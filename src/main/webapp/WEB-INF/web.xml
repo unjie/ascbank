@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://java.sun.com/xml/ns/javaee"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd"
+	id="WebApp_ID" version="2.5">
+	<display-name>MonkProject</display-name>
+	<!-- 配置过滤器 编码进行过滤 start -->
+	<filter>
+		<!-- 过滤器名称 -->
+		<filter-name>encodingFilter</filter-name>
+		<!-- 过滤器需要实现Filter接口 -->
+		<filter-class>org.springframework.web.filter.CharacterEncodingFilter</filter-class>
+		<!-- 初始配置 -->
+		<init-param>
+			<!-- 参数名 -->
+			<param-name>encoding</param-name>
+			<!-- 参数值 -->
+			<param-value>UTF-8</param-value>
+		</init-param>
+		<init-param>
+			<param-name>forceEncoding</param-name>
+			<param-value>true</param-value>
+		</init-param>
+	</filter>
+	<!-- 配置过滤器 编码进行过滤 end -->
+	<!-- 映射过滤器 start -->
+	<filter-mapping>
+		<filter-name>encodingFilter</filter-name>
+		<!--“/*”表示拦截所有的请求 -->
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- 映射过滤器 end -->
+	<!-- 连接池 启用Web监控统计功能 start -->
+	<filter>
+		<filter-name>DruidWebStatFilter</filter-name>
+		<filter-class>com.alibaba.druid.support.http.WebStatFilter</filter-class>
+		<init-param>
+			<param-name>exclusions</param-name>
+			<param-value>*.js,*.gif,*.jpg,*.png,*.css,*.ico,/druid/*</param-value>
+		</init-param>
+	</filter>
+	<filter-mapping>
+		<filter-name>DruidWebStatFilter</filter-name>
+		<url-pattern>/*</url-pattern>
+	</filter-mapping>
+	<!-- 配置 servlet 过滤 start -->
+	<servlet>
+		<!-- 过滤器名称 -->
+		<servlet-name>DruidStatView</servlet-name>
+		<!-- 过滤器需要实现的servlet接口 -->
+		<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
+	</servlet>
+	<!-- 配置 servlet 过滤 end -->
+	<!-- 映射 servlet start -->
+	<servlet-mapping>
+		<servlet-name>DruidStatView</servlet-name>
+		<url-pattern>/druid/*</url-pattern>
+	</servlet-mapping>
+	<!-- 映射 servlet end -->
+	<!-- 连接池 启用Web监控统计功能 end -->
+
+	<!-- Shiro安全框架过滤器 start 后期加载配置 最开始先不配置shiro环境 小伙伴 步子是要一步一步走的，胖子是一口一口吃出来的 -->
+	<listener>
+    	<listener-class>org.apache.shiro.web.env.EnvironmentLoaderListener</listener-class>
+	</listener>
+	
+	<filter>
+	    <filter-name>ShiroFilter</filter-name>
+	    <filter-class>org.apache.shiro.web.servlet.ShiroFilter</filter-class>
+	</filter>
+	
+	<filter-mapping>
+	    <filter-name>ShiroFilter</filter-name>
+	    <url-pattern>/*</url-pattern>
+	    <dispatcher>REQUEST</dispatcher>
+	    <dispatcher>FORWARD</dispatcher>
+	    <dispatcher>INCLUDE</dispatcher>
+	    <dispatcher>ERROR</dispatcher>
+	</filter-mapping>
+	<!-- Shiro安全框架过滤器 end -->
+
+	<!-- 配置下监听吧你不坚挺怎么让她快乐？ start -->
+	<!-- Spring 刷新Introspector防止内存泄露 -->
+	<listener>
+		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
+	</listener>
+	<!-- Spring ApplicationContext 载入 -->
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<!-- 配置下监听吧你不坚挺怎么让她快乐？ end -->
+
+	<!-- 基础功能都配置完了，下面配置下我们启动时候需要加载的项目吧 SpringContext-core.xml 我们的基础启动配置项目哦 -->
+	<context-param>
+		<param-name>contextConfigLocation</param-name>
+		<param-value>classpath:SpringContext-core.xml</param-value>
+	</context-param>
+	<!-- Spring MVC配置 start -->
+	<servlet>
+		<servlet-name>MonkProject</servlet-name>
+		<servlet-class>org.springframework.web.servlet.DispatcherServlet</servlet-class>
+		<init-param>
+			<description>spring mvc 配置文件</description>
+			<param-name>contextConfigLocation</param-name>
+			<param-value>classpath:springContext-mvc.xml</param-value>
+		</init-param>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+	<servlet-mapping>
+		<servlet-name>MonkProject</servlet-name>
+		<url-pattern>/</url-pattern>
+	</servlet-mapping>
+	<!-- Spring MVC配置 end -->
+
+	<!-- 指定展示默认文件，太多了我们就用Index.jsp来初始化吧 -->
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+	<!-- 有初始 就要有对应的错误界面吧 假如你找不到了难道不需要给出一些信息让你知晓么？ -->
+	<error-page>
+		<error-code>403</error-code>
+		<location>/WEB-INF/views/404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>404</error-code>
+		<location>/WEB-INF/views/404.jsp</location>
+	</error-page>
+</web-app>
