@@ -19,7 +19,7 @@
     <bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
         <property name="locations">
             <list>
-                <value>classpath:monk.properties</value>
+                <value>classpath:ascbank.properties</value>
             </list>
         </property>
     </bean>

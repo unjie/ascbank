@@ -10,11 +10,11 @@
 
 	<properties>
 		<springframework.version>4.2.6.RELEASE</springframework.version>
-
 		<spring-data-jpa.version>1.10.1.RELEASE</spring-data-jpa.version>
 		<mybatis.version>3.4.0</mybatis.version>
 		<shiro.version>1.2.4</shiro.version>
 		<ehcache.version>3.0.1</ehcache.version>
+		<druid-version>1.0.13</druid-version>
 	</properties>
 
 	<dependencies>
@@ -80,7 +80,13 @@
 			<version>${shiro.version}</version>
 		</dependency>
 		<!--[END] shiro -->
-
+		<!--[START] druid Druid是Java语言中最好的数据库连接池。Druid能够提供强大的监控和扩展功能。 -->
+		<dependency>
+		    <groupId>com.alibaba</groupId>
+		    <artifactId>druid</artifactId>
+		    <version>${druid-version}</version>
+		</dependency>
+		<!--[END] druid -->
 	</dependencies>
 
 </project>
