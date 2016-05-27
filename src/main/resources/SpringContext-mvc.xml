@@ -34,20 +34,41 @@
     <mvc:default-servlet-handler />
 
 
+	<!-- 设置为true以忽略对Accept Header的支持 -->
+    <bean id="cnManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">  
+            <property name="ignoreAcceptHeader" value="true"/> 
+            <!-- path扩展名至mimeType的映射,即 /user.json => application/json --> 
+            <property name="favorPathExtension" value="true"/>  
+            <property name="defaultContentType" value="text/html"/> 
+           <!--  Parameter用于开启 /userinfo/123?format=json 的支持  -->
+            <property name="favorParameter" value="true"/>  
+            <!--  favorPathExtension, favorParameter是true时才起作用 -->
+            <property name="mediaTypes">  
+                <map>  
+                    <entry key="xml" value="application/xml"/>  
+                    <entry key="json" value="text/plain"/>  
+                    <entry key="xls" value="application/vnd.ms-excel"/>  
+                </map>  
+            </property>  
+    </bean>  
+
+
     <!-- bean name view resolver -->
     <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" />
     <!-- 根据客户端的不同的请求决定不同的 view进行响应, 如 /blog/1.json /blog/1.xml -->
     <bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" p:order="1">
         <!-- 设置为true以忽略对Accept Header的支持 -->
         <!-- 扩展名至mimeType的映射,即 /user.json => application/json -->
+        <!-- 
         <property name="favorPathExtension" value="false" />
-        <!-- 用于开启 /userinfo/123?format=json 的支持 -->
+        //用于开启 /userinfo/123?format=json 的支持
         <property name="favorParameter" value="false" />
-        <property name="mediaTypes">  <!--favorPathExtension, favorParameter是true时才起作用 -->
+        <property name="mediaTypes">  favorPathExtension, favorParameter是true时才起作用
             <map>
                 <entry key="html" value="*" />
             </map>
-        </property>
+        </property> -->
+        <property name="contentNegotiationManager" ref="cnManager"/> 
         <property name="viewResolvers">
             <list>
                 <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">

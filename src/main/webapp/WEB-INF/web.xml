@@ -102,7 +102,7 @@
 		<init-param>
 			<description>spring mvc 配置文件</description>
 			<param-name>contextConfigLocation</param-name>
-			<param-value>classpath:springContext-mvc.xml</param-value>
+			<param-value>classpath:SpringContext-mvc.xml</param-value>
 		</init-param>
 		<load-on-startup>1</load-on-startup>
 	</servlet>
@@ -119,10 +119,14 @@
 	<!-- 有初始 就要有对应的错误界面吧 假如你找不到了难道不需要给出一些信息让你知晓么？ -->
 	<error-page>
 		<error-code>403</error-code>
-		<location>/WEB-INF/views/404.jsp</location>
+		<location>/WEB-INF/views/error/404.jsp</location>
 	</error-page>
 	<error-page>
 		<error-code>404</error-code>
-		<location>/WEB-INF/views/404.jsp</location>
+		<location>/WEB-INF/views/error/404.jsp</location>
+	</error-page>
+	<error-page>
+		<error-code>500</error-code>
+		<location>/WEB-INF/views/error/500.jsp</location>
 	</error-page>
 </web-app>

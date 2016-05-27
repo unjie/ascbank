@@ -1,5 +1,4 @@
-<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.ascbank</groupId>
 	<artifactId>ascbank</artifactId>
@@ -7,6 +6,7 @@
 	<packaging>war</packaging>
 	<name>ascbank</name>
 	<description>ascbank</description>
+	<url>http://localhost:3000/unjie/ascbank.git</url>
 
 	<properties>
 		<springframework.version>4.2.6.RELEASE</springframework.version>
@@ -15,6 +15,7 @@
 		<shiro.version>1.2.4</shiro.version>
 		<ehcache.version>3.0.1</ehcache.version>
 		<druid-version>1.0.13</druid-version>
+		<maven.tomcat.port>99</maven.tomcat.port>
 	</properties>
 
 	<dependencies>
@@ -35,6 +36,12 @@
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
 			<version>${spring-data-jpa.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>spring-orm</artifactId>
+					<groupId>org.springframework</groupId>
+				</exclusion>
+			</exclusions>
 		</dependency>
 		<!--[END] spring -->
 		<!--[START] mybatis -->
@@ -82,11 +89,65 @@
 		<!--[END] shiro -->
 		<!--[START] druid Druid是Java语言中最好的数据库连接池。Druid能够提供强大的监控和扩展功能。 -->
 		<dependency>
-		    <groupId>com.alibaba</groupId>
-		    <artifactId>druid</artifactId>
-		    <version>${druid-version}</version>
+			<groupId>com.alibaba</groupId>
+			<artifactId>druid</artifactId>
+			<version>${druid-version}</version>
 		</dependency>
 		<!--[END] druid -->
 	</dependencies>
 
+	<build>
+		<pluginManagement>
+				<plugins>
+					<plugin>  
+			        <groupId>org.apache.maven.plugins</groupId>  
+			        <artifactId>maven-compiler-plugin</artifactId>  
+			        <configuration>  
+			          <source>1.7</source>  
+			          <target>1.7</target>  
+			        </configuration>  
+			    </plugin>  
+				<plugin>
+					<groupId>org.apache.tomcat.maven</groupId>
+					<artifactId>tomcat7-maven-plugin</artifactId>
+					<version>2.2</version>
+					<configuration>
+						<!-- http port -->
+						<port>${maven.tomcat.port}</port>
+						<!-- application path always starts with / -->
+						<path>/</path>
+						<!--上下文文件的可选路径 optional path to a context file -->
+						<!-- <contextFile>${tomcatContextXml}</contextFile> -->
+						<!--可选的系统性能要添加 optional system propoerties you want to add -->
+						<systemProperties>
+							<appserver.base>${project.build.directory}/appserver-base</appserver.base>
+							<appserver.home>${project.build.directory}/appserver-home</appserver.home>
+							<derby.system.home>${project.build.directory}/appserver-base/logs</derby.system.home>
+							<java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
+						</systemProperties>
+						<!--如果你想使用测试依赖关系而不是只运行时 if you want to use test dependencies rather than only runtime -->
+						<useTestClasspath>false</useTestClasspath>
+						<!-- optional if you want to add some extra directories into the classloader -->
+						<additionalClasspathDirs>
+							<additionalClasspathDir></additionalClasspathDir>
+						</additionalClasspathDirs>
+					</configuration>
+					<!-- For any extra dependencies needed when running embedded Tomcat (not WAR dependencies) add them below -->
+					<!-- 额外的依赖关系，在运行时需要嵌入Tomcat（不是战争的依赖）添加以下 -->
+					<dependencies>
+						<dependency>
+							<groupId>org.apache.derby</groupId>
+							<artifactId>derby</artifactId>
+							<version>\${derbyVersion}</version>
+						</dependency>
+						<dependency>
+							<groupId>javax.mail</groupId>
+							<artifactId>mail</artifactId>
+							<version>1.4</version>
+						</dependency>
+					</dependencies>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
 </project>
