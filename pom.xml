@@ -10,7 +10,7 @@
 
 	<properties>
 		<springframework.version>4.2.6.RELEASE</springframework.version>
-		<spring-data-jpa.version>1.10.1.RELEASE</spring-data-jpa.version>
+		<!-- <spring-data-jpa.version>1.10.1.RELEASE</spring-data-jpa.version> -->
 		<mybatis.version>3.4.0</mybatis.version>
 		<shiro.version>1.2.4</shiro.version>
 		<ehcache.version>3.0.1</ehcache.version>
@@ -32,6 +32,7 @@
 		</dependency>
 
 		<!-- spring-data-jpa -->
+		<!-- 
 		<dependency>
 			<groupId>org.springframework.data</groupId>
 			<artifactId>spring-data-jpa</artifactId>
@@ -43,6 +44,7 @@
 				</exclusion>
 			</exclusions>
 		</dependency>
+		 -->
 		<!--[END] spring -->
 		<!--[START] mybatis -->
 		<dependency>
