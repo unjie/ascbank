@@ -6,10 +6,10 @@
     <javaModelGenerator targetPackage="com.ascbank.model" targetProject="test\src\" />
     <sqlMapGenerator targetPackage="com.ascbank.map" targetProject="test\src\" />
     <javaClientGenerator targetPackage="com.ascbank.client" targetProject="test\src\" type="XMLMAPPER" />
-    <!-- 
+    
     <table schema="???" tableName="???" >
       <columnOverride column="???" property="???" />
     </table> 
-    -->
+    
   </context>
 </generatorConfiguration>
