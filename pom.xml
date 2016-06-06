@@ -19,6 +19,15 @@
 	</properties>
 
 	<dependencies>
+	
+		<!--[START]  PostgreSQL -->
+		<dependency>
+		    <groupId>postgresql</groupId>
+		    <artifactId>postgresql</artifactId>
+		    <version>9.1-901-1.jdbc4</version>
+		</dependency>
+		<!--[END]  PostgreSQL -->
+	
 		<!--[START] spring -->
 		<dependency>
 			<groupId>org.springframework</groupId>
@@ -84,6 +93,10 @@
 			<version>${druid-version}</version>
 		</dependency>
 		<!--[END] druid -->
+		
+		
+		
+		
 	</dependencies>
 
 	<build>
@@ -137,7 +150,7 @@
 						</dependency>
 					</dependencies>
 				</plugin>
-				<!--mybatis generator 代码生成插件  -->
+				<!--mybatis generator 代码生成插件                           mybatis-generator:generate  -->
 				<plugin>
 				    <groupId>org.mybatis.generator</groupId>
 				    <artifactId>mybatis-generator-maven-plugin</artifactId>

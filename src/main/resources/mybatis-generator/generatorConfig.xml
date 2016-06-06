@@ -1,15 +1,24 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration >
+<classPathEntry location="X:\Program Files\apache-maven\.m2\repository\postgresql\postgresql\9.1-901-1.jdbc4\postgresql-9.1-901-1.jdbc4.jar"/>
   <context id="context1" >
     <jdbcConnection driverClass="org.postgresql.Driver" connectionURL="=jdbc:postgresql://localhost:5432/qinzero" userId="root" password="root123" />
-    <javaModelGenerator targetPackage="com.ascbank.model" targetProject="test\src\" />
-    <sqlMapGenerator targetPackage="com.ascbank.map" targetProject="test\src\" />
-    <javaClientGenerator targetPackage="com.ascbank.client" targetProject="test\src\" type="XMLMAPPER" />
+    <javaModelGenerator targetPackage="com.ascbank.model" targetProject="src\main\java" />
+    <sqlMapGenerator targetPackage="com.ascbank.map" targetProject="src\main\java" />
+    <javaClientGenerator targetPackage="com.ascbank.client" targetProject="src\main\java" type="XMLMAPPER" />
     
-    <table schema="???" tableName="???" >
-      <columnOverride column="???" property="???" />
-    </table> 
-    
+    <table tableName="t_article" ></table> 
+    <table tableName="t_gantt" ></table> 
+    <table tableName="t_menu" ></table> 
+    <table tableName="t_navigation" ></table> 
+    <table tableName="t_permission" ></table> 
+    <table tableName="t_role" ></table> 
+    <table tableName="t_role_permission" ></table> 
+    <table tableName="t_shortcut" ></table> 
+    <table tableName="t_system_info" ></table> 
+    <table tableName="t_url_filter" ></table> 
+    <table tableName="t_user" ></table> 
+    <table tableName="t_user_role" ></table> 
   </context>
 </generatorConfiguration>
