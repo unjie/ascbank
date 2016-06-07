@@ -49,6 +49,12 @@
 			<artifactId>mybatis</artifactId>
 			<version>${mybatis.version}</version>
 		</dependency>
+		
+		<dependency>
+			<groupId>org.mybatis</groupId>
+			<artifactId>mybatis-spring</artifactId>
+			<version>1.3.0</version>
+		</dependency>
 		<!--[END] mybatis -->
 		<!--[START] ehcach -->
 		<dependency>
@@ -138,11 +144,13 @@
 					<!-- For any extra dependencies needed when running embedded Tomcat (not WAR dependencies) add them below -->
 					<!-- 额外的依赖关系，在运行时需要嵌入Tomcat（不是战争的依赖）添加以下 -->
 					<dependencies>
-						<dependency>
+						<!--
+						 <dependency>
 							<groupId>org.apache.derby</groupId>
 							<artifactId>derby</artifactId>
 							<version>\${derbyVersion}</version>
 						</dependency>
+						 -->
 						<dependency>
 							<groupId>javax.mail</groupId>
 							<artifactId>mail</artifactId>

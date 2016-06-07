@@ -4,26 +4,26 @@ xmlns:tx="http://www.springframework.org/schema/tx" xmlns:jpa="http://www.spring
 xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
 http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
 http://www.springframework.org/schema/data/jpa http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
-
+<!-- 
         <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-            <!-- 指定数据源 -->
+            指定数据源
             <property name="dataSource" ref="dataSource" />
-            <!-- 指定Entity实体类包路径 -->
+            指定Entity实体类包路径
             <property name="packagesToScan">
                 <list>
-                    <value>com.ascbank.*.entity</value>
+                    <value>com.ascbank.entity.*</value>
                 </list>
             </property>
-            <!-- 指定JPA属性；如Hibernate中指定是否显示SQL的是否显示、方言等 -->
+            指定JPA属性；如Hibernate中指定是否显示SQL的是否显示、方言等
             <property name="jpaVendorAdapter">
                 <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                    <!-- 是否生成ddl文件 -->
+                    是否生成ddl文件
                     <property name="generateDdl" value="true" />
-                    <!-- 是否展示sql -->
+                    是否展示sql
                     <property name="showSql" value="false" />
-                    <!-- 必要的数据库库使用的详细信息 -->
+                    必要的数据库库使用的详细信息
                     <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
-                    <!-- mysql,自行选择 -->
+                    mysql,自行选择
                     <property name="database" value="MYSQL"/>
                 </bean>
             </property>
@@ -36,16 +36,39 @@ http://www.springframework.org/schema/data/jpa http://www.springframework.org/sc
                 </props>
             </property>
         </bean>
-
+ -->
         <!-- Spring Data Jpa配置 -->
 
-        <!-- 配置 启用扫描并自动创建代理的功能  factory-class="com.ascbank.base.jpa.PeakJpaRepositoryFactory"自己定义的bean注解方式，可以不写，直接注解所有包下的 -->
-        <jpa:repositories base-package="com.ascbank.*.dao" entity-manager-factory-ref="entityManagerFactory" transaction-manager-ref="transactionManager" factory-class="com.ascbank.base.jpa.PeakJpaRepositoryFactory">   </jpa:repositories>    
+	<!-- MyBatis配置 -->
+		<bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+			<property name="dataSource" ref="dataSource" />
+			<!-- 自动扫描entity目录, 省掉Configuration.xml里的手工配置 -->
+			<property name="typeAliasesPackage" value="com.ascbank.showcase.entity" />
+			<!-- 显式指定Mapper文件位置 -->
+			<property name="mapperLocations" value="classpath:/mybatis/*Mapper.xml" />
+		</bean>
+		<!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口-->
+		<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+			<property name="basePackage" value="com.ascbank" />
+			<property name="annotationClass" value="com.ascbank.repository.mybatis.MyBatisRepository"/>
+		</bean>
+		
+<!-- 
+		事务管理器配置, Jpa单数据源事务 
+		<bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
+			<property name="entityManagerFactory" ref="entityManagerFactory"/>
+		</bean> 
+-->
+	
+		<!-- 另一个事务管理器, Jdbc单数据源事务 -->
+		<bean id="quartzTransactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+			<property name="dataSource" ref="quartzDataSource" />
+		</bean>
 
-        <!-- Jpa 事务配置 -->
-        <bean id="transactionManager" class="org.springframework.orm.jpa.JpaTransactionManager">
-            <property name="entityManagerFactory" ref="entityManagerFactory"/>
-        </bean>
+        <!-- 配置 启用扫描并自动创建代理的功能  factory-class="com.ascbank.base.jpa.PeakJpaRepositoryFactory"自己定义的bean注解方式，可以不写，直接注解所有包下的 -->
+        <jpa:repositories base-package="com.ascbank.dao.*" entity-manager-factory-ref="entityManagerFactory" transaction-manager-ref="transactionManager" />     
+
+        
 
         <!-- 开启注解事务 -->
         <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true"/>
