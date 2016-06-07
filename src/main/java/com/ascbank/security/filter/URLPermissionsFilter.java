@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.util.StringUtils;
 
 import com.ascbank.model.UrlFilter;
+import com.ascbank.service.UrlFilterService;
 
 /**
  * 基于URL的权限判断过滤器
@@ -27,7 +28,7 @@ import com.ascbank.model.UrlFilter;
  */
 public class URLPermissionsFilter extends AuthorizationFilter {
 	private static final Logger log = LoggerFactory.getLogger(URLPermissionsFilter.class);
-	private UrlFilterServiceInterface<Long, UrlFilter> urlFilterService;
+	private UrlFilterService urlFilterService;
 
 	/**
 	 * 根据请求URL产生权限字符串，这里只产生，而比对的事交给Realm
@@ -74,7 +75,7 @@ public class URLPermissionsFilter extends AuthorizationFilter {
 	}
 
 	@Resource(name = "urlFilterService")
-	public void setUrlFilterService(UrlFilterServiceInterface<Long, UrlFilter> urlFilterService) {
+	public void setUrlFilterService(UrlFilterService urlFilterService) {
 		this.urlFilterService = urlFilterService;
 	}
 }
