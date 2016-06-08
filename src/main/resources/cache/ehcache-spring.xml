@@ -2,7 +2,7 @@
 
 	<service>
 		<jsr107:defaults>
-			<jsr107:cache name="shiroEhcache" template="heap-cache" />
+			<jsr107:cache name="springEhcache" template="heap-cache" />
 		</jsr107:defaults>
 	</service>
 

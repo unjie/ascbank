@@ -160,4 +160,9 @@ public class Permission {
     public void setPermission(String permission) {
         this.permission = permission == null ? null : permission.trim();
     }
+
+	public String toPermissionString() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

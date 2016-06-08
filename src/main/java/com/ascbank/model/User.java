@@ -1,6 +1,7 @@
 package com.ascbank.model;
 
 import java.util.Date;
+import java.util.List;
 
 public class User {
     /**
@@ -546,4 +547,9 @@ public class User {
     public void setWechatName(String wechatName) {
         this.wechatName = wechatName == null ? null : wechatName.trim();
     }
+
+	public List<Role> getRoles() {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

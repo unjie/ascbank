@@ -9,4 +9,6 @@ public interface UserService {
 
 	User login(User user);
 
+	User read(String username);
+
 }

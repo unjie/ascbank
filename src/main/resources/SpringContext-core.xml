@@ -3,5 +3,6 @@
 <import resource="classpath:SpringContext-cache.xml"/>
 <import resource="classpath:SpringContext-datasource.xml"/>
 <import resource="classpath:SpringContext-mybatis.xml"/>
+<import resource="classpath:SpringContext-shiro.xml"/>
 <!-- <import resource="classpath:SpringContext-jpa.xml"/> -->
 </beans>

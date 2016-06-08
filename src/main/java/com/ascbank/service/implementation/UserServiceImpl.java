@@ -41,5 +41,12 @@ public class UserServiceImpl implements UserService {
 		return user;
 		
 	}
+
+
+	@Override
+	public User read(String username) {
+		// TODO Auto-generated method stub
+		return userMap.selectByUsername(username);
+	}
 	
 }
