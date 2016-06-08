@@ -10,7 +10,7 @@ import com.ascbank.dao.UserMapper;
 import com.ascbank.model.User;
 import com.ascbank.service.UserService;
 
-@Service
+@Service("userService")
 @Transactional(readOnly = true,isolation=Isolation.READ_UNCOMMITTED)
 public class UserServiceImpl implements UserService {
 
