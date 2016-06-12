@@ -51,8 +51,8 @@
         <property name="filters" value="stat" />
         
         <!-- StatFilter属性slowSqlMillis用来配置SQL慢的标准，执行时间超过slowSqlMillis的就是慢。slowSqlMillis的缺省值为3000，也就是3秒。 -->
-        <property name="slowSqlMillis" value="10000" />
-    	<property name="logSlowSql" value="true" />
+        <!-- <property name="slowSqlMillis" value="1000" /> -->
+    	<!-- <property name="logSlowSql" value="true" /> -->
     </bean>
     <!-- end -->
 </beans>

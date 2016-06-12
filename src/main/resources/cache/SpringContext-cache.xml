@@ -8,7 +8,7 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
 	<bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-		<property name="configLocation" value="classpath:cache/ehcache-spring.xml" />
+		<property name="configLocation" value="classpath:cache/spring-ehcache.xml" />
 		<property name="cacheManagerName" value="springEhcache" />
 		<property name="acceptExisting" value="true" />
 		<!-- <property name="shared" value="true" /> -->

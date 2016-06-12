@@ -1,6 +1,4 @@
-/**
- * 
- */
+
 package com.ascbank.base.jpa;
 
 /**

@@ -9,7 +9,7 @@
 		<!-- 自动扫描model目录, 省掉Configuration.xml里的手工配置 -->
 		<property name="typeAliasesPackage" value="com.ascbank.model.*" />
 		<!-- 显式指定Mapper文件位置 -->
-		<property name="mapperLocations" value="classpath:/com/ascbank/map/*Mapper.xml" />
+		<property name="mapperLocations" value="classpath:mybatis/map/*Mapper.xml" />
 	</bean>
 
 	<!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口 -->

@@ -9,15 +9,9 @@
 	<!-- 項目自定义的Realm -->
 	<!--  <bean id="shiroDbRealm" class="com.ascbank.security.realm.ShiroDbRealm" /> -->
 
-
-
-
 	<!-- 用户授权信息Cache, 采用EhCache Shiro 缓存管理器 实现利用Ehcache所有缓存功能的框架。 -->
-	
-
-	
 	<bean id="shiroEhcacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
-		<property name="configLocation" value="classpath:shiro/ehcache-shiro.xml" />
+		<property name="configLocation" value="classpath:shiro/shiro-ehcache.xml" />
 		<property name="cacheManagerName" value="shiroEhcache" />
 		<property name="acceptExisting" value="true" />
 		<property name="shared" value="true" />
