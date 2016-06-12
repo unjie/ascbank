@@ -3,24 +3,24 @@
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 
         <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">
-            指定数据源
+          <!--   指定数据源 -->
             <property name="dataSource" ref="dataSource" />
-            指定Entity实体类包路径
+            <!-- 指定Entity实体类包路径 -->
             <property name="packagesToScan">
                 <list>
                     <value>com.ascbank.entity.*</value>
                 </list>
             </property>
-            指定JPA属性；如Hibernate中指定是否显示SQL的是否显示、方言等
+            <!-- 指定JPA属性；如Hibernate中指定是否显示SQL的是否显示、方言等 -->
             <property name="jpaVendorAdapter">
                 <bean class="org.springframework.orm.jpa.vendor.HibernateJpaVendorAdapter">
-                    是否生成ddl文件
+            <!--         是否生成ddl文件 -->
                     <property name="generateDdl" value="true" />
-                    是否展示sql
+                  <!--   是否展示sql -->
                     <property name="showSql" value="false" />
-                    必要的数据库库使用的详细信息
+                    <!-- 必要的数据库库使用的详细信息 -->
                     <property name="databasePlatform" value="org.hibernate.dialect.MySQLDialect" />
-                    mysql,自行选择
+                    <!-- mysql,自行选择 -->
                     <property name="database" value="MYSQL"/>
                 </bean>
             </property>

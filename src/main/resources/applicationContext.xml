@@ -6,9 +6,10 @@
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
-<import resource="classpath:SpringContext-cache.xml"/>
-<import resource="classpath:SpringContext-datasource.xml"/>
-<import resource="classpath:SpringContext-mybatis.xml"/>
-<import resource="classpath:SpringContext-shiro.xml"/>
-<!-- <import resource="classpath:SpringContext-jpa.xml"/> -->
+<import resource="classpath:cache/SpringContext-cache.xml"  /> 
+<import resource="classpath:mvc/SpringContext-mvc.xml"/>
+<import resource="classpath:datasource/SpringContext-datasource.xml"/>
+<import resource="classpath:mybatis/SpringContext-mybatis.xml"/>
+<import resource="classpath:shiro/SpringContext-shiro.xml"/>
+
 </beans>

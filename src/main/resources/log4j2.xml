@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE Configuration PUBLIC "-//APACHE//DTD LOG4J 1.2//EN" "http://logging.apache.org/log4j/1.2/apidocs/org/apache/log4j/xml/doc-files/log4j.dtd">
+<Configuration status="DEBUG">
+	<Appenders>
+		<Console name="logConsole" target="SYSTEM_OUT">
+			<PatternLayout pattern="[%-5p] %d %c - %m%n" />
+		</Console>
+		<File name="logFile" fileName="${webapp.root}/log/my.log">
+			<PatternLayout pattern="%m%n" />
+		</File>
+	</Appenders>
+
+	<Loggers>
+		<Logger name="mh.sample2.Log4jTest2" level="INFO">
+			<AppenderRef ref="logFile" />
+		</Logger>
+		<Root level="INFO">
+			<AppenderRef ref="logConsole" />
+		</Root>
+	</Loggers>
+</Configuration>

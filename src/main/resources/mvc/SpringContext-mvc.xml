@@ -11,16 +11,26 @@
 	<!-- 启用注解 -->
 	<mvc:annotation-driven />
 
+	<mvc:view-controller path="/" view-name="forward:/index.html" status-code="200" />
+	<!-- 自动扫描@Controller -->
+	<context:component-scan base-package="com.ascbank"  >
+		<context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"  />
+		<context:include-filter type="annotation" expression="org.springframework.web.bind.annotation.ControllerAdvice" />
+	</context:component-scan>
+	
 		<!-- Spring 缓存配置 -->
-	<bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+	<!--  -->
+	<!-- Spring 缓存配置 -->
+	<!--
+	 <bean id="ehcacheManager" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
 		<property name="configLocation" value="classpath:cache/ehcache-spring.xml" />
 		<property name="cacheManagerName" value="springEhcache" />
 		<property name="acceptExisting" value="true" />
-		<!-- <property name="shared" value="true" /> -->
+		<property name="shared" value="true" />
 	</bean>
 	<bean id="ehcacheCacheManager" class="org.springframework.cache.ehcache.EhCacheCacheManager">
 		<property name="cacheManager" ref="ehcacheManager" />
-		<!-- 此处的transactionAware表示是否事务环绕的，如果true，则如果事务回滚，缓存也回滚，默认false。 -->
+		此处的transactionAware表示是否事务环绕的，如果true，则如果事务回滚，缓存也回滚，默认false。
 		<property name="transactionAware" value="true" />
 	</bean>
 
@@ -28,7 +38,7 @@
 		<constructor-arg value="resource" />
 	</bean>
 	<cache:annotation-driven cache-manager="ehcacheCacheManager" mode="proxy" order="10" proxy-target-class="false"/>
-
+	 -->
 
 
 
