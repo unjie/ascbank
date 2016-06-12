@@ -1,27 +1,14 @@
-<config xmlns:xsi='http://www.w3.org/2001/XMLSchema-instance' xmlns='http://www.ehcache.org/v3' xmlns:jsr107='http://www.ehcache.org/v3/jsr107'>
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false" name="shiroEhcache" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache http://ehcache.org/ehcache.xsd">
+	<diskStore path="${webapp.root}/ehcache/shiroCache" />
 
-	<service>
-		<jsr107:defaults>
-			<jsr107:cache name="shiroEhcache" template="heap-cache" />
-		</jsr107:defaults>
-	</service>
-
-	<cache-template name="heap-cache">
-		<listeners>
-			<listener>
-				<class>org.terracotta.ehcache.EventLogger</class>
-				<event-firing-mode>ASYNCHRONOUS</event-firing-mode>
-				<event-ordering-mode>UNORDERED</event-ordering-mode>
-				<events-to-fire-on>CREATED</events-to-fire-on>
-				<events-to-fire-on>UPDATED</events-to-fire-on>
-				<events-to-fire-on>EXPIRED</events-to-fire-on>
-				<events-to-fire-on>REMOVED</events-to-fire-on>
-				<events-to-fire-on>EVICTED</events-to-fire-on>
-			</listener>
-		</listeners>
-		<resources>
-			<heap unit="entries">2000</heap>
-			<offheap unit="MB">100</offheap>
-		</resources>
-	</cache-template>
-</config>
+	<defaultCache maxElementsInMemory="10000" eternal="false" timeToIdleSeconds="1800" timeToLiveSeconds="1800" overflowToDisk="false" diskPersistent="false" diskExpiryThreadIntervalSeconds="1800" />
+	<!-- 登录记录缓存 锁定10分钟 -->
+	<cache name="passwordRetryCache" maxEntriesLocalHeap="2000" eternal="false" timeToIdleSeconds="3600" timeToLiveSeconds="0" overflowToDisk="false" statistics="true" />
+	<!-- 权限cache，默认命名shiro.authorizationCache -->
+	<cache name="shiro.authorizationCache" maxEntriesLocalHeap="2000" eternal="false" timeToIdleSeconds="3600" timeToLiveSeconds="0" overflowToDisk="false" statistics="true" />
+	<!-- 权限cache，默认命名shiro.authenticationCache -->
+	<cache name="shiro.authenticationCache" maxEntriesLocalHeap="2000" eternal="false" timeToIdleSeconds="3600" timeToLiveSeconds="0" overflowToDisk="false" statistics="true" />
+	<!-- sessioncache -->
+	<cache name="shiro-activeSessionCache" maxElementsInMemory="10000" eternal="false" overflowToDisk="false" diskPersistent="true" diskExpiryThreadIntervalSeconds="3600" timeToIdleSeconds="3600" timeToLiveSeconds="3600" />
+</ehcache>
