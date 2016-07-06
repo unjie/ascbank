@@ -11,42 +11,43 @@ import com.ascbank.model.User;
 import com.ascbank.service.UserService;
 
 @Service("userService")
-@Transactional(readOnly = true,isolation=Isolation.READ_UNCOMMITTED)
+@Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
 public class UserServiceImpl implements UserService {
 
 	@Resource
 	private UserMapper userMap;
-	
-	
-	/* (non-Javadoc)
-	 * @see com.ascbank.service.UserService_#setUserMap(com.ascbank.dao.UserMapper)
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ascbank.service.UserService_#setUserMap(com.ascbank.dao.UserMapper)
 	 */
-	
+
 	@Override
 	public void setUserMap(UserMapper userMap) {
 		this.userMap = userMap;
 	}
 
-
-	/* (non-Javadoc)
+	/*
+	 * (non-Javadoc)
+	 * 
 	 * @see com.ascbank.service.UserService_#login(com.ascbank.model.User)
 	 */
-	
-	@Override
-	public User login(User user){
-		
-		
-		user = userMap.selectByUsername(user.getUsername());
-		
-		return user;
-		
-	}
 
+	@Override
+	public User login(User user) {
+
+		user = userMap.selectByUsername(user.getUsername());
+
+		return user;
+
+	}
 
 	@Override
 	public User read(String username) {
 		// TODO Auto-generated method stub
 		return userMap.selectByUsername(username);
 	}
-	
+
 }

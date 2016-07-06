@@ -36,7 +36,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 
 	@Resource(name = "userService")
 	private UserService userService;
-	
+
 	public static final String HASH_ALGORITHM = "SHA-1";
 	public static final int HASH_INTERATIONS = 1024;
 	static final int SALT_SIZE = 8;
@@ -57,7 +57,8 @@ public class ShiroDbRealm extends AuthorizingRealm {
 			throw new AuthenticationException("{User.name.not.exist}");
 		}
 		if (user != null) {
-			info = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), ByteSource.Util.bytes(Encodes.decodeHex(user.getEncrypt())), getName());
+			info = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(),
+					ByteSource.Util.bytes(Encodes.decodeHex(user.getEncrypt())), getName());
 		}
 
 		log.debug("----->>>" + info);

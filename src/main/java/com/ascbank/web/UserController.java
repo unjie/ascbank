@@ -18,25 +18,19 @@ import com.ascbank.service.UserService;
 @Controller
 @RequestMapping("/user")
 public class UserController {
-	
+
 	@Resource
-	UserService  userService;
-	
-	
-	
-	
+	UserService userService;
+
 	public void setUserService(UserService userService) {
 		this.userService = userService;
 	}
 
+	@RequestMapping(value = "/login")
+	public String login(User user) {
 
+		System.out.println(user);
 
-
-	@RequestMapping(value="/login")
-	public String login(User user){
-		
-		
-		
 		return "user/login";
 	}
 

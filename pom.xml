@@ -9,7 +9,13 @@
 	<url>http://localhost:3000/unjie/ascbank.git</url>
 
 	<properties>
+
+		<hibernate.version>5.2.4.Final</hibernate.version>
+		<lucene.version>6.0.1</lucene.version>
+		<!-- <hibernat.search.version>5.5.3.Final</hibernat.search.version> -->
 		<springframework.version>4.2.6.RELEASE</springframework.version>
+		<spring.data-solr.version>2.0.2.RELEASE</spring.data-solr.version>
+		<solr-solrj.version>5.5.0</solr-solrj.version>
 		<!-- <spring-data-jpa.version>1.10.1.RELEASE</spring-data-jpa.version> -->
 		<mybatis.version>3.4.0</mybatis.version>
 		<shiro.version>1.2.5</shiro.version>
@@ -20,6 +26,13 @@
 
 	<dependencies>
 
+		<!--[START] Log -->
+		<dependency>
+			<groupId>org.slf4j</groupId>
+			<artifactId>slf4j-log4j12</artifactId>
+			<version>1.7.21</version>
+		</dependency>
+		<!--[END] Log -->
 		<!--[START] servlet -->
 		<dependency>
 			<groupId>javax.servlet</groupId>
@@ -32,9 +45,6 @@
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
-
-
-
 		<!--[END] servlet -->
 
 		<!--[START] javax.cache api -->
@@ -52,8 +62,47 @@
 			<version>9.1-901-1.jdbc4</version>
 		</dependency>
 		<!--[END] PostgreSQL -->
-
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>${hibernate.version}</version>
+		</dependency>
+		<!-- -->
+		<!-- <dependency> <groupId>org.hibernate</groupId> <artifactId>hibernate-search-orm</artifactId> <version>${hibernat.search.version}</version> </dependency> -->
+		<!--[START] lucene 全文索引 -->
+		<!-- SPRING DATA -->
+		<dependency>
+			<groupId>org.springframework.data</groupId>
+			<artifactId>spring-data-solr</artifactId>
+			<version>${spring.data-solr.version}</version>
+			<exclusions>
+				<exclusion>
+					<artifactId>solr-solrj</artifactId>
+					<groupId>org.apache.solr</groupId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<!-- SOLR-SOLRJS -->
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-solrj</artifactId>
+			<version>${solr-solrj.version}</version>
+		</dependency>
+		<!-- 
+		<dependency>
+			<groupId>org.apache.solr</groupId>
+			<artifactId>solr-core</artifactId>
+			<version>${solr-solrj.version}</version>
+		</dependency>
+		 -->
+		<!--[END] lucene -->
 		<!--[START] spring -->
+		<dependency>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-test</artifactId>
+			<version>${springframework.version}</version>
+			<scope>test</scope>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-context</artifactId>
@@ -69,22 +118,16 @@
 			<artifactId>spring-webmvc</artifactId>
 			<version>${springframework.version}</version>
 		</dependency>
-		<!-- 
-		<dependency>
-			<groupId>org.springframework</groupId>
-			<artifactId>spring-orm</artifactId>
-			<version>${springframework.version}</version>
-		</dependency>
-		 -->
+		<!-- <dependency> <groupId>org.springframework</groupId> <artifactId>spring-orm</artifactId> <version>${springframework.version}</version> </dependency> -->
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-tx</artifactId>
 			<version>${springframework.version}</version>
 		</dependency>
 		<dependency>
-		    <groupId>org.springframework</groupId>
-		    <artifactId>spring-jdbc</artifactId>
-		    <version>${springframework.version}</version>
+			<groupId>org.springframework</groupId>
+			<artifactId>spring-jdbc</artifactId>
+			<version>${springframework.version}</version>
 		</dependency>
 
 
@@ -103,42 +146,24 @@
 			<artifactId>mybatis-spring</artifactId>
 			<version>1.3.0</version>
 		</dependency>
-		
-		
+
+
 		<!--[END] mybatis -->
-		
-		
+
+
 		<!--[START] ehcach -->
-		<!-- 3.0.2
+		<!-- 3.0.2 <dependency> <groupId>org.ehcache</groupId> <artifactId>ehcache</artifactId> <version>${ehcache.version}</version> </dependency> -->
 		<dependency>
-			<groupId>org.ehcache</groupId>
+			<groupId>net.sf.ehcache</groupId>
 			<artifactId>ehcache</artifactId>
 			<version>${ehcache.version}</version>
 		</dependency>
-		 -->
-		<dependency>
-	      <groupId>net.sf.ehcache</groupId>
-	      <artifactId>ehcache</artifactId>
-	      <version>${ehcache.version}</version>
-	    </dependency>   
-		<!-- 
-		<dependency>
-		   <groupId>org.ehcache</groupId>
-		   <artifactId>jcache</artifactId>
-		   <version>1.0.1</version>
-		</dependency>
-		 -->
+		<!-- <dependency> <groupId>org.ehcache</groupId> <artifactId>jcache</artifactId> <version>1.0.1</version> </dependency> -->
 		<!--[END] ehcache-core -->
-		
+
 		<!--[START] cache-annotations-ri-spring -->
-		<!-- 
-		<dependency>
-		    <groupId>org.jsr107.ri</groupId>
-		    <artifactId>cache-annotations-ri-spring</artifactId>
-		    <version>1.0.0</version>
-		</dependency>
-		-->
-		<!--[END] cache-annotations-ri-spring-->
+		<!-- <dependency> <groupId>org.jsr107.ri</groupId> <artifactId>cache-annotations-ri-spring</artifactId> <version>1.0.0</version> </dependency> -->
+		<!--[END] cache-annotations-ri-spring -->
 
 		<!-- <dependency> <groupId>net.sf.ehcache.internal</groupId> <artifactId>ehcache-core</artifactId> <version>${ehcache.version}</version> </dependency> <dependency> <groupId>net.sf.ehcache</groupId> <artifactId>ehcache-web</artifactId> <version>2.0.4</version> <exclusions> <exclusion> <artifactId>ehcache-core</artifactId> <groupId>net.sf.ehcache</groupId> </exclusion> </exclusions> </dependency> -->
 		<!--[END] ehcache -->
@@ -185,6 +210,26 @@
 			<version>1.3.1</version>
 		</dependency>
 		<!--[END] fileupload -->
+		<!--[START] TEST TOOL -->
+		<dependency>
+			<groupId>junit</groupId>
+			<artifactId>junit</artifactId>
+			<version>4.10</version>
+			<scope>test</scope>
+			<exclusions>
+				<exclusion>
+					<groupId>org.hamcrest</groupId>
+					<artifactId>hamcrest-core</artifactId>
+				</exclusion>
+			</exclusions>
+		</dependency>
+		<dependency>
+			<groupId>org.easymock</groupId>
+			<artifactId>easymock</artifactId>
+			<version>3.4</version>
+			<scope>test</scope>
+		</dependency>
+		<!--[END] TEST TOOL -->
 
 	</dependencies>
 
@@ -207,7 +252,7 @@
 						<!-- http port -->
 						<port>${maven.tomcat.port}</port>
 						<!-- application path always starts with / -->
-						<path>/</path>
+						<path>/${project.artifactId}</path>
 						<!--上下文文件的可选路径 optional path to a context file -->
 						<!-- <contextFile>${tomcatContextXml}</contextFile> -->
 						<!--可选的系统性能要添加 optional system propoerties you want to add -->
@@ -264,4 +309,16 @@
 			</plugins>
 		</pluginManagement>
 	</build>
+	<repositories>
+		<repository>
+			<id>maven-restlet</id>
+			<name>Public online Restlet repository</name>
+			<url>http://maven.restlet.org</url>
+		</repository>
+		<repository>
+			<id>maven-aliyun</id>
+			<name>Public online Restlet repository</name>
+			<url>http://maven.aliyun.com/nexus/content/groups/public/</url>
+		</repository>
+	</repositories>
 </project>
