@@ -12,7 +12,7 @@
   CONTEXT SETTINGS
   #####################################
    -->
-  <context:property-placeholder location="classpath:solr/solr.properties" ignore-resource-not-found="true" />
+ <!--  <context:property-placeholder location="classpath:solr/solr.properties" ignore-resource-not-found="false" /> -->
 
  <!-- 
   ##################################### 
@@ -22,14 +22,14 @@
 
  	<!-- <solr:embedded-solr-server id="solrServer" solrHome="${solr.host}" />  -->
   
-  <solr:solr-client id="solrClient" url="${solr.host}" />
+  <solr:solr-client id="solrClient" url="http://localhost:8983/solr/gettingstarted" />
   
   
   <bean id="solrTemplate" class="org.springframework.data.solr.core.SolrTemplate" scope="singleton">
     <constructor-arg ref="solrClient" />
   </bean>
 
-  <bean id="searchRepository" class="org.springframework.data.solr.example.repository.SolrProductRepository">
+  <bean id="searchRepository" class="com.ascbank.solr.repository.impl.ArticleStrengthenRepositoryImpl">
     <property name="solrOperations" ref="solrTemplate" />
   </bean>
 
