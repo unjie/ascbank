@@ -13,6 +13,7 @@
 	<import resource="classpath:cache/SpringContext-cache.xml" /> 
 	<import resource="classpath:datasource/SpringContext-datasource.xml"/>
 	<import resource="classpath:mybatis/SpringContext-mybatis.xml"/>
+	<import resource="classpath:captcha/Springcontext-captcha.xml"/>
 	<import resource="classpath:shiro/SpringContext-shiro.xml" />
 	<import resource="classpath:solr/SpringContext-solr.xml" />
 </beans>

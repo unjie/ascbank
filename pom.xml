@@ -54,7 +54,13 @@
 			<version>1.0.0</version>
 		</dependency>
 		<!--[END] javax.cache api -->
-
+		<!--[START] kaptcha 验证码组件 -->
+		<dependency>
+			<groupId>com.github.axet</groupId>
+			<artifactId>kaptcha</artifactId>
+			<version>0.0.9</version>
+		</dependency>
+		<!--[END] kaptcha 验证码组件 -->
 		<!--[START] PostgreSQL -->
 		<dependency>
 			<groupId>postgresql</groupId>

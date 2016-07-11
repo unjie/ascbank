@@ -3,35 +3,23 @@
  */
 package com.ascbank.web;
 
-import javax.annotation.Resource;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 
-import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.validation.BindingResult;
 
 import com.ascbank.model.User;
-import com.ascbank.service.UserService;
 
 /**
- * @author unjie wusu_jie@qq.com
+ * @author jie
  *
  */
-@Controller
-@RequestMapping("/user")
-public class UserController {
+public interface UserController {
 
-	@Resource
-	UserService userService;
+	String exit(HttpServletRequest request);
 
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+	String login(HttpSession session, User user, BindingResult br);
 
-	@RequestMapping(value = "/login")
-	public String login(User user) {
-
-		System.out.println(user);
-
-		return "user/login";
-	}
+	String register(HttpSession session, User user, BindingResult br);
 
 }
