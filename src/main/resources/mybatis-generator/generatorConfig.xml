@@ -4,7 +4,7 @@
 <classPathEntry location="X:\Program Files\apache-maven\.m2\repository\postgresql\postgresql\9.1-901-1.jdbc4\postgresql-9.1-901-1.jdbc4.jar"/>
   <context id="postgresql" >
     <jdbcConnection driverClass="org.postgresql.Driver" connectionURL="=jdbc:postgresql://localhost:5432/ascbank" userId="root" password="root123" />
-    <javaModelGenerator targetPackage="com.ascbank.model" targetProject="src\main\java" >
+    <javaModelGenerator targetPackage="com.ascbank.map.model" targetProject="src\main\java" >
     	<property name="trimStrings" value="true"/>
      <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
         <property name="enableSubPackages" value="true"/>
@@ -13,22 +13,22 @@
     <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
         <property name="enableSubPackages" value="true"/>
     </sqlMapGenerator>
-    <javaClientGenerator targetPackage="com.ascbank.dao" targetProject="src\main\java" type="XMLMAPPER" >
+    <javaClientGenerator targetPackage="com.ascbank.map.dao" targetProject="src\main\java" type="XMLMAPPER" >
     <!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
         <property name="enableSubPackages" value="true"/>
     </javaClientGenerator>
     
-    <table tableName="article" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
-    <table tableName="gantt" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
-    <table tableName="menu" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
-    <table tableName="navigation" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
-    <table tableName="permission" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
-    <table tableName="role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
-    <table tableName="role_permission" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
-    <table tableName="shortcut" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
-    <table tableName="system_info" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
-    <table tableName="url_filter" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
-    <table tableName="user" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
-    <table tableName="user_role" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
+    <table tableName="article" ></table> <!-- enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"  -->
+    <table tableName="gantt" ></table> 
+    <table tableName="menu" ></table> 
+    <table tableName="navigation" ></table> 
+    <table tableName="permission" ></table> 
+    <table tableName="role" ></table> 
+    <table tableName="role_permission" ></table> 
+    <table tableName="shortcut" ></table> 
+    <table tableName="system_info" ></table> 
+    <table tableName="url_filter" ></table> 
+    <table tableName="user" ></table> 
+    <table tableName="user_role" ></table> 
   </context>
 </generatorConfiguration>
