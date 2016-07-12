@@ -49,5 +49,4 @@ public class JsonResultInfo {
 		this.success = success;
 	}
 
-
 }

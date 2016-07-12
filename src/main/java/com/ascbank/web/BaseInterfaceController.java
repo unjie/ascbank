@@ -7,8 +7,7 @@ import org.springframework.validation.BindingResult;
 
 import com.ascbank.model.base.PKEntity;
 
-
-public interface BaseInterfaceController <T extends Serializable, E extends PKEntity<T>> extends Serializable {
+public interface BaseInterfaceController<T extends Serializable, E extends PKEntity<T>> extends Serializable {
 
 	public abstract JsonResultInfo create(E entity, BindingResult br);
 
@@ -18,9 +17,10 @@ public interface BaseInterfaceController <T extends Serializable, E extends PKEn
 
 	public abstract List<E> readAll(Integer page, Integer start, Integer limit, String property, String direction);
 
-	//public abstract List<E> readAll(Integer page, Integer start, Integer	limit);
+	// public abstract List<E> readAll(Integer page, Integer start, Integer
+	// limit);
 
-	//public abstract List<E> readAll(String property, String direction);
+	// public abstract List<E> readAll(String property, String direction);
 
 	public abstract JsonResultInfo update(E entity, BindingResult br);
 

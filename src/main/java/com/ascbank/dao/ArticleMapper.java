@@ -4,8 +4,6 @@ import com.ascbank.model.Article;
 import com.ascbank.repository.mybatis.MyBatisRepository;
 
 @MyBatisRepository
-public interface ArticleMapper  extends  BaseInterfaceDao<Long,Article> {
-	
-	
-	
+public interface ArticleMapper extends BaseInterfaceDao<Long, Article> {
+
 }

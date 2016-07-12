@@ -5,14 +5,13 @@ import java.io.Serializable;
 import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.domain.Persistable;
 
-
 public class PKEntity<PK extends Serializable> implements Persistable<PK> {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 7450672136743027882L;
-	
+
 	@Field
 	private PK id;
 

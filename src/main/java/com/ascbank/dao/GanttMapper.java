@@ -4,6 +4,6 @@ import com.ascbank.model.Gantt;
 import com.ascbank.repository.mybatis.MyBatisRepository;
 
 @MyBatisRepository
-public interface GanttMapper  extends  BaseInterfaceDao<Long,Gantt>{
-	
+public interface GanttMapper extends BaseInterfaceDao<Long, Gantt> {
+
 }

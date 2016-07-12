@@ -51,8 +51,7 @@ public class URLPermissionsFilter extends AuthorizationFilter {
 	 *            我们要动态产生这个权限字符串，所以这个配置对我们没用
 	 */
 	@Override
-	public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
-			throws IOException {
+	public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws IOException {
 		Boolean bool = true;// super.isAccessAllowed(request, response,
 							// buildPermissions(request));
 

@@ -26,7 +26,6 @@ import com.ascbank.service.BaseInterfaceService;
 import com.ascbank.verify.FormatCheck;
 import com.ascbank.verify.UnqueCheck;
 
-
 public abstract class BaseAbstractController<T extends Serializable, E extends PKEntity<T>, S extends BaseInterfaceService<T, E>> implements BaseInterfaceController<T, E>, InjectionInterface<S> {
 
 	/**
@@ -101,7 +100,6 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		return info;
 	}
 
-	
 	@Override
 	@RequestMapping(value = { "/reads" }, method = { RequestMethod.GET })
 	@ResponseBody
@@ -142,7 +140,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		} catch (Exception e) {
 			info.setSuccess(false);
 			info.setMessage(e.getMessage());
-		} 
+		}
 		return info;
 	}
 
@@ -154,7 +152,8 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	}
 
 	/**
-	 * @param beanService the beanService to set
+	 * @param beanService
+	 *            the beanService to set
 	 */
 	public void setBeanService(S beanService) {
 		this.beanService = beanService;

@@ -13,5 +13,4 @@ public class ArticleException extends Exception {
 		// TODO Auto-generated constructor stub
 	}
 
-
 }

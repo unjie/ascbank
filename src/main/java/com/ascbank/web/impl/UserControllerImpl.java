@@ -37,11 +37,10 @@ public class UserControllerImpl extends BaseAbstractController<Long, User, UserS
 
 	private static final long serialVersionUID = -6215656516167426274L;
 
-	//@Resource
-	//UserService userService;
+	// @Resource
+	// UserService userService;
 
 	private static final Logger log = LoggerFactory.getLogger(UserControllerImpl.class);
-
 
 	private Properties systemConfig;
 
@@ -121,8 +120,5 @@ public class UserControllerImpl extends BaseAbstractController<Long, User, UserS
 			return systemConfig.getProperty("user_register_success");
 		}
 	}
-
-	
-
 
 }

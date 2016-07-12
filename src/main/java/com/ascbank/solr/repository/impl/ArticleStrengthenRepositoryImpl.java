@@ -28,29 +28,37 @@ public class ArticleStrengthenRepositoryImpl extends SimpleSolrRepository<Articl
 	public ArticleStrengthenRepositoryImpl() {
 		super();
 	}
+
 	public ArticleStrengthenRepositoryImpl(SolrOperations solrOperations) {
 		super();
 		this.setSolrOperations(solrOperations);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.ascbank.solr.repository.custom.ArticleRepository#findByContext(java.lang.String)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ascbank.solr.repository.custom.ArticleRepository#findByContext(java.
+	 * lang.String)
 	 */
 	@Override
 	public FacetPage<Article> findByContext(String context, Pageable page) {
-		FacetQuery query = new SimpleFacetQuery(new Criteria("context").startsWith(context),page);
-	
+		FacetQuery query = new SimpleFacetQuery(new Criteria("context").startsWith(context), page);
+
 		return getSolrOperations().queryForFacetPage(query, Article.class);
 	}
 
-	/* (non-Javadoc)
-	 * @see com.ascbank.solr.repository.custom.ArticleRepository#findByClicks(java.lang.Short)
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.ascbank.solr.repository.custom.ArticleRepository#findByClicks(java.
+	 * lang.Short)
 	 */
 	@Override
 	public Page<Article> findByClicks(Short clicks, Pageable page) {
 		// TODO Auto-generated method stub
-		return this.getSolrOperations().queryForPage(new SimpleQuery(new SimpleStringCriteria("clicks:" + clicks)).setPageRequest(page),Article.class);
+		return this.getSolrOperations().queryForPage(new SimpleQuery(new SimpleStringCriteria("clicks:" + clicks)).setPageRequest(page), Article.class);
 	}
 
-	
 }

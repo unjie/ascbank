@@ -1,7 +1,5 @@
 package com.ascbank.test.lucene.solr;
 
-
-
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -41,8 +39,9 @@ public class SolrTest {
 
 	@Before
 	public void setUp() {
-		// Create new repository instance using Factory and inject custom implementation
-		repo = new SolrRepositoryFactory(this.solrOperations).getRepository(ArticleStrengthenRepository.class,new ArticleStrengthenRepositoryImpl(this.solrOperations));
+		// Create new repository instance using Factory and inject custom
+		// implementation
+		repo = new SolrRepositoryFactory(this.solrOperations).getRepository(ArticleStrengthenRepository.class, new ArticleStrengthenRepositoryImpl(this.solrOperations));
 	}
 
 	@After
@@ -52,66 +51,45 @@ public class SolrTest {
 	}
 
 	protected List<Article> createArticleList(int nrArticles) {
-		    List<Article> articles = new ArrayList<Article>(nrArticles);
-		    for (int i = 0; i < nrArticles; i++) {
-		      articles.add(createArticle(i));
-		    }
-		    return articles;
-		  }
+		List<Article> articles = new ArrayList<Article>(nrArticles);
+		for (int i = 0; i < nrArticles; i++) {
+			articles.add(createArticle(i));
+		}
+		return articles;
+	}
 
-    protected Article createArticle(int id) {
-		    Article article = new Article();
-		    Article initial = new Article();
-			initial.setId((long)id);
-			initial.setClicks((short)(300+id));
-			initial.setContext("baidu SEO book  test NO: 000"+id*10);
-			initial.setMenuId((long)id*2);
-			initial.setUploadtime(new Date());
-		    return article;
-		  }
-	
+	protected Article createArticle(int id) {
+		Article article = new Article();
+		Article initial = new Article();
+		initial.setId((long) id);
+		initial.setClicks((short) (300 + id));
+		initial.setContext("baidu SEO book  test NO: 000" + id * 10);
+		initial.setMenuId((long) id * 2);
+		initial.setUploadtime(new Date());
+		return article;
+	}
+
 	@Test
 	public void testCRUD() {
 		Assert.assertEquals(0, repo.count());
 
-		Article initial= createArticle(1);
-		
+		Article initial = createArticle(1);
+
 		repo.save(initial);
 		Assert.assertEquals(1, repo.count());
 		Article loaded = repo.findOne(initial.getId());
 		Assert.assertEquals(initial.getClicks(), loaded.getClicks());
-		logger.info("-------------------------------------------"+loaded.getContext());
+		logger.info("-------------------------------------------" + loaded.getContext());
 		loaded.setContext("changed named");
 		repo.save(loaded);
-		
-		
+
 		Assert.assertEquals(1, repo.count());
 
 		loaded = repo.findOne(initial.getId());
 		Assert.assertEquals("changed named", loaded.getContext());
-		logger.info("-------------------------------------------"+loaded.getContext());
+		logger.info("-------------------------------------------" + loaded.getContext());
 		repo.delete(loaded);
 		Assert.assertEquals(0, repo.count());
 	}
 
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -28,12 +28,9 @@ public interface BaseInterfaceDao<T extends Serializable, E extends PKEntity<T>>
 	T updateByPrimaryKeySelective(E record);
 
 	T updateByPrimaryKey(E record);
-	
-	
+
 	Page<E> selelctByPageableAll(Pageable pageable);
-	
+
 	Iterable<E> selelctBySortAll(Sort sort);
-	
-	
-	
+
 }
