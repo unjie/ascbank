@@ -6,7 +6,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-
 	<sf:form modelAttribute="user" class="contact" id="contact-form" name="contact-form"  action="user/login" method="post"  lang="utf-8"  >
 
 					

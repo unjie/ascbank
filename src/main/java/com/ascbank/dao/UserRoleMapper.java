@@ -20,4 +20,7 @@ public interface UserRoleMapper {
 	 * @mbggenerated Tue Jun 07 15:09:14 CST 2016
 	 */
 	int insertSelective(UserRole record);
+	
+	
+	int delete(UserRole record);
 }

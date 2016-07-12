@@ -16,10 +16,13 @@ import org.springframework.util.StringUtils;
 
 import com.ascbank.dao.UserMapper;
 import com.ascbank.exception.UserException;
+import com.ascbank.model.Permission;
 import com.ascbank.model.Role;
 import com.ascbank.model.User;
 import com.ascbank.service.BaseAbstractService;
 import com.ascbank.service.UserService;
+import com.ascbank.util.Digests;
+import com.ascbank.util.Encodes;
 
 @Service("userService")
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
@@ -30,8 +33,7 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 	 * 
 	 */
 	private static final long serialVersionUID = 6000159997137264505L;
-	@Resource
-	private UserMapper userMap;
+	
 
 	/*
 	 * (non-Javadoc)
@@ -40,10 +42,7 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 	 * com.ascbank.service.UserService_#setUserMap(com.ascbank.dao.UserMapper)
 	 */
 
-	@Override
-	public void setUserMap(UserMapper userMap) {
-		this.userMap = userMap;
-	}
+	
 
 	/*
 	 * (non-Javadoc)
@@ -75,19 +74,19 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 	@Override
 	public User read(String username) {
 		// TODO Auto-generated method stub
-		return userMap.selectByUsername(username);
+		return getBean().selectByUsername(username);
 	}
 
 	@Override
 	public User add(User user) {
 		Role role = new Role(user.getUsername(), user.getUsername() + "_UserRole");
-		user.getRoles().add(role);
-		beanDao.save(this.entryptPassword(user));
+		///user.getRoles().add(role);
+		getBean().insertSelective(this.entryptPassword(user));
 
-		Permission perm = new Permission("User", "read,update", user.getId().toString(), "[ " + user.getUsername() + " ] User Permission");
-		role.getPermissions().add(perm);
+		Permission perm = new Permission(user.getId().toString(),"User", "read,update",  "[ " + user.getUsername() + " ] User Permission");
+		///role.getPermissions().add(perm);
 
-		return beanDao.save(user);
+		return user;
 
 	}
 
@@ -136,5 +135,7 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 		}
 		return super.update(user);
 	}
+
+	
 
 }

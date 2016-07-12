@@ -19,6 +19,12 @@
     insert into user_role (user_id, role_id)
     values (#{userId,jdbcType=BIGINT}, #{roleId,jdbcType=BIGINT})
   </insert>
+  
+  <delete id="delete" parameterType="com.ascbank.model.UserRole">
+  	delete from user_role
+  	where userId=#{userId,jdbcType=BIGINT} and roleId=#{roleId,jdbcType=BIGINT}
+  </delete>
+  
   <insert id="insertSelective" parameterType="com.ascbank.model.UserRole" >
     <!--
       WARNING - @mbggenerated

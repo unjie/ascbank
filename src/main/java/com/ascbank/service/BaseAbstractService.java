@@ -107,6 +107,9 @@ public abstract class BaseAbstractService<T extends Serializable, E extends PKEn
 		this.beanDao = bean;
 	}
 
+	public D getBean(){
+		return this.beanDao;
+	}
 	// @Transactional
 	@Override
 	// @Caching(evict = { @CacheEvict(value = "Page", allEntries =
