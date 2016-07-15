@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.ascbank.solr.repository.custom;
 
@@ -15,7 +15,7 @@ import com.ascbank.model.Article;
  */
 public interface ArticleRepository {
 
-	FacetPage<Article> findByContext(String context, Pageable page);
-
 	Page<Article> findByClicks(Short clicks, Pageable page);
+
+	FacetPage<Article> findByContext(String context, Pageable page);
 }

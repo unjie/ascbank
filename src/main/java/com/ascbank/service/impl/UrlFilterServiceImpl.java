@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.ascbank.service.impl;
 
@@ -16,9 +16,11 @@ import com.ascbank.service.UrlFilterService;
 @Service("urlFilterService")
 public class UrlFilterServiceImpl implements UrlFilterService {
 
+	private UrlFilterMapper urlFilterMapper;
+
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.ascbank.service.UrlFilterService#read(java.lang.String)
 	 */
 	@Override
@@ -26,8 +28,6 @@ public class UrlFilterServiceImpl implements UrlFilterService {
 		// TODO Auto-generated method stub
 		return urlFilterMapper.selectByURL(url);
 	}
-
-	private UrlFilterMapper urlFilterMapper;
 
 	@Override
 	public void setUrlFilterMapper(UrlFilterMapper urlFilterMapper) {

@@ -11,16 +11,16 @@ import org.apache.commons.lang3.StringEscapeUtils;
 
 /**
  * 封装各种格式的编码解码工具类.
- * 
+ *
  * 1.Commons-Codec的 hex/base64 编码 2.自制的base62 编码 3.Commons-Lang的xml/html escape
  * 4.JDK提供的URLEncoder
- * 
+ *
  * @author calvin
  */
 public class Encodes {
 
-	private static final char[] BASE62 = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
-	private static final String DEFAULT_URL_ENCODING = "UTF-8";
+	private static final char[]	BASE62					= "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
+	private static final String	DEFAULT_URL_ENCODING	= "UTF-8";
 
 	/**
 	 * Base64解码.
@@ -46,7 +46,7 @@ public class Encodes {
 	public static String encodeBase62(byte[] input) {
 		char[] chars = new char[input.length];
 		for (int i = 0; i < input.length; i++) {
-			chars[i] = BASE62[(input[i] & 0xFF) % BASE62.length];
+			chars[i] = Encodes.BASE62[(input[i] & 0xFF) % Encodes.BASE62.length];
 		}
 		return new String(chars);
 	}
@@ -105,7 +105,7 @@ public class Encodes {
 	 */
 	public static String urlDecode(String part) {
 		try {
-			return URLDecoder.decode(part, DEFAULT_URL_ENCODING);
+			return URLDecoder.decode(part, Encodes.DEFAULT_URL_ENCODING);
 		} catch (UnsupportedEncodingException e) {
 			throw Exceptions.unchecked(e);
 		}
@@ -116,7 +116,7 @@ public class Encodes {
 	 */
 	public static String urlEncode(String part) {
 		try {
-			return URLEncoder.encode(part, DEFAULT_URL_ENCODING);
+			return URLEncoder.encode(part, Encodes.DEFAULT_URL_ENCODING);
 		} catch (UnsupportedEncodingException e) {
 			throw Exceptions.unchecked(e);
 		}

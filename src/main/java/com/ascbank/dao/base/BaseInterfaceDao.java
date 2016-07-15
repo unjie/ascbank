@@ -1,15 +1,15 @@
 /**
- * 
+ *
  */
-package com.ascbank.dao;
+package com.ascbank.dao.base;
 
 import java.io.Serializable;
+import java.util.List;
 
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
-import com.ascbank.model.Article;
 import com.ascbank.model.base.PKEntity;
 
 /**
@@ -17,20 +17,23 @@ import com.ascbank.model.base.PKEntity;
  *
  */
 public interface BaseInterfaceDao<T extends Serializable, E extends PKEntity<T>> {
-	T deleteByPrimaryKey(T id);
+	
+	int deleteByPrimaryKey(T id);
 
-	T insert(E record);
+	int insert(E record);
 
-	T insertSelective(E record);
+	int insertSelective(E record);
+
+	List<E> selectAll();
 
 	E selectByPrimaryKey(T id);
-
-	T updateByPrimaryKeySelective(E record);
-
-	T updateByPrimaryKey(E record);
 
 	Page<E> selelctByPageableAll(Pageable pageable);
 
 	Iterable<E> selelctBySortAll(Sort sort);
+
+	int updateByPrimaryKey(E record);
+
+	int updateByPrimaryKeySelective(E record);
 
 }

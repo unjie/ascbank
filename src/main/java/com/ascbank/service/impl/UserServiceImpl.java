@@ -1,7 +1,5 @@
 package com.ascbank.service.impl;
 
-import javax.annotation.Resource;
-
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
@@ -15,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
 import com.ascbank.dao.UserMapper;
+import com.ascbank.dependency.injection.InjectionInterface;
 import com.ascbank.exception.UserException;
 import com.ascbank.model.Permission;
 import com.ascbank.model.Role;
@@ -26,65 +25,29 @@ import com.ascbank.util.Encodes;
 
 @Service("userService")
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
-public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper> implements UserService {
-
-	private static final Logger log = LoggerFactory.getLogger(UserServiceImpl.class);
+public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper> implements UserService, InjectionInterface<UserMapper> {
+	
 	/**
-	 * 
+	 *
 	 */
-	private static final long serialVersionUID = 6000159997137264505L;
-	
+	private static final long	serialVersionUID	= 122684424253144556L;
+	private final Logger		log					= LoggerFactory.getLogger(UserServiceImpl.class);
 
 	/*
 	 * (non-Javadoc)
-	 * 
-	 * @see
-	 * com.ascbank.service.UserService_#setUserMap(com.ascbank.dao.UserMapper)
-	 */
-
-	
-
-	/*
-	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see com.ascbank.service.UserService_#login(com.ascbank.model.User)
 	 */
 
 	@Override
-	public User login(User user) throws UserException {
-
-		UsernamePasswordToken upt = new UsernamePasswordToken(user.getUsername(), user.getPassword(), user.getSave());
-		Subject subject = SecurityUtils.getSubject();
-		try {
-			if (log.isDebugEnabled())
-				log.debug("-------->>>>>" + user);
-			subject.login(upt);
-
-		} catch (AuthenticationException e) {
-			if (log.isInfoEnabled())
-				log.error("登录失败错误信息:" + e);
-			upt.clear();
-			throw new UserException("{User.nameAndPassword.error}");
-		}
-
-		return user;
-
-	}
-
-	@Override
-	public User read(String username) {
-		// TODO Auto-generated method stub
-		return getBean().selectByUsername(username);
-	}
-
-	@Override
 	public User add(User user) {
-		Role role = new Role(user.getUsername(), user.getUsername() + "_UserRole");
-		///user.getRoles().add(role);
+		final Role role = new Role(null, user.getUsername(), user.getUsername() + "_UserRole");
+		user.getRoles().add(role);
 		getBean().insertSelective(this.entryptPassword(user));
 
-		Permission perm = new Permission(user.getId().toString(),"User", "read,update",  "[ " + user.getUsername() + " ] User Permission");
-		///role.getPermissions().add(perm);
+		final Permission perm = new Permission(null, user.getId().toString(), "User", "read,update",
+				"[ " + user.getUsername() + " ] User Permission");
+		role.getPermissions().add(perm);
 
 		return user;
 
@@ -92,7 +55,7 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 
 	@Override
 	public boolean canEvict(Cache userCache, Long id, String username) {
-		User cacheUser = userCache.get(id, User.class);
+		final User cacheUser = userCache.get(id, User.class);
 		if (cacheUser == null) {
 			return false;
 		}
@@ -103,27 +66,56 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 	public User entryptPassword(User user) {
 		byte[] salt = null;
 		if (user.getEncrypt() == null || user.getEncrypt().isEmpty()) {
-			salt = Digests.generateSalt(SALT_SIZE);
+			salt = Digests.generateSalt(UserService.SALT_SIZE);
 			user.setEncrypt(Encodes.encodeHex(salt));
 		}
 		salt = Encodes.decodeHex(user.getEncrypt());
-		byte[] hashPassword = Digests.sha1(user.getPassword().getBytes(), salt, HASH_INTERATIONS);
+		final byte[] hashPassword = Digests.sha1(user.getPassword().getBytes(), salt, UserService.HASH_INTERATIONS);
 		user.setPassword(Encodes.encodeHex(hashPassword));
 		return user;
 	}
 
 	@Override
+	public User login(User user) throws UserException {
+		
+		final UsernamePasswordToken upt = new UsernamePasswordToken(user.getUsername(), user.getPassword(), user.getSave());
+		final Subject subject = SecurityUtils.getSubject();
+		try {
+			if (log.isDebugEnabled()) {
+				log.debug("-------->>>>>" + user);
+			}
+			subject.login(upt);
+
+		} catch (final AuthenticationException e) {
+			if (log.isInfoEnabled()) {
+				log.error("登录失败错误信息:" + e);
+			}
+			upt.clear();
+			throw new UserException("{User.nameAndPassword.error}");
+		}
+
+		return user;
+
+	}
+
+	@Override
 	public User logout() {
-		Subject subject = SecurityUtils.getSubject();
+		final Subject subject = SecurityUtils.getSubject();
 
 		if (subject != null) {
-
-			User user = this.read((String) subject.getPrincipal());
+			
+			final User user = this.read((String) subject.getPrincipal());
 			log.debug("----logout {}-------------", user);
 			subject.logout();
 			return user;
 		}
 		return null;
+	}
+
+	@Override
+	public User read(String username) {
+		// TODO Auto-generated method stub
+		return getBean().selectByUsername(username);
 	}
 
 	@Override
@@ -135,7 +127,5 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 		}
 		return super.update(user);
 	}
-
-	
 
 }

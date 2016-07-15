@@ -10,6 +10,11 @@
 		<property name="typeAliasesPackage" value="com.ascbank.model.*" />
 		<!-- 显式指定Mapper文件位置 -->
 		<property name="mapperLocations" value="classpath:mybatis/map/*Mapper.xml" />
+		<property name="plugins">
+			<array>
+				<bean  class="com.ascbank.myBatis.plugin.SelectPagingPlugin"/>
+			</array>
+		</property>
 	</bean>
 
 	<!-- 扫描basePackage下所有以@MyBatisRepository标识的 接口 -->

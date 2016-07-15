@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.ascbank.service;
 
@@ -28,7 +28,5 @@ public interface BaseInterfaceService<T extends Serializable, E extends PKEntity
 	public abstract E read(T id);
 
 	public abstract E update(E entity) throws Exception;
-	
-	
 
 }

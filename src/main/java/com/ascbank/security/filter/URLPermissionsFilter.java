@@ -22,20 +22,20 @@ import com.ascbank.service.UrlFilterService;
  * 我们自动根据URL产生所谓的权限字符串，这一项在Shiro示例中是写在配置文件里面的，默认认为权限不可动态配置
  * <p>
  * URL举例：/User/create.do?***=*** -->权限字符串：/User/create.do
- * 
+ *
  * @author zhengwei lastmodified 2013年8月15日
  *
  */
 public class URLPermissionsFilter extends AuthorizationFilter {
-	private static final Logger log = LoggerFactory.getLogger(URLPermissionsFilter.class);
-	private UrlFilterService urlFilterService;
+	private final Logger		log	= LoggerFactory.getLogger(URLPermissionsFilter.class);
+	private UrlFilterService	urlFilterService;
 
 	/**
 	 * 根据请求URL产生权限字符串，这里只产生，而比对的事交给Realm
-	 * 
+	 *
 	 * @param request
 	 * @return
-	 * 
+	 *
 	 */
 	protected UrlFilter buildPermissions(ServletRequest request) {
 		HttpServletRequest req = (HttpServletRequest) request;
@@ -51,18 +51,20 @@ public class URLPermissionsFilter extends AuthorizationFilter {
 	 *            我们要动态产生这个权限字符串，所以这个配置对我们没用
 	 */
 	@Override
-	public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue) throws IOException {
+	public boolean isAccessAllowed(ServletRequest request, ServletResponse response, Object mappedValue)
+			throws IOException {
 		Boolean bool = true;// super.isAccessAllowed(request, response,
-							// buildPermissions(request));
+		// buildPermissions(request));
 
 		UrlFilter urlFilter = buildPermissions(request);
 		if (urlFilter != null) {
-
+			
 			Subject subject = getSubject(request, response);
 			if (!StringUtils.isEmpty(urlFilter.getRoles())) {
 				for (String role : urlFilter.getRoles().split(",")) {
-					if (subject.hasRole(role))
+					if (subject.hasRole(role)) {
 						return true;
+					}
 				}
 			}
 			if (!StringUtils.isEmpty(urlFilter.getPermissions())) {

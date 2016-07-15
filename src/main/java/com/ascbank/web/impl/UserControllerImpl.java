@@ -1,11 +1,10 @@
 /**
- * 
+ *
  */
 package com.ascbank.web.impl;
 
 import java.util.Properties;
 
-import javax.annotation.Resource;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -34,19 +33,19 @@ import com.ascbank.web.UserController;
 @Controller
 @RequestMapping("/user")
 public class UserControllerImpl extends BaseAbstractController<Long, User, UserService> implements UserController {
-
-	private static final long serialVersionUID = -6215656516167426274L;
+	
+	private static final long	serialVersionUID	= -6215656516167426274L;
 
 	// @Resource
 	// UserService userService;
 
-	private static final Logger log = LoggerFactory.getLogger(UserControllerImpl.class);
+	private final Logger		log					= LoggerFactory.getLogger(UserControllerImpl.class);
 
-	private Properties systemConfig;
+	private Properties			systemConfig;
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * com.qinzero.controller.UserControllerInterface#exit(javax.servlet.http
 	 * .HttpServletRequest)
@@ -54,15 +53,16 @@ public class UserControllerImpl extends BaseAbstractController<Long, User, UserS
 	@Override
 	@RequestMapping(value = { "/exit" }, method = { RequestMethod.GET })
 	public String exit(HttpServletRequest request) {
-		if (getBeanService().logout() != null)
+		if (getBeanService().logout() != null) {
 			return systemConfig.getProperty("user_exit");
+		}
 		request.setAttribute("error", "{500.error}");
 		return systemConfig.getProperty("error_500");
 	}
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * com.qinzero.controller.UserControllerInterface#login(javax.servlet.http
 	 * .HttpSession, com.qinzero.entity.User,
@@ -74,14 +74,16 @@ public class UserControllerImpl extends BaseAbstractController<Long, User, UserS
 		if (br.hasErrors()) {
 			return systemConfig.getProperty("user_login");
 		} else {
-			if (user.getCaptcha() != null && !user.getCaptcha().equalsIgnoreCase((String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY))) {
+			if (user.getCaptcha() != null && !user.getCaptcha().equalsIgnoreCase(
+					(String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY))) {
 				br.addError(new ObjectError("captcha", "{User.captcha.input}"));
 				return systemConfig.getProperty("user_login");
 			}
 			try {
 				getBeanService().login(user);
-				if (log.isDebugEnabled())
+				if (log.isDebugEnabled()) {
 					log.debug("-----------{}---", user.toString());
+				}
 			} catch (UserException e) {
 				br.addError(new ObjectError("error", e.getMessage()));
 				return systemConfig.getProperty("user_login");
@@ -93,7 +95,7 @@ public class UserControllerImpl extends BaseAbstractController<Long, User, UserS
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see
 	 * com.qinzero.controller.UserControllerInterface#register(javax.servlet
 	 * .http.HttpSession, com.qinzero.entity.User,
@@ -101,11 +103,13 @@ public class UserControllerImpl extends BaseAbstractController<Long, User, UserS
 	 */
 	@Override
 	@RequestMapping(value = { "/register" }, method = { RequestMethod.POST })
-	public String register(HttpSession session, @Validated(value = { FormatCheck.class, UnqueCheck.class }) User user, BindingResult br) {
+	public String register(HttpSession session, @Validated(value = { FormatCheck.class, UnqueCheck.class }) User user,
+			BindingResult br) {
 		if (br.hasErrors()) {
 			return systemConfig.getProperty("user_register");
 		} else {
-			if (user.getCaptcha() != null && !user.getCaptcha().equalsIgnoreCase((String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY))) {
+			if (user.getCaptcha() != null && !user.getCaptcha().equalsIgnoreCase(
+					(String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY))) {
 				br.addError(new ObjectError("captcha", "{User.captcha.input}"));
 				return systemConfig.getProperty("user_register");
 			}

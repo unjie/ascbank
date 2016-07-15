@@ -26,27 +26,30 @@ import com.ascbank.service.BaseInterfaceService;
 import com.ascbank.verify.FormatCheck;
 import com.ascbank.verify.UnqueCheck;
 
-public abstract class BaseAbstractController<T extends Serializable, E extends PKEntity<T>, S extends BaseInterfaceService<T, E>> implements BaseInterfaceController<T, E>, InjectionInterface<S> {
+public abstract class BaseAbstractController<T extends Serializable, E extends PKEntity<T>, S extends BaseInterfaceService<T, E>>
+implements BaseInterfaceController<T, E>, InjectionInterface<S> {
 
 	/**
-	 * 
+	 *
 	 */
-	private static final long serialVersionUID = -3550102906601887804L;
+	private static final long	serialVersionUID	= -3550102906601887804L;
 
-	private S beanService;
+	private S					beanService;
 
-	private Logger log = LoggerFactory.getLogger(BaseAbstractController.class);
+	private Logger				log					= LoggerFactory.getLogger(BaseAbstractController.class);
 
 	@Override
 	@RequestMapping(value = { "/create" }, method = RequestMethod.POST)
 	@ResponseBody
 	// @RequiresPermissions(value = "add")
-	public JsonResultInfo create(@RequestBody @Validated(value = { FormatCheck.class, UnqueCheck.class }) E entity, BindingResult br) {
+	public JsonResultInfo create(@RequestBody @Validated(value = { FormatCheck.class, UnqueCheck.class }) E entity,
+			BindingResult br) {
 
 		JsonResultInfo info = new JsonResultInfo();
 		try {
-			if (br.hasErrors())
+			if (br.hasErrors()) {
 				throw new ArticleException(br.getAllErrors().iterator().next().getDefaultMessage());
+			}
 			// for (E e : entity) {
 			log.debug("------------create--->{}<------------------------", entity);
 			entity = this.getBeanService().add(entity);
@@ -83,6 +86,13 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		return info;
 	}
 
+	/**
+	 * @return the beanService
+	 */
+	public S getBeanService() {
+		return beanService;
+	}
+
 	@Override
 	@ResponseBody
 	@RequestMapping(value = { "/read/{id}" }, method = { RequestMethod.GET })
@@ -90,8 +100,9 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	public JsonResultInfo read(@PathVariable("id") T id) {
 		// TODO Auto-generated method stub
 
-		if (log.isDebugEnabled())
+		if (log.isDebugEnabled()) {
 			log.debug("--------read----{}---------", id.toString());
+		}
 
 		JsonResultInfo info = new JsonResultInfo();
 		info.setData(this.getBeanService().read(id));
@@ -106,9 +117,11 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	// @RequiresPermissions(value="read")
 	public List<E> readAll(Integer page, Integer start, Integer limit, String property, String direction) {
 		// TODO Auto-generated method stub
-		if (page == null || limit == null)
+		if (page == null || limit == null) {
 			return new ArrayList<E>();
-		Sort sort = StringUtils.isEmpty(property) && StringUtils.isEmpty(direction) ? null : new Sort(Direction.fromStringOrNull(direction), property);
+		}
+		Sort sort = StringUtils.isEmpty(property) && StringUtils.isEmpty(direction) ? null
+				: new Sort(Direction.fromStringOrNull(direction), property);
 		PageRequest pr = sort != null ? new PageRequest(page, limit, sort) : new PageRequest(page, limit);
 		return this.getBeanService().list(pr).getContent();
 	}
@@ -120,16 +133,26 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		this.setBeanService(bean);
 	}
 
+	/**
+	 * @param beanService
+	 *            the beanService to set
+	 */
+	public void setBeanService(S beanService) {
+		this.beanService = beanService;
+	}
+
 	@Override
 	@RequestMapping(value = { "/update", "/update/{id}" }, method = RequestMethod.PUT)
 	@ResponseBody
 	// @EntityPermissions(permission = "update")
-	public JsonResultInfo update(@RequestBody @Validated(value = { FormatCheck.class, UnqueCheck.class }) E entity, BindingResult br) {
+	public JsonResultInfo update(@RequestBody @Validated(value = { FormatCheck.class, UnqueCheck.class }) E entity,
+			BindingResult br) {
 		// TODO Auto-generated method stub
 		JsonResultInfo info = new JsonResultInfo();
 		try {
-			if (br.hasErrors())
+			if (br.hasErrors()) {
 				throw new ArticleException(br.getAllErrors().iterator().next().getDefaultMessage());
+			}
 			// for (E e : entity) {
 			log.debug("-----------------------update--->{}<-------------", entity);
 			entity = this.getBeanService().update(entity);
@@ -142,21 +165,6 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 			info.setMessage(e.getMessage());
 		}
 		return info;
-	}
-
-	/**
-	 * @return the beanService
-	 */
-	public S getBeanService() {
-		return beanService;
-	}
-
-	/**
-	 * @param beanService
-	 *            the beanService to set
-	 */
-	public void setBeanService(S beanService) {
-		this.beanService = beanService;
 	}
 
 }

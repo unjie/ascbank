@@ -10,18 +10,16 @@ import org.apache.commons.lang3.Validate;
 
 /**
  * 支持SHA-1/MD5消息摘要的工具类.
- * 
+ *
  * 返回ByteSource，可进一步被编码为Hex, Base64或UrlSafeBase64
- * 
+ *
  * @author calvin
  */
 public class Digests {
 
-	private static final String MD5 = "MD5";
-	private static SecureRandom random = new SecureRandom();
-	private static final String SHA1 = "SHA-1";
-	
-	
+	private static final String	MD5		= "MD5";
+	private static SecureRandom	random	= new SecureRandom();
+	private static final String	SHA1	= "SHA-1";
 
 	/**
 	 * 对字符串进行散列, 支持md5与sha1算法.
@@ -61,14 +59,14 @@ public class Digests {
 
 	/**
 	 * 生成随机的Byte[]作为salt.
-	 * 
+	 *
 	 * @param numBytes
 	 *            byte数组的大小
 	 */
 	public static byte[] generateSalt(int numBytes) {
 		Validate.isTrue(numBytes > 0, "numBytes argument must be a positive integer (1 or larger)", numBytes);
 		byte[] bytes = new byte[numBytes];
-		random.nextBytes(bytes);
+		Digests.random.nextBytes(bytes);
 		return bytes;
 	}
 
@@ -76,28 +74,28 @@ public class Digests {
 	 * 对文件进行md5散列.
 	 */
 	public static byte[] md5(InputStream input) throws IOException {
-		return digest(input, MD5);
+		return Digests.digest(input, Digests.MD5);
 	}
 
 	/**
 	 * 对输入字符串进行sha1散列.
 	 */
 	public static byte[] sha1(byte[] input) {
-		return digest(input, SHA1, null, 1);
+		return Digests.digest(input, Digests.SHA1, null, 1);
 	}
 
 	public static byte[] sha1(byte[] input, byte[] salt) {
-		return digest(input, SHA1, salt, 1);
+		return Digests.digest(input, Digests.SHA1, salt, 1);
 	}
 
 	public static byte[] sha1(byte[] input, byte[] salt, int iterations) {
-		return digest(input, SHA1, salt, iterations);
+		return Digests.digest(input, Digests.SHA1, salt, iterations);
 	}
 
 	/**
 	 * 对文件进行sha1散列.
 	 */
 	public static byte[] sha1(InputStream input) throws IOException {
-		return digest(input, SHA1);
+		return Digests.digest(input, Digests.SHA1);
 	}
 }

@@ -8,16 +8,16 @@ import org.springframework.data.domain.Persistable;
 public class PKEntity<PK extends Serializable> implements Persistable<PK> {
 
 	/**
-	 * 
+	 *
 	 */
-	private static final long serialVersionUID = 7450672136743027882L;
+	private static final long	serialVersionUID	= 7450672136743027882L;
 
 	@Field
-	private PK id;
+	private PK					id;
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#equals(java.lang.Object)
 	 */
 	@Override
@@ -42,7 +42,7 @@ public class PKEntity<PK extends Serializable> implements Persistable<PK> {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see org.springframework.data.domain.Persistable#getId()
 	 */
 	@Override
@@ -52,7 +52,7 @@ public class PKEntity<PK extends Serializable> implements Persistable<PK> {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#hashCode()
 	 */
 	@Override
@@ -68,7 +68,7 @@ public class PKEntity<PK extends Serializable> implements Persistable<PK> {
 	/**
 	 * Must be {@link Transient} in order to ensure that no JPA provider
 	 * complains because of a missing setter.
-	 * 
+	 *
 	 * @see DATAJPA-622
 	 * @see org.springframework.data.domain.Persistable#isNew()
 	 */
@@ -79,7 +79,7 @@ public class PKEntity<PK extends Serializable> implements Persistable<PK> {
 
 	/**
 	 * Sets the id of the entity.
-	 * 
+	 *
 	 * @param id
 	 *            the id to set
 	 */
@@ -89,7 +89,7 @@ public class PKEntity<PK extends Serializable> implements Persistable<PK> {
 
 	/*
 	 * (non-Javadoc)
-	 * 
+	 *
 	 * @see java.lang.Object#toString()
 	 */
 	@Override

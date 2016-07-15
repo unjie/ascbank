@@ -1,5 +1,5 @@
 /**
- * 
+ *
  */
 package com.ascbank.web;
 
@@ -9,13 +9,13 @@ package com.ascbank.web;
  */
 public class JsonResultInfo {
 
-	private Object data;
+	private Object	data;
 
-	private Object error;
+	private Object	error;
 
-	private String message;
+	private String	message;
 
-	private boolean success;
+	private boolean	success;
 
 	public Object getData() {
 		return data;
