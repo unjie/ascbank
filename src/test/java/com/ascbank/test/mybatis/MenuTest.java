@@ -28,14 +28,14 @@ import com.ascbank.model.Menu;
 @ContextConfiguration("classpath:applicationContext.xml")
 public class MenuTest {
 	private static Log	logger	= LogFactory.getLog(MenuTest.class);
-
+	
 	@Autowired
 	ApplicationContext	context;
 	
-	// @Test
+	@Test
 	public void menuAddTest() {
 		final MenuMapper am = (MenuMapper) context.getBean("menuMapper");
-
+		
 		final Menu record = new Menu();
 		record.setAlias("test");
 		record.setAuthor("jiesun");
@@ -51,39 +51,39 @@ public class MenuTest {
 		record.setThumb("");
 		record.setTitle("title");
 		record.setUrl("/");
-
+		
 		logger.info("=======================insert Before record = " + record + "=========================");
-
+		
 		logger.info("=======================return = " + am.insertSelective(record) + "=========================");
-
+		
 		logger.info("=======================insert After record = " + record + "=========================");
-
+		
 	}
-
+	
 	// @Test
 	public void menuDeleteTest() {
 		final MenuMapper am = (MenuMapper) context.getBean("menuMapper");
 		final int record = am.deleteByPrimaryKey(1L);
-
+		
 		logger.info("=======================" + record + "=========================");
-
+		
 	}
-
+	
 	@Test
 	public void menuQueryTest() {
 		final MenuMapper am = (MenuMapper) context.getBean("menuMapper");
 		final Menu record = am.selectByPrimaryKey(2L);
-
+		
 		logger.info("=======================" + record + "=========================");
-
+		
 	}
-
+	
 	@Before
 	public void setUp() {
 		// Create
-
+		
 	}
-
+	
 	@After
 	public void tearDown() {
 		
