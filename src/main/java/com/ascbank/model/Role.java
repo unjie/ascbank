@@ -28,6 +28,10 @@ public class Role extends PKEntity<Long> {
 	 */
 	private String				roleName;
 
+	public Role() {
+		super();
+	}
+
 	public Role(Long id, String description, String roleName) {
 		super();
 		this.setId(id);
@@ -92,4 +96,10 @@ public class Role extends PKEntity<Long> {
 	public void setRoleName(String roleName) {
 		this.roleName = roleName == null ? null : roleName.trim();
 	}
+	
+	@Override
+	public String toString() {
+		return "Role [description=" + description + ", permissions=" + permissions + ", roleName=" + roleName + ", Id=" + getId() + "]";
+	}
+	
 }

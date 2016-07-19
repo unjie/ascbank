@@ -31,23 +31,23 @@ import com.ascbank.util.Encodes;
 @DependsOn(value = "userService")
 @Component("shiroDbRealm")
 public class ShiroDbRealm extends AuthorizingRealm {
-	private final Logger	log	= LoggerFactory.getLogger(ShiroDbRealm.class);
+	private Logger		log	= LoggerFactory.getLogger(ShiroDbRealm.class);
 	
 	@Resource(name = "userService")
-	private UserService		userService;
+	private UserService	userService;
 	
 	// 获取认证信息
 	@Override
 	protected AuthenticationInfo doGetAuthenticationInfo(AuthenticationToken token) throws AuthenticationException {
 		SimpleAuthenticationInfo info = null;
 		User user = null;
-		final UsernamePasswordToken upt = (UsernamePasswordToken) token;
+		UsernamePasswordToken upt = (UsernamePasswordToken) token;
 		// 通过表单接收的用户名
-		final String username = upt.getUsername();
+		String username = upt.getUsername();
 		try {
 			user = userService.read(username);
 			
-		} catch (final RuntimeException e) {
+		} catch (RuntimeException e) {
 			// TODO Auto-generated catch block
 			throw new AuthenticationException("{User.name.not.exist}");
 		}
@@ -62,30 +62,35 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	// 获取授权信息
 	@Override
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
-		final String username = (String) super.getAvailablePrincipal(principals);
-		final User user = userService.read(username);
-		
-		final SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
-		final Set<String> roles = new HashSet<String>();
-		final Set<String> permissions = new HashSet<String>();
-		for (final Role role : user.getRoles()) {
+		String username = (String) super.getAvailablePrincipal(principals);
+		User user = userService.read(username);
+
+		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
+		Set<String> roles = new HashSet<String>();
+		Set<String> permissions = new HashSet<String>();
+
+		for (Permission per : user.getPermissions()) {
+			permissions.add(per.toPermissionString());
+		}
+
+		for (Role role : user.getRoles()) {
 			roles.add(role.getRoleName());
-			for (final Permission per : role.getPermissions()) {
+			for (Permission per : role.getPermissions()) {
 				permissions.add(per.toPermissionString());
 			}
 		}
-		info.addRoles(roles);
-		info.addStringPermissions(permissions);
+		
+		info.addRoles(roles); // 添加权限到用户信息
+		info.addStringPermissions(permissions);// 添加权限到用户信息
 		return info;
 	}
 	
 	/**
 	 * 设定Password校验的Hash算法与迭代次数.
 	 */
-	@SuppressWarnings("static-access")
-	@PostConstruct()
+	@PostConstruct()// class初始化时执行
 	public void initCredentialsMatcher() {
-		final HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(UserService.HASH_ALGORITHM);
+		HashedCredentialsMatcher matcher = new HashedCredentialsMatcher(UserService.HASH_ALGORITHM);
 		matcher.setHashIterations(UserService.HASH_INTERATIONS);
 		setCredentialsMatcher(matcher);
 	}

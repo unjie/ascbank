@@ -40,6 +40,9 @@ public class Permission extends PKEntity<Long> {
 	 */
 	private String				permission;
 	
+	public Permission() {
+	}
+
 	public Permission(Long id, String entityIds, String name, String permission, String description) {
 		super();
 		this.setId(id);
@@ -153,4 +156,10 @@ public class Permission extends PKEntity<Long> {
 		// TODO Auto-generated method stub
 		return null;
 	}
+
+	@Override
+	public String toString() {
+		return "Permission [description=" + description + ", entityIds=" + entityIds + ", name=" + name + ", permission=" + permission + ", Id=" + getId() + "]";
+	}
+
 }
