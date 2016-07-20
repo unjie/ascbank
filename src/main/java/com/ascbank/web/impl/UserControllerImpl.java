@@ -3,8 +3,6 @@
  */
 package com.ascbank.web.impl;
 
-import java.util.Properties;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
@@ -41,8 +39,6 @@ public class UserControllerImpl extends BaseAbstractController<Long, User, UserS
 
 	private final Logger		log					= LoggerFactory.getLogger(UserControllerImpl.class);
 
-	private Properties			systemConfig;
-
 	/*
 	 * (non-Javadoc)
 	 *
@@ -71,7 +67,9 @@ public class UserControllerImpl extends BaseAbstractController<Long, User, UserS
 	@Override
 	@RequestMapping(value = { "/login" }, method = { RequestMethod.POST })
 	public String login(HttpSession session, @Validated(value = { LoginCheck.class }) User user, BindingResult br) {
+		log.debug("------{}-------", user);
 		if (br.hasErrors()) {
+			log.debug("------------------{}-------------------", br);
 			return systemConfig.getProperty("user_login");
 		} else {
 			if (user.getCaptcha() != null && !user.getCaptcha().equalsIgnoreCase(

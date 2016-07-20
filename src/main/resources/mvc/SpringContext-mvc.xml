@@ -11,7 +11,9 @@
 	
 	<mvc:view-controller path="/" view-name="forward:/index.html" status-code="200" />
 
-
+	<bean name="systemConfig" init-method="getObject" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations" value="classpath:systemConfig.properties" />
+	</bean>
 
 	<!-- 自动扫描@Controller  use-default-filters="false"-->
 	<context:component-scan base-package="com.ascbank" >
@@ -22,15 +24,17 @@
 	
 	<!-- 加载spring配置 分配不同该模块的配置，方便后期单独提取或转变项目格式 <import resource="springContext-configureServlet.xml"/> -->
 	<!-- 映射静态文件 -->
-	<mvc:view-controller path="/" view-name="forward:/home/index" />
+	<mvc:view-controller path="/" view-name="forward:/index" />
 	<!-- 静态资源文件 -->
 	<mvc:resources mapping="/static/**" location="/WEB-INF/static/" />
+	<!--
 	<mvc:resources mapping="/upload/**" location="/WEB-INF/upload/" />
 	<mvc:resources mapping="/js/**" location="/WEB-INF/js/" />
 	<mvc:resources mapping="/css/**" location="/WEB-INF/css/" />
 	<mvc:resources mapping="/fonts/**" location="/WEB-INF/fonts/" />
 	<mvc:resources mapping="/plugins/**" location="/WEB-INF/plugins/" />
-	<mvc:resources mapping="images/**" location="/WEB-INF/images/" />
+	<mvc:resources mapping="/images/**" location="/WEB-INF/images/" />
+	 -->
 	<!-- 当上面要访问的静态资源不包括在上面的配置中时，则根据此配置来访问 -->
 	<mvc:default-servlet-handler />
 
@@ -52,8 +56,7 @@
 			</map>
 		</property>
 	</bean>
-
-
+	
 	<!-- bean name view resolver -->
 	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" />
 	<!-- 根据客户端的不同的请求决定不同的 view进行响应, 如 /blog/1.json /blog/1.xml -->
@@ -67,7 +70,7 @@
 				<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
 					<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 					<property name="contentType" value="text/html" />
-					<property name="prefix" value="/WEB-INF/views/" />
+					<property name="prefix" value="/WEB-INF/views" />
 					<property name="suffix" value=".jsp" />
 				</bean>
 			</list>
@@ -77,9 +80,45 @@
 	<bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="2">
 		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 		<property name="contentType" value="text/html" />
-		<property name="prefix" value="/WEB-INF/views/" />
+		<property name="prefix" value="/WEB-INF/views" />
 		<property name="suffix" value=".jsp" />
 	</bean>
+	
+	
+	
+	<!-- 以下 validator ConversionService 在使用 mvc:annotation-driven 会 自动注册 -->
+	<bean id="validator" lazy-init="false" class="com.qinzero.validator.ReinforceValidatorFactoryBean">
+		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />
+		<!-- 如果不加默认到 使用classpath下的 ValidationMessages.properties -->
+		<property name="validationMessageSource" ref="messageSource" />
+	</bean>
+	
+	<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
+	<!-- 国际化消息 -->
+	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
+		<property name="basenames">
+			<list>
+				<!-- 在web环境中一定要定位到classpath 否则默认到当前web应用下找 -->
+				<value>classpath:ValidationMesages</value>
+				<value>classpath:org/hibernate/validator/ValidationMessages</value>
+			</list>
+		</property>
+		<property name="fileEncodings" value="utf-8" />
+		<property name="cacheSeconds" value="120" />
+	</bean>
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="language" />
+		</bean>
+	</mvc:interceptors>
+	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
+		<property name="cookieName" value="locale" />
+		<property name="cookieMaxAge" value="-1" />
+		<property name="defaultLocale" value="zh_CN" />
+	</bean>
+	<!--End 国际化消息 -->
+	
+	
 
 	<!--上传文件设置 -->
 	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">

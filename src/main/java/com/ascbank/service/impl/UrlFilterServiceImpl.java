@@ -3,6 +3,7 @@
  */
 package com.ascbank.service.impl;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.ascbank.dao.UrlFilterMapper;
@@ -15,9 +16,10 @@ import com.ascbank.service.UrlFilterService;
  */
 @Service("urlFilterService")
 public class UrlFilterServiceImpl implements UrlFilterService {
-
+	
+	@Autowired
 	private UrlFilterMapper urlFilterMapper;
-
+	
 	/*
 	 * (non-Javadoc)
 	 *
@@ -28,10 +30,10 @@ public class UrlFilterServiceImpl implements UrlFilterService {
 		// TODO Auto-generated method stub
 		return urlFilterMapper.selectByURL(url);
 	}
-
+	
 	@Override
 	public void setUrlFilterMapper(UrlFilterMapper urlFilterMapper) {
 		this.urlFilterMapper = urlFilterMapper;
 	}
-
+	
 }

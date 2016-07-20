@@ -3,6 +3,9 @@ package com.ascbank.web;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Properties;
+
+import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,24 +30,25 @@ import com.ascbank.verify.FormatCheck;
 import com.ascbank.verify.UnqueCheck;
 
 public abstract class BaseAbstractController<T extends Serializable, E extends PKEntity<T>, S extends BaseInterfaceService<T, E>>
-implements BaseInterfaceController<T, E>, InjectionInterface<S> {
-
+		implements BaseInterfaceController<T, E>, InjectionInterface<S> {
+	
 	/**
 	 *
 	 */
 	private static final long	serialVersionUID	= -3550102906601887804L;
-
+	
 	private S					beanService;
-
 	private Logger				log					= LoggerFactory.getLogger(BaseAbstractController.class);
-
+	@Autowired
+	protected Properties		systemConfig;
+	
 	@Override
 	@RequestMapping(value = { "/create" }, method = RequestMethod.POST)
 	@ResponseBody
 	// @RequiresPermissions(value = "add")
 	public JsonResultInfo create(@RequestBody @Validated(value = { FormatCheck.class, UnqueCheck.class }) E entity,
 			BindingResult br) {
-
+		
 		JsonResultInfo info = new JsonResultInfo();
 		try {
 			if (br.hasErrors()) {
@@ -54,7 +58,7 @@ implements BaseInterfaceController<T, E>, InjectionInterface<S> {
 			log.debug("------------create--->{}<------------------------", entity);
 			entity = this.getBeanService().add(entity);
 			// }
-
+			
 			info.setSuccess(true);
 			info.setMessage("{default.create.succeed}");
 			info.setData(entity);
@@ -64,7 +68,7 @@ implements BaseInterfaceController<T, E>, InjectionInterface<S> {
 		}
 		return info;
 	}
-
+	
 	@Override
 	@RequestMapping(value = { "/destroy/**", "/destroy" }, method = RequestMethod.DELETE)
 	@ResponseBody
@@ -85,32 +89,41 @@ implements BaseInterfaceController<T, E>, InjectionInterface<S> {
 		}
 		return info;
 	}
-
+	
 	/**
 	 * @return the beanService
 	 */
 	public S getBeanService() {
 		return beanService;
 	}
-
+	
+	@Override
+	@RequestMapping(value = { "/", "/{pagename:[\\w]+}.html" }, path = {}, method = RequestMethod.GET, consumes = { "text/plain", "application/*" })
+	public String getHtml(HttpServletRequest request, @PathVariable("pagename") String pagename) {
+		RequestMapping rm = this.getClass().getAnnotation(RequestMapping.class);
+		log.debug("=========={}=========", rm);
+		return rm.value()[0] + "/" + ((pagename == null) ? "index" : pagename);
+		
+	}
+	
 	@Override
 	@ResponseBody
 	@RequestMapping(value = { "/read/{id}" }, method = { RequestMethod.GET })
 	// @EntityPermissions(permission="read")
 	public JsonResultInfo read(@PathVariable("id") T id) {
 		// TODO Auto-generated method stub
-
+		
 		if (log.isDebugEnabled()) {
 			log.debug("--------read----{}---------", id.toString());
 		}
-
+		
 		JsonResultInfo info = new JsonResultInfo();
 		info.setData(this.getBeanService().read(id));
 		info.setSuccess(true);
 		info.setMessage("{default.read.succeed}");
 		return info;
 	}
-
+	
 	@Override
 	@RequestMapping(value = { "/reads" }, method = { RequestMethod.GET })
 	@ResponseBody
@@ -125,14 +138,14 @@ implements BaseInterfaceController<T, E>, InjectionInterface<S> {
 		PageRequest pr = sort != null ? new PageRequest(page, limit, sort) : new PageRequest(page, limit);
 		return this.getBeanService().list(pr).getContent();
 	}
-
+	
 	@Override
 	@Autowired
 	public void setBean(S bean) {
 		// TODO Auto-generated method stub
 		this.setBeanService(bean);
 	}
-
+	
 	/**
 	 * @param beanService
 	 *            the beanService to set
@@ -166,5 +179,5 @@ implements BaseInterfaceController<T, E>, InjectionInterface<S> {
 		}
 		return info;
 	}
-
+	
 }

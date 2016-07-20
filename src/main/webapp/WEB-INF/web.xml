@@ -24,6 +24,7 @@
 		<param-name>log4jConfigLocation</param-name>
 		<param-value>classpath:log4j2.xml</param-value>
 	</context-param>
+	<!-- spring 委托过滤器代理 -->
 	<filter>
 		<filter-name>shiroFilter</filter-name>
 		<filter-class>org.springframework.web.filter.DelegatingFilterProxy</filter-class>

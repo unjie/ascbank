@@ -31,9 +31,7 @@
 
 	<!-- 会话ID生成器 -->
 	<bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator" />
-
-
-
+	
 	<!-- sessionIdCookie的实现,用于重写覆盖容器默认的JSESSIONID -->
 	<bean id="sharesession" class="org.apache.shiro.web.servlet.SimpleCookie">
 		<!-- cookie的name,对应的默认是 JSESSIONID -->
@@ -136,7 +134,7 @@
 		<!-- authc：该过滤器下的页面必须验证后才能访问,它是Shiro内置的一个拦截器org.apache.shiro.web.filter.authc.FormAuthenticationFilter -->
 		<property name="filterChainDefinitions">
 			<value>
-				/captcha.jpg=anon
+				/public/captcha.jpg=anon
 				/public/images/**=anon
 				/public/js/**=anon
 				/public/css/**=anon
@@ -155,8 +153,10 @@
 		</property>
 		<!-- <property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" /> -->
 	</bean>
+	
+	
 	<bean id="urlPermissions" class="com.ascbank.security.filter.URLPermissionsFilter" />
-	<!-- <bean id="chainDefinitionSectionMetaSource" class="com.qinzero.security.filter.ChainDefinitionSectionMetaSource"> <property name="filterChainDefinitions"> <value> /login = authc /logout = logout /resource/** = anon </value> </property> </bean> -->
+	
 
 	<!-- 起效权限注解,这个很少在web项目中用到,一般是控制url的访问,不是在controller中声明权限注解 -->
 	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->

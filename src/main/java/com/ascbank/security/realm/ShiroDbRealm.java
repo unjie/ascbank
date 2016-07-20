@@ -44,15 +44,14 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		UsernamePasswordToken upt = (UsernamePasswordToken) token;
 		// 通过表单接收的用户名
 		String username = upt.getUsername();
-		try {
-			user = userService.read(username);
-			
-		} catch (RuntimeException e) {
-			// TODO Auto-generated catch block
-			throw new AuthenticationException("{User.name.not.exist}");
-		}
+		
+		user = userService.read(username);
+		log.debug(".................................doGetAuthenticationInfo  user= {}.......................................", user);
+		
 		if (user != null) {
 			info = new SimpleAuthenticationInfo(user.getUsername(), user.getPassword(), ByteSource.Util.bytes(Encodes.decodeHex(user.getEncrypt())), getName());
+		} else {
+			throw new AuthenticationException("{User.name.not.exist}");
 		}
 		
 		log.debug("----->>>" + info);

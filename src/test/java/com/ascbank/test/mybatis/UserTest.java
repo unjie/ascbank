@@ -68,7 +68,7 @@ public class UserTest {
 	@Test
 	public void userQueryTest() {
 		UserMapper am = (UserMapper) context.getBean("userMapper");
-		User record = am.selectByPrimaryKey(1L);
+		User record = am.selectByUsername("admin");
 		
 		logger.info("=======================" + record + "=========================");
 		
