@@ -8,8 +8,7 @@
         http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
         http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.1.xsd">
-	
-	<mvc:view-controller path="/" view-name="forward:/index.html" status-code="200" />
+
 
 	<bean name="systemConfig" init-method="getObject" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="locations" value="classpath:systemConfig.properties" />
@@ -23,8 +22,10 @@
 
 	
 	<!-- 加载spring配置 分配不同该模块的配置，方便后期单独提取或转变项目格式 <import resource="springContext-configureServlet.xml"/> -->
+
+	
 	<!-- 映射静态文件 -->
-	<mvc:view-controller path="/" view-name="forward:/index" />
+	<mvc:view-controller path="/" view-name="/index" status-code="200" />
 	<!-- 静态资源文件 -->
 	<mvc:resources mapping="/static/**" location="/WEB-INF/static/" />
 	<!--
@@ -83,7 +84,6 @@
 		<property name="prefix" value="/WEB-INF/views" />
 		<property name="suffix" value=".jsp" />
 	</bean>
-	
 	
 	
 	<!-- 以下 validator ConversionService 在使用 mvc:annotation-driven 会 自动注册 -->

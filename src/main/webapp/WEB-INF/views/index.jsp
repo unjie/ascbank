@@ -7,6 +7,6 @@
 <title>Insert title here</title>
 </head>
 <body>
-<h1>Welcome to you <%=request.getUserPrincipal().getName(); %><h1>
+<h1>Welcome to you <%=request.getUserPrincipal().getName()%><h1>
 </body>
 </html>
