@@ -135,10 +135,7 @@
 		<property name="filterChainDefinitions">
 			<value>
 				/public/captcha.jpg=anon
-				/public/images/**=anon
-				/public/js/**=anon
-				/public/css/**=anon
-				/public/**=authc
+				/static/**=anon
 				/user/login**=anon
 				/user/register**=anon
 				/403=anon
