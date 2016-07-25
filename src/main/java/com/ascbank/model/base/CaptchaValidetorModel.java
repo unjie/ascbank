@@ -17,5 +17,6 @@ public interface CaptchaValidetorModel {
 	 *
 	 * @mbggenerated Wed Jul 13 16:52:44 CST 2016
 	 */
+
 	public String getCaptcha();
 }

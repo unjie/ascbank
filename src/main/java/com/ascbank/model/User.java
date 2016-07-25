@@ -38,7 +38,6 @@ public class User extends PKEntity<Long> implements CaptchaValidetorModel {
 	 * @mbggenerated Wed Jul 13 16:52:44 CST 2016
 	 */
 	@Captcha(key = com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY, groups = { LoginCheck.class, AddCheck.class }, message = "验证码错误")
-	@Length(max = 4, min = 4, message = "验证码必须为4位", groups = { LoginCheck.class, AddCheck.class })
 	@Transient
 	public transient String		captcha;
 	/**
