@@ -35,7 +35,7 @@
   </div>
   <!-- /.login-logo -->
   <div class="login-box-body">
-    <p class="login-box-msg">Sign in to start your session</p>
+    <p class="login-box-msg">Sign in to start your session<br/><sf:errors path="*" /></p>
 
     <form action="${__ROOT__}/user/login" method="POST">
       <div class="form-group has-feedback">
@@ -52,7 +52,7 @@
       </div>
       <div class="form-group has-feedback">
        	<input type="image"  class="form-control"  id="validateCodeImg" src="${__ROOT__}/public/captcha.jpg" />
-        <span class="glyphicon glyphicon-picture form-control-feedback"></span>
+        <span class="fa fa-photo form-control-feedback"></span>
       </div>
       <div class="row">
         <div class="col-xs-8">

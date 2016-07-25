@@ -18,9 +18,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import com.ascbank.exception.UserException;
 import com.ascbank.model.User;
 import com.ascbank.service.UserService;
-import com.ascbank.verify.FormatCheck;
+import com.ascbank.verify.AddCheck;
 import com.ascbank.verify.LoginCheck;
-import com.ascbank.verify.UnqueCheck;
 import com.ascbank.web.BaseAbstractController;
 import com.ascbank.web.UserController;
 
@@ -68,27 +67,25 @@ public class UserControllerImpl extends BaseAbstractController<Long, User, UserS
 	@RequestMapping(value = { "/login" }, method = { RequestMethod.POST })
 	public String login(HttpSession session, @Validated(value = { LoginCheck.class }) User user, BindingResult br) {
 		log.debug("------{}-------", user);
-		if (br.hasErrors()) {
-			log.debug("------------------{}-------------------", br);
-			return systemConfig.getProperty("user_login");
-		} else {
-			if (user.getCaptcha() != null && !user.getCaptcha().equalsIgnoreCase(
-					(String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY))) {
-				br.addError(new ObjectError("captcha", "{User.captcha.input}"));
+		if (user != null && (user.getUsername() != null || user.getEmail() != null || user.getPhone() != null)) {
+			if (br.hasErrors()) {
+				log.debug("------------------{}-------------------", br);
 				return systemConfig.getProperty("user_login");
-			}
-			try {
-				getBeanService().login(user);
-				if (log.isDebugEnabled()) {
-					log.debug("-----------{}---", user.toString());
+			} else {
+				
+				try {
+					getBeanService().login(user);
+					if (log.isDebugEnabled()) {
+						log.debug("-----------{}---", user.toString());
+					}
+				} catch (UserException e) {
+					br.addError(new ObjectError("error", e.getMessage()));
+					return systemConfig.getProperty("user_login");
 				}
-			} catch (UserException e) {
-				br.addError(new ObjectError("error", e.getMessage()));
-				return systemConfig.getProperty("user_login");
 			}
-			// SecurityUtils.getSubject().getSession().getAttribute("username");
-			return systemConfig.getProperty("user_login_successs");
 		}
+		return systemConfig.getProperty("user_login_successs");
+		
 	}
 
 	/*
@@ -101,16 +98,11 @@ public class UserControllerImpl extends BaseAbstractController<Long, User, UserS
 	 */
 	@Override
 	@RequestMapping(value = { "/register" }, method = { RequestMethod.POST })
-	public String register(HttpSession session, @Validated(value = { FormatCheck.class, UnqueCheck.class }) User user,
+	public String register(HttpSession session, @Validated(value = { AddCheck.class }) User user,
 			BindingResult br) {
 		if (br.hasErrors()) {
 			return systemConfig.getProperty("user_register");
 		} else {
-			if (user.getCaptcha() != null && !user.getCaptcha().equalsIgnoreCase(
-					(String) session.getAttribute(com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY))) {
-				br.addError(new ObjectError("captcha", "{User.captcha.input}"));
-				return systemConfig.getProperty("user_register");
-			}
 			try {
 				getBeanService().add(user);
 			} catch (Exception e) {

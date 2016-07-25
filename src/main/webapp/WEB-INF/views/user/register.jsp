@@ -36,28 +36,32 @@
 
     <form action="${__ROOT__}/user/register" method="post">
       <div class="form-group has-feedback">
-        <input type="text" class="form-control" placeholder="Full name">
-        <span class="glyphicon glyphicon-user form-control-feedback"></span>
+        <input type="text" name="username" class="form-control" placeholder="Full name">
+        <span class="fa fa-user form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="email" class="form-control" placeholder="Email">
-        <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+        <input type="email"  name="email" class="form-control" placeholder="Email">
+        <span class="fa fa-envelope-o form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Password">
-        <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+        <input type="number"  name="phone" class="form-control" placeholder="phone">
+        <span class="fa fa-mobile-phone form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" class="form-control" placeholder="Retype password">
-        <span class="glyphicon glyphicon-log-in form-control-feedback"></span>
+        <input type="password" name="passwrod" class="form-control" placeholder="Password">
+        <span class="fa fa-lock form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="text" name="captcha" class="form-control" placeholder="Captcha">
+        <input type="password" name="respasswrod"  class="form-control" placeholder="Retype password">
+        <span class="fa fa-sign-in form-control-feedback"></span>
+      </div>
+      <div class="form-group has-feedback">
+        <input type="text"  name="captcha" class="form-control" placeholder="Captcha">
         <span class="fa fa-reply form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
        	<input type="image"  class="form-control"  id="validateCodeImg" src="${__ROOT__}/public/captcha.jpg" />
-        <span class="glyphicon glyphicon-picture form-control-feedback"></span>
+        <span class="fa fa-photo form-control-feedback"></span>
       </div>
       <div class="row">
         <div class="col-xs-8">

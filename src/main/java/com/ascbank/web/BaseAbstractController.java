@@ -26,8 +26,8 @@ import com.ascbank.dependency.injection.InjectionInterface;
 import com.ascbank.exception.ArticleException;
 import com.ascbank.model.base.PKEntity;
 import com.ascbank.service.BaseInterfaceService;
+import com.ascbank.verify.AddCheck;
 import com.ascbank.verify.FormatCheck;
-import com.ascbank.verify.UnqueCheck;
 
 public abstract class BaseAbstractController<T extends Serializable, E extends PKEntity<T>, S extends BaseInterfaceService<T, E>>
 		implements BaseInterfaceController<T, E>, InjectionInterface<S> {
@@ -46,7 +46,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	@RequestMapping(value = { "/create" }, method = RequestMethod.POST)
 	@ResponseBody
 	// @RequiresPermissions(value = "add")
-	public JsonResultInfo create(@RequestBody @Validated(value = { FormatCheck.class, UnqueCheck.class }) E entity,
+	public JsonResultInfo create(@RequestBody @Validated(value = { FormatCheck.class, AddCheck.class }) E entity,
 			BindingResult br) {
 		
 		JsonResultInfo info = new JsonResultInfo();
@@ -98,7 +98,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	}
 	
 	@Override
-	@RequestMapping(value = { "/", "/{pagename:[\\w]+}.html" }, path = {}, method = RequestMethod.GET, consumes = { "text/plain", "application/*" })
+	@RequestMapping(value = { "/", "/{pagename:[\\w]+}**" }, path = {}, method = RequestMethod.GET, consumes = { "text/plain", "application/*" })
 	public String getHtml(HttpServletRequest request, @PathVariable("pagename") String pagename) {
 		RequestMapping rm = this.getClass().getAnnotation(RequestMapping.class);
 		log.debug("=========={}=========", rm);
@@ -125,7 +125,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	}
 	
 	@Override
-	@RequestMapping(value = { "/reads" }, method = { RequestMethod.GET })
+	@RequestMapping(value = { "/reads" }, method = { RequestMethod.TRACE })
 	@ResponseBody
 	// @RequiresPermissions(value="read")
 	public List<E> readAll(Integer page, Integer start, Integer limit, String property, String direction) {
@@ -158,7 +158,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	@RequestMapping(value = { "/update", "/update/{id}" }, method = RequestMethod.PUT)
 	@ResponseBody
 	// @EntityPermissions(permission = "update")
-	public JsonResultInfo update(@RequestBody @Validated(value = { FormatCheck.class, UnqueCheck.class }) E entity,
+	public JsonResultInfo update(@RequestBody @Validated(value = { FormatCheck.class, AddCheck.class }) E entity,
 			BindingResult br) {
 		// TODO Auto-generated method stub
 		JsonResultInfo info = new JsonResultInfo();

@@ -1,23 +1,29 @@
 package com.ascbank.service.impl;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.authc.AuthenticationException;
 import org.apache.shiro.authc.UsernamePasswordToken;
 import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.Cache;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Isolation;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 
+import com.ascbank.dao.PermissionMapper;
 import com.ascbank.dao.UserMapper;
+import com.ascbank.dao.UserPermissionMapper;
 import com.ascbank.dependency.injection.InjectionInterface;
 import com.ascbank.exception.UserException;
 import com.ascbank.model.Permission;
-import com.ascbank.model.Role;
 import com.ascbank.model.User;
+import com.ascbank.model.UserPermission;
 import com.ascbank.service.BaseAbstractService;
 import com.ascbank.service.UserService;
 import com.ascbank.util.Digests;
@@ -30,27 +36,47 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 	/**
 	 *
 	 */
-	private final static long	serialVersionUID	= 122684424253144556L;
-	private Logger				log					= LoggerFactory.getLogger(UserServiceImpl.class);
-	
+	private final static long		serialVersionUID	= 122684424253144556L;
+	private Logger					log					= LoggerFactory.getLogger(UserServiceImpl.class);
+
 	/*
 	 * (non-Javadoc)
 	 *
 	 * @see com.ascbank.service.UserService_#login(com.ascbank.model.User)
 	 */
 	
+	@Autowired(required = false)
+	private PermissionMapper		permissionMap;
+	
+	@Autowired(required = false)
+	private UserPermissionMapper	userPermissionMap;
+	
 	@Override
 	public User add(User user) {
-		Role role = new Role(null, user.getUsername(), user.getUsername() + "_UserRole");
-		user.getRoles().add(role);
-		getBean().insertSelective(this.entryptPassword(user));
-		
+		// 插入 User
+		getBean().insertSelective(user);
+
+		// 创建Permission 对象
 		Permission perm = new Permission(null, user.getId().toString(), "User", "read,update",
 				"[ " + user.getUsername() + " ] User Permission");
-		role.getPermissions().add(perm);
+		// 插入perm对象
+		permissionMap.insertSelective(perm);
+		
+		// UserPermission 关联对象
+		UserPermission up = new UserPermission();
+		up.setUserId(user.getId());
+		up.setPermissionId(perm.getId());
+		// 插入关联
+		userPermissionMap.insert(up);
+
+		List<Permission> permis = user.getPermissions();
+		if (permis == null) {
+			permis = new ArrayList<Permission>();
+		}
+		permis.add(perm);
 		
 		return user;
-		
+
 	}
 	
 	@Override

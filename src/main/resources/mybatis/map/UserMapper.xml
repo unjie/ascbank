@@ -78,9 +78,6 @@
 			<if test="avatar != null">
 				avatar,
 			</if>
-			<if test="captcha != null">
-				captcha,
-			</if>
 			<if test="description != null">
 				description,
 			</if>
@@ -131,9 +128,7 @@
 			<if test="avatar != null">
 				#{avatar,jdbcType=VARCHAR},
 			</if>
-			<if test="captcha != null">
-				#{captcha,jdbcType=VARCHAR},
-			</if>
+			
 			<if test="description != null">
 				#{description,jdbcType=VARCHAR},
 			</if>
