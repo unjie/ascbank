@@ -257,6 +257,8 @@ $(function () {
     });
   });
 
+  //The Calender
+  $("#calendar").datepicker();
   //------------------
   //- SPARKLINE LINE -
   //------------------

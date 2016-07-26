@@ -36,12 +36,12 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	 *
 	 */
 	private static final long	serialVersionUID	= -3550102906601887804L;
-	
+
 	private S					beanService;
 	private Logger				log					= LoggerFactory.getLogger(BaseAbstractController.class);
 	@Autowired
 	protected Properties		systemConfig;
-	
+
 	@Override
 	@RequestMapping(value = { "/create" }, method = RequestMethod.POST)
 	@ResponseBody
@@ -58,7 +58,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 			log.debug("------------create--->{}<------------------------", entity);
 			entity = this.getBeanService().add(entity);
 			// }
-			
+
 			info.setSuccess(true);
 			info.setMessage("{default.create.succeed}");
 			info.setData(entity);
@@ -68,7 +68,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		}
 		return info;
 	}
-	
+
 	@Override
 	@RequestMapping(value = { "/destroy/**", "/destroy" }, method = RequestMethod.DELETE)
 	@ResponseBody
@@ -89,30 +89,30 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		}
 		return info;
 	}
-	
+
 	/**
 	 * @return the beanService
 	 */
 	public S getBeanService() {
 		return beanService;
 	}
-	
+
 	@Override
 	@RequestMapping(value = { "/", "/{pagename:[\\w]+}**" }, path = {}, method = RequestMethod.GET, consumes = { "text/plain", "application/*" })
 	public String getHtml(HttpServletRequest request, @PathVariable("pagename") String pagename) {
 		RequestMapping rm = this.getClass().getAnnotation(RequestMapping.class);
 		log.debug("=========={}=========", rm);
 		return rm.value()[0] + "/" + ((pagename == null) ? "index" : pagename);
-		
+
 	}
-	
+
 	@Override
 	@ResponseBody
 	@RequestMapping(value = { "/read/{id}" }, method = { RequestMethod.GET })
 	// @EntityPermissions(permission="read")
 	public JsonResultInfo read(@PathVariable("id") T id) {
 		// TODO Auto-generated method stub
-		
+
 		if (log.isDebugEnabled()) {
 			log.debug("--------read----{}---------", id.toString());
 		}
@@ -121,9 +121,10 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		info.setData(this.getBeanService().read(id));
 		info.setSuccess(true);
 		info.setMessage("{default.read.succeed}");
+		log.debug("------------------info =>{}-------------------", info);
 		return info;
 	}
-	
+
 	@Override
 	@RequestMapping(value = { "/reads" }, method = { RequestMethod.TRACE })
 	@ResponseBody
@@ -138,14 +139,14 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		PageRequest pr = sort != null ? new PageRequest(page, limit, sort) : new PageRequest(page, limit);
 		return this.getBeanService().list(pr).getContent();
 	}
-	
+
 	@Override
 	@Autowired
 	public void setBean(S bean) {
 		// TODO Auto-generated method stub
 		this.setBeanService(bean);
 	}
-	
+
 	/**
 	 * @param beanService
 	 *            the beanService to set
@@ -153,7 +154,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	public void setBeanService(S beanService) {
 		this.beanService = beanService;
 	}
-
+	
 	@Override
 	@RequestMapping(value = { "/update", "/update/{id}" }, method = RequestMethod.PUT)
 	@ResponseBody
@@ -179,5 +180,5 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		}
 		return info;
 	}
-	
+
 }

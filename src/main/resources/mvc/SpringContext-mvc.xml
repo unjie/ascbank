@@ -26,6 +26,7 @@
 	
 	<!-- 映射静态文件 -->
 	<mvc:view-controller path="/" view-name="/index" status-code="200" />
+	<mvc:view-controller path="/manage" view-name="/manage" status-code="200" />
 	<!-- 静态资源文件 -->
 	<mvc:resources mapping="/static/**" location="/WEB-INF/static/" />
 	<!--

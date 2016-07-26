@@ -5,16 +5,19 @@ import java.io.Serializable;
 import org.apache.solr.client.solrj.beans.Field;
 import org.springframework.data.domain.Persistable;
 
-public class PKEntity<PK extends Serializable> implements Persistable<PK> {
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
+@JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
+public class PKEntity<PK extends Serializable> implements Persistable<PK> {
+	
 	/**
 	 *
 	 */
 	private static final long	serialVersionUID	= 7450672136743027882L;
-
+	
 	@Field
 	private PK					id;
-
+	
 	/*
 	 * (non-Javadoc)
 	 *
@@ -22,24 +25,24 @@ public class PKEntity<PK extends Serializable> implements Persistable<PK> {
 	 */
 	@Override
 	public boolean equals(Object obj) {
-
+		
 		if (null == obj) {
 			return false;
 		}
-
+		
 		if (this == obj) {
 			return true;
 		}
-
+		
 		if (!getClass().equals(obj.getClass())) {
 			return false;
 		}
-
+		
 		PKEntity<?> that = (PKEntity<?>) obj;
-
+		
 		return null == this.getId() ? false : this.getId().equals(that.getId());
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 *
@@ -49,7 +52,7 @@ public class PKEntity<PK extends Serializable> implements Persistable<PK> {
 	public PK getId() {
 		return id;
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 *
@@ -57,14 +60,14 @@ public class PKEntity<PK extends Serializable> implements Persistable<PK> {
 	 */
 	@Override
 	public int hashCode() {
-
+		
 		int hashCode = 17;
-
+		
 		hashCode += null == getId() ? 0 : getId().hashCode() * 31;
-
+		
 		return hashCode;
 	}
-
+	
 	/**
 	 * Must be {@link Transient} in order to ensure that no JPA provider
 	 * complains because of a missing setter.
@@ -76,7 +79,7 @@ public class PKEntity<PK extends Serializable> implements Persistable<PK> {
 	public boolean isNew() {
 		return null == getId();
 	}
-
+	
 	/**
 	 * Sets the id of the entity.
 	 *
@@ -86,7 +89,7 @@ public class PKEntity<PK extends Serializable> implements Persistable<PK> {
 	public void setId(final PK id) {
 		this.id = id;
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 *
