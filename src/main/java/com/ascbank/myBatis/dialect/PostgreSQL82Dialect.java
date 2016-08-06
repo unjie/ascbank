@@ -33,11 +33,11 @@ public class PostgreSQL82Dialect extends AbstractDialect implements Dialect {
 			return true;
 		}
 	};
-
+	
 	@Override
 	public String getLimitSql(String querySql, Pageable pageable) {
 		// TODO Auto-generated method stub
 		return LIMIT_HANDLER.processSql(querySql, pageable);
 	}
-
+	
 }

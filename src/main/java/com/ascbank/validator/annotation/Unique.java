@@ -18,15 +18,14 @@ import com.ascbank.validator.annotation.interfaced.ValidetorInterface;
 import com.ascbank.validator.annotation.validtor.UniqueValidator;
 
 /**
- * @Unque 验证 bean 需要实现ValidetorInterface 接口 verifyBean与verifyClass
- *        只需要传入一个,verifyBean优先于verifyClass 如果都不设置则默认验证不通过
+ * @Unque 验证 bean 需要实现ValidetorInterface 接口 verifyBean与verifyClass 只需要传入一个,verifyBean优先于verifyClass 如果都不设置则默认验证不通过
  */
 @Documented
 @Constraint(validatedBy = { UniqueValidator.class })
 @Target({ TYPE, ANNOTATION_TYPE })
 @Retention(RUNTIME)
 public @interface Unique {
-
+	
 	// 指定多个时使用
 	@Target({ FIELD, METHOD, PARAMETER, ANNOTATION_TYPE })
 	@Retention(RUNTIME)
@@ -34,20 +33,20 @@ public @interface Unique {
 	public @interface List {
 		Unique[] value();
 	}
-
+	
 	String[] attributes();
-
+	
 	Class<?>[] groups() default {};
-
+	
 	String message() default "{default.update.unique.validated}";
-
+	
 	Class<? extends Payload>[] payload() default {};
-
+	
 	// ConstraintTarget validationAppliesTo() default ConstraintTarget.IMPLICIT;
-
+	
 	String verifyBean() default "";
-
+	
 	@SuppressWarnings("rawtypes")
 	Class<? extends ValidetorInterface> verifyClass() default ValidetorInterface.class;
-
+	
 }

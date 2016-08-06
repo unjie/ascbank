@@ -11,9 +11,9 @@ import com.ascbank.model.UrlFilter;
  *
  */
 public interface UrlFilterService {
-
+	
 	UrlFilter read(String url);
-
+	
 	void setUrlFilterMapper(UrlFilterMapper urlFilterMapper);
-
+	
 }

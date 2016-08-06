@@ -33,7 +33,7 @@ public class RoleTest {
 	// @Test
 	public void roleAddTest() {
 		RoleMapper am = (RoleMapper) context.getBean("roleMapper");
-
+		
 		Role record = new Role();
 		record.setRoleName("");
 		record.setDescription("");
@@ -53,7 +53,7 @@ public class RoleTest {
 		logger.info("=======================" + record + "=========================");
 		
 	}
-
+	
 	@Test
 	public void roleQueryTest() {
 		RoleMapper am = (RoleMapper) context.getBean("roleMapper");

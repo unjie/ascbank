@@ -15,11 +15,11 @@ import com.ascbank.model.User;
  *
  */
 public interface UserController {
-
+	
 	String exit(HttpServletRequest request);
-
+	
 	String login(HttpSession session, User user, BindingResult br);
-
+	
 	String register(HttpSession session, User user, BindingResult br);
-
+	
 }

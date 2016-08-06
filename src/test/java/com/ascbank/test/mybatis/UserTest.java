@@ -40,11 +40,11 @@ public class UserTest {
 	public void tearDown() {
 		
 	}
-
+	
 	// @Test
 	public void userAddTest() {
 		UserMapper am = (UserMapper) context.getBean("userMapper");
-
+		
 		User record = new User();
 		record.setAvatar("");
 		

@@ -26,9 +26,9 @@ public class SelectPagingPlugin implements Interceptor {
 	
 	// @Autowired
 	private Dialect			dialect;
-
+	
 	private final Logger	log	= LoggerFactory.getLogger(SelectPagingPlugin.class);
-
+	
 	/**
 	 * 根据原Sql语句获取对应的查询总记录数的Sql语句
 	 *

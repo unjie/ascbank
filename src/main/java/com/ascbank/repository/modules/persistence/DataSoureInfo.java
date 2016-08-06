@@ -26,7 +26,7 @@ public class DataSoureInfo {
 	 */
 	public static Dialect getDialect(DataSource dataSource) {
 		String jdbcUrl = getJdbcUrlFromDataSource(dataSource);
-
+		
 		// 根据jdbc url判断dialect
 		if (StringUtils.contains(jdbcUrl, ":h2:")) {
 			return new H2Dialect();
@@ -42,7 +42,7 @@ public class DataSoureInfo {
 			throw new IllegalArgumentException("Unknown Database of " + jdbcUrl);
 		}
 	}
-
+	
 	// @Resource(name="dataSource")
 	private static String getJdbcUrlFromDataSource(DataSource dataSource) {
 		Connection connection = null;
@@ -64,5 +64,5 @@ public class DataSoureInfo {
 			}
 		}
 	}
-
+	
 }

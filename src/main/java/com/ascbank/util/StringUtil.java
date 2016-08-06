@@ -12,7 +12,7 @@ public class StringUtil {
 		
 		return str.replaceFirst(str.substring(0, 1), str.substring(0, 1).toUpperCase());
 	}
-
+	
 	/**
 	 *
 	 * Java属性名转数据库表列名
@@ -51,5 +51,5 @@ public class StringUtil {
 		}
 		return true;
 	}
-
+	
 }

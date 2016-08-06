@@ -63,15 +63,15 @@ public class ShiroDbRealm extends AuthorizingRealm {
 	protected AuthorizationInfo doGetAuthorizationInfo(PrincipalCollection principals) {
 		String username = (String) super.getAvailablePrincipal(principals);
 		User user = userService.read(username);
-
+		
 		SimpleAuthorizationInfo info = new SimpleAuthorizationInfo();
 		Set<String> roles = new HashSet<String>();
 		Set<String> permissions = new HashSet<String>();
-
+		
 		for (Permission per : user.getPermissions()) {
 			permissions.add(per.toPermissionString());
 		}
-
+		
 		for (Role role : user.getRoles()) {
 			roles.add(role.getRoleName());
 			for (Permission per : role.getPermissions()) {

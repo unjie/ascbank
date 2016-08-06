@@ -79,7 +79,7 @@ public class UserControllerImpl extends com.ascbank.web.basis.BaseAbstractContro
 			}
 		}
 		return systemConfig.getProperty("user_login_successs");
-
+		
 	}
 	
 	/*

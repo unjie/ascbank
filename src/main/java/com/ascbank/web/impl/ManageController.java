@@ -25,7 +25,6 @@ public class ManageController {
 		RequestMapping rm = this.getClass().getAnnotation(RequestMapping.class);
 		log.debug("==========rm => {}  , pageName = > {}=========", rm, pagename);
 		return rm.value()[0] + "/" + ((pagename == null) ? "index" : pagename);
-		
 	}
 	
 }

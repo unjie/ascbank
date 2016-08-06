@@ -44,9 +44,7 @@ import com.ascbank.util.StringUtil;
  *
  */
 @Component
-@Intercepts({
-		@Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }),
-		@Signature(type = ResultSetHandler.class, method = "handleResultSets", args = { Statement.class })
+@Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }), @Signature(type = ResultSetHandler.class, method = "handleResultSets", args = { Statement.class })
 })
 public class PagerPlugin implements Interceptor {
 	
@@ -99,14 +97,14 @@ public class PagerPlugin implements Interceptor {
 	public Object plugin(Object target) {
 		return Plugin.wrap(target, this);
 	}
-
+	
 	public void setDialect(Dialect dialect) {
 		this.dialect = dialect;
 	}
-
+	
 	@Override
 	public void setProperties(Properties properties) {
 		
 	}
-
+	
 }

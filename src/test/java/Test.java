@@ -4,11 +4,11 @@
 
 class A {
 	String a = "@#$";
-
+	
 	public String getA() {
 		return a;
 	}
-
+	
 	public void setA(String a) {
 		this.a = a;
 	}
@@ -17,15 +17,15 @@ class A {
 
 class B {
 	String b = "123";
-
+	
 	public String getB() {
 		return b;
 	}
-
+	
 	public void setB(String b) {
 		this.b = b;
 	}
-
+	
 }
 
 /**
@@ -42,11 +42,11 @@ public class Test {
 		System.out.println(1 + 'l');
 		A a = new A();
 		B b = new B();
-
+		
 		new Test().add(a, b);
 		System.out.println(" a = " + a.getA() + "\r\n b= " + b.getB());
 	}
-
+	
 	void add(A a, B b) {
 		String c = a.getA();
 		a.setA(b.getB());
@@ -58,7 +58,7 @@ public class Test {
 		// String regex = "([\u4e00-\u9fa5]|\\w)+";
 		// Pattern pattern = Pattern.compile(regex);
 		String regex = "[\\w]+(?:(.\\w*))";
-
+		
 		String str1 = "abcF";
 		String str2 = "as212.html";
 		String str3 = "das你好1d.do";

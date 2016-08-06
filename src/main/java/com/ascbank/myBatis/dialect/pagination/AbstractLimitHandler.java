@@ -14,7 +14,7 @@ public abstract class AbstractLimitHandler implements LimitHandler {
 	protected AbstractLimitHandler() {
 		// NOP
 	}
-
+	
 	/**
 	 * Default implementation of binding parameter values needed by the LIMIT clause.
 	 *
@@ -35,7 +35,7 @@ public abstract class AbstractLimitHandler implements LimitHandler {
 	 *
 	 * @Override public int bindLimitParametersAtStartOfQuery(RowSelection selection, PreparedStatement statement, int index) throws SQLException { return bindLimitParametersFirst() ? bindLimitParameters(selection, statement, index) : 0; }
 	 */
-
+	
 	/**
 	 * Does the <tt>LIMIT</tt> clause come at the start of the <tt>SELECT</tt> statement, rather than at the end?
 	 *
@@ -44,7 +44,7 @@ public abstract class AbstractLimitHandler implements LimitHandler {
 	public boolean bindLimitParametersFirst() {
 		return false;
 	}
-
+	
 	/**
 	 * ANSI SQL defines the LIMIT clause to be in the form LIMIT offset, limit. Does this dialect require us to bind the parameters in reverse order?
 	 *
@@ -53,7 +53,7 @@ public abstract class AbstractLimitHandler implements LimitHandler {
 	public boolean bindLimitParametersInReverseOrder() {
 		return false;
 	}
-
+	
 	/**
 	 * Hibernate APIs explicitly state that setFirstResult() should be a zero-based offset. Here we allow the Dialect a chance to convert that value based on what the underlying db or driver will expect.
 	 * <p/>
@@ -70,7 +70,7 @@ public abstract class AbstractLimitHandler implements LimitHandler {
 	public int convertToFirstRowValue(int zeroBasedFirstResult) {
 		return zeroBasedFirstResult;
 	}
-
+	
 	/**
 	 * Generally, if there is no limit applied to a Hibernate query we do not apply any limits to the SQL query. This option forces that the limit be written to the SQL query.
 	 *
@@ -79,7 +79,7 @@ public abstract class AbstractLimitHandler implements LimitHandler {
 	public boolean forceLimitUsage() {
 		return false;
 	}
-
+	
 	/**
 	 * Some dialect-specific LIMIT clauses require the maximum last row number (aka, first_row_number + total_row_count), while others require the maximum returned row count (the total maximum number of rows to return).
 	 *
@@ -93,7 +93,7 @@ public abstract class AbstractLimitHandler implements LimitHandler {
 		final int lastRow = selection.getPageSize() * selection.getPageNumber() + selection.getOffset();
 		return useMaxForLimit() ? lastRow + firstRow : lastRow;
 	}
-
+	
 	@Override
 	public String processSql(String sql, Pageable selection) {
 		throw new UnsupportedOperationException("Paged queries not supported by " + getClass().getName());
@@ -103,12 +103,12 @@ public abstract class AbstractLimitHandler implements LimitHandler {
 	public boolean supportsLimit() {
 		return false;
 	}
-
+	
 	@Override
 	public boolean supportsLimitOffset() {
 		return supportsLimit();
 	}
-
+	
 	/**
 	 * Does this handler support bind variables (i.e., prepared statement parameters) for its limit/offset?
 	 *
@@ -117,7 +117,7 @@ public abstract class AbstractLimitHandler implements LimitHandler {
 	public boolean supportsVariableLimit() {
 		return supportsLimit();
 	}
-
+	
 	/**
 	 * Does the <tt>LIMIT</tt> clause take a "maximum" row number instead of a total number of returned rows?
 	 * <p/>

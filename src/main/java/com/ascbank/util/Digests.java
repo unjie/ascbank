@@ -16,11 +16,11 @@ import org.apache.commons.lang3.Validate;
  * @author calvin
  */
 public class Digests {
-
+	
 	private static final String	MD5		= "MD5";
 	private static SecureRandom	random	= new SecureRandom();
 	private static final String	SHA1	= "SHA-1";
-
+	
 	/**
 	 * 对字符串进行散列, 支持md5与sha1算法.
 	 */
@@ -40,7 +40,7 @@ public class Digests {
 			throw Exceptions.unchecked(e);
 		}
 	}
-
+	
 	private static byte[] digest(InputStream input, String algorithm) throws IOException {
 		try {
 			MessageDigest messageDigest = MessageDigest.getInstance(algorithm);
@@ -56,7 +56,7 @@ public class Digests {
 			throw Exceptions.unchecked(e);
 		}
 	}
-
+	
 	/**
 	 * 生成随机的Byte[]作为salt.
 	 *
@@ -69,29 +69,29 @@ public class Digests {
 		Digests.random.nextBytes(bytes);
 		return bytes;
 	}
-
+	
 	/**
 	 * 对文件进行md5散列.
 	 */
 	public static byte[] md5(InputStream input) throws IOException {
 		return Digests.digest(input, Digests.MD5);
 	}
-
+	
 	/**
 	 * 对输入字符串进行sha1散列.
 	 */
 	public static byte[] sha1(byte[] input) {
 		return Digests.digest(input, Digests.SHA1, null, 1);
 	}
-
+	
 	public static byte[] sha1(byte[] input, byte[] salt) {
 		return Digests.digest(input, Digests.SHA1, salt, 1);
 	}
-
+	
 	public static byte[] sha1(byte[] input, byte[] salt, int iterations) {
 		return Digests.digest(input, Digests.SHA1, salt, iterations);
 	}
-
+	
 	/**
 	 * 对文件进行sha1散列.
 	 */

@@ -18,15 +18,15 @@ import com.ascbank.model.base.PKEntity;
 public interface BaseInterfaceService<T extends Serializable, E extends PKEntity<T>> extends Serializable {
 	
 	public abstract E add(E entity) throws Exception;
-
+	
 	public abstract void delete(T id) throws Exception;
-
+	
 	public abstract List<E> list(Pageable pageable);
-
+	
 	public abstract List<E> list(Sort sort);
-
+	
 	public abstract E read(T id);
-
+	
 	public abstract E update(E entity) throws Exception;
-
+	
 }

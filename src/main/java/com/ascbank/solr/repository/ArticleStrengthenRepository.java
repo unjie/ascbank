@@ -7,6 +7,6 @@ import com.ascbank.model.Article;
 import com.ascbank.solr.repository.custom.ArticleRepository;
 
 public interface ArticleStrengthenRepository
-extends ArticleRepository, CrudRepository<Article, Long>, SolrCrudRepository<Article, Long> {
-
+		extends ArticleRepository, CrudRepository<Article, Long>, SolrCrudRepository<Article, Long> {
+	
 }

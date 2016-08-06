@@ -36,17 +36,17 @@ public @interface Captcha {
 	public @interface List {
 		Captcha[] value();
 	}
-
+	
 	Class<?>[] groups() default {};
-
+	
 	String key();
 	
 	int length() default 4;
-
+	
 	String message() default "{default.captcha.validated}";
-
+	
 	Class<? extends Payload>[] payload() default {};
-
+	
 	// ConstraintTarget validationAppliesTo() default ConstraintTarget.IMPLICIT;
 	
 }

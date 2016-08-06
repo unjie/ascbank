@@ -14,8 +14,8 @@ import com.ascbank.model.Article;
  *
  */
 public interface ArticleRepository {
-
+	
 	Page<Article> findByClicks(Short clicks, Pageable page);
-
+	
 	FacetPage<Article> findByContext(String context, Pageable page);
 }

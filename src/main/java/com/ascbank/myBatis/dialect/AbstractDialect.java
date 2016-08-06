@@ -24,31 +24,31 @@ public abstract class AbstractDialect implements Dialect {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 	@Override
 	public String getOrderSql(String querySql, Sort sort, String alias) {
 		// TODO Auto-generated method stub
 		return QueryUtils.applySorting(querySql, sort, alias);
 	}
-	
+
 	@Override
 	public String getPagerSql(String querySql, Pageable pageable) {
-		return getPagerSql(querySql, pageable, QueryUtils.detectAlias(querySql));
+		return getPagerSql(querySql, pageable, QueryUtils.detectTableOrAlias(querySql));
 	}
 
 	@Override
-	public String getPagerSql(String querySql, Pageable pageable, String string) {
+	public String getPagerSql(String querySql, Pageable pageable, String alias) {
 		// TODO Auto-generated method stub
-		querySql = QueryUtils.applySorting(querySql, pageable.getSort(), QueryUtils.detectAlias(querySql));
+		querySql = QueryUtils.applySorting(querySql, pageable.getSort(), alias);
 		log.debug("-------------------------{}----------------------------", querySql);
 		return getLimitSql(querySql, pageable);
 
 	}
-	
+
 	@Override
 	public String getPagerSql(String querySql, String[] sort, String[] order, RowBounds rowBounds) {
 		// TODO Auto-generated method stub
 		return null;
 	}
-	
+
 }

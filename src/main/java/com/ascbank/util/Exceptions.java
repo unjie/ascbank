@@ -11,7 +11,7 @@ import java.io.StringWriter;
  * @author calvin
  */
 public class Exceptions {
-
+	
 	/**
 	 * 获取组合本异常信息与底层异常信息的异常描述, 适用于本异常为统一包装异常类，底层异常才是根本原因的情况。
 	 */
@@ -21,7 +21,7 @@ public class Exceptions {
 				.append(nestedException.getClass().getName()).append(":").append(nestedException.getMessage())
 				.toString();
 	}
-
+	
 	/**
 	 * 获取异常的Root Cause.
 	 */
@@ -32,7 +32,7 @@ public class Exceptions {
 		}
 		return ex;
 	}
-
+	
 	/**
 	 * 将ErrorStack转化为String.
 	 */
@@ -41,7 +41,7 @@ public class Exceptions {
 		ex.printStackTrace(new PrintWriter(stringWriter));
 		return stringWriter.toString();
 	}
-
+	
 	/**
 	 * 判断异常是否由某些底层的异常引起.
 	 */
@@ -58,7 +58,7 @@ public class Exceptions {
 		}
 		return false;
 	}
-
+	
 	/**
 	 * 将CheckedException转换为UncheckedException.
 	 */

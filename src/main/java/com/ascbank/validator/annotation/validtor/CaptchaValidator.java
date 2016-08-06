@@ -22,7 +22,7 @@ public class CaptchaValidator implements ConstraintValidator<Captcha, String> {
 	private int					length;
 	@Autowired
 	private HttpSession			session;
-
+	
 	/**
 	 * @Captcha 验证码验证
 	 */
@@ -31,7 +31,7 @@ public class CaptchaValidator implements ConstraintValidator<Captcha, String> {
 		// TODO Auto-generated method stub
 		this.key = annotation.key();
 		this.length = annotation.length();
-
+		
 		log.debug("-------------------------key :{}   length :{}--------------------------------", key, length);
 	}
 	

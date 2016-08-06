@@ -38,7 +38,7 @@ public class CaptchaTest {
 		user.setPassword("123456");
 		user.setSave(true);
 		user.setCaptcha("capt");
-
+		
 		Set<ConstraintViolation<User>> constraintViolations =
 				validator.validate(user);
 		

@@ -38,7 +38,7 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 	 */
 	private final static long		serialVersionUID	= 122684424253144556L;
 	private Logger					log					= LoggerFactory.getLogger(UserServiceImpl.class);
-
+	
 	/*
 	 * (non-Javadoc)
 	 *
@@ -55,10 +55,9 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 	public User add(User user) {
 		// 插入 User
 		getBean().insertSelective(user);
-
+		
 		// 创建Permission 对象
-		Permission perm = new Permission(null, user.getId().toString(), "User", "read,update",
-				"[ " + user.getUsername() + " ] User Permission");
+		Permission perm = new Permission(null, user.getId().toString(), "User", "read,update", "[ " + user.getUsername() + " ] User Permission");
 		// 插入perm对象
 		permissionMap.insertSelective(perm);
 		
@@ -68,7 +67,7 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 		up.setPermissionId(perm.getId());
 		// 插入关联
 		userPermissionMap.insert(up);
-
+		
 		List<Permission> permis = user.getPermissions();
 		if (permis == null) {
 			permis = new ArrayList<Permission>();
@@ -76,7 +75,7 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 		permis.add(perm);
 		
 		return user;
-
+		
 	}
 	
 	@Override

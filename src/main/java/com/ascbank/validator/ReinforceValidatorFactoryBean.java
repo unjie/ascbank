@@ -7,10 +7,10 @@ import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 //@Component("validator")
 public class ReinforceValidatorFactoryBean extends LocalValidatorFactoryBean {
-
+	
 	/// private static final Logger log =
 	/// LoggerFactory.getLogger(ReinforceValidatorFactoryBean.class);
-
+	
 	@Override
 	public void validate(Object target, Errors errors) {
 		// TODO Auto-generated method stub
@@ -29,7 +29,7 @@ public class ReinforceValidatorFactoryBean extends LocalValidatorFactoryBean {
 			super.validate(target, errors);
 		}
 	}
-
+	
 	@Override
 	public void validate(Object target, Errors errors, Object... validationHints) {
 		// TODO Auto-generated method stub
@@ -48,7 +48,7 @@ public class ReinforceValidatorFactoryBean extends LocalValidatorFactoryBean {
 		} else {
 			super.validate(target, errors, validationHints);
 		}
-
+		
 	}
-
+	
 }

@@ -22,11 +22,11 @@ public class LimitHelper {
 	public static int getFirstRow(Pageable selection) {
 		return selection == null ? 0 : selection.getPageNumber() * selection.getPageSize() + selection.getOffset();
 	}
-
+	
 	public static int getMaxRows(Pageable selection) {
 		return selection.getPageSize() * (selection.getPageNumber() + 1) + selection.getOffset();
 	}
-
+	
 	/**
 	 * Is a first row limit indicated?
 	 *
@@ -38,7 +38,7 @@ public class LimitHelper {
 	public static boolean hasFirstRow(Pageable selection) {
 		return getFirstRow(selection) > 0;
 	}
-
+	
 	/**
 	 * Is a max row limit indicated?
 	 *
@@ -51,7 +51,7 @@ public class LimitHelper {
 		int maxRows = getMaxRows(selection);
 		return selection != null && maxRows > 0;
 	}
-
+	
 	/**
 	 * Should limit be applied?
 	 *
@@ -65,7 +65,7 @@ public class LimitHelper {
 	public static boolean useLimit(LimitHandler limitHandler, Pageable selection) {
 		return limitHandler.supportsLimit() && hasMaxRows(selection);
 	}
-
+	
 	private LimitHelper() {
 	}
 }

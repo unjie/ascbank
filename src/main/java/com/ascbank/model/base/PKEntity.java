@@ -69,8 +69,7 @@ public class PKEntity<PK extends Serializable> implements Persistable<PK> {
 	}
 	
 	/**
-	 * Must be {@link Transient} in order to ensure that no JPA provider
-	 * complains because of a missing setter.
+	 * Must be {@link Transient} in order to ensure that no JPA provider complains because of a missing setter.
 	 *
 	 * @see DATAJPA-622
 	 * @see org.springframework.data.domain.Persistable#isNew()

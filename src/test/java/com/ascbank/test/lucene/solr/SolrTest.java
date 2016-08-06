@@ -60,8 +60,7 @@ public class SolrTest {
 	public void setUp() {
 		// Create new repository instance using Factory and inject custom
 		// implementation
-		repo = new SolrRepositoryFactory(this.solrOperations).getRepository(ArticleStrengthenRepository.class,
-				new ArticleStrengthenRepositoryImpl(this.solrOperations));
+		repo = new SolrRepositoryFactory(this.solrOperations).getRepository(ArticleStrengthenRepository.class, new ArticleStrengthenRepositoryImpl(this.solrOperations));
 	}
 	
 	@After

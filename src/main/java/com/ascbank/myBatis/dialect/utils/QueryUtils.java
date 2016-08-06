@@ -48,41 +48,47 @@ public class QueryUtils {
 	
 	private static final Pattern	ALIAS_MATCH;
 	private static final String		COMPLEX_COUNT_VALUE				= "$3$6";
-	
 	private static final Pattern	COUNT_MATCH;
 	public static final String		COUNT_QUERY_STRING				= "select count(%s) from %s x";
+	
 	private static final String		COUNT_REPLACEMENT_TEMPLATE		= "select count(%s) $5$6$7";
+	
 	private static final String		DEFAULT_ALIAS					= "x";
 	public static final String		DELETE_ALL_QUERY_STRING			= "delete from %s x";
-	
 	private static final String		EQUALS_CONDITION_STRING			= "%s.%s = :%s";
 	private static final String		IDENTIFIER						= "[\\p{Lu}\\P{InBASIC_LATIN}\\p{Alnum}._$]+";
-	
 	private static final String		IDENTIFIER_GROUP				= String.format("(%s)", IDENTIFIER);
+	
 	private static final String		JOIN							= "join\\s" + IDENTIFIER + "\\s(as\\s)?" + IDENTIFIER_GROUP;
-	
 	private static final Pattern	JOIN_PATTERN					= Pattern.compile(JOIN, Pattern.CASE_INSENSITIVE);
+	
 	private static final Pattern	NAMED_PARAMETER					= Pattern.compile(":" + IDENTIFIER + "|\\#" + IDENTIFIER, CASE_INSENSITIVE);
-	
 	private static final Pattern	ORDER_BY						= Pattern.compile(".*order\\s+by\\s+.*", CASE_INSENSITIVE);
-	private static final String		ORDER_BY_PART					= "(?iu)\\s+order\\s+by\\s+.*$";
 	
+	private static final String		ORDER_BY_PART					= "(?iu)\\s+order\\s+by\\s+.*$";
 	private static final int		QUERY_JOIN_ALIAS_GROUP_INDEX	= 2;
 	
 	private static final String		SIMPLE_COUNT_VALUE				= "$2";
+	private static final Pattern	TABLE_MATCH;
+	
+	// private static final Pattern TABLE_MATCH;
 	private static final int		VARIABLE_NAME_GROUP_INDEX		= 4;
 	
 	static {
 		
 		StringBuilder builder = new StringBuilder();
-		builder.append("(?<=from)"); // from as starting delimiter
-		builder.append("(?:\\s)+"); // at least one space separating
-		builder.append(IDENTIFIER_GROUP); // Entity name, can be qualified (any
-		builder.append("(?:\\sas)*"); // exclude possible "as" keyword
-		builder.append("(?:\\s)+"); // at least one space separating
-		builder.append("(\\w*)"); // the actual alias
+		builder.append("(?<=from)"); // from as starting delimiter 从开始的符号
+		builder.append("(?:\\s)+"); // at least one space separating 至少一个空间分离
+		builder.append(IDENTIFIER_GROUP); // Entity name, can be qualified (any 实体名称，可以是限定的（任何
+		TABLE_MATCH = compile(builder.toString(), CASE_INSENSITIVE);
+
+		builder.append("(?:\\sas)*"); // exclude possible "as" keyword 排除可能的“as”关键字
+		builder.append("(?:\\s)+"); // at least one space separating 至少一个空格分离
+		builder.append("(\\w*)"); // the actual alias 实际的别名
 		
 		ALIAS_MATCH = compile(builder.toString(), CASE_INSENSITIVE);
+		
+		// TABLE_MATCH = compile(builder.toString(), CASE_INSENSITIVE);
 		
 		builder = new StringBuilder();
 		builder.append("(select\\s+((distinct )?(.+?)?)\\s+)?(from\\s+");
@@ -93,6 +99,18 @@ public class QueryUtils {
 		
 		COUNT_MATCH = compile(builder.toString(), CASE_INSENSITIVE);
 		
+	}
+	
+	/**
+	 * Adds {@literal order by} clause to the JPQL query. Uses the {@link #DEFAULT_ALIAS} to bind the sorting property to.
+	 *
+	 * @param query
+	 * @param sort
+	 * @return
+	 */
+	public static String applySorting(String query, Sort sort) {
+		
+		return applySorting(query, sort, DEFAULT_ALIAS);
 	}
 	
 	/**
@@ -133,18 +151,6 @@ public class QueryUtils {
 	 *
 	 * return query; }
 	 */
-	
-	/**
-	 * Adds {@literal order by} clause to the JPQL query. Uses the {@link #DEFAULT_ALIAS} to bind the sorting property to.
-	 *
-	 * @param query
-	 * @param sort
-	 * @return
-	 */
-	public static String applySorting(String query, Sort sort) {
-		
-		return applySorting(query, sort, DEFAULT_ALIAS);
-	}
 	
 	/**
 	 * Adds {@literal order by} clause to the JPQL query.
@@ -232,8 +238,44 @@ public class QueryUtils {
 	public static String detectAlias(String query) {
 		
 		Matcher matcher = ALIAS_MATCH.matcher(query);
-		
 		return matcher.find() ? matcher.group(2) : null;
+	}
+	
+	/**
+	 * Resolves the table name for the entity to be retrieved from the given JPA query.
+	 *
+	 * @param query
+	 * @return
+	 */
+	public static String detectTableName(String query) {
+		
+		Matcher matcher = TABLE_MATCH.matcher(query);
+		return matcher.find() ? matcher.group(1) : null;
+	}
+	
+	/**
+	 * Resolves the table name for the entity to be retrieved from the given JPA query.
+	 *
+	 * @param query
+	 * @return
+	 */
+
+	public static String detectTableOrAlias(String query) {
+		
+		Matcher matcher = ALIAS_MATCH.matcher(query);
+		
+		String keyword = null;
+		if (matcher.find()) {
+			keyword = matcher.group(2);
+			// log.debug(" keyword: {}", keyword);
+
+		} else {
+			matcher = TABLE_MATCH.matcher(query);
+			if (matcher.find()) {
+				keyword = matcher.group(1);
+			}
+		}
+		return keyword;
 	}
 	
 	/**
@@ -261,7 +303,7 @@ public class QueryUtils {
 		sb.append("1 = 1");
 		return sb.toString();
 	}
-	
+
 	/**
 	 * Returns an existing join for the given attribute if one already exists or creates a new one if not.
 	 *
@@ -310,7 +352,7 @@ public class QueryUtils {
 		
 		return String.format("%s %s", wrapped, toJpaDirection(order));
 	}
-	
+
 	/**
 	 * Returns the aliases used for {@code left (outer) join}s.
 	 *
@@ -372,27 +414,6 @@ public class QueryUtils {
 	}
 	
 	/**
-	 * Return whether the given {@link From} contains a fetch declaration for the attribute with the given name.
-	 *
-	 * @param from
-	 *            the {@link From} to check for fetches.
-	 * @param attribute
-	 *            the attribute name to check.
-	 * @return
-	 */
-	/*
-	 * private static boolean isAlreadyFetched(From<?, ?> from, String attribute) {
-	 *
-	 * for (Fetch<?, ?> f : from.getFetches()) {
-	 *
-	 * boolean sameName = f.getAttribute().getName().equals(attribute);
-	 *
-	 * if (sameName && f.getJoinType().equals(JoinType.LEFT)) { return true; } }
-	 *
-	 * return false; }
-	 */
-	
-	/**
 	 * Returns whether the given {@code propertyPathModel} requires the creation of a join. This is the case if we find a non-optional association.
 	 *
 	 * @param propertyPathModel
@@ -443,6 +464,35 @@ public class QueryUtils {
 	private static String toJpaDirection(Order order) {
 		return order.getDirection().name().toLowerCase(Locale.US);
 	}
+	
+	// private final Logger log = LoggerFactory.getLogger(QueryUtils.class);
+	
+	/**
+	 * Private constructor to prevent instantiation.
+	 */
+	private QueryUtils() {
+	}
+	
+	/**
+	 * Return whether the given {@link From} contains a fetch declaration for the attribute with the given name.
+	 *
+	 * @param from
+	 *            the {@link From} to check for fetches.
+	 * @param attribute
+	 *            the attribute name to check.
+	 * @return
+	 */
+	/*
+	 * private static boolean isAlreadyFetched(From<?, ?> from, String attribute) {
+	 *
+	 * for (Fetch<?, ?> f : from.getFetches()) {
+	 *
+	 * boolean sameName = f.getAttribute().getName().equals(attribute);
+	 *
+	 * if (sameName && f.getJoinType().equals(JoinType.LEFT)) { return true; } }
+	 *
+	 * return false; }
+	 */
 
 	/**
 	 * Creates a criteria API {@link javax.persistence.criteria.Order} from the given {@link Order}.
@@ -488,9 +538,4 @@ public class QueryUtils {
 	 * return orders; }
 	 */
 	
-	/**
-	 * Private constructor to prevent instantiation.
-	 */
-	private QueryUtils() {
-	}
 }

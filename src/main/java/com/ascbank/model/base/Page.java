@@ -18,13 +18,13 @@ public class Page<T> extends LinkedList<T> implements Serializable {
 		super(c);
 		this.total = total;
 	}
-
+	
 	public List<T> getRows() {
 		return this;
 	}
-
+	
 	public int getTotal() {
 		return total;
 	}
-
+	
 }

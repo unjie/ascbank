@@ -32,8 +32,7 @@ public class UniqueValidator implements ConstraintValidator<Unique, Persistable<
 	private ValidetorInterface	validetorBean;
 	
 	/**
-	 * @Unque 验证 bean 需要实现ValidetorInterface 接口 bean Class与BeanName
-	 *        只需要传入一个,BeanName优先于Class 如果都不设置这默认验证不通过
+	 * @Unque 验证 bean 需要实现ValidetorInterface 接口 bean Class与BeanName 只需要传入一个,BeanName优先于Class 如果都不设置这默认验证不通过
 	 */
 	@Override
 	public void initialize(Unique annotation) {
