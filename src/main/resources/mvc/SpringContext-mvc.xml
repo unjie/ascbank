@@ -9,6 +9,22 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
         http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.1.xsd">
 
+<!-- 启用注解 -->
+
+	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean" />
+	<bean class="org.springframework.data.repository.support.DomainClassConverter">
+	   <constructor-arg ref="conversionService" />
+	</bean>
+	<!-- Pageable 分页实现请求  -->
+	<mvc:annotation-driven conversion-service="conversionService" validator="validator">
+	    <mvc:argument-resolvers>
+	        <bean    class="org.springframework.data.web.PageableHandlerMethodArgumentResolver"/>
+	    </mvc:argument-resolvers>
+	</mvc:annotation-driven>
+
+<!--  2016年8月3日 15:17:16 ↑ -->
+
+
 
 	<bean name="systemConfig" init-method="getObject" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="locations" value="classpath:systemConfig.properties" />
@@ -87,8 +103,6 @@
 	</bean>
 	
 	
-	<!-- 指定自己定义的validator -->  
-	<mvc:annotation-driven validator="validator"/>  
 	<!-- 以下 validator ConversionService 在使用 mvc:annotation-driven 会 自动注册 -->
 	<bean id="validator" lazy-init="false" class="com.ascbank.validator.ReinforceValidatorFactoryBean">
 		<property name="providerClass" value="org.hibernate.validator.HibernateValidator" />

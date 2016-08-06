@@ -1,19 +1,15 @@
-package com.ascbank.web;
+package com.ascbank.web.basis;
 
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Properties;
-
-import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
-import org.springframework.data.domain.Sort.Direction;
-import org.springframework.util.StringUtils;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -27,7 +23,6 @@ import com.ascbank.exception.ArticleException;
 import com.ascbank.model.base.PKEntity;
 import com.ascbank.service.BaseInterfaceService;
 import com.ascbank.verify.AddCheck;
-import com.ascbank.verify.FormatCheck;
 
 public abstract class BaseAbstractController<T extends Serializable, E extends PKEntity<T>, S extends BaseInterfaceService<T, E>>
 		implements BaseInterfaceController<T, E>, InjectionInterface<S> {
@@ -37,7 +32,8 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	 */
 	private static final long	serialVersionUID	= -3550102906601887804L;
 
-	private S					beanService;
+	@Autowired
+	protected S					beanService;
 	private Logger				log					= LoggerFactory.getLogger(BaseAbstractController.class);
 	@Autowired
 	protected Properties		systemConfig;
@@ -46,7 +42,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	@RequestMapping(value = { "/create" }, method = RequestMethod.POST)
 	@ResponseBody
 	// @RequiresPermissions(value = "add")
-	public JsonResultInfo create(@RequestBody @Validated(value = { FormatCheck.class, AddCheck.class }) E entity,
+	public JsonResultInfo create(@RequestBody @Validated(value = { AddCheck.class }) E entity,
 			BindingResult br) {
 		
 		JsonResultInfo info = new JsonResultInfo();
@@ -70,7 +66,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	}
 
 	@Override
-	@RequestMapping(value = { "/destroy/**", "/destroy" }, method = RequestMethod.DELETE)
+	@RequestMapping(value = { "/destroy/**", "/destroy" }, method = { RequestMethod.DELETE, RequestMethod.POST })
 	@ResponseBody
 	// @EntityPermissions(permission = "destroy")
 	public JsonResultInfo destroy(
@@ -99,7 +95,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 
 	@Override
 	@RequestMapping(value = { "/", "/{pagename:[\\w]+}**" }, path = {}, method = RequestMethod.GET, consumes = { "text/plain", "application/*" })
-	public String getHtml(HttpServletRequest request, @PathVariable("pagename") String pagename) {
+	public String getHtml(@PathVariable("pagename") String pagename) {
 		RequestMapping rm = this.getClass().getAnnotation(RequestMapping.class);
 		log.debug("=========={}=========", rm);
 		return rm.value()[0] + "/" + ((pagename == null) ? "index" : pagename);
@@ -126,40 +122,25 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	}
 
 	@Override
-	@RequestMapping(value = { "/reads" }, method = { RequestMethod.TRACE })
+	@RequestMapping(value = { "/reads" }, method = { RequestMethod.TRACE, RequestMethod.POST })
 	@ResponseBody
 	// @RequiresPermissions(value="read")
-	public List<E> readAll(Integer page, Integer start, Integer limit, String property, String direction) {
-		// TODO Auto-generated method stub
-		if (page == null || limit == null) {
-			return new ArrayList<E>();
-		}
-		Sort sort = StringUtils.isEmpty(property) && StringUtils.isEmpty(direction) ? null
-				: new Sort(Direction.fromStringOrNull(direction), property);
-		PageRequest pr = sort != null ? new PageRequest(page, limit, sort) : new PageRequest(page, limit);
-		return this.getBeanService().list(pr).getContent();
+	public List<E> readAll(@PageableDefault(value = 15, sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable) {
+		
+		return this.getBeanService().list(pageable);
 	}
 
 	@Override
-	@Autowired
 	public void setBean(S bean) {
 		// TODO Auto-generated method stub
-		this.setBeanService(bean);
-	}
-
-	/**
-	 * @param beanService
-	 *            the beanService to set
-	 */
-	public void setBeanService(S beanService) {
-		this.beanService = beanService;
+		this.beanService = bean;
 	}
 	
 	@Override
-	@RequestMapping(value = { "/update", "/update/{id}" }, method = RequestMethod.PUT)
+	@RequestMapping(value = { "/update", "/update/{id}" }, method = { RequestMethod.PUT, RequestMethod.POST })
 	@ResponseBody
 	// @EntityPermissions(permission = "update")
-	public JsonResultInfo update(@RequestBody @Validated(value = { FormatCheck.class, AddCheck.class }) E entity,
+	public JsonResultInfo update(@RequestBody @Validated(value = { AddCheck.class }) E entity,
 			BindingResult br) {
 		// TODO Auto-generated method stub
 		JsonResultInfo info = new JsonResultInfo();

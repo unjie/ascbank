@@ -60,7 +60,7 @@
         <span class="fa fa-reply form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-       	<input type="image"  class="form-control"  id="validateCodeImg" src="${__ROOT__}/public/captcha.jpg" />
+       	<img class="form-control"  id="validateCodeImg" src="${__ROOT__}/public/captcha.jpg" />
         <span class="fa fa-photo form-control-feedback"></span>
       </div>
       <div class="row">
@@ -73,7 +73,7 @@
         </div>
         <!-- /.col -->
         <div class="col-xs-4">
-          <button type="submit" class="btn btn-primary btn-block btn-flat">Register</button>
+          <input type="submit" class="btn btn-primary btn-block btn-flat" value="Register"/>
         </div>
         <!-- /.col -->
       </div>

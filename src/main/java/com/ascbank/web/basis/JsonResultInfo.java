@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.ascbank.web;
+package com.ascbank.web.basis;
 
 /**
  * @author jie

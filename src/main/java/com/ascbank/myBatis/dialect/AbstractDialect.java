@@ -24,18 +24,6 @@ public abstract class AbstractDialect implements Dialect {
 		// TODO Auto-generated method stub
 		return null;
 	}
-
-	@Override
-	public String getLimitSql(Pageable pageable) {
-		
-		return null;
-	}
-	
-	@Override
-	public String getLimitSql(String querySql, Pageable pageable) {
-		
-		return null;
-	}
 	
 	@Override
 	public String getOrderSql(String querySql, Sort sort, String alias) {

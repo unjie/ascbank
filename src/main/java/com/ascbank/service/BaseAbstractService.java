@@ -10,7 +10,6 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 
@@ -67,17 +66,13 @@ public abstract class BaseAbstractService<T extends Serializable, E extends PKEn
 	}
 
 	/*
-	 * @Override // @Cacheable(value = "getGenericity", key =
-	 * "#root.targetClass.getName()+'_'+#index", unless = "#result!=null")
-	 * public Class<?> getGenericity(Integer index) { return
-	 * ResolvableType.forType(this.getClass().getGenericSuperclass()).
-	 * resolveGeneric(index); }
+	 * @Override // @Cacheable(value = "getGenericity", key = "#root.targetClass.getName()+'_'+#index", unless = "#result!=null") public Class<?> getGenericity(Integer index) { return ResolvableType.forType(this.getClass().getGenericSuperclass()). resolveGeneric(index); }
 	 */
 	@Override
 	// @Caching(cacheable = { @Cacheable(value = "Page", key =
 	// "#root.targetClass.getName()+'_page_'+#pageable.getPageNumber()+'_'+#pageable.getPageSize()+#pageable.sort.iterator().next().getProperty()+'_'+#pageable.sort.iterator().next().getDirection().name()",
 	// condition = "#pageable != null") })
-	public Page<E> list(Pageable pageable) {
+	public List<E> list(Pageable pageable) {
 		return beanDao.selelctByPageableAll(pageable);
 	}
 
@@ -85,7 +80,7 @@ public abstract class BaseAbstractService<T extends Serializable, E extends PKEn
 	// @Caching(cacheable = { @Cacheable(value = "Page", key =
 	// "#root.targetClass.getName()+'_'+#sort.iterator().next().getProperty()+'_'+#sort.iterator().next().getDirection().name()",
 	// condition = "#sort != null") })
-	public Iterable<E> list(Sort sort) {
+	public List<E> list(Sort sort) {
 		// TODO Auto-generated method stub
 		log.debug("----------------- readAll entity={}------------------", sort);
 		return beanDao.selelctBySortAll(sort);
@@ -128,21 +123,13 @@ public abstract class BaseAbstractService<T extends Serializable, E extends PKEn
 		
 		// TODO Auto-generated method stub
 		/*
-		 * List<SearchFilter> list = new ArrayList<SearchFilter>(); //
-		 * 获取当前new的对象的 泛型的父类 类型
+		 * List<SearchFilter> list = new ArrayList<SearchFilter>(); // 获取当前new的对象的 泛型的父类 类型
 		 *
-		 * @SuppressWarnings("unchecked") Class<E> clazz = (Class<E>)
-		 * this.getGenericity(1); // (Class<E>) //
-		 * ResolvableType.forClass(this.getClass()).getGeneric(1).resolve(); //
-		 * (Class<E>) ((ParameterizedType) //
-		 * .getGenericSuperclass()).getActualTypeArguments()[1]; // //
-		 * 获取第一个类型参数的真实类型
+		 * @SuppressWarnings("unchecked") Class<E> clazz = (Class<E>) this.getGenericity(1); // (Class<E>) // ResolvableType.forClass(this.getClass()).getGeneric(1).resolve(); // (Class<E>) ((ParameterizedType) // .getGenericSuperclass()).getActualTypeArguments()[1]; // // 获取第一个类型参数的真实类型
 		 *
-		 * for (Entry<String, Object> entry : map.entrySet()) { list.add(new
-		 * SearchFilter(entry.getKey(), Operator.EQ, entry.getValue())); }
+		 * for (Entry<String, Object> entry : map.entrySet()) { list.add(new SearchFilter(entry.getKey(), Operator.EQ, entry.getValue())); }
 		 *
-		 * Specification<E> specification =
-		 * DynamicSpecifications.bySearchFilter(clazz, false, list);
+		 * Specification<E> specification = DynamicSpecifications.bySearchFilter(clazz, false, list);
 		 *
 		 * log.debug(specification.toString());
 		 *

@@ -14,7 +14,7 @@
 			<array>
 				<bean  class="com.ascbank.myBatis.plugin.SelectPagingPlugin">
 					<property name="dialect">
-							<bean factory-method="getDialect" class="com.qinzero.repository.modules.persistence.DataSoureInfo" >
+							<bean factory-method="getDialect" class="com.ascbank.repository.modules.persistence.DataSoureInfo" >
 								<constructor-arg ref="dataSource" />
 							</bean>
 					</property>

@@ -20,7 +20,6 @@ import com.ascbank.model.User;
 import com.ascbank.service.UserService;
 import com.ascbank.verify.AddCheck;
 import com.ascbank.verify.LoginCheck;
-import com.ascbank.web.BaseAbstractController;
 import com.ascbank.web.UserController;
 
 /**
@@ -29,21 +28,19 @@ import com.ascbank.web.UserController;
  */
 @Controller
 @RequestMapping("/user")
-public class UserControllerImpl extends BaseAbstractController<Long, User, UserService> implements UserController {
+public class UserControllerImpl extends com.ascbank.web.basis.BaseAbstractController<Long, User, UserService> implements UserController {
 	
 	private static final long	serialVersionUID	= -6215656516167426274L;
-
+	
 	// @Resource
 	// UserService userService;
-
+	
 	private final Logger		log					= LoggerFactory.getLogger(UserControllerImpl.class);
-
+	
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see
-	 * com.qinzero.controller.UserControllerInterface#exit(javax.servlet.http
-	 * .HttpServletRequest)
+	 * @see com.qinzero.controller.UserControllerInterface#exit(javax.servlet.http .HttpServletRequest)
 	 */
 	@Override
 	@RequestMapping(value = { "/exit" }, method = { RequestMethod.GET })
@@ -54,14 +51,11 @@ public class UserControllerImpl extends BaseAbstractController<Long, User, UserS
 		request.setAttribute("error", "{500.error}");
 		return systemConfig.getProperty("error_500");
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see
-	 * com.qinzero.controller.UserControllerInterface#login(javax.servlet.http
-	 * .HttpSession, com.qinzero.entity.User,
-	 * org.springframework.validation.BindingResult)
+	 * @see com.qinzero.controller.UserControllerInterface#login(javax.servlet.http .HttpSession, com.qinzero.entity.User, org.springframework.validation.BindingResult)
 	 */
 	@Override
 	@RequestMapping(value = { "/login" }, method = { RequestMethod.POST })
@@ -85,16 +79,13 @@ public class UserControllerImpl extends BaseAbstractController<Long, User, UserS
 			}
 		}
 		return systemConfig.getProperty("user_login_successs");
-		
-	}
 
+	}
+	
 	/*
 	 * (non-Javadoc)
 	 *
-	 * @see
-	 * com.qinzero.controller.UserControllerInterface#register(javax.servlet
-	 * .http.HttpSession, com.qinzero.entity.User,
-	 * org.springframework.validation.BindingResult)
+	 * @see com.qinzero.controller.UserControllerInterface#register(javax.servlet .http.HttpSession, com.qinzero.entity.User, org.springframework.validation.BindingResult)
 	 */
 	@Override
 	@RequestMapping(value = { "/register" }, method = { RequestMethod.POST })
@@ -114,5 +105,5 @@ public class UserControllerImpl extends BaseAbstractController<Long, User, UserS
 			return systemConfig.getProperty("user_register_success");
 		}
 	}
-
+	
 }

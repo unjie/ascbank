@@ -7,8 +7,6 @@
 		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
 		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd">
 		
-	<!-- 启用注解 -->
-	<mvc:annotation-driven />
 	<import resource="classpath:mvc/SpringContext-mvc.xml" />
 	<import resource="classpath:cache/SpringContext-cache.xml" /> 
 	<import resource="classpath:datasource/SpringContext-datasource.xml"/>
