@@ -12,7 +12,13 @@
 		<property name="mapperLocations" value="classpath:mybatis/map/*Mapper.xml" />
 		<property name="plugins">
 			<array>
-				<bean  class="com.ascbank.myBatis.plugin.SelectPagingPlugin"/>
+				<bean  class="com.ascbank.myBatis.plugin.SelectPagingPlugin">
+					<property name="dialect">
+							<bean factory-method="getDialect" class="com.qinzero.repository.modules.persistence.DataSoureInfo" >
+								<constructor-arg ref="dataSource" />
+							</bean>
+					</property>
+				</bean>
 			</array>
 		</property>
 	</bean>

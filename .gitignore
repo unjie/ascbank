@@ -19,3 +19,4 @@ build/
 ext/
 
 /target/
+/bin/
