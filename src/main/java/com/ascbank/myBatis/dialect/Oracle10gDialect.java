@@ -1,7 +1,7 @@
 /**
  * 
  */
-package com.ascbank.myBatis.drive.dialect;
+package com.ascbank.myBatis.dialect;
 
 /**
  * @author jie

@@ -19,7 +19,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Pageable;
 
-import com.ascbank.myBatis.drive.dialect.Dialect;
+import com.ascbank.myBatis.dialect.Dialect;
 
 @Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class, Integer.class }) })
 public class SelectPagingPlugin implements Interceptor {
@@ -61,7 +61,7 @@ public class SelectPagingPlugin implements Interceptor {
 			log.debug("===============================");
 			if (pageable != null) {
 				String querySql = delegate.getBoundSql().getSql();
-				delegateMetaObj.setValue("boundSql.sql", dialect.getPagerSql(querySql, pageable, "x"));
+				delegateMetaObj.setValue("boundSql.sql", dialect.getPagerSql(querySql, pageable));
 				log.debug("---------------------query originalSql =>  {}------------------------------", querySql);
 			}
 			

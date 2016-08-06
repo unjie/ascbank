@@ -12,12 +12,12 @@ import javax.sql.DataSource;
 
 import org.apache.commons.lang3.StringUtils;
 
-import com.ascbank.myBatis.drive.dialect.Dialect;
-import com.ascbank.myBatis.drive.dialect.H2Dialect;
-import com.ascbank.myBatis.drive.dialect.MySQL5InnoDBDialect;
-import com.ascbank.myBatis.drive.dialect.Oracle10gDialect;
-import com.ascbank.myBatis.drive.dialect.PostgreSQL82Dialect;
-import com.ascbank.myBatis.drive.dialect.SQLServer2008Dialect;
+import com.ascbank.myBatis.dialect.Dialect;
+import com.ascbank.myBatis.dialect.H2Dialect;
+import com.ascbank.myBatis.dialect.MySQL5InnoDBDialect;
+import com.ascbank.myBatis.dialect.Oracle10gDialect;
+import com.ascbank.myBatis.dialect.PostgreSQL82Dialect;
+import com.ascbank.myBatis.dialect.SQLServer2008Dialect;
 
 // @Component
 public class DataSoureInfo {

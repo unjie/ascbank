@@ -25,7 +25,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.stereotype.Component;
 
 import com.ascbank.model.base.Page;
-import com.ascbank.myBatis.drive.dialect.Dialect;
+import com.ascbank.myBatis.dialect.Dialect;
 import com.ascbank.util.StringUtil;
 
 /**
