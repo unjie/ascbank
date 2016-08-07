@@ -1,7 +1,6 @@
 package com.ascbank.web.basis;
 
 import java.io.Serializable;
-import java.util.List;
 import java.util.Properties;
 
 import org.slf4j.Logger;
@@ -125,9 +124,17 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	@RequestMapping(value = { "/reads" }, method = { RequestMethod.TRACE, RequestMethod.POST })
 	@ResponseBody
 	// @RequiresPermissions(value="read")
-	public List<E> readAll(@PageableDefault(value = 15, sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable) {
-		
-		return this.getBeanService().list(pageable);
+	public JsonResultInfo readAll(@PageableDefault(value = 15, sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable) {
+		JsonResultInfo info = new JsonResultInfo();
+		try {
+			info.setSuccess(true);
+			info.setMessage("{default.update.succeed}");
+			info.setData(this.getBeanService().list(pageable));
+		} catch (Exception e) {
+			info.setSuccess(false);
+			info.setMessage(e.getMessage());
+		}
+		return info;
 	}
 	
 	@Override
