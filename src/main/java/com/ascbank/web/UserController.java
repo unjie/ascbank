@@ -4,7 +4,6 @@
 package com.ascbank.web;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.springframework.validation.BindingResult;
 
@@ -14,12 +13,12 @@ import com.ascbank.model.User;
  * @author jie
  *
  */
-public interface UserController {
+public interface UserController<E extends User, O extends User> {
 	
 	String exit(HttpServletRequest request);
-	
-	String login(HttpSession session, User user, BindingResult br);
-	
-	String register(HttpSession session, User user, BindingResult br);
+
+	String login(E user, BindingResult br);
+
+	String register(O user, BindingResult br);
 	
 }

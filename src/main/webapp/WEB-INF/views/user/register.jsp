@@ -48,11 +48,11 @@
         <span class="fa fa-mobile-phone form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" name="passwrod" class="form-control" placeholder="Password">
+        <input type="password" name="password" class="form-control" placeholder="Password">
         <span class="fa fa-lock form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">
-        <input type="password" name="respasswrod"  class="form-control" placeholder="Retype password">
+        <input type="password" name="respassword"  class="form-control" placeholder="Retype password">
         <span class="fa fa-sign-in form-control-feedback"></span>
       </div>
       <div class="form-group has-feedback">

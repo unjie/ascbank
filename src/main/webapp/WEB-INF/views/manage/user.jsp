@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<html>
+<html lang="cn">
 <head>
   <meta charset="utf-8">
   <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -15,8 +15,11 @@
   <link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">
   <!-- Ionicons -->
   <link rel="stylesheet" href="//cdn.bootcss.com/ionicons/2.0.1/css/ionicons.min.css">
-  <!-- DataTables -->
-  <link rel="stylesheet" href="${__STATIC__}/plugins/datatables/dataTables.bootstrap.css">
+  <!-- Dojo -->
+<!--   
+<link href="//cdn.bootcss.com/dojo/1.11.0-rc5/resources/dojo.css" rel="stylesheet">
+ <script type="text/javascript"   src="//cdn.bootcss.com/dojo/1.11.0-rc5/dojo.js" data-dojo-config="isDebug: 1, async: 1, parseOnLoad: 1"></script>
+  -->
   <!-- Theme style -->
   <link rel="stylesheet" href="${__STATIC__}/dist/css/AdminLTE.min.css">
   <!-- AdminLTE Skins. Choose a skin from the css/skins
@@ -26,215 +29,17 @@
   <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
   <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
   <!--[if lt IE 9]>
-  <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-  <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+  <script src="//cdn.bootcss.com/html5shiv/r29/html5.min.js"></script>
+  <script src="//cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
   <![endif]-->
+  <!-- jQuery 2.2.3 -->
+ <script src="${__STATIC__}/plugins/jQuery/jquery-2.2.3.min.js"></script>
 </head>
 <body class="hold-transition skin-blue sidebar-mini">
 <div class="wrapper">
 
 <jsp:include page="header.jsp"/>
-  <!-- Left side column. contains the logo and sidebar -->
-  <aside class="main-sidebar">
-    <!-- sidebar: style can be found in sidebar.less -->
-    <section class="sidebar">
-      <!-- Sidebar user panel -->
-      <div class="user-panel">
-        <div class="pull-left image">
-          <img src="${__STATIC__}/dist/img/user2-160x160.jpg" class="img-circle" alt="User Image">
-        </div>
-        <div class="pull-left info">
-          <p>Alexander Pierce</p>
-          <a href="#"><i class="fa fa-circle text-success"></i> Online</a>
-        </div>
-      </div>
-      <!-- search form -->
-      <form action="#" method="get" class="sidebar-form">
-        <div class="input-group">
-          <input type="text" name="q" class="form-control" placeholder="Search...">
-              <span class="input-group-btn">
-                <button type="submit" name="search" id="search-btn" class="btn btn-flat"><i class="fa fa-search"></i>
-                </button>
-              </span>
-        </div>
-      </form>
-      <!-- /.search form -->
-      <!-- sidebar menu: : style can be found in sidebar.less -->
-      <ul class="sidebar-menu">
-        <li class="header">MAIN NAVIGATION</li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-dashboard"></i> <span>Dashboard</span>
-            <span class="pull-right-container">
-              <i class="fa fa-angle-left pull-right"></i>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="${__STATIC__}/index.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
-            <li><a href="${__STATIC__}/index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-files-o"></i>
-            <span>Layout Options</span>
-            <span class="pull-right-container">
-              <span class="label label-primary pull-right">4</span>
-            </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="../layout/top-nav.html"><i class="fa fa-circle-o"></i> Top Navigation</a></li>
-            <li><a href="../layout/boxed.html"><i class="fa fa-circle-o"></i> Boxed</a></li>
-            <li><a href="../layout/fixed.html"><i class="fa fa-circle-o"></i> Fixed</a></li>
-            <li><a href="../layout/collapsed-sidebar.html"><i class="fa fa-circle-o"></i> Collapsed Sidebar</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="../widgets.html">
-            <i class="fa fa-th"></i> <span>Widgets</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-green">new</small>
-            </span>
-          </a>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-pie-chart"></i>
-            <span>Charts</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="../charts/chartjs.html"><i class="fa fa-circle-o"></i> ChartJS</a></li>
-            <li><a href="../charts/morris.html"><i class="fa fa-circle-o"></i> Morris</a></li>
-            <li><a href="../charts/flot.html"><i class="fa fa-circle-o"></i> Flot</a></li>
-            <li><a href="../charts/inline.html"><i class="fa fa-circle-o"></i> Inline charts</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-laptop"></i>
-            <span>UI Elements</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="../UI/general.html"><i class="fa fa-circle-o"></i> General</a></li>
-            <li><a href="../UI/icons.html"><i class="fa fa-circle-o"></i> Icons</a></li>
-            <li><a href="../UI/buttons.html"><i class="fa fa-circle-o"></i> Buttons</a></li>
-            <li><a href="../UI/sliders.html"><i class="fa fa-circle-o"></i> Sliders</a></li>
-            <li><a href="../UI/timeline.html"><i class="fa fa-circle-o"></i> Timeline</a></li>
-            <li><a href="../UI/modals.html"><i class="fa fa-circle-o"></i> Modals</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-edit"></i> <span>Forms</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="../forms/general.html"><i class="fa fa-circle-o"></i> General Elements</a></li>
-            <li><a href="../forms/advanced.html"><i class="fa fa-circle-o"></i> Advanced Elements</a></li>
-            <li><a href="../forms/editors.html"><i class="fa fa-circle-o"></i> Editors</a></li>
-          </ul>
-        </li>
-        <li class="treeview active">
-          <a href="#">
-            <i class="fa fa-table"></i> <span>Tables</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="simple.html"><i class="fa fa-circle-o"></i> Simple tables</a></li>
-            <li class="active"><a href="data.html"><i class="fa fa-circle-o"></i> Data tables</a></li>
-          </ul>
-        </li>
-        <li>
-          <a href="../calendar.html">
-            <i class="fa fa-calendar"></i> <span>Calendar</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-red">3</small>
-              <small class="label pull-right bg-blue">17</small>
-            </span>
-          </a>
-        </li>
-        <li>
-          <a href="../mailbox/mailbox.html">
-            <i class="fa fa-envelope"></i> <span>Mailbox</span>
-            <span class="pull-right-container">
-              <small class="label pull-right bg-yellow">12</small>
-              <small class="label pull-right bg-green">16</small>
-              <small class="label pull-right bg-red">5</small>
-            </span>
-          </a>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-folder"></i> <span>Examples</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="../examples/invoice.html"><i class="fa fa-circle-o"></i> Invoice</a></li>
-            <li><a href="../examples/profile.html"><i class="fa fa-circle-o"></i> Profile</a></li>
-            <li><a href="../examples/login.html"><i class="fa fa-circle-o"></i> Login</a></li>
-            <li><a href="../examples/register.html"><i class="fa fa-circle-o"></i> Register</a></li>
-            <li><a href="../examples/lockscreen.html"><i class="fa fa-circle-o"></i> Lockscreen</a></li>
-            <li><a href="../examples/404.html"><i class="fa fa-circle-o"></i> 404 Error</a></li>
-            <li><a href="../examples/500.html"><i class="fa fa-circle-o"></i> 500 Error</a></li>
-            <li><a href="../examples/blank.html"><i class="fa fa-circle-o"></i> Blank Page</a></li>
-            <li><a href="../examples/pace.html"><i class="fa fa-circle-o"></i> Pace Page</a></li>
-          </ul>
-        </li>
-        <li class="treeview">
-          <a href="#">
-            <i class="fa fa-share"></i> <span>Multilevel</span>
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-          </a>
-          <ul class="treeview-menu">
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-            <li>
-              <a href="#"><i class="fa fa-circle-o"></i> Level One
-                <span class="pull-right-container">
-                  <i class="fa fa-angle-left pull-right"></i>
-                </span>
-              </a>
-              <ul class="treeview-menu">
-                <li><a href="#"><i class="fa fa-circle-o"></i> Level Two</a></li>
-                <li>
-                  <a href="#"><i class="fa fa-circle-o"></i> Level Two
-                    <span class="pull-right-container">
-                      <i class="fa fa-angle-left pull-right"></i>
-                    </span>
-                  </a>
-                  <ul class="treeview-menu">
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                    <li><a href="#"><i class="fa fa-circle-o"></i> Level Three</a></li>
-                  </ul>
-                </li>
-              </ul>
-            </li>
-            <li><a href="#"><i class="fa fa-circle-o"></i> Level One</a></li>
-          </ul>
-        </li>
-        <li><a href="${__STATIC__}/documentation/index.html"><i class="fa fa-book"></i> <span>Documentation</span></a></li>
-        <li class="header">LABELS</li>
-        <li><a href="#"><i class="fa fa-circle-o text-red"></i> <span>Important</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-yellow"></i> <span>Warning</span></a></li>
-        <li><a href="#"><i class="fa fa-circle-o text-aqua"></i> <span>Information</span></a></li>
-      </ul>
-    </section>
-    <!-- /.sidebar -->
-  </aside>
-
+  <jsp:include page="leftMenu.jsp"></jsp:include>
   <!-- Content Wrapper. Contains page content -->
   <div class="content-wrapper">
     <!-- Content Header (Page header) -->
@@ -261,29 +66,288 @@
             </div>
             <!-- /.box-header -->
             <div class="box-body">
-              <table id="user" class="table table-bordered table-striped">
-                <thead>
-                <tr>
-                  <th>username</th>
-                  <th>email</th>
-                  <th>phone</th>
-                  <th>realName</th>
-                  <th>lastlogintime</th>
-                </tr>
-                </thead>
-               
-                
-                <tfoot>
-                <tr>
-                  <th>username</th>
-                  <th>email</th>
-                  <th>phone</th>
-                  <th>realName</th>
-                  <th>lastlogintime</th>
-                </tr>
-                </tfoot>
-                 
-              </table>
+           		<div id="toolbar">
+			        <button id="remove" class="btn btn-danger" disabled>
+			            <i class="glyphicon glyphicon-remove"></i> Delete
+			        </button>
+			    </div>
+			  <!--   data-side-pagination="server" -->
+			    <table id="table"
+			           data-toolbar="#toolbar"
+			           data-search="true"
+			         data-response-handler="responseHandler" data-detail-view="true" data-detail-formatter="detailFormatter" 
+			           data-show-refresh="true"
+			           data-show-toggle="true"
+			           data-show-columns="true"
+			           data-show-export="true"
+			           data-minimum-count-columns="2"
+			           data-show-pagination-switch="true"
+			           data-pagination="true"
+			           data-id-field="id"
+			           data-page-list="[10, 25, 50, 100, ALL]"
+			           data-show-footer="false"
+			           
+			           data-method="POST"
+			           data-url="${__ROOT__}/user/reads">
+			    </table>
+			</div>
+			
+			<script>
+			    var $table = $('#table'),
+			        $remove = $('#remove'),
+			        selections = [];
+			
+			    function initTable() {
+			        $table.bootstrapTable({
+			            height: getHeight(),
+			            columns: [
+			                [
+			                    {
+			                        field: 'state',
+			                        checkbox: true,
+			                        align: 'center',
+			                        valign: 'middle'
+			                    }, {
+			                        title: 'id',
+			                        field: 'id',
+			                        align: 'center',
+			                        valign: 'middle',
+			                        sortable: true,
+			                        footerFormatter: totalTextFormatter
+			                    }, {
+			                        field: 'username',
+			                        title: 'username',
+			                        sortable: true,
+			                        editable: true,
+			                        footerFormatter: totalNameFormatter,
+			                        align: 'center'
+			                    },{
+			                    	 title: 'email',
+			                    	field: 'email',
+			                        sortable: true,
+			                        editable: {
+			                            type: 'text',
+			                            title: 'Email',
+			                            validate: function (value) {
+			                                value = $.trim(value);
+			                                if (!value) {
+			                                    return 'This field is required';
+			                                }
+			                                if (!/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/.test(value)) {
+			                                    return 'This field not email format.'
+			                                }
+			                                var data = $table.bootstrapTable('getData'),
+			                                    index = $(this).parents('tr').data('index');
+			                                console.log(data[index]);
+			                                return '';
+			                            }
+			                        },
+			                        align: 'center'
+			                    }, {
+			                    	title: 'phone',
+			                    	field: 'phone',
+			                        sortable: true,
+			                        editable: true,
+			                        align: 'center'
+			                    }, {
+			                    	title: 'realname',
+			                    	field: 'realname',
+			                        sortable: true,
+			                        editable: true,
+			                        align: 'center'
+			                    }, {
+			                    	title: 'wechat',
+			                    	field: 'wechat',
+			                        sortable: true,
+			                        editable: true,
+			                        align: 'center'
+			                    }, {
+			                    	title: 'wechatName',
+			                    	field: 'wechatName',
+			                        sortable: true,
+			                        editable: true,
+			                        align: 'center'
+			                    }, {
+			                    	title: 'password',
+			                    	field: 'password',
+			                        sortable: true,
+			                        editable: true,
+			                        align: 'center'
+			                    },  {
+			                        field: 'operate',
+			                        title: 'Item Operate',
+			                        align: 'center',
+			                        events: operateEvents,
+			                        formatter: operateFormatter
+			                    } 
+			                ]
+			            ]
+			        });
+			        // sometimes footer render error.
+			        setTimeout(function () {
+			            $table.bootstrapTable('resetView');
+			        }, 200);
+			        $table.on('check.bs.table uncheck.bs.table ' +
+			                'check-all.bs.table uncheck-all.bs.table', function () {
+			            $remove.prop('disabled', !$table.bootstrapTable('getSelections').length);
+			
+			            // save your data, here just save the current page
+			            selections = getIdSelections();
+			            // push or splice the selections if you want to save all data selections
+			        });
+			        $table.on('expand-row.bs.table', function (e, index, row, $detail) {
+			            if (index % 2 == 1) {
+			                $detail.html('Loading from ajax request...');
+			                $.get('LICENSE', function (res) {
+			                    $detail.html(res.replace(/\n/g, '<br>'));
+			                });
+			            }
+			        });
+			        $table.on('all.bs.table', function (e, name, args) {
+			            console.log(name, args);
+			        });
+			        $remove.click(function () {
+			            var ids = getIdSelections();
+			            $table.bootstrapTable('remove', {
+			                field: 'id',
+			                values: ids
+			            });
+			            $remove.prop('disabled', true);
+			        });
+			        $(window).resize(function () {
+			            $table.bootstrapTable('resetView', {
+			                height: getHeight()
+			            });
+			        });
+			    }
+			
+			    function getIdSelections() {
+			        return $.map($table.bootstrapTable('getSelections'), function (row) {
+			            return row.id
+			        });
+			    }
+			
+			    function responseHandler(res) {
+			        $.each(res.data, function (i, row) {
+			            row.state = $.inArray(row.id, selections) !== -1;
+			        });
+			        return res;
+			    }
+			
+			    function detailFormatter(index, row) {
+			        var html = [];
+			        $.each(row, function (key, value) {
+			            html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+			        });
+			        return html.join('');
+			    }
+			
+			    function operateFormatter(value, row, index) {
+			        return [
+			            '<a class="like" href="javascript:void(0)" title="Like">',
+			            '<i class="glyphicon glyphicon-heart"></i>',
+			            '</a>  ',
+			            '<a class="remove" href="javascript:void(0)" title="Remove">',
+			            '<i class="glyphicon glyphicon-remove"></i>',
+			            '</a>'
+			        ].join('');
+			    }
+			
+			    window.operateEvents = {
+			        'click .like': function (e, value, row, index) {
+			            alert('You click like action, row: ' + JSON.stringify(row));
+			        },
+			        'click .remove': function (e, value, row, index) {
+			            $table.bootstrapTable('remove', {
+			                field: 'id',
+			                values: [row.id]
+			            });
+			        }
+			    };
+			
+			    function totalTextFormatter(data) {
+			        return 'Total';
+			    }
+			
+			    function totalNameFormatter(data) {
+			        return data.length;
+			    }
+			
+			    function totalPriceFormatter(data) {
+			        var total = 0;
+			        $.each(data, function (i, row) {
+			            total += +(row.price.substring(1));
+			        });
+			        return '$' + total;
+			    }
+			
+			    function getHeight() {
+			        return $(window).height() - $('h1').outerHeight(true);
+			    }
+			
+			    $(function () {
+			        var scripts = [
+			                location.search.substring(1) || '//cdn.bootcss.com/bootstrap-table/1.11.0/bootstrap-table.min.js',//'assets/bootstrap-table/src/bootstrap-table.js',
+			               	//'assets/bootstrap-table/src/extensions/export/bootstrap-table-export.js',
+			               	'//cdn.bootcss.com/bootstrap-table/1.11.0/extensions/export/bootstrap-table-export.min.js',
+			            	 //'http://rawgit.com/hhurz/tableExport.jquery.plugin/master/tableExport.js',
+			            	 '//cdn.bootcss.com/TableExport/3.2.5/js/tableexport.min.js',
+			                '//cdn.bootcss.com/bootstrap-table/1.11.0/extensions/editable/bootstrap-table-editable.min.js',
+			             	 // 'http://rawgit.com/vitalets/x-editable/master/dist/bootstrap3-editable/js/bootstrap-editable.js'
+			             	 '//cdn.bootcss.com/x-editable/1.5.1/bootstrap3-editable/js/bootstrap-editable.min.js'
+			            ],
+			            eachSeries = function (arr, iterator, callback) {
+			                callback = callback || function () {};
+			                if (!arr.length) {
+			                    return callback();
+			                }
+			                var completed = 0;
+			                var iterate = function () {
+			                    iterator(arr[completed], function (err) {
+			                        if (err) {
+			                            callback(err);
+			                            callback = function () {};
+			                        }
+			                        else {
+			                            completed += 1;
+			                            if (completed >= arr.length) {
+			                                callback(null);
+			                            }
+			                            else {
+			                                iterate();
+			                            }
+			                        }
+			                    });
+			                };
+			                iterate();
+			            };
+			
+			        eachSeries(scripts, getScript, initTable);
+			    });
+			
+			    function getScript(url, callback) {
+			        var head = document.getElementsByTagName('head')[0];
+			        var script = document.createElement('script');
+			        script.src = url;
+			
+			        var done = false;
+			        // Attach handlers for all browsers
+			        script.onload = script.onreadystatechange = function() {
+			            if (!done && (!this.readyState ||
+			                    this.readyState == 'loaded' || this.readyState == 'complete')) {
+			                done = true;
+			                if (callback)
+			                    callback();
+			                script.onload = script.onreadystatechange = null;
+			            }
+			        };
+			
+			        head.appendChild(script);
+			
+			        // We handle everything using the script element injection
+			        return undefined;
+			    }
+			</script>
             </div>
             <!-- /.box-body -->
           </div>
@@ -295,218 +359,26 @@
     </section>
     <!-- /.content -->
   </div>
-  <!-- /.content-wrapper -->
-  <footer class="main-footer">
-    <div class="pull-right hidden-xs">
-      <b>Version</b> 2.3.5
-    </div>
-    <strong>Copyright &copy; 2014-2016 <a href="http://almsaeedstudio.com">Almsaeed Studio</a>.</strong> All rights
-    reserved.
-  </footer>
 
-  <!-- Control Sidebar -->
-  <aside class="control-sidebar control-sidebar-dark">
-    <!-- Create the tabs -->
-    <ul class="nav nav-tabs nav-justified control-sidebar-tabs">
-      <li><a href="#control-sidebar-home-tab" data-toggle="tab"><i class="fa fa-home"></i></a></li>
-      <li><a href="#control-sidebar-settings-tab" data-toggle="tab"><i class="fa fa-gears"></i></a></li>
-    </ul>
-    <!-- Tab panes -->
-    <div class="tab-content">
-      <!-- Home tab content -->
-      <div class="tab-pane" id="control-sidebar-home-tab">
-        <h3 class="control-sidebar-heading">Recent Activity</h3>
-        <ul class="control-sidebar-menu">
-          <li>
-            <a href="javascript:void(0)">
-              <i class="menu-icon fa fa-birthday-cake bg-red"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Langdon's Birthday</h4>
-
-                <p>Will be 23 on April 24th</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <i class="menu-icon fa fa-user bg-yellow"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Frodo Updated His Profile</h4>
-
-                <p>New phone +1(800)555-1234</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <i class="menu-icon fa fa-envelope-o bg-light-blue"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Nora Joined Mailing List</h4>
-
-                <p>nora@example.com</p>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <i class="menu-icon fa fa-file-code-o bg-green"></i>
-
-              <div class="menu-info">
-                <h4 class="control-sidebar-subheading">Cron Job 254 Executed</h4>
-
-                <p>Execution time 5 seconds</p>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <!-- /.control-sidebar-menu -->
-
-        <h3 class="control-sidebar-heading">Tasks Progress</h3>
-        <ul class="control-sidebar-menu">
-          <li>
-            <a href="javascript:void(0)">
-              <h4 class="control-sidebar-subheading">
-                Custom Template Design
-                <span class="label label-danger pull-right">70%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-danger" style="width: 70%"></div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <h4 class="control-sidebar-subheading">
-                Update Resume
-                <span class="label label-success pull-right">95%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-success" style="width: 95%"></div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <h4 class="control-sidebar-subheading">
-                Laravel Integration
-                <span class="label label-warning pull-right">50%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-warning" style="width: 50%"></div>
-              </div>
-            </a>
-          </li>
-          <li>
-            <a href="javascript:void(0)">
-              <h4 class="control-sidebar-subheading">
-                Back End Framework
-                <span class="label label-primary pull-right">68%</span>
-              </h4>
-
-              <div class="progress progress-xxs">
-                <div class="progress-bar progress-bar-primary" style="width: 68%"></div>
-              </div>
-            </a>
-          </li>
-        </ul>
-        <!-- /.control-sidebar-menu -->
-
-      </div>
-      <!-- /.tab-pane -->
-      <!-- Stats tab content -->
-      <div class="tab-pane" id="control-sidebar-stats-tab">Stats Tab Content</div>
-      <!-- /.tab-pane -->
-      <!-- Settings tab content -->
-      <div class="tab-pane" id="control-sidebar-settings-tab">
-        <form method="post">
-          <h3 class="control-sidebar-heading">General Settings</h3>
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Report panel usage
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Some information about this general settings option
-            </p>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Allow mail redirect
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Other sets of options are available
-            </p>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Expose author name in posts
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-
-            <p>
-              Allow the user to show his name in blog posts
-            </p>
-          </div>
-          <!-- /.form-group -->
-
-          <h3 class="control-sidebar-heading">Chat Settings</h3>
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Show me as online
-              <input type="checkbox" class="pull-right" checked>
-            </label>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Turn off notifications
-              <input type="checkbox" class="pull-right">
-            </label>
-          </div>
-          <!-- /.form-group -->
-
-          <div class="form-group">
-            <label class="control-sidebar-subheading">
-              Delete chat history
-              <a href="javascript:void(0)" class="text-red pull-right"><i class="fa fa-trash-o"></i></a>
-            </label>
-          </div>
-          <!-- /.form-group -->
-        </form>
-      </div>
-      <!-- /.tab-pane -->
-    </div>
-  </aside>
-  <!-- /.control-sidebar -->
-  <!-- Add the sidebar's background. This div must be placed
-       immediately after the control sidebar -->
-  <div class="control-sidebar-bg"></div>
+ <jsp:include page="footer.jsp"/>
+ 
+  <jsp:include page="controlSidebar.jsp"/>
 </div>
 <!-- ./wrapper -->
 
-<!-- jQuery 2.2.3 -->
-<script src="${__STATIC__}/plugins/jQuery/jquery-2.2.3.min.js"></script>
+
 <!-- Bootstrap 3.3.6 -->
 <script src="${__STATIC__}/bootstrap/js/bootstrap.min.js"></script>
+<!-- <script src="//cdn.bootcss.com/dojo/1.11.0-rc5/dojo.js"></script> -->
 <!-- DataTables -->
-<script src="${__STATIC__}/plugins/datatables/jquery.dataTables.min.js"></script>
+<%--
+<link rel="stylesheet" href="${__STATIC__}/plugins/datatables/dataTables.bootstrap.css">
+ <script src="${__STATIC__}/plugins/datatables/jquery.dataTables.min.js"></script>
 <script src="${__STATIC__}/plugins/datatables/dataTables.bootstrap.min.js"></script>
+ --%> 
+ <link href="//cdn.bootcss.com/bootstrap-table/1.11.0/bootstrap-table.min.css" rel="stylesheet">
+ <script src="//cdn.bootcss.com/bootstrap-table/1.11.0/bootstrap-table.min.js"></script>
+
 <!-- SlimScroll -->
 <script src="${__STATIC__}/plugins/slimScroll/jquery.slimscroll.min.js"></script>
 <!-- FastClick -->
@@ -516,25 +388,6 @@
 <!-- AdminLTE for demo purposes -->
 <script src="${__STATIC__}/dist/js/demo.js"></script>
 <!-- page script -->
-<script>
-  $(function () {
-    $('#user').DataTable({
-      "paging": true,
-      "lengthChange": false,
-      "searching": false,
-      "ordering": true,
-      "info": true,
-      "autoWidth": false,
-      "ajax":{
-    	  "url":"${__ROOT__}/user/reads",
-    	  "type":"POST",
-    	  "dataSrc": 'data',
-    	  columns: [
-    	            { data: 'name' },
-    	            ]
-      }
-    });
-  });
-</script>
+
 </body>
 </html>

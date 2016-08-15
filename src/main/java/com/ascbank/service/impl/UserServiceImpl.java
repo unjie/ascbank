@@ -21,6 +21,7 @@ import com.ascbank.dao.UserMapper;
 import com.ascbank.dao.UserPermissionMapper;
 import com.ascbank.dependency.injection.InjectionInterface;
 import com.ascbank.exception.UserException;
+import com.ascbank.model.Login;
 import com.ascbank.model.Permission;
 import com.ascbank.model.User;
 import com.ascbank.model.UserPermission;
@@ -51,8 +52,11 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 	@Autowired(required = false)
 	private UserPermissionMapper	userPermissionMap;
 	
+	@Transactional
 	@Override
 	public User add(User user) {
+		entryptPassword(user);
+
 		// 插入 User
 		getBean().insertSelective(user);
 		
@@ -73,6 +77,7 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 			permis = new ArrayList<Permission>();
 		}
 		permis.add(perm);
+		user.setPermissions(permis);
 		
 		return user;
 		
@@ -103,7 +108,7 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 	@Override
 	public User login(User user) throws UserException {
 		
-		UsernamePasswordToken upt = new UsernamePasswordToken(user.getUsername(), user.getPassword(), user.getSave());
+		UsernamePasswordToken upt = new UsernamePasswordToken(user.getUsername(), user.getPassword(), ((Login) user).getSave());
 		Subject subject = SecurityUtils.getSubject();
 		try {
 			if (log.isDebugEnabled()) {
@@ -143,6 +148,7 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 		return getBean().selectByUsername(username);
 	}
 	
+	@Transactional
 	@Override
 	public User update(User user) {
 		if (StringUtils.isEmpty(user.getPassword())) {

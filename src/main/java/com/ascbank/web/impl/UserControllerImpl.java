@@ -4,7 +4,6 @@
 package com.ascbank.web.impl;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -16,9 +15,12 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 import com.ascbank.exception.UserException;
+import com.ascbank.model.Login;
+import com.ascbank.model.Register;
 import com.ascbank.model.User;
 import com.ascbank.service.UserService;
 import com.ascbank.verify.AddCheck;
+import com.ascbank.verify.CaptchaCheck;
 import com.ascbank.verify.LoginCheck;
 import com.ascbank.web.UserController;
 
@@ -28,7 +30,7 @@ import com.ascbank.web.UserController;
  */
 @Controller
 @RequestMapping("/user")
-public class UserControllerImpl extends com.ascbank.web.basis.BaseAbstractController<Long, User, UserService> implements UserController {
+public class UserControllerImpl extends com.ascbank.web.basis.BaseAbstractController<Long, User, UserService> implements UserController<Login, Register> {
 	
 	private static final long	serialVersionUID	= -6215656516167426274L;
 	
@@ -59,11 +61,11 @@ public class UserControllerImpl extends com.ascbank.web.basis.BaseAbstractContro
 	 */
 	@Override
 	@RequestMapping(value = { "/login" }, method = { RequestMethod.POST })
-	public String login(HttpSession session, @Validated(value = { LoginCheck.class }) User user, BindingResult br) {
-		log.debug("------{}-------", user);
+	public String login(@Validated(value = { CaptchaCheck.class, LoginCheck.class }) Login user, BindingResult br) {
+		log.debug("----------User : {}-----BR : {}----", user, br);
 		if (user != null && (user.getUsername() != null || user.getEmail() != null || user.getPhone() != null)) {
 			if (br.hasErrors()) {
-				log.debug("------------------{}-------------------", br);
+				log.debug("------------------{}-------------------", br.getAllErrors());
 				return systemConfig.getProperty("user_login");
 			} else {
 				
@@ -89,12 +91,14 @@ public class UserControllerImpl extends com.ascbank.web.basis.BaseAbstractContro
 	 */
 	@Override
 	@RequestMapping(value = { "/register" }, method = { RequestMethod.POST })
-	public String register(HttpSession session, @Validated(value = { AddCheck.class }) User user,
-			BindingResult br) {
+	public String register(@Validated(value = { CaptchaCheck.class, AddCheck.class }) Register user, BindingResult br) {
+		log.debug("----------User : {}-----BR : {}----", user, br);
 		if (br.hasErrors()) {
+			log.debug("------------------BR {}-------------------", br.getAllErrors());
 			return systemConfig.getProperty("user_register");
 		} else {
 			try {
+				log.debug("--------register:{}----------", user);
 				getBeanService().add(user);
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
@@ -105,5 +109,5 @@ public class UserControllerImpl extends com.ascbank.web.basis.BaseAbstractContro
 			return systemConfig.getProperty("user_register_success");
 		}
 	}
-	
+
 }

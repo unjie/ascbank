@@ -12,6 +12,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.ascbank.dao.base.BaseInterfaceDao;
 import com.ascbank.dependency.injection.InjectionInterface;
@@ -30,10 +31,10 @@ public abstract class BaseAbstractService<T extends Serializable, E extends PKEn
 	private static final long	serialVersionUID	= -8237810984312825562L;
 	@Autowired
 	D							beanDao;
-	
+
 	private final Logger		log					= LoggerFactory.getLogger(BaseAbstractService.class);
-	
-	// @Transactional
+
+	@Transactional
 	@Override
 	// @Caching(evict = { @CacheEvict(value = "Page", allEntries = true) }, put
 	// = { @CachePut(value = "springEhcache", key =
@@ -47,7 +48,7 @@ public abstract class BaseAbstractService<T extends Serializable, E extends PKEn
 		assert (beanDao.insert(entity) == 1);
 		return entity;
 	}
-	
+
 	// @Transactional
 	@Override
 	// @Caching(evict = { @CacheEvict(value = "Page", allEntries = true),
@@ -60,11 +61,11 @@ public abstract class BaseAbstractService<T extends Serializable, E extends PKEn
 		}
 		beanDao.deleteByPrimaryKey(id);
 	}
-	
+
 	public D getBean() {
 		return this.beanDao;
 	}
-	
+
 	/*
 	 * @Override // @Cacheable(value = "getGenericity", key = "#root.targetClass.getName()+'_'+#index", unless = "#result!=null") public Class<?> getGenericity(Integer index) { return ResolvableType.forType(this.getClass().getGenericSuperclass()). resolveGeneric(index); }
 	 */
@@ -75,7 +76,7 @@ public abstract class BaseAbstractService<T extends Serializable, E extends PKEn
 	public List<E> list(Pageable pageable) {
 		return beanDao.selelctByPageableAll(pageable);
 	}
-	
+
 	@Override
 	// @Caching(cacheable = { @Cacheable(value = "Page", key =
 	// "#root.targetClass.getName()+'_'+#sort.iterator().next().getProperty()+'_'+#sort.iterator().next().getDirection().name()",
@@ -85,7 +86,7 @@ public abstract class BaseAbstractService<T extends Serializable, E extends PKEn
 		log.debug("----------------- readAll entity={}------------------", sort);
 		return beanDao.selelctBySortAll(sort);
 	}
-	
+
 	// @EntityPermissions(permission = "read")
 	@Override
 	// @Caching(cacheable = { @Cacheable(value = "ServicCache", key =
@@ -97,13 +98,13 @@ public abstract class BaseAbstractService<T extends Serializable, E extends PKEn
 		log.debug("---------------read {}----", id);
 		return beanDao.selectByPrimaryKey(id);
 	}
-	
+
 	@Override
 	public void setBean(D bean) {
 		// TODO Auto-generated method stub
 		this.beanDao = bean;
 	}
-	
+
 	// @Transactional
 	@Override
 	// @Caching(evict = { @CacheEvict(value = "Page", allEntries =
@@ -117,7 +118,7 @@ public abstract class BaseAbstractService<T extends Serializable, E extends PKEn
 		beanDao.updateByPrimaryKeySelective(entity);
 		return entity;
 	}
-	
+
 	@Override
 	public List<E> verify(Map<String, Object> map) {
 		

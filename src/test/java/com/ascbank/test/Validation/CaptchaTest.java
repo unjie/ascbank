@@ -24,24 +24,24 @@ import com.ascbank.model.User;
 public class CaptchaTest {
 	
 	private static Validator validator;
-	
+
 	@BeforeClass
 	public static void setUp() {
 		ValidatorFactory factory = Validation.buildDefaultValidatorFactory();
 		validator = factory.getValidator();
 	}
-	
+
 	@Test
 	public void Test() {
 		User user = new User();
 		user.setUsername("admin");
 		user.setPassword("123456");
-		user.setSave(true);
-		user.setCaptcha("capt");
-		
+		// user.setSave(true);
+		// user.setCaptcha("capt");
+
 		Set<ConstraintViolation<User>> constraintViolations =
 				validator.validate(user);
-		
+
 		assertEquals(0, constraintViolations.size());
 	}
 }
