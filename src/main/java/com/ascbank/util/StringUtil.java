@@ -40,6 +40,11 @@ public class StringUtil {
 		return sb.toString();
 	}
 	
+	public static boolean isNullOrEmpty(String ids) {
+		// TODO Auto-generated method stub
+		return ids == null || ids.isEmpty();
+	}
+
 	/************
 	 * 判断字符串是否为纯数字
 	 */

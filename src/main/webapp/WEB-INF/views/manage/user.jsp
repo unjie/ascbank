@@ -75,7 +75,7 @@
 			    <table id="table"
 			           data-toolbar="#toolbar"
 			           data-search="true"
-			         data-response-handler="responseHandler" data-detail-view="true" data-detail-formatter="detailFormatter" 
+						data-response-handler="responseHandler" data-detail-view="true" data-detail-formatter="detailFormatter" 
 			           data-show-refresh="true"
 			           data-show-toggle="true"
 			           data-show-columns="true"
@@ -84,7 +84,7 @@
 			           data-show-pagination-switch="true"
 			           data-pagination="true"
 			           data-id-field="id"
-			           data-page-list="[10, 25, 50, 100, ALL]"
+			           data-page-list="[10, 25, 50, 100, 200, 500, 1000, ALL]"
 			           data-show-footer="false"
 			           
 			           data-method="POST"
@@ -236,9 +236,12 @@
 			
 			    function detailFormatter(index, row) {
 			        var html = [];
+			        html.push('<form action="${__ROOT__}/user/update" method="POST" id=form_"'+index+'">');
 			        $.each(row, function (key, value) {
-			            html.push('<p><b>' + key + ':</b> ' + value + '</p>');
+			            html.push('<p><b>' + key + ':</b><input type="text" value="'+value+'" id="k_'+key+'"></p>');
 			        });
+			        html.push('<input type="submit" value="提交">');
+			        html.push('</form>');
 			        return html.join('');
 			    }
 			
