@@ -22,5 +22,5 @@
 	<bean id="cache" factory-bean="ehcacheCacheManager" factory-method="getCache">
 		<constructor-arg value="resource" />
 	</bean>
-	<cache:annotation-driven cache-manager="ehcacheCacheManager" mode="proxy" order="10" proxy-target-class="false"/>
+	<cache:annotation-driven cache-manager="ehcacheCacheManager" mode="proxy" order="10" />
 </beans>

@@ -1,4 +1,4 @@
-package com.ascbank.shiro.authz.annotation;
+package com.ascbank.security.shiro.authz.annotation;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -9,7 +9,7 @@ import org.apache.shiro.authz.annotation.Logical;
 
 @Target({ ElementType.TYPE, ElementType.METHOD })
 @Retention(RetentionPolicy.RUNTIME)
-public @interface EntityPermissions {
+public @interface AutoPermissions {
 
 	/**
 	 * The permission string which will be passed to

@@ -11,7 +11,7 @@
 		<hibernate.version>5.2.4.Final</hibernate.version>
 		<lucene.version>6.0.1</lucene.version>
 		<!-- <hibernat.search.version>5.5.3.Final</hibernat.search.version> -->
-		<aspectj.version>1.8.9</aspectj.version>
+		<!-- <aspectj.version>1.8.9</aspectj.version> -->
 		<springframework.version>4.2.6.RELEASE</springframework.version>
 		<spring.data-solr.version>2.0.2.RELEASE</spring.data-solr.version>
 		<solr-solrj.version>5.5.0</solr-solrj.version>
@@ -99,13 +99,21 @@
 		<!-- <dependency> <groupId>org.apache.solr</groupId> <artifactId>solr-core</artifactId> <version>${solr-solrj.version}</version> </dependency> -->
 		<!--[END] lucene -->
 		<!--[START] aspectj 面相切面 -->
+		<!-- 
 		<dependency>
 		  <groupId>org.aspectj</groupId>
 		  <artifactId>aspectjrt</artifactId>
 		  <version>${aspectj.version}</version>
 		</dependency>
+		 -->
 		<!--[END]  aspectj -->
 		<!--[START] spring -->
+		<dependency>
+		<!-- aspectj 面相切面 -->
+		  <groupId>org.springframework</groupId>
+		  <artifactId>spring-aspects</artifactId>
+		  <version>${springframework.version}</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework</groupId>
 			<artifactId>spring-test</artifactId>

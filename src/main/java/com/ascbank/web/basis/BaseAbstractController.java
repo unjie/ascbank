@@ -22,8 +22,8 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ascbank.dependency.injection.InjectionInterface;
 import com.ascbank.exception.ArticleException;
 import com.ascbank.model.base.PKEntity;
+import com.ascbank.security.shiro.authz.annotation.AutoPermissions;
 import com.ascbank.service.BaseInterfaceService;
-import com.ascbank.shiro.authz.annotation.EntityPermissions;
 import com.ascbank.verify.AddCheck;
 
 public abstract class BaseAbstractController<T extends Serializable, E extends PKEntity<T>, S extends BaseInterfaceService<T, E>>
@@ -69,7 +69,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	
 	@Override
 	@ResponseBody
-	@EntityPermissions(permission = "destroy")
+	@AutoPermissions(permission = "destroy")
 	@RequestMapping(value = { "/destroy/**", "/destroy" }, method = { RequestMethod.DELETE, RequestMethod.POST })
 	public JsonResultInfo destroy(
 			@RequestBody E entity/* , @PathVariable("id") T id */) {
@@ -106,7 +106,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	
 	@Override
 	@ResponseBody
-	@EntityPermissions(permission = "read")
+	@AutoPermissions(permission = "read")
 	@RequestMapping(value = { "/read/{id}" }, method = { RequestMethod.GET })
 	public JsonResultInfo read(@PathVariable("id") T id) {
 		// TODO Auto-generated method stub
@@ -148,7 +148,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	
 	@Override
 	@ResponseBody
-	@EntityPermissions(permission = "update")
+	@AutoPermissions(permission = "update")
 	@RequestMapping(value = { "/update", "/update/{id}" }, method = { RequestMethod.PUT, RequestMethod.POST }, consumes = MediaType.ALL_VALUE)
 	public JsonResultInfo update(@RequestBody @Validated(value = { AddCheck.class }) E entity, BindingResult br) {
 		// TODO Auto-generated method stub
