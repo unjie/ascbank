@@ -370,7 +370,23 @@
 						</execution>
 					</executions>
 				</plugin>
-
+				<plugin>
+				    <groupId>org.apache.maven.plugins</groupId>
+				    <artifactId>maven-assembly-plugin</artifactId>
+				    <version>2.6</version>
+				    <configuration>
+				        <descriptor>src/assembly/assembly.xml</descriptor>
+				        <finalName>${project.build.finalName}</finalName>
+				    </configuration>
+				    <executions>
+				        <execution>
+				            <phase>package</phase>
+				            <goals>
+				                <goal>directory</goal>
+				            </goals>
+				        </execution>
+				    </executions>
+				</plugin>
 
 				<!--mybatis generator 代码生成插件 mybatis-generator:generate -->
 				<plugin>

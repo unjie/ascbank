@@ -52,8 +52,8 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 	@Autowired(required = false)
 	private UserPermissionMapper	userPermissionMap;
 	
-	@Transactional
 	@Override
+	@Transactional
 	public User add(User user) {
 		entryptPassword(user);
 
@@ -148,8 +148,8 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 		return getBean().selectByUsername(username);
 	}
 	
-	@Transactional
 	@Override
+	@Transactional
 	public User update(User user) {
 		if (StringUtils.isEmpty(user.getPassword())) {
 			user.setPassword(null);

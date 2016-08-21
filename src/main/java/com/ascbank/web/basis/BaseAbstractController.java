@@ -3,7 +3,6 @@ package com.ascbank.web.basis;
 import java.io.Serializable;
 import java.util.Properties;
 
-import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +21,6 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ascbank.dependency.injection.InjectionInterface;
 import com.ascbank.exception.ArticleException;
 import com.ascbank.model.base.PKEntity;
-import com.ascbank.security.shiro.authz.annotation.AutoPermissions;
 import com.ascbank.service.BaseInterfaceService;
 import com.ascbank.verify.AddCheck;
 
@@ -42,7 +40,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	
 	@Override
 	@ResponseBody
-	@RequiresPermissions(value = "add")
+	// @RequiresPermissions(value = "add")
 	@RequestMapping(value = { "/create" }, method = RequestMethod.POST)
 	public JsonResultInfo create(@RequestBody @Validated(value = { AddCheck.class }) E entity,
 			BindingResult br) {
@@ -69,10 +67,9 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	
 	@Override
 	@ResponseBody
-	@AutoPermissions(permission = "destroy")
+	// @AutoPermissions(permission = "destroy")
 	@RequestMapping(value = { "/destroy/**", "/destroy" }, method = { RequestMethod.DELETE, RequestMethod.POST })
-	public JsonResultInfo destroy(
-			@RequestBody E entity/* , @PathVariable("id") T id */) {
+	public JsonResultInfo destroy(@RequestBody E entity) {
 		JsonResultInfo info = new JsonResultInfo();
 		try {
 			// for (E e : entity) {
@@ -106,7 +103,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	
 	@Override
 	@ResponseBody
-	@AutoPermissions(permission = "read")
+	// @AutoPermissions(permission = "read")
 	@RequestMapping(value = { "/read/{id}" }, method = { RequestMethod.GET })
 	public JsonResultInfo read(@PathVariable("id") T id) {
 		// TODO Auto-generated method stub
@@ -125,7 +122,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	
 	@Override
 	@ResponseBody
-	@RequiresPermissions(value = "read")
+	// @RequiresPermissions(value = "read")
 	@RequestMapping(value = { "/reads" }, method = { RequestMethod.TRACE, RequestMethod.POST })
 	public JsonResultInfo readAll(@PageableDefault(value = 15, sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable) {
 		JsonResultInfo info = new JsonResultInfo();
@@ -148,7 +145,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	
 	@Override
 	@ResponseBody
-	@AutoPermissions(permission = "update")
+	// @AutoPermissions(permission = "update")
 	@RequestMapping(value = { "/update", "/update/{id}" }, method = { RequestMethod.PUT, RequestMethod.POST }, consumes = MediaType.ALL_VALUE)
 	public JsonResultInfo update(@RequestBody @Validated(value = { AddCheck.class }) E entity, BindingResult br) {
 		// TODO Auto-generated method stub

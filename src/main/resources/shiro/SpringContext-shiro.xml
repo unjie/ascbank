@@ -155,7 +155,7 @@
 	
 
 	<!-- 起效权限注解,这个很少在web项目中用到,一般是控制url的访问,不是在controller中声明权限注解 -->
-	<!-- 保证实现了Shiro内部lifecycle函数的bean执行 -->
+	<!-- 保证实现了Shiro内部lifecycle(生命周期)函数的bean执行 -->
 	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
 	<!-- 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证 -->
 
@@ -163,15 +163,24 @@
 	<!-- Enable Shiro Annotations for Spring-configured beans. Only run after the lifecycleBeanProcessor has run -->
 	<!-- 由于本例中并未使用Shiro注解,故注释掉这两个bean(个人觉得将权限通过注解的方式硬编码在程序中,查看起来不是很方便,没必要使用) -->
 	<!-- AOP式方法级权限检查 -->
-	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor">
-		<property name="proxyTargetClass" value="false" />
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"  >
+		<property name="order" value="1"/>
+		<property name="proxyTargetClass" value="true" />
 	</bean>
 	<!-- 开启shiro安全注释 -->
-	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor">
+	<!-- Advisor(顾问) -->
+	<!-- 	
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor" >
 		<property name="securityManager" ref="securityManager" />
 	</bean>
-	
-	<bean id="profiler" class="com.ascbank.security.shiro.authz.annotation.PermissionInterceptor" />
+ -->
+	<!-- Enable Shiro Annotations for Spring-configured beans.  Only run after -->  
+	<bean class="com.ascbank.security.shiro.interceptor.PermissionsExpandAuthorizationAdvisor">  
+	    <property name="securityManager" ref="securityManager"/>  
+	</bean> 
+
+<!-- 	
+	<bean id="profiler" class="com.ascbank.security.shiro.aop.PermissionInterceptor" />
 	
 	<aop:config >
 		<aop:aspect id="permissionAspect" ref="profiler">
@@ -179,4 +188,5 @@
 			<aop:around method="doInterceptor" pointcut-ref="businessService"/>
 		</aop:aspect>
 	</aop:config>
+ -->
 </beans>

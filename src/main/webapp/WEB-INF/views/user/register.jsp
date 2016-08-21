@@ -55,13 +55,13 @@
         <input type="password" name="respassword"  class="form-control" placeholder="Retype password">
         <span class="fa fa-sign-in form-control-feedback"></span>
       </div>
+       <div class="form-group has-feedback">
+       	<img class="form-control"  id="validateCodeImg" src="${__ROOT__}/public/captcha.jpg" />
+        <span class="fa fa-photo form-control-feedback"></span>
+      </div>
       <div class="form-group has-feedback">
         <input type="text"  name="captcha" class="form-control" placeholder="Captcha">
         <span class="fa fa-reply form-control-feedback"></span>
-      </div>
-      <div class="form-group has-feedback">
-       	<img class="form-control"  id="validateCodeImg" src="${__ROOT__}/public/captcha.jpg" />
-        <span class="fa fa-photo form-control-feedback"></span>
       </div>
       <div class="row">
         <div class="col-xs-8">

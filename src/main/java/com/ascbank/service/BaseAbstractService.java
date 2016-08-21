@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ascbank.dao.base.BaseInterfaceDao;
 import com.ascbank.dependency.injection.InjectionInterface;
 import com.ascbank.model.base.PKEntity;
+import com.ascbank.security.shiro.authz.annotation.AutoPermissions;
 import com.ascbank.verify.ValidetorInterface;
 
 /**
@@ -31,16 +32,15 @@ public abstract class BaseAbstractService<T extends Serializable, E extends PKEn
 	private static final long	serialVersionUID	= -8237810984312825562L;
 	@Autowired
 	D							beanDao;
-
+	
 	private final Logger		log					= LoggerFactory.getLogger(BaseAbstractService.class);
-
-	@Transactional
+	
 	@Override
-	// @Caching(evict = { @CacheEvict(value = "Page", allEntries = true) }, put
-	// = { @CachePut(value = "springEhcache", key =
-	// "#root.targetClass.getName()+'_'+#result.id", condition = "#result
-	// !=null") })
-	public E add(E entity) {// 类类型表达式：使用“T(Type)”来表示java.lang.Class实例，“Type”必须是类全限定名，“java.lang”包除外，即该包下的类可以不指定包名；使用类类型表达式还可以进行访问类静态方法及类静态字段。
+	@Transactional
+	@AutoPermissions
+	// @Caching(evict = { @CacheEvict(value = "Page", allEntries = true) }, put = { @CachePut(value = "springEhcache", key = "#root.targetClass.getName()+'_'+#result.id", condition = "#result !=null") })
+	public E add(E entity) {
+		// 类类型表达式：使用“T(Type)”来表示java.lang.Class实例，“Type”必须是类全限定名，“java.lang”包除外，即该包下的类可以不指定包名；使用类类型表达式还可以进行访问类静态方法及类静态字段。
 		// TODO Auto-generated method stub
 		if (log.isDebugEnabled()) {
 			log.debug("----------------- add entity={}------------------", entity);
@@ -48,12 +48,11 @@ public abstract class BaseAbstractService<T extends Serializable, E extends PKEn
 		assert (beanDao.insert(entity) == 1);
 		return entity;
 	}
-
-	// @Transactional
+	
 	@Override
-	// @Caching(evict = { @CacheEvict(value = "Page", allEntries = true),
-	// @CacheEvict(value = "springEhcache", key =
-	// "#root.targetClass.getName()+'_'+#id", condition = "#id !=null") })
+	@Transactional
+	@AutoPermissions
+	// @Caching(evict = { @CacheEvict(value = "Page", allEntries = true), @CacheEvict(value = "springEhcache", key ="#root.targetClass.getName()+'_'+#id", condition = "#id !=null") })
 	public void delete(T id) {
 		// TODO Auto-generated method stub
 		if (log.isDebugEnabled()) {
@@ -61,64 +60,55 @@ public abstract class BaseAbstractService<T extends Serializable, E extends PKEn
 		}
 		beanDao.deleteByPrimaryKey(id);
 	}
-
+	
 	public D getBean() {
 		return this.beanDao;
 	}
 
-	/*
-	 * @Override // @Cacheable(value = "getGenericity", key = "#root.targetClass.getName()+'_'+#index", unless = "#result!=null") public Class<?> getGenericity(Integer index) { return ResolvableType.forType(this.getClass().getGenericSuperclass()). resolveGeneric(index); }
-	 */
+	// @Override // @Cacheable(value = "getGenericity", key = "#root.targetClass.getName()+'_'+#index", unless = "#result!=null") public Class<?> getGenericity(Integer index) { return ResolvableType.forType(this.getClass().getGenericSuperclass()). resolveGeneric(index); }
+	
 	@Override
-	// @Caching(cacheable = { @Cacheable(value = "Page", key =
-	// "#root.targetClass.getName()+'_page_'+#pageable.getPageNumber()+'_'+#pageable.getPageSize()+#pageable.sort.iterator().next().getProperty()+'_'+#pageable.sort.iterator().next().getDirection().name()",
-	// condition = "#pageable != null") })
+	@AutoPermissions
+	// @Caching(cacheable = { @Cacheable(value = "Page", key = "#root.targetClass.getName()+'_page_'+#pageable.getPageNumber()+'_'+#pageable.getPageSize()+#pageable.sort.iterator().next().getProperty()+'_'+#pageable.sort.iterator().next().getDirection().name()",condition = "#pageable != null") })
 	public List<E> list(Pageable pageable) {
 		return beanDao.selelctByPageableAll(pageable);
 	}
-
+	
 	@Override
-	// @Caching(cacheable = { @Cacheable(value = "Page", key =
-	// "#root.targetClass.getName()+'_'+#sort.iterator().next().getProperty()+'_'+#sort.iterator().next().getDirection().name()",
-	// condition = "#sort != null") })
+	@AutoPermissions
+	// @Caching(cacheable = { @Cacheable(value = "Page", key = "#root.targetClass.getName()+'_'+#sort.iterator().next().getProperty()+'_'+#sort.iterator().next().getDirection().name()", condition = "#sort != null") })
 	public List<E> list(Sort sort) {
 		// TODO Auto-generated method stub
 		log.debug("----------------- readAll entity={}------------------", sort);
 		return beanDao.selelctBySortAll(sort);
 	}
-
-	// @EntityPermissions(permission = "read")
+	
 	@Override
-	// @Caching(cacheable = { @Cacheable(value = "ServicCache", key =
-	// "#root.targetClass.getName()+'_'+#id
-	// +#root.target.logInfo('loginfo_'+#id)", condition = "#id!=null and
-	// #root.target.logInfo('bease-read_'+#id)!=null") })
+	@AutoPermissions(permission = "read")
+	// @RequiresPermissions("read:*")
+	// @Caching(cacheable = { @Cacheable(value = "ServicCache", key = "#root.targetClass.getName()+'_'+#id +#root.target.logInfo('loginfo_'+#id)", condition = "#id!=null and #root.target.logInfo('bease-read_'+#id)!=null") })
 	public E read(T id) {
 		// TODO Auto-generated method stub
 		log.debug("---------------read {}----", id);
 		return beanDao.selectByPrimaryKey(id);
 	}
-
+	
 	@Override
 	public void setBean(D bean) {
 		// TODO Auto-generated method stub
 		this.beanDao = bean;
 	}
 
-	// @Transactional
 	@Override
-	// @Caching(evict = { @CacheEvict(value = "Page", allEntries =
-	// true),@CacheEvict(value = "springEhcache", key =
-	// "#root.targetClass.getName()+'_'+#entity.id", condition = "#entity!=null
-	// and (#entity.id !=null)") }, put = { @CachePut(value = "springEhcache",
-	// key = "#root.targetClass.getName()+'_'+#result.id", condition =
-	// "#entity!=null") })
+	@Transactional
+	@AutoPermissions
+	// @Caching(evict = { @CacheEvict(value = "Page", allEntries = true),@CacheEvict(value = "springEhcache", key = "#root.targetClass.getName()+'_'+#entity.id", condition = "#entity!=null and (#entity.id !=null)") }, put = { @CachePut(value = "springEhcache", key = "#root.targetClass.getName()+'_'+#result.id", condition = "#entity!=null") })
 	public E update(E entity) {
 		log.debug("----------------- update entity={}------------------", entity);
 		beanDao.updateByPrimaryKeySelective(entity);
 		return entity;
 	}
-
+	
 	@Override
 	public List<E> verify(Map<String, Object> map) {
 		

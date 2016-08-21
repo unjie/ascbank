@@ -8,18 +8,15 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import org.apache.shiro.SecurityUtils;
 import org.apache.shiro.aop.MethodInvocation;
-import org.apache.shiro.authz.UnauthorizedException;
-import org.apache.shiro.authz.annotation.Logical;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.ResolvableType;
 import org.springframework.data.domain.Persistable;
 import org.springframework.util.CollectionUtils;
+import org.springframework.util.StringUtils;
 
 import com.ascbank.security.shiro.authz.annotation.AutoPermissions;
-import com.ascbank.util.StringUtil;
 
 /**
  * @author jie
@@ -29,83 +26,79 @@ public class MethodInvocationAnnotationHandler {
 	
 	private static final Logger log = LoggerFactory.getLogger(MethodInvocationAnnotationHandler.class);
 
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Annotation MethodAnnotationHandler(MethodInvocation mi, Annotation a) {
-		Subject currentUser = SecurityUtils.getSubject();
+		// Subject currentUser = SecurityUtils.getSubject();
 		if (a instanceof AutoPermissions) {
-			boolean isPermissioin = false;
+			
 			AutoPermissions ap = (AutoPermissions) a;
-			String permissions = "";
+			
 			String[] permission = ap.permission();
 			String ids = ap.ids();
 			String entityName = ap.entity();
-			Object arg0 = mi.getArguments();
-
+			Object[] arg0 = mi.getArguments();
+			String authentication = "";
 			log.debug("------------------->（AOP）拦截到了:{}", arg0);
-			if (ids.isEmpty() && arg0 != null) {
-				if (arg0.getClass().isArray() || arg0 instanceof Collection) {
-					List list = arg0.getClass().isArray() ? CollectionUtils.arrayToList(arg0)
-							: new ArrayList<Object>((Collection) arg0);
-					for (Object obj : list) {
-						ids += (obj instanceof Persistable ? ((Persistable) obj).getId() : obj) + ",";
-					}
-					ids.substring(0, ids.length() - 1);
-				} else {
-					if (arg0 instanceof Persistable) {
-						if (((Persistable) arg0).getId() == null) {
-							throw new UnauthorizedException("{default.not.permissions}");// 拦截通过更新添加数据(id=null)
+			if (arg0 != null) {
+				List list = null;
+				for (Object obj : arg0) {
+					if (obj instanceof Persistable) {
+						entityName = obj.getClass().getSimpleName();
+						ids = ((Persistable) obj).getId() + "";
+						log.debug("------------------->0.（AOP）拦截到了:{}", entityName);
+						break;
+					} else if (obj.getClass().isArray() || obj instanceof Collection) {
+						if (Persistable.class.isAssignableFrom(obj.getClass().getComponentType())) {
+							list = obj.getClass().isArray() ? CollectionUtils.arrayToList(obj)
+									: new ArrayList<Object>((Collection) obj);
+							entityName = obj.getClass().getComponentType().getSimpleName();
+							log.debug("------------------->1.（AOP）拦截到了:{}", entityName);
 						}
-						ids = ((Persistable) arg0).getId().toString();
+						
+					}
+				}
+				if (entityName.isEmpty()) {
+					if (list == null) {
+						Class returnType = mi.getMethod().getReturnType();
+						if (Persistable.class.isAssignableFrom(returnType)) {
+							entityName = returnType.getSimpleName();
+							
+							log.debug("->>>>>>>>{}                {}      ------------------------------------", mi.getThis().getClass().getSuperclass().getGenericSuperclass().getClass(), ResolvableType.forType(mi.getThis().getClass().getSuperclass().getGenericSuperclass()).getGenerics());
+							ResolvableType.forType(mi.getThis().getClass().getSuperclass().getGenericSuperclass()).resolveGeneric(1);
+							log.debug("------------------->3.（AOP）拦截到了:{}                 |||>{}", returnType, mi.getThis().getClass().getName());
+						} else if (returnType.isArray() || Collection.class.isAssignableFrom(returnType)) {
+							entityName = returnType.getComponentType().getSimpleName();
+							log.debug("------------------->4.（AOP）拦截到了:{}", entityName);
+						} else {
+							entityName = "";
+							log.debug("------------------->5.（AOP）拦截到了:{}", entityName);
+						}
+					}
+				}
+				authentication += entityName + (entityName.isEmpty() ? "" : ":");
+				if (permission == null || permission.length == 0) {
+					authentication += mi.getMethod().getName();
+				} else {
+					authentication += StringUtils.arrayToDelimitedString(permission, ",");
+				}
+				if (ids.isEmpty()) {
+					if (list != null) {
+						for (Object obj : list) {
+							ids += (obj instanceof Persistable ? ((Persistable) obj).getId() : obj) + ",";
+						}
+						ids.substring(0, ids.length() - 1);
+						
 					} else {
-						ids = arg0.toString();
+						ids = "*";
 					}
+					
 				}
-			}
-
-			if (arg0 != null && entityName.isEmpty()) {
-				entityName = arg0.getClass().getSimpleName();
-			}
-			ids = (StringUtil.isNullOrEmpty(ids) ? "" : (":" + ids));
-
-			if (permission.length == 1) {
-				currentUser.checkPermission(entityName + ":" + permission[0] + ids);
-				// permission = new String[] { pjp.getSignature().getName() };
-			}
-
-			for (int i = 0; 1 <= permission.length; i++) {
-				// 当前登录人 具有权限
-				permission[i] = entityName + ":" + permission[i] + ids;
-			}
-
-			if (Logical.AND.equals(ap.logical())) {
-				currentUser.checkPermissions(permission);
-			}
-
-			if (Logical.OR.equals(ap.logical())) {
-				// Avoid processing exceptions unnecessarily - "delay" throwing
-				// the exception by calling hasRole first
-				boolean hasAtLeastOnePermission = false;
-				for (String perm : permission) {
-					if (currentUser.isPermitted(perm)) {
-						hasAtLeastOnePermission = true;
-					}
-				}
-				// Cause the exception if none of the role match, note that the
-				// exception message will be a bit misleading
-				if (!hasAtLeastOnePermission) {
-					currentUser.checkPermission(permission[0]);
-				}
-
-			} else {
-				isPermissioin = true;
-			}
-			log.debug("------------------->（AOP）拦截到了:{}", permissions);
-			if (!isPermissioin) {
-				// 抛出无权限异常
-				throw new UnauthorizedException("{default.not.permissions}");
+				
+				ap.authentication()[0].concat(authentication + ":" + ids);
+				log.debug("------------------->{}（AOP）拦截到了:{}", (authentication + ":" + ids).toString(), ap.authentication()[0]);
 			}
 		}
-
 		return a;
 	}
-	
+
 }
