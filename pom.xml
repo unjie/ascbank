@@ -7,6 +7,15 @@
 	<name>ascbank</name>
 	<description>ascbank</description>
 	<url>http://localhost:3000/unjie/ascbank.git</url>
+	
+	
+	<parent>
+	    <groupId>org.springframework.boot</groupId>
+	    <artifactId>spring-boot-starter-parent</artifactId>
+	    <version>1.3.5.RELEASE</version>
+	    <relativePath /> <!-- lookup parent from repository -->
+	</parent>
+	
 	<properties>
 		<hibernate.version>5.2.4.Final</hibernate.version>
 		<lucene.version>6.0.1</lucene.version>
@@ -277,6 +286,52 @@
 		</dependency>
 		<!--[END] TEST TOOL -->
 		
+		<!-- [START] spring-cloud -->
+		<dependency>
+	        <groupId>org.springframework.cloud</groupId>
+	        <artifactId>spring-cloud-starter-config</artifactId>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-test</artifactId>
+	        <scope>test</scope>
+	    </dependency>
+
+		<!-- [END] spring-cloud -->
+		
+		
+		
+		<!--[START] tomcat -->
+ 		<!--
+ 		 <dependency>
+		  <groupId>org.apache.tomcat</groupId>
+		  <artifactId>tomcat-util</artifactId>
+		  <version>8.0.33</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.tomcat</groupId>
+		  <artifactId>tomcat-api</artifactId>
+		  <version>8.0.33</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.tomcat</groupId>
+		  <artifactId>tomcat-websocket</artifactId>
+		  <version>8.0.0-RC5</version>
+		</dependency>
+		 -->
+		<dependency>
+		  <groupId>org.apache.tomcat.embed</groupId>
+		  <artifactId>tomcat-embed-websocket</artifactId>
+		  <version>9.0.0.M4</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.tomcat.embed</groupId>
+		  <artifactId>tomcat-embed-core</artifactId>
+		  <version>9.0.0.M3</version>
+		</dependency>
+		<!--[END] tomcat -->
+		
+		
 		
 <!-- 	<dependency>
 	  <groupId>joda-time</groupId>
@@ -285,6 +340,19 @@
 	  <scope>pom</scope>
 	</dependency> -->
 	</dependencies>
+
+<dependencyManagement>
+    <dependencies>
+        <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-dependencies</artifactId>
+            <version>Brixton.RELEASE</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
+    </dependencies>
+</dependencyManagement>
+
 
 	<build>
 		<pluginManagement>
@@ -414,7 +482,19 @@
 						</dependency>
 					</dependencies>
 				</plugin>
+				
+				
+				
+				 <plugin>
+		            <groupId>org.springframework.boot</groupId>
+		            <artifactId>spring-boot-maven-plugin</artifactId>
+		        </plugin>
+				
+				
+				
 			</plugins>
+			
+			
 		</pluginManagement>
 	</build>
 	<repositories>
