@@ -7,23 +7,20 @@ import org.apache.shiro.aop.MethodInvocation;
 import org.apache.shiro.authz.AuthorizationException;
 import org.apache.shiro.authz.aop.AuthorizingAnnotationHandler;
 import org.apache.shiro.authz.aop.AuthorizingAnnotationMethodInterceptor;
-import org.junit.Test;
 
-import com.ascbank.model.User;
 import com.ascbank.security.shiro.aop.AutoPermissionsAnnotationHandler;
 import com.ascbank.security.shiro.aop.MethodInvocationAnnotationHandler;
-import com.ascbank.security.shiro.authz.annotation.AutoPermissions;
 
 public class AutoPermissionsAnnotationMethodInterceptor extends AuthorizingAnnotationMethodInterceptor {
 	
 	public AutoPermissionsAnnotationMethodInterceptor() {
 		super(new AutoPermissionsAnnotationHandler());
 	}
-
+	
 	public AutoPermissionsAnnotationMethodInterceptor(AnnotationResolver resolver) {
 		super(new AutoPermissionsAnnotationHandler(), resolver);
 	}
-	
+
 	@Override
 	public void assertAuthorized(MethodInvocation mi) throws AuthorizationException {
 		try {
@@ -42,16 +39,5 @@ public class AutoPermissionsAnnotationMethodInterceptor extends AuthorizingAnnot
 			throw ae;
 		}
 	}
-
-	@AutoPermissions
-	public void read(User user) {
-		
-	}
 	
-	@Test
-	public void test() {
-		User u = new User();
-		u.setId(1L);
-		
-	}
 }

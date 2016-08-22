@@ -2,7 +2,7 @@
 export LOG_PATH="/export/Logs/com.ascbank.local"
 mkdir -p $LOG_PATH
 # 启动类
-export MAIN_CLASS=com.ascbank.startup.Bootstrap
+export MAIN_CLASS=com.ascbank.startup.Application
 
 echo -------------------------------------------
 echo stop server

@@ -14,7 +14,7 @@ export _EXECJAVA="$JAVA_HOME/bin/java"
 # JVM启动参数
 export JAVA_OPTS="-server -Xms128m -Xmx256m -Xss256k -XX:MaxDirectMemorySize=128m"
 # 启动类
-export MAIN_CLASS=com.ascbank.startup.Bootstrap
+export MAIN_CLASS=com.ascbank.startup.Application
 
 $_EXECJAVA $JAVA_OPTS -classpath $CLASSPATH $MAIN_CLASS &
 tail -f $LOG_PATH/stdout.log

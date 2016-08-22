@@ -10,7 +10,7 @@
 	</appender>
 	
 	<!-- 演示按时间滚动的策略 -->
-	<appender name="defaultlogFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+	<appender name="defaultLogFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
 		<file>/tmp/logs/showcase.log</file>
 		
 		<rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">

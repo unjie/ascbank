@@ -14,6 +14,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TomcatBootstrap {
+	
 	private static final Logger LOG = LoggerFactory.getLogger(TomcatBootstrap.class);
 
 	private static Tomcat createTomcat(int port, String contextPath, String docBase) throws Exception {
@@ -42,8 +43,7 @@ public class TomcatBootstrap {
 		return new File(projectDir, "src/main/webapp").getPath();
 	}
 
-	public static void main(String[] args) throws Exception {
-		// 提升性能(https://wiki.apache.org/tomcat/HowTo/FasterStartUp)
+	public static void main(String[] args) throws Exception { // 提升性能(https://wiki.apache.org/tomcat/HowTo/FasterStartUp)
 		System.setProperty("tomcat.util.scan.StandardJarScanFilter.jarsToSkip", "*.jar");
 		// System.setProperty("securerandom.source","file:/dev/./urandom");
 		int port = Integer.parseInt(System.getProperty("server.port", "8080"));
@@ -53,6 +53,7 @@ public class TomcatBootstrap {
 		final Tomcat tomcat = createTomcat(port, contextPath, docBase);
 		tomcat.start();
 		Runtime.getRuntime().addShutdownHook(new Thread() {
+			
 			@Override
 			public void run() {
 				try {

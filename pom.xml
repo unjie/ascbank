@@ -9,13 +9,15 @@
 	<url>http://localhost:3000/unjie/ascbank.git</url>
 	
 	
+<!-- 	
 	<parent>
 	    <groupId>org.springframework.boot</groupId>
 	    <artifactId>spring-boot-starter-parent</artifactId>
-	    <version>1.3.5.RELEASE</version>
-	    <relativePath /> <!-- lookup parent from repository -->
+	    <version>1.4.0.RELEASE</version>
+	    <relativePath /> lookup parent from repository
 	</parent>
-	
+	 -->
+
 	<properties>
 		<hibernate.version>5.2.4.Final</hibernate.version>
 		<lucene.version>6.0.1</lucene.version>
@@ -38,13 +40,16 @@
 	<dependencies>
 
 		<!--[START] Log -->
+
 		<dependency>
 			<groupId>org.slf4j</groupId>
 			<artifactId>slf4j-log4j12</artifactId>
-			<version>1.7.21</version>
+			<version>1.7.21</version> 
 		</dependency>
+
 		<!--[END] Log -->
 		<!--[START] servlet -->
+<!-- 
 		<dependency>
 			<groupId>javax.servlet</groupId>
 			<artifactId>jstl</artifactId>
@@ -56,6 +61,7 @@
 			<version>2.5</version>
 			<scope>provided</scope>
 		</dependency>
+-->
 		<!--[END] servlet -->
 
 		<!--[START] javax.cache api -->
@@ -287,9 +293,14 @@
 		<!--[END] TEST TOOL -->
 		
 		<!-- [START] spring-cloud -->
+<!-- 		
 		<dependency>
 	        <groupId>org.springframework.cloud</groupId>
 	        <artifactId>spring-cloud-starter-config</artifactId>
+	    </dependency>
+	    <dependency>
+	        <groupId>org.springframework.cloud</groupId>
+	        <artifactId>spring-cloud-starter-eureka</artifactId>
 	    </dependency>
 	    <dependency>
 	        <groupId>org.springframework.boot</groupId>
@@ -297,17 +308,17 @@
 	        <scope>test</scope>
 	    </dependency>
 
+	     <dependency>
+	        <groupId>org.springframework.boot</groupId>
+	        <artifactId>spring-boot-starter-web</artifactId>
+	    </dependency>
+ -->
 		<!-- [END] spring-cloud -->
 		
 		
 		
 		<!--[START] tomcat -->
  		<!--
- 		 <dependency>
-		  <groupId>org.apache.tomcat</groupId>
-		  <artifactId>tomcat-util</artifactId>
-		  <version>8.0.33</version>
-		</dependency>
 		<dependency>
 		  <groupId>org.apache.tomcat</groupId>
 		  <artifactId>tomcat-api</artifactId>
@@ -319,6 +330,12 @@
 		  <version>8.0.0-RC5</version>
 		</dependency>
 		 -->
+ 		 <dependency>
+		  <groupId>org.apache.tomcat</groupId>
+		  <artifactId>tomcat-util</artifactId>
+		  <version>8.0.33</version>
+		</dependency>
+		<!-- //tomcat-内置所需jar -->
 		<dependency>
 		  <groupId>org.apache.tomcat.embed</groupId>
 		  <artifactId>tomcat-embed-websocket</artifactId>
@@ -329,6 +346,13 @@
 		  <artifactId>tomcat-embed-core</artifactId>
 		  <version>9.0.0.M3</version>
 		</dependency>
+		
+		<dependency>
+		  <groupId>org.apache.tomcat.embed</groupId>
+		  <artifactId>tomcat-embed-jasper</artifactId>
+		  <version>9.0.0.M3</version>
+		</dependency>
+	
 		<!--[END] tomcat -->
 		
 		
@@ -340,7 +364,7 @@
 	  <scope>pom</scope>
 	</dependency> -->
 	</dependencies>
-
+<!-- 
 <dependencyManagement>
     <dependencies>
         <dependency>
@@ -350,9 +374,16 @@
             <type>pom</type>
             <scope>import</scope>
         </dependency>
+         <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-dependencies</artifactId>
+            <version>1.4.0.RELEASE</version>
+            <type>pom</type>
+            <scope>import</scope>
+        </dependency>
     </dependencies>
 </dependencyManagement>
-
+ -->
 
 	<build>
 		<pluginManagement>
@@ -362,8 +393,8 @@
 					<artifactId>maven-compiler-plugin</artifactId>
 					<configuration>
 						<encoding>utf-8</encoding>
-						<source>1.7</source>
-						<target>1.7</target>
+						<source>1.8</source>
+						<target>1.8</target>
 					</configuration>
 				</plugin>
 				<plugin>
@@ -484,13 +515,13 @@
 				</plugin>
 				
 				
-				
+<!-- 				
 				 <plugin>
 		            <groupId>org.springframework.boot</groupId>
 		            <artifactId>spring-boot-maven-plugin</artifactId>
 		        </plugin>
 				
-				
+ -->
 				
 			</plugins>
 			
