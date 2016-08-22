@@ -330,11 +330,13 @@
 		  <version>8.0.0-RC5</version>
 		</dependency>
 		 -->
+ 		<!-- 
  		 <dependency>
 		  <groupId>org.apache.tomcat</groupId>
 		  <artifactId>tomcat-util</artifactId>
 		  <version>8.0.33</version>
 		</dependency>
+		 -->
 		<!-- //tomcat-内置所需jar -->
 		<dependency>
 		  <groupId>org.apache.tomcat.embed</groupId>
@@ -344,13 +346,17 @@
 		<dependency>
 		  <groupId>org.apache.tomcat.embed</groupId>
 		  <artifactId>tomcat-embed-core</artifactId>
-		  <version>9.0.0.M3</version>
+		  <version>9.0.0.M4</version>
 		</dependency>
-		
 		<dependency>
 		  <groupId>org.apache.tomcat.embed</groupId>
 		  <artifactId>tomcat-embed-jasper</artifactId>
-		  <version>9.0.0.M3</version>
+		  <version>9.0.0.M4</version>
+		</dependency>
+		<dependency>
+		  <groupId>org.apache.tomcat</groupId>
+		  <artifactId>tomcat-juli</artifactId>
+		  <version>9.0.0.M9</version>
 		</dependency>
 	
 		<!--[END] tomcat -->
