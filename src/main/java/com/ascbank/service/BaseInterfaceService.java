@@ -22,17 +22,17 @@ public interface BaseInterfaceService<T extends Serializable, E extends PKEntity
 	
 	@Transactional
 	public abstract E add(E entity) throws Exception;
-
+	
 	@Transactional
 	public abstract void delete(T id) throws Exception;
-
-	public abstract List<E> list(Pageable pageable);
-
-	public abstract List<E> list(Sort sort);
-
+	
+	public abstract List<E> read(Pageable pageable);
+	
+	public abstract List<E> read(Sort sort);
+	
 	public abstract E read(T id);
-
+	
 	@Transactional
 	public abstract E update(E entity) throws Exception;
-
+	
 }
