@@ -195,14 +195,6 @@
 			            selections = getIdSelections();
 			            // push or splice the selections if you want to save all data selections
 			        });
-			        $table.on('expand-row.bs.table', function (e, index, row, $detail) {
-			            if (index % 2 == 1) {
-			                $detail.html('Loading from ajax request...');
-			                $.get('LICENSE', function (res) {
-			                    $detail.html(res.replace(/\n/g, '<br>'));
-			                });
-			            }
-			        });
 			        $table.on('all.bs.table', function (e, name, args) {
 			            console.log(name, args);
 			        });
@@ -236,15 +228,41 @@
 			
 			    function detailFormatter(index, row) {
 			        var html = [];
-			        html.push('<form action="${__ROOT__}/user/update" method="POST" id=form_"'+index+'">');
+			        html.push('<form action="javascript:alert( \'success!\' );" method="POST" id=form_"'+index+'" onsubmit="javascript:user_submit_update(this);">');
 			        $.each(row, function (key, value) {
-			            html.push('<p><b>' + key + ':</b><input type="text" value="'+value+'" id="k_'+key+'"></p>');
+			            html.push('<span style="float:left;width:30%;margin:5px;"><b style="float:left;width:25%">' + key + ':</b><input type="text" name="'+key+'" value="'+value+'" id="k_'+key+'"></span>');
 			        });
-			        html.push('<input type="submit" value="提交">');
+			        html.push('<span style="float:left;;width:30%;"><input type="submit"  value="提交" ></span>');//onsubmit="javascript:user_submit_update(this);"
 			        html.push('</form>');
 			        return html.join('');
 			    }
-			
+			    
+			    jQuery.prototype.serializeObject=function(){  
+			        var obj=new Object();  
+			        $.each(this.serializeArray(),function(index,param){  
+			            if(!(param.name in obj)){  
+			                obj[param.name]=param.value;  
+			            }  
+			        });  
+			        return obj;  
+			    };  
+			function user_submit_update(even){
+				var e=$(even),data=e.serializeObject();
+				console.log(data);
+				$.ajax({
+					  type: 'POST',
+					//  contentType:'application/json',
+					  url: "${__ROOT__}/user/update.json",
+					  data: data,
+					  dataType: "json",
+					  success: function(e){
+						  alert(e);
+					  }
+					 });
+			}
+			    
+			    
+			    
 			    function operateFormatter(value, row, index) {
 			        return [
 			            '<a class="like" href="javascript:void(0)" title="Like">',

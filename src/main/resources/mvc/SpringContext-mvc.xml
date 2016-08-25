@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:context="http://www.springframework.org/schema/context" xmlns:p="http://www.springframework.org/schema/p" xmlns:util="http://www.springframework.org/schema/util" xmlns:tx="http://www.springframework.org/schema/tx" xmlns:aop="http://www.springframework.org/schema/aop" xmlns:cache="http://www.springframework.org/schema/cache"
-	xsi:schemaLocation="
-        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.1.xsd
-        http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
-        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.1.xsd
-        http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.1.xsd
-        http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.1.xsd
-        http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.1.xsd
-        http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.1.xsd">
+	xsi:schemaLocation="http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd
+		http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
 	<!-- 启用注解 -->
 
@@ -16,7 +15,7 @@
 		<constructor-arg ref="conversionService" />
 	</bean>
 	<!-- Pageable 分页实现请求 -->
-	<mvc:annotation-driven conversion-service="conversionService" validator="validator">
+	<mvc:annotation-driven conversion-service="conversionService" validator="validator" >
 		<mvc:argument-resolvers>
 			<bean class="org.springframework.data.web.PageableHandlerMethodArgumentResolver" />
 		</mvc:argument-resolvers>
@@ -62,28 +61,34 @@
 		<property name="mediaTypes">
 			<map>
 				<entry key="xml" value="application/xml" />
-				<entry key="json" value="text/plain" />
+				<entry key="json" value="application/json" />
 				<entry key="xls" value="application/vnd.ms-excel" />
-				<entry key="html" value="*" />
+				<entry key="html" value="*/*" />
 			</map>
 		</property>
 	</bean>
 
-	<!-- bean name view resolver -->
-	<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="0" />
 	<!-- 根据客户端的不同的请求决定不同的 view进行响应, 如 /blog/1.json /blog/1.xml -->
-	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" p:order="1">
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" >
+	     <!-- <property name="ignoreAcceptHeader" value="true"/>   -->
+        <!-- <property name="defaultContentType" value="text/html"/>   -->
 		<property name="contentNegotiationManager" ref="cnManager" />
 		<property name="viewResolvers">
 			<list>
-				<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+				<!-- bean name view resolver -->
+				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="1" />
+				<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="2" >
 					<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 					<property name="contentType" value="text/html" />
 					<property name="prefix" value="/WEB-INF/views" />
 					<property name="suffix" value=".jsp" />
 				</bean>
 			</list>
+			
+			
 		</property>
+		
+		
 	</bean>
 	<!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
 	<!-- <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="2"> <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" /> <property name="contentType" value="text/html" /> <property name="prefix" value="/WEB-INF/views" /> <property name="suffix" value=".jsp" /> </bean> -->

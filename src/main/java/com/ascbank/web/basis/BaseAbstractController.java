@@ -93,7 +93,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	}
 
 	@Override
-	@RequestMapping(value = { "/", "/{pagename:[\\w]+}**" }, path = {}, method = RequestMethod.GET, consumes = { "text/plain", "application/*" })
+	@RequestMapping(value = { "/", "/{pagename:[\\w]+}**" }, path = {}, method = RequestMethod.GET)
 	public String getHtml(@PathVariable("pagename") String pagename) {
 		RequestMapping rm = this.getClass().getAnnotation(RequestMapping.class);
 		log.debug("=========={}=========", rm);
@@ -146,7 +146,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	@Override
 	@ResponseBody
 	// @AutoPermissions(permission = "update")
-	@RequestMapping(value = { "/update", "/update/{id}" }, method = { RequestMethod.PUT, RequestMethod.POST }, consumes = MediaType.ALL_VALUE)
+	@RequestMapping(value = { "/update", "/update/{id}" }, method = { RequestMethod.PUT, RequestMethod.POST }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
 	public JsonResultInfo update(@RequestBody @Validated(value = { AddCheck.class }) E entity, BindingResult br) {
 		// TODO Auto-generated method stub
 		JsonResultInfo info = new JsonResultInfo();
