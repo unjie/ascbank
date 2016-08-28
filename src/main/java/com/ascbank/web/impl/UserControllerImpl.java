@@ -91,7 +91,7 @@ public class UserControllerImpl extends com.ascbank.web.basis.BaseAbstractContro
 	 */
 	@Override
 	@RequestMapping(value = { "/register" }, method = { RequestMethod.POST })
-	public String register(@Validated(value = { CaptchaCheck.class, AddCheck.class }) Register user, BindingResult br) {
+	public String register(@Validated(value = { CaptchaCheck.class, LoginCheck.class, AddCheck.class }) Register user, BindingResult br) {
 		log.debug("----------User : {}-----BR : {}----", user, br);
 		if (br.hasErrors()) {
 			log.debug("------------------BR {}-------------------", br.getAllErrors());

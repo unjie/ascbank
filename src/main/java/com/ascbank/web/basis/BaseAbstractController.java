@@ -9,7 +9,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
-import org.springframework.http.MediaType;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -31,19 +30,18 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	 *
 	 */
 	private static final long	serialVersionUID	= -3550102906601887804L;
-
+	
 	@Autowired
 	protected S					beanService;
 	private Logger				log					= LoggerFactory.getLogger(BaseAbstractController.class);
 	@Autowired
 	protected Properties		systemConfig;
-
+	
 	@Override
 	@ResponseBody
 	// @RequiresPermissions(value = "add")
-	@RequestMapping(value = { "/create" }, method = RequestMethod.POST)
-	public JsonResultInfo create(@RequestBody @Validated(value = { AddCheck.class }) E entity,
-			BindingResult br) {
+	@RequestMapping(value = { "/create" }, method = { RequestMethod.POST, RequestMethod.PUT })
+	public JsonResultInfo create(@RequestBody @Validated(value = { AddCheck.class }) E entity, BindingResult br) {
 		
 		JsonResultInfo info = new JsonResultInfo();
 		try {
@@ -54,7 +52,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 			log.debug("------------create--->{}<------------------------", entity);
 			entity = this.getBeanService().add(entity);
 			// }
-
+			
 			info.setSuccess(true);
 			info.setMessage("{default.create.succeed}");
 			info.setData(entity);
@@ -64,18 +62,23 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		}
 		return info;
 	}
-
+	
 	@Override
 	@ResponseBody
 	// @AutoPermissions(permission = "destroy")
-	@RequestMapping(value = { "/destroy/**", "/destroy" }, method = { RequestMethod.DELETE, RequestMethod.POST })
-	public JsonResultInfo destroy(@RequestBody E entity) {
+	@RequestMapping(value = { "/destroy", "/destroy/{id}" }, method = { RequestMethod.DELETE, RequestMethod.POST })
+	public JsonResultInfo destroy(@RequestBody E entity, @PathVariable("id") T id) {
 		JsonResultInfo info = new JsonResultInfo();
 		try {
 			// for (E e : entity) {
 			log.debug("---------------destroy------>{}<-----------------------", entity);
-			this.getBeanService().delete(entity.getId());
-			// }
+			id = (entity != null) ? entity.getId() : id;
+			if (id == null) {
+				info.setSuccess(false);
+				info.setMessage("{default.destroy.failure}");
+				return info;
+			}
+			this.getBeanService().delete(id);
 			info.setSuccess(true);
 			info.setMessage("{default.destroy.succeed}");
 		} catch (Exception e) {
@@ -84,34 +87,34 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		}
 		return info;
 	}
-
+	
 	/**
 	 * @return the beanService
 	 */
 	public S getBeanService() {
 		return beanService;
 	}
-
+	
 	@Override
 	@RequestMapping(value = { "/", "/{pagename:[\\w]+}**" }, path = {}, method = RequestMethod.GET)
 	public String getHtml(@PathVariable("pagename") String pagename) {
 		RequestMapping rm = this.getClass().getAnnotation(RequestMapping.class);
 		log.debug("=========={}=========", rm);
 		return rm.value()[0] + "/" + ((pagename == null) ? "index" : pagename);
-
+		
 	}
-
+	
 	@Override
 	@ResponseBody
 	// @AutoPermissions(permission = "read")
 	@RequestMapping(value = { "/read/{id}" }, method = { RequestMethod.GET })
 	public JsonResultInfo read(@PathVariable("id") T id) {
 		// TODO Auto-generated method stub
-
+		
 		if (log.isDebugEnabled()) {
 			log.debug("--------read----{}---------", id.toString());
 		}
-
+		
 		JsonResultInfo info = new JsonResultInfo();
 		info.setData(this.getBeanService().read(id));
 		info.setSuccess(true);
@@ -119,7 +122,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		log.debug("------------------info =>{}-------------------", info);
 		return info;
 	}
-
+	
 	@Override
 	@ResponseBody
 	// @RequiresPermissions(value = "read")
@@ -136,23 +139,25 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		}
 		return info;
 	}
-
+	
 	@Override
 	public void setBean(S bean) {
 		// TODO Auto-generated method stub
 		this.beanService = bean;
 	}
-
+	
 	@Override
 	@ResponseBody
 	// @AutoPermissions(permission = "update")
-	@RequestMapping(value = { "/update", "/update/{id}" }, method = { RequestMethod.PUT, RequestMethod.POST }, produces = { MediaType.APPLICATION_JSON_UTF8_VALUE })
+	@RequestMapping(value = { "/update", "/update/{id}" }, method = { RequestMethod.PATCH, RequestMethod.POST })// produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }
 	public JsonResultInfo update(@RequestBody @Validated(value = { AddCheck.class }) E entity, BindingResult br) {
 		// TODO Auto-generated method stub
 		JsonResultInfo info = new JsonResultInfo();
 		try {
 			if (br.hasErrors()) {
-				throw new ArticleException(br.getAllErrors().iterator().next().getDefaultMessage());
+				log.debug("-----------------------update--->{}<-------------", br.getAllErrors());
+
+				throw new ArticleException(br.getAllErrors().toString());
 			}
 			// for (E e : entity) {
 			log.debug("-----------------------update--->{}<-------------", entity);
@@ -167,5 +172,5 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		}
 		return info;
 	}
-
+	
 }

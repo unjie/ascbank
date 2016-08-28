@@ -39,50 +39,50 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 	 */
 	private final static long		serialVersionUID	= 122684424253144556L;
 	private Logger					log					= LoggerFactory.getLogger(UserServiceImpl.class);
-	
+
 	/*
 	 * (non-Javadoc)
 	 *
 	 * @see com.ascbank.service.UserService_#login(com.ascbank.model.User)
 	 */
-	
+
 	@Autowired(required = false)
 	private PermissionMapper		permissionMap;
-	
+
 	@Autowired(required = false)
 	private UserPermissionMapper	userPermissionMap;
-	
+
 	@Override
 	@Transactional
 	public User add(User user) {
 		entryptPassword(user);
-
+		
 		// 插入 User
 		getBean().insertSelective(user);
-		
+
 		// 创建Permission 对象
 		Permission perm = new Permission(null, user.getId().toString(), "User", "read,update", "[ " + user.getUsername() + " ] User Permission");
 		// 插入perm对象
 		permissionMap.insertSelective(perm);
-		
+
 		// UserPermission 关联对象
 		UserPermission up = new UserPermission();
 		up.setUserId(user.getId());
 		up.setPermissionId(perm.getId());
 		// 插入关联
 		userPermissionMap.insert(up);
-		
+
 		List<Permission> permis = user.getPermissions();
 		if (permis == null) {
 			permis = new ArrayList<Permission>();
 		}
 		permis.add(perm);
 		user.setPermissions(permis);
-		
+
 		return user;
-		
+
 	}
-	
+
 	@Override
 	public boolean canEvict(Cache userCache, Long id, String username) {
 		User cacheUser = userCache.get(id, User.class);
@@ -91,11 +91,11 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 		}
 		return !cacheUser.getUsername().equals(username);
 	}
-	
+
 	@Override
 	public User entryptPassword(User user) {
 		byte[] salt = null;
-		if (user.getEncrypt() == null || user.getEncrypt().isEmpty()) {
+		if (StringUtils.isEmpty(user.getEncrypt())) {
 			salt = Digests.generateSalt(UserService.SALT_SIZE);
 			user.setEncrypt(Encodes.encodeHex(salt));
 		}
@@ -104,7 +104,7 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 		user.setPassword(Encodes.encodeHex(hashPassword));
 		return user;
 	}
-	
+
 	@Override
 	public User login(User user) throws UserException {
 		
@@ -115,7 +115,7 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 				log.debug("-------->>>>>" + user);
 			}
 			subject.login(upt);
-			
+
 		} catch (AuthenticationException e) {
 			if (log.isInfoEnabled()) {
 				log.error("登录失败错误信息:" + e);
@@ -123,15 +123,15 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 			upt.clear();
 			throw new UserException("{User.nameAndPassword.error}");
 		}
-		
+
 		return user;
-		
+
 	}
-	
+
 	@Override
 	public User logout() {
 		Subject subject = SecurityUtils.getSubject();
-		
+
 		if (subject != null) {
 			
 			User user = this.read((String) subject.getPrincipal());
@@ -141,22 +141,20 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 		}
 		return null;
 	}
-	
+
 	@Override
 	public User read(String username) {
 		// TODO Auto-generated method stub
 		return getBean().selectByUsername(username);
 	}
-	
+
 	@Override
 	@Transactional
 	public User update(User user) {
-		if (StringUtils.isEmpty(user.getPassword())) {
-			user.setPassword(null);
-		} else {
+		if (StringUtils.isEmpty(user.getEncrypt()) && !StringUtils.isEmpty(user.getPassword())) {
 			user = this.entryptPassword(user);
 		}
 		return super.update(user);
 	}
-	
+
 }

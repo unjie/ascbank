@@ -14,14 +14,64 @@
 	<bean class="org.springframework.data.repository.support.DomainClassConverter">
 		<constructor-arg ref="conversionService" />
 	</bean>
-	<!-- Pageable 分页实现请求 -->
-	<mvc:annotation-driven conversion-service="conversionService" validator="validator" >
+
+	<mvc:annotation-driven conversion-service="conversionService" validator="validator">
 		<mvc:argument-resolvers>
+			<!-- Pageable 分页实现请求 -->
 			<bean class="org.springframework.data.web.PageableHandlerMethodArgumentResolver" />
 		</mvc:argument-resolvers>
+<!-- 
+		<mvc:message-converters register-defaults="true">
+			//将StringHttpMessageConverter的默认编码设为UTF-8
+			<bean class="org.springframework.http.converter.StringHttpMessageConverter">
+				<constructor-arg value="UTF-8" />
+			</bean>
+			//将Jackson2HttpMessageConverter的默认格式化输出设为true
+			<bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter">
+				<property name="prettyPrint" value="true" />
+			</bean>
+		</mvc:message-converters>
+ -->
 	</mvc:annotation-driven>
 	<!-- 2016年8月3日 15:17:16 ↑ -->
 
+	<!-- //请求映射处理适配器 -->
+	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
+		<property name="messageConverters">
+			<util:list id="beanList">
+				<ref bean="stringHttpMessageConverter" />
+				<ref bean="byteArrayHttpMessageConverter"/>
+				<ref bean="resourceHttpMessageConverter"/>
+				<ref bean="sourceHttpMessageConverter"/>
+				<ref bean="mappingJackson2HttpMessageConverter"/>
+				
+				<!-- 
+				<ref bean="jaxb2RootElementHttpMessageConverter"/>
+				<ref bean="marshallingHttpMessageConverter" />
+				<ref bean="xmlAwareFormHttpMessageConverter"/>
+				 -->			
+			</util:list>
+		</property>
+	
+	</bean>
+
+	<bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter" />
+	<bean id="byteArrayHttpMessageConverter" class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+	<bean id="resourceHttpMessageConverter" class="org.springframework.http.converter.ResourceHttpMessageConverter" />
+	<bean id="sourceHttpMessageConverter" class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
+	<bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+	
+<!-- 	//xml 解析器
+	<bean id="xmlAwareFormHttpMessageConverter" class="org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter" />
+	<bean id="jaxb2RootElementHttpMessageConverter" class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter" />
+	<bean id="marshallingHttpMessageConverter" class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter">
+		<property name="marshaller" ref="castorMarshaller" />
+		<property name="unmarshaller" ref="castorMarshaller" />
+	</bean>
+	<bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller" />
+-->
+	
+	<!-- // 注解方法处理适配器 <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> <property name="messageConverters"> <list> <ref bean="byteArray_hmc" /> <ref bean="string_hmc" /> <ref bean="resource_hmc" /> <ref bean="source_hmc" /> <ref bean="xmlAwareForm_hmc" /> <ref bean="jaxb2RootElement_hmc" /> <ref bean="jackson_hmc" /> </list> </property> </bean> -->
 
 
 	<bean name="systemConfig" init-method="getObject" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
@@ -48,7 +98,6 @@
 	<mvc:default-servlet-handler />
 
 
-	
 	<bean id="cnManager" class="org.springframework.web.accept.ContentNegotiationManagerFactoryBean">
 		<!-- 设置为true以忽略对Accept Header的支持 -->
 		<property name="ignoreAcceptHeader" value="true" />
@@ -69,26 +118,34 @@
 	</bean>
 
 	<!-- 根据客户端的不同的请求决定不同的 view进行响应, 如 /blog/1.json /blog/1.xml -->
-	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" >
-	     <!-- <property name="ignoreAcceptHeader" value="true"/>   -->
-        <!-- <property name="defaultContentType" value="text/html"/>   -->
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+		<!-- <property name="ignoreAcceptHeader" value="true"/> -->
+		<!-- <property name="defaultContentType" value="text/html"/> -->
 		<property name="contentNegotiationManager" ref="cnManager" />
 		<property name="viewResolvers">
 			<list>
 				<!-- bean name view resolver -->
 				<bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="1" />
-				<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="2" >
+				<bean class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="2">
 					<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 					<property name="contentType" value="text/html" />
 					<property name="prefix" value="/WEB-INF/views" />
 					<property name="suffix" value=".jsp" />
 				</bean>
 			</list>
-			
-			
 		</property>
-		
-		
+		<property name="defaultViews">
+			<list>
+				<bean class="org.springframework.web.servlet.view.json.MappingJackson2JsonView">
+					<!-- <property name="extractValueFromSingleKeyModel" value="true"/> -->
+					<property name="prettyPrint" value="true" />
+					<!-- <property name="contentType" value="text/plain"/> -->
+				</bean>
+				<!-- xml视图 <bean class="org.springframework.web.servlet.view.xml.MarshallingView"> <constructor-arg ref="jaxb2Marshaller"/> </bean> -->
+			</list>
+		</property>
+
+
 	</bean>
 	<!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
 	<!-- <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="2"> <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" /> <property name="contentType" value="text/html" /> <property name="prefix" value="/WEB-INF/views" /> <property name="suffix" value=".jsp" /> </bean> -->
@@ -103,6 +160,11 @@
 
 	<!-- !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! -->
 	<!-- 国际化消息 -->
+	<mvc:interceptors>
+		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
+			<property name="paramName" value="language" />
+		</bean>
+	</mvc:interceptors>
 	<bean id="messageSource" class="org.springframework.context.support.ReloadableResourceBundleMessageSource">
 		<property name="basenames">
 			<list>
@@ -114,11 +176,6 @@
 		<property name="fileEncodings" value="utf-8" />
 		<property name="cacheSeconds" value="120" />
 	</bean>
-	<mvc:interceptors>
-		<bean class="org.springframework.web.servlet.i18n.LocaleChangeInterceptor">
-			<property name="paramName" value="language" />
-		</bean>
-	</mvc:interceptors>
 	<bean id="localeResolver" class="org.springframework.web.servlet.i18n.CookieLocaleResolver">
 		<property name="cookieName" value="locale" />
 		<property name="cookieMaxAge" value="-1" />
