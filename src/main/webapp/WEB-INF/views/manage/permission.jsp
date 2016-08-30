@@ -1,4 +1,4 @@
-<!-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> <c:set var="__CLASS__" value="role" scope="request"/> -->
+<!--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> <c:set var="__CLASS__" value="permission" scope="request"/> -->
 <jsp:include page="Head.jsp"/>
 <jsp:include page="urpBody.jsp"/>
 <script>

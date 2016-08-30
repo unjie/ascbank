@@ -77,7 +77,10 @@
 		select id, description, role_name
 		from t_role
 	</select>
-
+	<select id="selelctByPageableAll" resultMap="BaseResultMap">
+		select id, description, role_name
+		from t_role
+	</select>
 	<select id="selectUser2Roles" resultMap="BaseResultMap" parameterType="java.lang.Long">
 		select id, description, role_name
 		from t_role LEFT JOIN t_user_role as ur on ur.role_id=t_role.id

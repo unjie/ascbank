@@ -9,22 +9,24 @@ import com.ascbank.model.base.PKEntity;
 
 public interface BaseInterfaceController<T extends Serializable, E extends PKEntity<T>> extends Serializable {
 	
-	public abstract JsonResultInfo create(E entity, BindingResult br);
+	JsonResultInfo create(E entity, BindingResult br);
 	
-	public abstract JsonResultInfo destroy(E entity, T id);
-	
-	public String getHtml(String pagename);
+	JsonResultInfo destroy(E entity);
 	
 	// public abstract List<E> readAll(Integer page, Integer start, Integer
 	// limit);
 	
 	// public abstract List<E> readAll(String property, String direction);
 	
-	public abstract JsonResultInfo read(T id);
+	JsonResultInfo destroy(T id);
 	
-	public abstract JsonResultInfo readAll(Pageable pageable);
+	String getHtml(String pagename);
 	
-	public abstract JsonResultInfo update(E entity, BindingResult br);
+	JsonResultInfo read(T id);
+	
+	JsonResultInfo readAll(Pageable pageable);
+	
+	JsonResultInfo update(E entity, BindingResult br);
 	
 	// public abstract String page(String page, Model model);
 }
