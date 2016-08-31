@@ -30,15 +30,15 @@ import com.ascbank.web.UserController;
  */
 @Controller
 @RequestMapping("/user")
-public class UserControllerImpl extends com.ascbank.web.basis.BaseAbstractController<Long, User, UserService> implements UserController<Login, Register> {
-	
+public class UserControllerImpl extends com.ascbank.web.basis.BaseAbstractController<Long, User, UserService<Long, User>> implements UserController<Long, User, Login, Register> {
+
 	private static final long	serialVersionUID	= -6215656516167426274L;
-	
+
 	// @Resource
 	// UserService userService;
-	
+
 	private final Logger		log					= LoggerFactory.getLogger(UserControllerImpl.class);
-	
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -53,7 +53,7 @@ public class UserControllerImpl extends com.ascbank.web.basis.BaseAbstractContro
 		request.setAttribute("error", "{500.error}");
 		return systemConfig.getProperty("error_500");
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -68,7 +68,7 @@ public class UserControllerImpl extends com.ascbank.web.basis.BaseAbstractContro
 				log.debug("------------------{}-------------------", br.getAllErrors());
 				return systemConfig.getProperty("user_login");
 			} else {
-				
+
 				try {
 					getBeanService().login(user);
 					if (log.isDebugEnabled()) {
@@ -81,9 +81,9 @@ public class UserControllerImpl extends com.ascbank.web.basis.BaseAbstractContro
 			}
 		}
 		return systemConfig.getProperty("user_login_successs");
-		
+
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 *

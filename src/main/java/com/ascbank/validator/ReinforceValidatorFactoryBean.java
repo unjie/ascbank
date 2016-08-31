@@ -22,8 +22,9 @@ public class ReinforceValidatorFactoryBean extends LocalValidatorFactoryBean {
 			for (Object o : obj) {
 				super.validate(o, errors);
 				// log.info("====>" + o.toString());
-				if (errors.hasErrors())
+				if (errors.hasErrors()) {
 					return;
+				}
 			}
 		} else {
 			super.validate(target, errors);
@@ -42,8 +43,9 @@ public class ReinforceValidatorFactoryBean extends LocalValidatorFactoryBean {
 			for (Object o : obj) {
 				super.validate(o, errors, validationHints);
 				// log.info("====>" + o.toString());
-				if (errors.hasErrors())
+				if (errors.hasErrors()) {
 					return;
+				}
 			}
 		} else {
 			super.validate(target, errors, validationHints);

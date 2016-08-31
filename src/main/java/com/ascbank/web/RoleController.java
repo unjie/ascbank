@@ -3,13 +3,15 @@
  */
 package com.ascbank.web;
 
-import com.ascbank.model.Role;
+import java.io.Serializable;
+
+import com.ascbank.model.base.PKEntity;
 import com.ascbank.web.basis.BaseInterfaceController;
 
 /**
  * @author jie
  *
  */
-public interface RoleController extends BaseInterfaceController<Long, Role> {
-	
+public interface RoleController<T extends Serializable, E extends PKEntity<T>> extends BaseInterfaceController<T, E> {
+
 }

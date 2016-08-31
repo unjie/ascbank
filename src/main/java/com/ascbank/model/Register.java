@@ -30,5 +30,5 @@ public class Register extends Login {
 	public void setRespassword(String respassword) {
 		this.respassword = respassword;
 	}
-
+	
 }

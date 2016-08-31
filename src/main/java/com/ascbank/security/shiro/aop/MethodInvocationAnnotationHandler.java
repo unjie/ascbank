@@ -22,9 +22,9 @@ import com.ascbank.security.shiro.authz.annotation.AutoPermissions;
  *
  */
 public class MethodInvocationAnnotationHandler {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(MethodInvocationAnnotationHandler.class);
-	
+
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Annotation MethodAnnotationHandler(MethodInvocation mi, Annotation a) {
 		// Subject currentUser = SecurityUtils.getSubject();
@@ -40,13 +40,13 @@ public class MethodInvocationAnnotationHandler {
 		Object[] arg = mi.getArguments();
 		String authentication = "";
 
-		log.debug("------------------->（AOP）拦截到了:{}", arg);
+		MethodInvocationAnnotationHandler.log.debug("------------------->（AOP）拦截到了:{}", arg);
 
 		if (entityName.isEmpty()) {
 			if (arg != null) {
-				
+
 				for (Object obj : arg) {
-					log.debug("------------------->（AOP）拦截到了{}", obj);
+					MethodInvocationAnnotationHandler.log.debug("------------------->（AOP）拦截到了{}", obj);
 					if (obj instanceof Persistable) {
 						if (entityName.isEmpty()) {
 							entityName = obj.getClass().getSimpleName();
@@ -54,7 +54,7 @@ public class MethodInvocationAnnotationHandler {
 						if (ids.isEmpty()) {
 							ids = ((Persistable) obj).getId() + "";
 						}
-						log.debug("------------------->0.（AOP）拦截到了:{}", entityName);
+						MethodInvocationAnnotationHandler.log.debug("------------------->0.（AOP）拦截到了:{}", entityName);
 						break;
 					} else if (obj.getClass().isArray() || obj instanceof Collection) {
 						if (Persistable.class.isAssignableFrom(obj.getClass().getComponentType())) {
@@ -70,11 +70,11 @@ public class MethodInvocationAnnotationHandler {
 								ids.substring(0, ids.length() - 1);
 
 							}
-							log.debug("------------------->1.（AOP）拦截到了:{}", entityName);
+							MethodInvocationAnnotationHandler.log.debug("------------------->1.（AOP）拦截到了:{}", entityName);
 						}
 
 					}
-					log.debug("------------------->（AOP）拦截到了{}", obj);
+					MethodInvocationAnnotationHandler.log.debug("------------------->（AOP）拦截到了{}", obj);
 
 				}
 			}
@@ -94,10 +94,10 @@ public class MethodInvocationAnnotationHandler {
 							break;
 						}
 					}
-					log.debug("------------------->（AOP）拦截到了{}", entityName);
+					MethodInvocationAnnotationHandler.log.debug("------------------->（AOP）拦截到了{}", entityName);
 				}
 			} else {
-				log.debug("------------------->（AOP）拦截到了{}", 555);
+				MethodInvocationAnnotationHandler.log.debug("------------------->（AOP）拦截到了{}", 555);
 			}
 		}
 		authentication += entityName + (entityName.isEmpty() ? "" : ":");
@@ -106,19 +106,19 @@ public class MethodInvocationAnnotationHandler {
 		}
 		if (permission == null || permission.length == 0) {
 			authentication += mi.getMethod().getName();
-			ap.AUTHENTICATION[0] = authentication + ids;
+			AutoPermissions.AUTHENTICATION[0] = authentication + ids;
 		} else {
 			// authentication += StringUtils.arrayToDelimitedString(permission, ",");
 			// String[] p = permission.clone();
 			for (int i = 0; i < permission.length; i++) {
 				permission[1] = authentication + permission[i] + ids;
 			}
-			ap.AUTHENTICATION[0] = permission;
+			AutoPermissions.AUTHENTICATION[0] = permission;
 		}
 
 		// ap.AUTHENTICATION[0] = authentication + (ids.isEmpty() ? "" : (":" + ids));
 
-		log.debug("------------------->{}（AOP）拦截到了:{}", (authentication + ":" + ids).toString(), ap.AUTHENTICATION[0]);
+		MethodInvocationAnnotationHandler.log.debug("------------------->{}（AOP）拦截到了:{}", (authentication + ":" + ids).toString(), AutoPermissions.AUTHENTICATION[0]);
 
 		return a;
 	}

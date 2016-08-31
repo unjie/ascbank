@@ -1,9 +1,3 @@
-<body class="hold-transition skin-blue sidebar-mini">
-	<div class="wrapper">
-		<jsp:include page="header.jsp" />
-		<jsp:include page="leftMenu.jsp"></jsp:include>
-		<!-- Content Wrapper. Contains page content -->
-		<div class="content-wrapper">
 			<!-- Content Header (Page header) -->
 			<section class="content-header">
 				<h1>
@@ -34,7 +28,7 @@
 									</button>
 								</div>
 								<!--   data-side-pagination="server" -->
-								<table id="table" data-toolbar="#toolbar" data-search="true" data-response-handler="responseHandler" data-detail-view="true" data-detail-formatter="detailFormatter" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-show-export="true" data-minimum-count-columns="2" data-show-pagination-switch="true" data-pagination="true" data-id-field="id" data-page-list="[10, 25, 50, 100, 200, 500, 1000, ALL]" data-show-footer="false" data-method="get" data-url="/ascbank/permission/reads">
+								<table id="table" data-toolbar="#toolbar" data-search="true" data-response-handler="responseHandler" data-detail-view="true" data-detail-formatter="detailFormatter" data-show-refresh="true" data-show-toggle="true" data-show-columns="true" data-show-export="true" data-minimum-count-columns="1" data-show-pagination-switch="true" data-pagination="true" data-id-field="id" data-page-list="[10, 25, 50, 100, 200, 500, 1000, ALL]" data-show-footer="false" data-method="get" data-url="${__ROOT__}/${__CLASS__}/reads">
 								</table>
 							</div>
 							<!-- /.box-body -->
@@ -67,8 +61,3 @@
 				<!-- /.row -->
 			</section>
 			<!-- /.content -->
-		</div>
-		<jsp:include page="footer.jsp" />
-		<jsp:include page="controlSidebar.jsp" />
-	</div>
-	<!-- ./wrapper -->

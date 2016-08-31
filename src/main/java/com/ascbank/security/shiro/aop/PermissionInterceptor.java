@@ -33,7 +33,7 @@ public class PermissionInterceptor {
 		boolean isPermissioin = false;
 		Subject currentUser = SecurityUtils.getSubject();
 		String permissions = "";
-		log.debug("------------------->（AOP）拦截到了:{}", autoPermissions);
+		PermissionInterceptor.log.debug("------------------->（AOP）拦截到了:{}", autoPermissions);
 		// 没有获得注解 及不需要权限-- 则直接运行
 		if (null != autoPermissions) {
 			String[] permission = autoPermissions.permission();
@@ -41,7 +41,7 @@ public class PermissionInterceptor {
 			String entityName = autoPermissions.entity();
 			
 			Object arg0 = pjp.getArgs()[0];
-			log.debug("------------------->（AOP）拦截到了:{}", arg0);
+			PermissionInterceptor.log.debug("------------------->（AOP）拦截到了:{}", arg0);
 			if (ids.isEmpty() && arg0 != null) {
 				if (arg0.getClass().isArray() || arg0 instanceof Collection) {
 					List list = arg0.getClass().isArray() ? CollectionUtils.arrayToList(arg0)
@@ -101,7 +101,7 @@ public class PermissionInterceptor {
 		} else {
 			isPermissioin = true;
 		}
-		log.debug("------------------->（AOP）拦截到了:{},{}", permissions, pjp.getSignature().getName());
+		PermissionInterceptor.log.debug("------------------->（AOP）拦截到了:{},{}", permissions, pjp.getSignature().getName());
 		if (isPermissioin) {
 			// 有执行方法或权限不拦截
 			return pjp.proceed();

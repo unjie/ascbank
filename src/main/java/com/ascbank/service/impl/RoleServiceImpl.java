@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ascbank.dao.RoleMapper;
 import com.ascbank.model.Role;
-import com.ascbank.service.BaseAbstractService;
 import com.ascbank.service.RoleService;
+import com.ascbank.service.basis.BaseAbstractService;
 
 /**
  * @author jie
@@ -18,7 +18,7 @@ import com.ascbank.service.RoleService;
  */
 @Service("roleService")
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
-public class RoleServiceImpl extends BaseAbstractService<Long, Role, RoleMapper> implements RoleService {
+public class RoleServiceImpl extends BaseAbstractService<Long, Role, RoleMapper> implements RoleService<Long, Role> {
 	
 	/**
 	 *

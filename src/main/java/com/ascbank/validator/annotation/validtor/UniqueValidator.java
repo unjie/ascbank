@@ -41,13 +41,13 @@ public class UniqueValidator implements ConstraintValidator<Unique, Persistable<
 				? (annotation.verifyBean().isEmpty())
 						? (annotation.verifyClass().isInterface() ? null
 								: beanFactory.getBean(annotation.verifyClass()))
-						: (beanFactory.getBean(annotation.verifyBean()))
-				: null;
-		
-		this.validetorBean = (obj instanceof ValidetorInterface) ? (ValidetorInterface) obj : null;
-		
-		this.attributes = annotation.attributes();
-		
+								: (beanFactory.getBean(annotation.verifyBean()))
+								: null;
+								
+								this.validetorBean = (obj instanceof ValidetorInterface) ? (ValidetorInterface) obj : null;
+								
+								this.attributes = annotation.attributes();
+								
 	}
 	
 	@Override
@@ -61,8 +61,8 @@ public class UniqueValidator implements ConstraintValidator<Unique, Persistable<
 			Object obj;
 			try {
 				obj = new PropertyDescriptor(attr, value.getClass()).getReadMethod().invoke(value);// value.getClass().getMethod("get"
-																									// +
-																									// StringUtil.capitalize(attr)).invoke(value);
+				// +
+				// StringUtil.capitalize(attr)).invoke(value);
 				if (obj != null) {
 					map.put(attr, obj);
 				}
@@ -70,7 +70,7 @@ public class UniqueValidator implements ConstraintValidator<Unique, Persistable<
 					| IntrospectionException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
-				log.debug(e.toString());
+				UniqueValidator.log.debug(e.toString());
 			}
 			
 		}
@@ -78,12 +78,12 @@ public class UniqueValidator implements ConstraintValidator<Unique, Persistable<
 		@SuppressWarnings("unchecked")
 		List<PKEntity> list = this.validetorBean.verify(map);
 		
-		log.debug("-----------------list.size() ={}---------------", list.size());
+		UniqueValidator.log.debug("-----------------list.size() ={}---------------", list.size());
 		if (list.size() > 1) {
 			return false;
 		} else if (list.size() == 1) {
 			Persistable e = list.get(0);
-			log.debug("-----------------e.getId() :{} == value.getId() : {}---------------", e.getId(), value.getId());
+			UniqueValidator.log.debug("-----------------e.getId() :{} == value.getId() : {}---------------", e.getId(), value.getId());
 			return (!e.isNew()) && (e.getId() == value.getId());
 		}
 		

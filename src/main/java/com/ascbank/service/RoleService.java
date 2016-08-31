@@ -1,7 +1,11 @@
 package com.ascbank.service;
 
-import com.ascbank.model.Role;
+import java.io.Serializable;
 
-public interface RoleService extends BaseInterfaceService<Long, Role> {
+import com.ascbank.model.Role;
+import com.ascbank.model.base.PKEntity;
+import com.ascbank.service.basis.BaseInterfaceService;
+
+public interface RoleService<T extends Serializable, E extends PKEntity<T>> extends BaseInterfaceService<Long, Role> {
 	
 }

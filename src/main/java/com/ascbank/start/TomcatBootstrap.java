@@ -22,14 +22,15 @@ public class TomcatBootstrap {
 		String tmpdir = System.getProperty("java.io.tmpdir");
 		Tomcat tomcat = new Tomcat();
 		tomcat.setBaseDir(tmpdir);
-
+		
 		tomcat.getHost().setAppBase(tmpdir);
 		tomcat.getHost().setAutoDeploy(false);
 		tomcat.getHost().setDeployOnStartup(false);
 		tomcat.getEngine().setBackgroundProcessorDelay(-1);
-		tomcat.setConnector(newNioConnector());
+		tomcat.setConnector(TomcatBootstrap.newNioConnector());
 		tomcat.getConnector().setPort(port);
 		tomcat.getService().addConnector(tomcat.getConnector());
+		@SuppressWarnings("unused")
 		Context context = tomcat.addWebapp(contextPath, docBase);
 		StandardServer server = (StandardServer) tomcat.getServer();
 		// APR library loader. Documentation at /docs/apr.html
@@ -44,7 +45,7 @@ public class TomcatBootstrap {
 		File projectDir = classpathDir.getParentFile().getParentFile();
 		return new File(projectDir, "src/main/webapp").getPath();
 	}
-
+	
 	private static LifecycleListener getLifecycleListener(String path) {
 		
 		ContextConfig listener = new ContextConfig();
@@ -57,9 +58,9 @@ public class TomcatBootstrap {
 		// System.setProperty("securerandom.source","file:/dev/./urandom");
 		int port = Integer.parseInt(System.getProperty("server.port", "8080"));
 		String contextPath = System.getProperty("server.contextPath", "");
-		String docBase = System.getProperty("server.docBase", getDefaultDocBase());
-		LOG.info("server port : {}, context path : {},doc base : {}", port, contextPath, docBase);
-		final Tomcat tomcat = createTomcat(port, contextPath, docBase, getLifecycleListener("/WEB-INF/web.xml"));
+		String docBase = System.getProperty("server.docBase", TomcatBootstrap.getDefaultDocBase());
+		TomcatBootstrap.LOG.info("server port : {}, context path : {},doc base : {}", port, contextPath, docBase);
+		final Tomcat tomcat = TomcatBootstrap.createTomcat(port, contextPath, docBase, TomcatBootstrap.getLifecycleListener("/WEB-INF/web.xml"));
 		tomcat.start();
 		Runtime.getRuntime().addShutdownHook(new Thread() {
 			
@@ -68,7 +69,7 @@ public class TomcatBootstrap {
 				try {
 					tomcat.stop();
 				} catch (LifecycleException e) {
-					LOG.error("stoptomcat error.", e);
+					TomcatBootstrap.LOG.error("stoptomcat error.", e);
 				}
 			}
 		});
@@ -78,6 +79,7 @@ public class TomcatBootstrap {
 	// 在这里调整参数优化
 	private static Connector newNioConnector() {
 		Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
+		@SuppressWarnings("unused")
 		Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
 		return connector;
 	}

@@ -27,8 +27,8 @@ import com.ascbank.service.UrlFilterService;
  *
  */
 public class URLPermissionsFilter extends AuthorizationFilter {
-	private final Logger		log	= LoggerFactory.getLogger(URLPermissionsFilter.class);
-	private UrlFilterService	urlFilterService;
+	private final Logger						log	= LoggerFactory.getLogger(URLPermissionsFilter.class);
+	private UrlFilterService<Long, UrlFilter>	urlFilterService;
 	
 	/**
 	 * 根据请求URL产生权限字符串，这里只产生，而比对的事交给Realm
@@ -76,7 +76,7 @@ public class URLPermissionsFilter extends AuthorizationFilter {
 	}
 	
 	@Resource(name = "urlFilterService")
-	public void setUrlFilterService(UrlFilterService urlFilterService) {
+	public void setUrlFilterService(UrlFilterService<Long, UrlFilter> urlFilterService) {
 		this.urlFilterService = urlFilterService;
 	}
 }

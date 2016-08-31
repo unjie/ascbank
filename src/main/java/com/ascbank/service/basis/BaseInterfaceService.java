@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.ascbank.service;
+package com.ascbank.service.basis;
 
 import java.io.Serializable;
 import java.util.List;

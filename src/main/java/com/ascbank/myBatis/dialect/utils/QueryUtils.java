@@ -3,28 +3,6 @@
  */
 package com.ascbank.myBatis.dialect.utils;
 
-/**
- * @author jie
- *
- */
-/*
- * Copyright 2008-2015 the original author or authors.
- *
- * Licensed under the Apache License, Version 2.0 (the "License");
- * you may not use this file except in compliance with the License.
- * You may obtain a copy of the License at
- *
- *      http://www.apache.org/licenses/LICENSE-2.0
- *
- * Unless required by applicable law or agreed to in writing, software
- * distributed under the License is distributed on an "AS IS" BASIS,
- * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- * See the License for the specific language governing permissions and
- * limitations under the License.
- */
-import static java.util.regex.Pattern.CASE_INSENSITIVE;
-import static java.util.regex.Pattern.compile;
-
 import java.util.HashSet;
 import java.util.Locale;
 import java.util.Set;
@@ -57,13 +35,13 @@ public class QueryUtils {
 	public static final String		DELETE_ALL_QUERY_STRING			= "delete from %s x";
 	private static final String		EQUALS_CONDITION_STRING			= "%s.%s = :%s";
 	private static final String		IDENTIFIER						= "[\\p{Lu}\\P{InBASIC_LATIN}\\p{Alnum}._$]+";
-	private static final String		IDENTIFIER_GROUP				= String.format("(%s)", IDENTIFIER);
+	private static final String		IDENTIFIER_GROUP				= String.format("(%s)", QueryUtils.IDENTIFIER);
 	
-	private static final String		JOIN							= "join\\s" + IDENTIFIER + "\\s(as\\s)?" + IDENTIFIER_GROUP;
-	private static final Pattern	JOIN_PATTERN					= Pattern.compile(JOIN, Pattern.CASE_INSENSITIVE);
+	private static final String		JOIN							= "join\\s" + QueryUtils.IDENTIFIER + "\\s(as\\s)?" + QueryUtils.IDENTIFIER_GROUP;
+	private static final Pattern	JOIN_PATTERN					= Pattern.compile(QueryUtils.JOIN, Pattern.CASE_INSENSITIVE);
 	
-	private static final Pattern	NAMED_PARAMETER					= Pattern.compile(":" + IDENTIFIER + "|\\#" + IDENTIFIER, CASE_INSENSITIVE);
-	private static final Pattern	ORDER_BY						= Pattern.compile(".*order\\s+by\\s+.*", CASE_INSENSITIVE);
+	private static final Pattern	NAMED_PARAMETER					= Pattern.compile(":" + QueryUtils.IDENTIFIER + "|\\#" + QueryUtils.IDENTIFIER, Pattern.CASE_INSENSITIVE);
+	private static final Pattern	ORDER_BY						= Pattern.compile(".*order\\s+by\\s+.*", Pattern.CASE_INSENSITIVE);
 	
 	private static final String		ORDER_BY_PART					= "(?iu)\\s+order\\s+by\\s+.*$";
 	private static final int		QUERY_JOIN_ALIAS_GROUP_INDEX	= 2;
@@ -79,25 +57,25 @@ public class QueryUtils {
 		StringBuilder builder = new StringBuilder();
 		builder.append("(?<=from)"); // from as starting delimiter 从开始的符号
 		builder.append("(?:\\s)+"); // at least one space separating 至少一个空间分离
-		builder.append(IDENTIFIER_GROUP); // Entity name, can be qualified (any 实体名称，可以是限定的（任何
-		TABLE_MATCH = compile(builder.toString(), CASE_INSENSITIVE);
-
+		builder.append(QueryUtils.IDENTIFIER_GROUP); // Entity name, can be qualified (any 实体名称，可以是限定的（任何
+		TABLE_MATCH = Pattern.compile(builder.toString(), Pattern.CASE_INSENSITIVE);
+		
 		builder.append("(?:\\sas)*"); // exclude possible "as" keyword 排除可能的“as”关键字
 		builder.append("(?:\\s)+"); // at least one space separating 至少一个空格分离
 		builder.append("(\\w*)"); // the actual alias 实际的别名
 		
-		ALIAS_MATCH = compile(builder.toString(), CASE_INSENSITIVE);
+		ALIAS_MATCH = Pattern.compile(builder.toString(), Pattern.CASE_INSENSITIVE);
 		
 		// TABLE_MATCH = compile(builder.toString(), CASE_INSENSITIVE);
 		
 		builder = new StringBuilder();
 		builder.append("(select\\s+((distinct )?(.+?)?)\\s+)?(from\\s+");
-		builder.append(IDENTIFIER);
+		builder.append(QueryUtils.IDENTIFIER);
 		builder.append("(?:\\s+as)?\\s+)");
-		builder.append(IDENTIFIER_GROUP);
+		builder.append(QueryUtils.IDENTIFIER_GROUP);
 		builder.append("(.*)");
 		
-		COUNT_MATCH = compile(builder.toString(), CASE_INSENSITIVE);
+		COUNT_MATCH = Pattern.compile(builder.toString(), Pattern.CASE_INSENSITIVE);
 		
 	}
 	
@@ -110,7 +88,7 @@ public class QueryUtils {
 	 */
 	public static String applySorting(String query, Sort sort) {
 		
-		return applySorting(query, sort, DEFAULT_ALIAS);
+		return QueryUtils.applySorting(query, sort, QueryUtils.DEFAULT_ALIAS);
 	}
 	
 	/**
@@ -170,16 +148,16 @@ public class QueryUtils {
 		
 		StringBuilder builder = new StringBuilder(query);
 		
-		if (!ORDER_BY.matcher(query).matches()) {
+		if (!QueryUtils.ORDER_BY.matcher(query).matches()) {
 			builder.append(" order by ");
 		} else {
 			builder.append(", ");
 		}
 		
-		Set<String> aliases = getOuterJoinAliases(query);
+		Set<String> aliases = QueryUtils.getOuterJoinAliases(query);
 		
 		for (Order order : sort) {
-			builder.append(getOrderClause(aliases, alias, order)).append(", ");
+			builder.append(QueryUtils.getOrderClause(aliases, alias, order)).append(", ");
 		}
 		
 		builder.delete(builder.length() - 2, builder.length());
@@ -195,7 +173,7 @@ public class QueryUtils {
 	 * @return
 	 */
 	public static String createCountQueryFor(String originalQuery) {
-		return createCountQueryFor(originalQuery, null);
+		return QueryUtils.createCountQueryFor(originalQuery, null);
 	}
 	
 	/**
@@ -212,21 +190,21 @@ public class QueryUtils {
 		
 		Assert.hasText(originalQuery, "OriginalQuery must not be null or empty!");
 		
-		Matcher matcher = COUNT_MATCH.matcher(originalQuery);
+		Matcher matcher = QueryUtils.COUNT_MATCH.matcher(originalQuery);
 		String countQuery = null;
 		
 		if (countProjection == null) {
 			
-			String variable = matcher.matches() ? matcher.group(VARIABLE_NAME_GROUP_INDEX) : null;
+			String variable = matcher.matches() ? matcher.group(QueryUtils.VARIABLE_NAME_GROUP_INDEX) : null;
 			boolean useVariable = variable != null && StringUtils.hasText(variable) && !variable.startsWith("new") && !variable.startsWith("count(") && !variable.contains(",");
 			
-			String replacement = useVariable ? SIMPLE_COUNT_VALUE : COMPLEX_COUNT_VALUE;
-			countQuery = matcher.replaceFirst(String.format(COUNT_REPLACEMENT_TEMPLATE, replacement));
+			String replacement = useVariable ? QueryUtils.SIMPLE_COUNT_VALUE : QueryUtils.COMPLEX_COUNT_VALUE;
+			countQuery = matcher.replaceFirst(String.format(QueryUtils.COUNT_REPLACEMENT_TEMPLATE, replacement));
 		} else {
-			countQuery = matcher.replaceFirst(String.format(COUNT_REPLACEMENT_TEMPLATE, countProjection));
+			countQuery = matcher.replaceFirst(String.format(QueryUtils.COUNT_REPLACEMENT_TEMPLATE, countProjection));
 		}
 		
-		return countQuery.replaceFirst(ORDER_BY_PART, "");
+		return countQuery.replaceFirst(QueryUtils.ORDER_BY_PART, "");
 	}
 	
 	/**
@@ -237,7 +215,7 @@ public class QueryUtils {
 	 */
 	public static String detectAlias(String query) {
 		
-		Matcher matcher = ALIAS_MATCH.matcher(query);
+		Matcher matcher = QueryUtils.ALIAS_MATCH.matcher(query);
 		return matcher.find() ? matcher.group(2) : null;
 	}
 	
@@ -249,7 +227,7 @@ public class QueryUtils {
 	 */
 	public static String detectTableName(String query) {
 		
-		Matcher matcher = TABLE_MATCH.matcher(query);
+		Matcher matcher = QueryUtils.TABLE_MATCH.matcher(query);
 		return matcher.find() ? matcher.group(1) : null;
 	}
 	
@@ -259,18 +237,18 @@ public class QueryUtils {
 	 * @param query
 	 * @return
 	 */
-
+	
 	public static String detectTableOrAlias(String query) {
 		
-		Matcher matcher = ALIAS_MATCH.matcher(query);
+		Matcher matcher = QueryUtils.ALIAS_MATCH.matcher(query);
 		
 		String keyword = null;
 		if (matcher.find()) {
 			keyword = matcher.group(2);
 			// log.debug(" keyword: {}", keyword);
-
+			
 		} else {
-			matcher = TABLE_MATCH.matcher(query);
+			matcher = QueryUtils.TABLE_MATCH.matcher(query);
 			if (matcher.find()) {
 				keyword = matcher.group(1);
 			}
@@ -292,18 +270,18 @@ public class QueryUtils {
 	public static String getExistsQueryString(String entityName, String countQueryPlaceHolder,
 			Iterable<String> idAttributes) {
 		
-		StringBuilder sb = new StringBuilder(String.format(COUNT_QUERY_STRING, countQueryPlaceHolder, entityName));
+		StringBuilder sb = new StringBuilder(String.format(QueryUtils.COUNT_QUERY_STRING, countQueryPlaceHolder, entityName));
 		sb.append(" WHERE ");
 		
 		for (String idAttribute : idAttributes) {
-			sb.append(String.format(EQUALS_CONDITION_STRING, "x", idAttribute, idAttribute));
+			sb.append(String.format(QueryUtils.EQUALS_CONDITION_STRING, "x", idAttribute, idAttribute));
 			sb.append(" AND ");
 		}
 		
 		sb.append("1 = 1");
 		return sb.toString();
 	}
-
+	
 	/**
 	 * Returns an existing join for the given attribute if one already exists or creates a new one if not.
 	 *
@@ -350,9 +328,9 @@ public class QueryUtils {
 		String reference = qualifyReference ? String.format("%s.%s", alias, property) : property;
 		String wrapped = order.isIgnoreCase() ? String.format("lower(%s)", reference) : reference;
 		
-		return String.format("%s %s", wrapped, toJpaDirection(order));
+		return String.format("%s %s", wrapped, QueryUtils.toJpaDirection(order));
 	}
-
+	
 	/**
 	 * Returns the aliases used for {@code left (outer) join}s.
 	 *
@@ -362,11 +340,11 @@ public class QueryUtils {
 	static Set<String> getOuterJoinAliases(String query) {
 		
 		Set<String> result = new HashSet<String>();
-		Matcher matcher = JOIN_PATTERN.matcher(query);
+		Matcher matcher = QueryUtils.JOIN_PATTERN.matcher(query);
 		
 		while (matcher.find()) {
 			
-			String alias = matcher.group(QUERY_JOIN_ALIAS_GROUP_INDEX);
+			String alias = matcher.group(QueryUtils.QUERY_JOIN_ALIAS_GROUP_INDEX);
 			if (StringUtils.hasText(alias)) {
 				result.add(alias);
 			}
@@ -410,7 +388,7 @@ public class QueryUtils {
 	 * @return
 	 */
 	public static boolean hasNamedParameter(String query) {
-		return StringUtils.hasText(query) && NAMED_PARAMETER.matcher(query).find();
+		return StringUtils.hasText(query) && QueryUtils.NAMED_PARAMETER.matcher(query).find();
 	}
 	
 	/**
@@ -493,7 +471,7 @@ public class QueryUtils {
 	 *
 	 * return false; }
 	 */
-
+	
 	/**
 	 * Creates a criteria API {@link javax.persistence.criteria.Order} from the given {@link Order}.
 	 *

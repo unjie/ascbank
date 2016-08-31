@@ -9,8 +9,8 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.ascbank.dao.PermissionMapper;
 import com.ascbank.model.Permission;
-import com.ascbank.service.BaseAbstractService;
 import com.ascbank.service.PermissionService;
+import com.ascbank.service.basis.BaseAbstractService;
 
 /**
  * @author jie
@@ -18,11 +18,11 @@ import com.ascbank.service.PermissionService;
  */
 @Service("permissionService")
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
-public class PermissionServiceImpl extends BaseAbstractService<Long, Permission, PermissionMapper> implements PermissionService {
+public class PermissionServiceImpl extends BaseAbstractService<Long, Permission, PermissionMapper> implements PermissionService<Long, Permission> {
 	
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = -889644476025098304L;
-
+	
 }

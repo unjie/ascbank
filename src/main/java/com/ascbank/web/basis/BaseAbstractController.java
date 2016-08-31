@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import com.ascbank.dependency.injection.InjectionInterface;
 import com.ascbank.exception.ArticleException;
 import com.ascbank.model.base.PKEntity;
-import com.ascbank.service.BaseInterfaceService;
+import com.ascbank.service.basis.BaseInterfaceService;
 import com.ascbank.verify.AddCheck;
 
 public abstract class BaseAbstractController<T extends Serializable, E extends PKEntity<T>, S extends BaseInterfaceService<T, E>>
-		implements BaseInterfaceController<T, E>, InjectionInterface<S> {
+implements BaseInterfaceController<T, E>, InjectionInterface<S> {
 	
 	/**
 	 *
@@ -70,7 +70,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	public JsonResultInfo destroy(@RequestBody E entity) {
 		return this.destroy(entity);
 	}
-
+	
 	@Override
 	@ResponseBody
 	// @AutoPermissions(permission = "destroy")
@@ -102,11 +102,11 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	}
 	
 	@Override
-	@RequestMapping(value = { "/", "/{pagename:[\\w]+}**" }, path = {}, method = RequestMethod.GET)
+	@RequestMapping(value = { "/{pagename:[\\w]+}**" }, method = RequestMethod.GET)
 	public String getHtml(@PathVariable("pagename") String pagename) {
 		RequestMapping rm = this.getClass().getAnnotation(RequestMapping.class);
 		log.debug("=========={}=========", rm);
-		return rm.value()[0] + "/" + ((pagename == null) ? "index" : pagename);
+		return rm.value()[0] + "/" + pagename;
 		
 	}
 	
@@ -162,7 +162,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		try {
 			if (br.hasErrors()) {
 				log.debug("-----------------------update--->{}<-------------", br.getAllErrors());
-
+				
 				throw new ArticleException(br.getAllErrors().toString());
 			}
 			// for (E e : entity) {

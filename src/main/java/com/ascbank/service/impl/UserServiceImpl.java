@@ -25,33 +25,33 @@ import com.ascbank.model.Login;
 import com.ascbank.model.Permission;
 import com.ascbank.model.User;
 import com.ascbank.model.UserPermission;
-import com.ascbank.service.BaseAbstractService;
 import com.ascbank.service.UserService;
+import com.ascbank.service.basis.BaseAbstractService;
 import com.ascbank.util.Digests;
 import com.ascbank.util.Encodes;
 
 @Service("userService")
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
-public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper> implements UserService, InjectionInterface<UserMapper> {
+public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper> implements UserService<Long, User>, InjectionInterface<UserMapper> {
 	
 	/**
 	 *
 	 */
 	private final static long		serialVersionUID	= 122684424253144556L;
 	private Logger					log					= LoggerFactory.getLogger(UserServiceImpl.class);
-
+	
 	/*
 	 * (non-Javadoc)
 	 *
 	 * @see com.ascbank.service.UserService_#login(com.ascbank.model.User)
 	 */
-
+	
 	@Autowired(required = false)
 	private PermissionMapper		permissionMap;
-
+	
 	@Autowired(required = false)
 	private UserPermissionMapper	userPermissionMap;
-
+	
 	@Override
 	@Transactional
 	public User add(User user) {
@@ -59,30 +59,30 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 		
 		// 插入 User
 		getBean().insertSelective(user);
-
+		
 		// 创建Permission 对象
 		Permission perm = new Permission(null, user.getId().toString(), "User", "read,update", "[ " + user.getUsername() + " ] User Permission");
 		// 插入perm对象
 		permissionMap.insertSelective(perm);
-
+		
 		// UserPermission 关联对象
 		UserPermission up = new UserPermission();
 		up.setUserId(user.getId());
 		up.setPermissionId(perm.getId());
 		// 插入关联
 		userPermissionMap.insert(up);
-
+		
 		List<Permission> permis = user.getPermissions();
 		if (permis == null) {
 			permis = new ArrayList<Permission>();
 		}
 		permis.add(perm);
 		user.setPermissions(permis);
-
+		
 		return user;
-
+		
 	}
-
+	
 	@Override
 	public boolean canEvict(Cache userCache, Long id, String username) {
 		User cacheUser = userCache.get(id, User.class);
@@ -91,7 +91,7 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 		}
 		return !cacheUser.getUsername().equals(username);
 	}
-
+	
 	@Override
 	public User entryptPassword(User user) {
 		byte[] salt = null;
@@ -104,7 +104,7 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 		user.setPassword(Encodes.encodeHex(hashPassword));
 		return user;
 	}
-
+	
 	@Override
 	public User login(User user) throws UserException {
 		
@@ -115,7 +115,7 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 				log.debug("-------->>>>>" + user);
 			}
 			subject.login(upt);
-
+			
 		} catch (AuthenticationException e) {
 			if (log.isInfoEnabled()) {
 				log.error("登录失败错误信息:" + e);
@@ -123,15 +123,15 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 			upt.clear();
 			throw new UserException("{User.nameAndPassword.error}");
 		}
-
+		
 		return user;
-
+		
 	}
-
+	
 	@Override
 	public User logout() {
 		Subject subject = SecurityUtils.getSubject();
-
+		
 		if (subject != null) {
 			
 			User user = this.read((String) subject.getPrincipal());
@@ -141,13 +141,13 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 		}
 		return null;
 	}
-
+	
 	@Override
 	public User read(String username) {
 		// TODO Auto-generated method stub
 		return getBean().selectByUsername(username);
 	}
-
+	
 	@Override
 	@Transactional
 	public User update(User user) {
@@ -156,5 +156,5 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 		}
 		return super.update(user);
 	}
-
+	
 }

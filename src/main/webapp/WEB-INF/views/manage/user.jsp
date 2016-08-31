@@ -1,7 +1,6 @@
-<!-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><c:set var="__CLASS__" value="user" scope="request"/> -->
-<jsp:include page="Head.jsp"/>
-<jsp:include page="urpBody.jsp"/>
-
+<!-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><c:set var="__CLASS__" value="user" scope="request"/><c:set var="URIBody" value="urpBody.jsp" scope="request"/> -->
+<jsp:include page="../debris/Head.jsp"/>
+<jsp:include page="Body.jsp"/>
 <jsp:include page="urpJS.jsp"/>
 <script>
 columns = [{
@@ -78,4 +77,4 @@ columns = [{
 					formatter: operateFormatter
 				}];
 </script>
-<jsp:include page="Foot.jsp"/>
+<jsp:include page="../debris/Foot.jsp"/>

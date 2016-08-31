@@ -32,12 +32,12 @@ public class CaptchaValidator implements ConstraintValidator<Captcha, String> {
 		this.key = annotation.key();
 		this.length = annotation.length();
 		
-		log.debug("-------------------------key :{}   length :{}--------------------------------", key, length);
+		CaptchaValidator.log.debug("-------------------------key :{}   length :{}--------------------------------", key, length);
 	}
 	
 	@Override
 	public boolean isValid(String captcha, ConstraintValidatorContext context) {
-		log.debug("-------------------------{}--------------------------------", captcha);
+		CaptchaValidator.log.debug("-------------------------{}--------------------------------", captcha);
 		return captcha != null && captcha.length() == length && captcha.equalsIgnoreCase((String) session.getAttribute(key));
 		
 	}

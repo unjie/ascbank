@@ -25,7 +25,7 @@ public class DataSoureInfo {
 	 * 从DataSoure中取出connection, 根据connection的metadata中的jdbcUrl判断Dialect类型. 仅支持Oracle, H2, MySql, PostgreSql, SQLServer，如需更多数据库类型，请仿照此类自行编写。
 	 */
 	public static Dialect getDialect(DataSource dataSource) {
-		String jdbcUrl = getJdbcUrlFromDataSource(dataSource);
+		String jdbcUrl = DataSoureInfo.getJdbcUrlFromDataSource(dataSource);
 		
 		// 根据jdbc url判断dialect
 		if (StringUtils.contains(jdbcUrl, ":h2:")) {

@@ -37,7 +37,7 @@ public class PostgreSQL82Dialect extends AbstractDialect implements Dialect {
 	@Override
 	public String getLimitSql(String querySql, Pageable pageable) {
 		// TODO Auto-generated method stub
-		return LIMIT_HANDLER.processSql(querySql, pageable);
+		return PostgreSQL82Dialect.LIMIT_HANDLER.processSql(querySql, pageable);
 	}
 	
 }

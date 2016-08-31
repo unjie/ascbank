@@ -17,11 +17,11 @@ import com.ascbank.web.basis.BaseAbstractController;
  */
 @Controller
 @RequestMapping("/permission")
-public class PermissionControllerImpl extends BaseAbstractController<Long, Permission, PermissionService> implements PermissionController {
-	
+public class PermissionControllerImpl extends BaseAbstractController<Long, Permission, PermissionService<Long, Permission>> implements PermissionController<Long, Permission> {
+
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = -7746422836218600107L;
-	
+
 }

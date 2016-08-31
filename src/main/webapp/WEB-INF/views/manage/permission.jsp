@@ -1,6 +1,7 @@
-<!--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> <c:set var="__CLASS__" value="permission" scope="request"/> -->
-<jsp:include page="Head.jsp"/>
-<jsp:include page="urpBody.jsp"/>
+<!--<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%> <c:set var="__CLASS__" value="permission" scope="request"/> <c:set var="URIBody" value="urpBody.jsp" scope="request"/>-->
+<jsp:include page="../debris/Head.jsp"/>
+<jsp:include page="Body.jsp"/>
+<jsp:include page="urpJS.jsp"/>
 <script>
 columns = [{
 					field: 'state',
@@ -15,56 +16,27 @@ columns = [{
 					sortable: true,
 					footerFormatter: totalTextFormatter
 				}, {
-					field: 'username',
-					title: 'username',
+					field: 'name',
+					title: 'name',
 					sortable: true,
 					editable: true,
 					footerFormatter: totalNameFormatter,
 					align: 'center'
 				}, {
-					title: 'email',
-					field: 'email',
-					sortable: true,
-					align: 'center',
-					editable: {
-						type: 'text',
-						title: 'Email',
-						validate: function(value) {
-							value = $.trim(value);
-							if(!value) {
-								return 'This field is required';
-							}
-							if(!/^(\w)+(\.\w+)*@(\w)+((\.\w+)+)$/
-								.test(value)) {
-								return 'This field not email format.'
-							}
-							var data = $table.bootstrapTable('getData'),
-								index = $(this).parents('tr').data('index');
-							console.log(data[index]);
-							return '';
-						}
-					}
-				}, {
-					title: 'phone',
-					field: 'phone',
+					title: 'permission',
+					field: 'permission',
 					sortable: true,
 					editable: true,
 					align: 'center'
 				}, {
-					title: 'realName',
-					field: 'realName',
+					title: 'entityIds',
+					field: 'entityIds',
 					sortable: true,
 					editable: true,
 					align: 'center'
 				}, {
-					title: 'wechat',
-					field: 'wechat',
-					sortable: true,
-					editable: true,
-					align: 'center'
-				}, {
-					title: 'wechatName',
-					field: 'wechatName',
+					title: 'description',
+					field: 'description',
 					sortable: true,
 					editable: true,
 					align: 'center'
@@ -76,5 +48,4 @@ columns = [{
 					formatter: operateFormatter
 				}];
 </script>
-<jsp:include page="urpJS.jsp"/>
-<jsp:include page="Foot.jsp"/>
+<jsp:include page="../debris/Foot.jsp"/>

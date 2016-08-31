@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"    pageEncoding="UTF-8"%>
   <header class="main-header">
     <!-- Logo -->
-    <a href="${__STATIC__}/index2.html" class="logo">
+    <a href="${__ROOT__}/manage/index" class="logo">
       <!-- mini logo for sidebar mini 50x50 pixels -->
       <span class="logo-mini"><b>A</b>LT</span>
       <!-- logo for regular state and mobile devices -->

@@ -22,7 +22,7 @@ import com.ascbank.solr.repository.ArticleStrengthenRepository;
  *
  */
 public class ArticleStrengthenRepositoryImpl extends SimpleSolrRepository<Article, Long>
-		implements ArticleStrengthenRepository {
+implements ArticleStrengthenRepository {
 	
 	public ArticleStrengthenRepositoryImpl() {
 		super();

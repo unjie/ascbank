@@ -36,7 +36,7 @@ public class LimitHelper {
 	 * @return Whether a first row limit in indicated
 	 */
 	public static boolean hasFirstRow(Pageable selection) {
-		return getFirstRow(selection) > 0;
+		return LimitHelper.getFirstRow(selection) > 0;
 	}
 	
 	/**
@@ -48,7 +48,7 @@ public class LimitHelper {
 	 * @return Whether a max row limit was indicated
 	 */
 	public static boolean hasMaxRows(Pageable selection) {
-		int maxRows = getMaxRows(selection);
+		int maxRows = LimitHelper.getMaxRows(selection);
 		return selection != null && maxRows > 0;
 	}
 	
@@ -63,7 +63,7 @@ public class LimitHelper {
 	 * @return Whether limiting is indicated
 	 */
 	public static boolean useLimit(LimitHandler limitHandler, Pageable selection) {
-		return limitHandler.supportsLimit() && hasMaxRows(selection);
+		return limitHandler.supportsLimit() && LimitHelper.hasMaxRows(selection);
 	}
 	
 	private LimitHelper() {

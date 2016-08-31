@@ -20,7 +20,7 @@ public class AutoPermissionsAnnotationMethodInterceptor extends AuthorizingAnnot
 	public AutoPermissionsAnnotationMethodInterceptor(AnnotationResolver resolver) {
 		super(new AutoPermissionsAnnotationHandler(), resolver);
 	}
-
+	
 	@Override
 	public void assertAuthorized(MethodInvocation mi) throws AuthorizationException {
 		try {

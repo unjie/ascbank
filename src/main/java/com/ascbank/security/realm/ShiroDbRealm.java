@@ -31,10 +31,10 @@ import com.ascbank.util.Encodes;
 @DependsOn(value = "userService")
 @Component("shiroDbRealm")
 public class ShiroDbRealm extends AuthorizingRealm {
-	private Logger		log	= LoggerFactory.getLogger(ShiroDbRealm.class);
+	private Logger					log	= LoggerFactory.getLogger(ShiroDbRealm.class);
 	
 	@Resource(name = "userService")
-	private UserService	userService;
+	private UserService<Long, User>	userService;
 	
 	// 获取认证信息
 	@Override
@@ -94,7 +94,7 @@ public class ShiroDbRealm extends AuthorizingRealm {
 		setCredentialsMatcher(matcher);
 	}
 	
-	public void setUserService(UserService userService) {
+	public void setUserService(UserService<Long, User> userService) {
 		this.userService = userService;
 	}
 }

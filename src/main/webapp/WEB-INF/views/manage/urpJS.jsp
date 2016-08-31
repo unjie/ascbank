@@ -238,3 +238,4 @@ function getScript(url, callback) {
 	return undefined;
 }
 </script>
+<link href="//cdn.bootcss.com/bootstrap-table/1.11.0/bootstrap-table.min.css" rel="stylesheet">

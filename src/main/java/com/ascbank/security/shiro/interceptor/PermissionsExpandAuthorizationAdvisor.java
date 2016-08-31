@@ -35,7 +35,7 @@ public class PermissionsExpandAuthorizationAdvisor extends AuthorizationAttribut
 	}
 	
 	private boolean isSelfAnnotationPresent(Method method) {
-		for (Class<? extends Annotation> annClass : SELF_ANNOTATION_CLASSES) {
+		for (Class<? extends Annotation> annClass : PermissionsExpandAuthorizationAdvisor.SELF_ANNOTATION_CLASSES) {
 			Annotation a = AnnotationUtils.findAnnotation(method, annClass);
 			if (a != null) {
 				return true;
@@ -54,7 +54,7 @@ public class PermissionsExpandAuthorizationAdvisor extends AuthorizationAttribut
 		// 如果方法上没有权限注解，尝试获取类上的默认权限注解
 		if (!flag) {
 			if (isSelfAnnotationPresent(method)) {
-				log.debug("--------matches --- <method> {} --- <targetClass> {} --------", method, targetClass);
+				PermissionsExpandAuthorizationAdvisor.log.debug("--------matches --- <method> {} --- <targetClass> {} --------", method, targetClass);
 				return true;
 			}
 			if (targetClass != null) {

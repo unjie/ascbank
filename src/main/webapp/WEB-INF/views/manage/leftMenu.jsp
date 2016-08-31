@@ -27,6 +27,32 @@
       <!-- sidebar menu: : style can be found in sidebar.less -->
       <ul class="sidebar-menu">
         <li class="header">MAIN NAVIGATION</li>
+        <li class="active treeview">
+          <a href="${__STATIC__}/#">
+            <i class="fa fa-users"></i> <span>User Manage</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="user"><i class="fa fa-user"></i> User Tables</a></li>
+            <li class="active"><a href="role"><i class="fa  fa-group"></i>Role Tables</a></li>
+            <li class="active"><a href="permission"><i class="fa  fa-user-secret"></i>Permission Tables</a></li>
+          </ul>
+        </li>
+      <li class="treeview">
+          <a href="#">
+            <i class="fa fa-font"></i> <span>Article</span>
+            <span class="pull-right-container">
+              <i class="fa fa-angle-left pull-right"></i>
+            </span>
+          </a>
+          <ul class="treeview-menu">
+            <li><a href="${__STATIC__}/ar.html"><i class="fa fa-circle-o"></i> Dashboard v1</a></li>
+            <li><a href="${__STATIC__}/index2.html"><i class="fa fa-circle-o"></i> Dashboard v2</a></li>
+          </ul>
+        </li>
+
         <li class="treeview">
           <a href="#">
             <i class="fa fa-dashboard"></i> <span>Dashboard</span>

@@ -44,7 +44,7 @@ public class StringUtil {
 		// TODO Auto-generated method stub
 		return ids == null || ids.isEmpty();
 	}
-
+	
 	/************
 	 * 判断字符串是否为纯数字
 	 */

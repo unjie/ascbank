@@ -15,7 +15,7 @@ import com.ascbank.service.UrlFilterService;
  *
  */
 @Service("urlFilterService")
-public class UrlFilterServiceImpl implements UrlFilterService {
+public class UrlFilterServiceImpl implements UrlFilterService<Long, UrlFilter> {
 	
 	@Autowired
 	private UrlFilterMapper urlFilterMapper;
