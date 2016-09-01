@@ -47,16 +47,19 @@ $.ajaxSetup({
 	}
 });
 
-var $table = $('#table'),
-	$remove = $('#remove'),
-	$addplus = $('#add-plus'),
-	selections = [],
-	__ROOT = '${__ROOT__}',
-	__CLASS = '${__CLASS__}',
-	url_prefix = __ROOT + "/" + __CLASS + "/";
+var	$table = $('#table'),
+		$remove = $('#remove'),
+		$addplus = $('#add-plus'),
+		$addcopy=$('#add-copy')
+		selections = [],
+		__ROOT = '${__ROOT__}',
+		__CLASS = '${__CLASS__}',
+		url_prefix = __ROOT + "/" + __CLASS + "/";
+	
 	
 
 function initTable() {
+	
 	$table.bootstrapTable({
 		'height': getHeight(),
 		'columns': columns
@@ -83,19 +86,10 @@ function initTable() {
 		});
 		$remove.prop('disabled', true);
 	});
-	$addplus.click(function() {
-		var data = $.map($table.bootstrapTable('getSelections'),
-			function(row) {
-				var r = $.extend(true, {}, row);
-				r.id = null;
-				r.username = null;
-				r.phone = null;
-				r.email = null;
-				return r;
-			});
-		$table.bootstrapTable('prepend', data);
-	});
+	
 
+	
+	
 	$(window).resize(function() {
 		$table.bootstrapTable('resetView', {
 			height: getHeight()
@@ -122,7 +116,7 @@ function detailFormatter(index, row) {
 	var html = [];
 	html.push('<form action="javascript:alert( \'success!\' );" method="POST" id=form_"' + index + '" onsubmit="javascript:user_submit_update(this);">');
 	$.each(row, function(key, value) {
-		html.push('<span style="float:left;width:30%;margin:5px;"><b style="float:left;width:25%">' + key + ':</b><input type="text" name="' + key + '" value="' + (value ? value : '') + '" id="k_' + key + '"></span>');
+		html.push('<span style="float:left;width:30%;margin:5px;"><b style="float:left;width:25%">' + key + ':</b>'+	(value.length>360 ?('<textarea name="' + key + '" >'+value+'</textarea>'):('<input type="text" name="' + key + '" value="' + (value ? value : '') + '" id="k_' + key + '">'))+'</span>');
 	});
 	html.push('<span style="float:left;;width:30%;"><input type="submit"  value="提交" ></span>'); //onsubmit="javascript:user_submit_update(this);"
 	html.push('</form>');
@@ -180,6 +174,9 @@ function getHeight() {
 }
 
 $(function() {
+	
+	
+	
 	var scripts = [
 			location.search.substring(1) ||
 			'//cdn.bootcss.com/bootstrap-table/1.11.0/bootstrap-table.min.js', //'assets/bootstrap-table/src/bootstrap-table.js',

@@ -23,8 +23,11 @@
 									<button id="remove" class="btn btn-danger" disabled>
 										<i class="glyphicon glyphicon-remove"></i> Delete
 									</button>
+									<button id="add-copy" class="btn btn-default">
+										<i class="glyphicon glyphicon-copy"></i>Copy
+									</button>
 									<button id="add-plus" class="btn btn-default">
-										<i class="glyphicon glyphicon-plus"></i>Add
+										<i class="glyphicon glyphicon-plus"></i>Creation
 									</button>
 								</div>
 								<!--   data-side-pagination="server" -->

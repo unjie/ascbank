@@ -9,8 +9,9 @@
 		<!-- Tell the browser to be responsive to screen width -->
 		<meta content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" name="viewport">
 		<!-- Bootstrap 3.3.6 -->
-		<%-- <link rel="stylesheet" href="${__STATIC__}/bootstrap/css/bootstrap.min.css"> --%>
-		<link href="//cdn.bootcss.com/bootstrap/4.0.0-alpha.3/css/bootstrap.min.css" rel="stylesheet">
+		<%--	 <link rel="stylesheet" href="${__STATIC__}/bootstrap/css/bootstrap.min.css"> --%>
+		<link href="//cdn.bootcss.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet">
+		
 		<!-- Font Awesome -->
 		<link rel="stylesheet" href="//cdn.bootcss.com/font-awesome/4.5.0/css/font-awesome.min.css">
 		<!-- Ionicons -->
@@ -18,9 +19,10 @@
 
 		<!-- Theme style -->
 		<link rel="stylesheet" href="${__STATIC__}/dist/css/AdminLTE.min.css">
+		
 		<!-- AdminLTE Skins. Choose a skin from the css/skins
        folder instead of downloading all of them to reduce the load. -->
-		<%-- <link rel="stylesheet" href="${__STATIC__}/dist/css/skins/_all-skins.min.css"> --%>
+		<link rel="stylesheet" href="${__STATIC__}/dist/css/skins/_all-skins.min.css"> 
 		<!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
 		<!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
 		<!--[if lt IE 9]>

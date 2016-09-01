@@ -1,0 +1,87 @@
+<!-- <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><c:set var="__CLASS__" value="gantt" scope="request"/><c:set var="URIBody" value="urpBody.jsp" scope="request"/> -->
+<jsp:include page="../debris/Head.jsp"/>
+<jsp:include page="Body.jsp"/>
+<jsp:include page="urpJS.jsp"/>
+<script>
+columns = [{
+					field: 'state',
+					checkbox: true,
+					align: 'center',
+					valign: 'middle'
+				}, {
+					title: 'id',
+					field: 'id',
+					align: 'center',
+					valign: 'middle',
+					sortable: true,
+				//	footerFormatter: totalTextFormatter 
+				}, {
+					field: 'parentId',
+					title: 'parentId',
+					sortable: true,
+					editable: true,
+					//footerFormatter: totalNameFormatter,
+					align: 'center'
+				}, {
+					title: 'title',
+					field: 'title',
+					sortable: true,
+					editable: true,
+					align: 'center'
+				}, {
+					title: 'duration',
+					field: 'duration',
+					sortable: true,
+					editable: true,
+					align: 'center',
+				}, {
+					title: 'expanded',
+					field: 'expanded',
+					sortable: true,
+					editable: true,
+					align: 'center'
+				}, {
+					title: 'isLive',
+					field: 'isLive',
+					sortable: true,
+					editable: true,
+					align: 'center'
+				}, {
+					title: 'leaf',
+					field: 'leaf',
+					sortable: true,
+					editable: true,
+					align: 'center'
+				}, {
+					title: 'progress',
+					field: 'progress',
+					sortable: true,
+					editable: true,
+					align: 'center'
+				}, {
+					title: 'sort',
+					field: 'sort',
+					sortable: true,
+					editable: true,
+					align: 'center'
+				}, {
+					title: 'startDate',
+					field: 'startDate',
+					sortable: true,
+					editable: true,
+					align: 'center'
+				}, {
+					title: 'description',
+					field: 'description',
+					sortable: true,
+					editable: true,
+					align: 'center'
+				}, {
+					field: 'operate',
+					title: 'Item Operate',
+					align: 'center',
+					events: operateEvents,
+					formatter: operateFormatter
+				}];
+</script>
+<jsp:include page="../debris/Foot.jsp"/>
