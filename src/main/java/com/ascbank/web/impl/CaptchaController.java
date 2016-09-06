@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.ascbank.web;
+package com.ascbank.web.impl;
 
 import java.awt.image.BufferedImage;
 
@@ -23,11 +23,11 @@ import com.google.code.kaptcha.Producer;
  *
  */
 @Controller
-@RequestMapping("/public")
-public class PublicController {
+@RequestMapping("/captcha")
+public class CaptchaController {
 	private Producer captchaProducer;
 	
-	@RequestMapping("/captcha.jpg")
+	@RequestMapping("/**.jpg")
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setDateHeader("Expires", 0);
 		// Set standard HTTP/1.1 no-cache headers.

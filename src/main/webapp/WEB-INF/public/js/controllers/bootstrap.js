@@ -1,7 +1,7 @@
 'use strict';
 
 /* Controllers */
-
+var app =  	angular.module('app');
   // bootstrap controller
   app.controller('AccordionDemoCtrl', ['$scope', function($scope) {
     $scope.oneAtATime = true;
