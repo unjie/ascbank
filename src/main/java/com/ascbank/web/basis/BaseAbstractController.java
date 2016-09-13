@@ -24,7 +24,7 @@ import com.ascbank.service.basis.BaseInterfaceService;
 import com.ascbank.verify.AddCheck;
 
 public abstract class BaseAbstractController<T extends Serializable, E extends PKEntity<T>, S extends BaseInterfaceService<T, E>>
-implements BaseInterfaceController<T, E>, InjectionInterface<S> {
+		implements BaseInterfaceController<T, E>, InjectionInterface<S> {
 	
 	/**
 	 *
@@ -99,15 +99,6 @@ implements BaseInterfaceController<T, E>, InjectionInterface<S> {
 	 */
 	public S getBeanService() {
 		return beanService;
-	}
-	
-	@Override
-	@RequestMapping(value = { "/{pagename:[\\w]+}**" }, method = RequestMethod.GET)
-	public String getHtml(@PathVariable("pagename") String pagename) {
-		RequestMapping rm = this.getClass().getAnnotation(RequestMapping.class);
-		log.debug("=========={}=========", rm);
-		return rm.value()[0] + "/" + pagename;
-		
 	}
 	
 	@Override

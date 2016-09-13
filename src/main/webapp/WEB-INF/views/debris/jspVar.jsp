@@ -1,1 +1,0 @@
-<%@ page contentType="text/html;charset=UTF-8"%> <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%><c:set var="__ROOT__" value="${pageContext.request.contextPath}"  scope="request"/><c:set var="__PUBLIC__" value="${__ROOT__}/public" scope="request"/>

@@ -18,17 +18,17 @@ public class Register extends Login {
 	 *
 	 */
 	private static final long	serialVersionUID	= 8952853064094048512L;
-	
-	@NotEmpty(groups = { CaptchaCheck.class })
+
 	@Transient
+	@NotEmpty(groups = { CaptchaCheck.class })
 	private transient String	respassword;
-	
+
 	public String getRespassword() {
 		return respassword;
 	}
-	
+
 	public void setRespassword(String respassword) {
 		this.respassword = respassword;
 	}
-	
+
 }

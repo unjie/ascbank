@@ -9,10 +9,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ascbank.exception.UserException;
 import com.ascbank.model.Login;
@@ -23,6 +24,8 @@ import com.ascbank.verify.AddCheck;
 import com.ascbank.verify.CaptchaCheck;
 import com.ascbank.verify.LoginCheck;
 import com.ascbank.web.UserController;
+import com.ascbank.web.basis.BaseAbstractController;
+import com.ascbank.web.basis.JsonResultInfo;
 
 /**
  * @author unjie wusu_jie@qq.com
@@ -30,8 +33,8 @@ import com.ascbank.web.UserController;
  */
 @Controller
 @RequestMapping("/user")
-public class UserControllerImpl extends com.ascbank.web.basis.BaseAbstractController<Long, User, UserService<Long, User>> implements UserController<Long, User, Login, Register> {
-
+public class UserControllerImpl extends BaseAbstractController<Long, User, UserService<Long, User>> implements UserController<Long, User, Login, Register> {
+	
 	private static final long	serialVersionUID	= -6215656516167426274L;
 
 	// @Resource
@@ -45,13 +48,21 @@ public class UserControllerImpl extends com.ascbank.web.basis.BaseAbstractContro
 	 * @see com.qinzero.controller.UserControllerInterface#exit(javax.servlet.http .HttpServletRequest)
 	 */
 	@Override
+	@ResponseBody
 	@RequestMapping(value = { "/exit" }, method = { RequestMethod.GET })
-	public String exit(HttpServletRequest request) {
+	public JsonResultInfo exit(HttpServletRequest request) {
+		JsonResultInfo info = new JsonResultInfo();
+		
 		if (getBeanService().logout() != null) {
-			return systemConfig.getProperty("user_exit");
+			info.setSuccess(true);
+			info.setMessage("user exit successs");
+			info.setUrl(this.systemConfig.get("user_exit_successs").toString());
+		} else {
+			info.setSuccess(false);
+			info.setMessage("user exit failure");
 		}
-		request.setAttribute("error", "{500.error}");
-		return systemConfig.getProperty("error_500");
+		
+		return info;
 	}
 
 	/*
@@ -60,27 +71,34 @@ public class UserControllerImpl extends com.ascbank.web.basis.BaseAbstractContro
 	 * @see com.qinzero.controller.UserControllerInterface#login(javax.servlet.http .HttpSession, com.qinzero.entity.User, org.springframework.validation.BindingResult)
 	 */
 	@Override
+	@ResponseBody
 	@RequestMapping(value = { "/login" }, method = { RequestMethod.POST })
-	public String login(@Validated(value = { CaptchaCheck.class, LoginCheck.class }) Login user, BindingResult br) {
+	public JsonResultInfo login(@RequestBody @Validated(value = { CaptchaCheck.class, LoginCheck.class }) Login user, BindingResult br) {
 		log.debug("----------User : {}-----BR : {}----", user, br);
+		JsonResultInfo info = new JsonResultInfo();
 		if (user != null && (user.getUsername() != null || user.getEmail() != null || user.getPhone() != null)) {
 			if (br.hasErrors()) {
 				log.debug("------------------{}-------------------", br.getAllErrors());
-				return systemConfig.getProperty("user_login");
+				info.setError(br.getAllErrors());
+				info.setSuccess(false);
+				info.setMessage(br.getAllErrors().get(0).getDefaultMessage());
 			} else {
-
+				
 				try {
 					getBeanService().login(user);
-					if (log.isDebugEnabled()) {
-						log.debug("-----------{}---", user.toString());
-					}
+					info.setSuccess(true);
+					info.setMessage("login successs");
+					log.debug("-----------{}---", user.toString());
+					info.setUrl(this.systemConfig.get("user_login_successs").toString());
 				} catch (UserException e) {
-					br.addError(new ObjectError("error", e.getMessage()));
-					return systemConfig.getProperty("user_login");
+					// br.addError(new ObjectError("error", e.getMessage()));
+					info.setError(e);
+					info.setSuccess(false);
+					info.setMessage("login failure ");
 				}
 			}
 		}
-		return systemConfig.getProperty("user_login_successs");
+		return info;
 
 	}
 
@@ -90,24 +108,34 @@ public class UserControllerImpl extends com.ascbank.web.basis.BaseAbstractContro
 	 * @see com.qinzero.controller.UserControllerInterface#register(javax.servlet .http.HttpSession, com.qinzero.entity.User, org.springframework.validation.BindingResult)
 	 */
 	@Override
+	@ResponseBody
 	@RequestMapping(value = { "/register" }, method = { RequestMethod.POST })
-	public String register(@Validated(value = { CaptchaCheck.class, LoginCheck.class, AddCheck.class }) Register user, BindingResult br) {
+	public JsonResultInfo register(@RequestBody @Validated(value = { CaptchaCheck.class, LoginCheck.class, AddCheck.class }) Register user, BindingResult br) {
 		log.debug("----------User : {}-----BR : {}----", user, br);
+		JsonResultInfo info = new JsonResultInfo();
 		if (br.hasErrors()) {
 			log.debug("------------------BR {}-------------------", br.getAllErrors());
-			return systemConfig.getProperty("user_register");
+			info.setError(br.getAllErrors());
+			info.setSuccess(false);
+			info.setMessage(br.getAllErrors().get(0).getDefaultMessage());
 		} else {
 			try {
 				log.debug("--------register:{}----------", user);
 				getBeanService().add(user);
+				info.setSuccess(true);
+				info.setMessage("login successs");
+				info.setUrl(this.systemConfig.get("user_register_successs").toString());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
-				br.addError(new ObjectError("error", e.getMessage()));
-				return systemConfig.getProperty("user_register");
+				// br.addError(new ObjectError("error", e.getMessage()));
+				info.setError(e);
+				info.setSuccess(false);
+				info.setMessage("login failure ");
 			}
-			log.info(user.toString());
-			return systemConfig.getProperty("user_register_success");
+			log.debug("-----------------{}--", user.toString());
+			
 		}
+		return info;
 	}
 
 }

@@ -10,10 +10,16 @@
 	      </div>
 	      <div class="list-group list-group-sm">
 	        <div class="list-group-item">
-	          <input type="email" placeholder="Email" class="form-control no-border" ng-model="user.email" required>
+	          <input type="text" placeholder="Email/Phone/Username" class="form-control no-border" ng-model="user.email" required>
 	        </div>
 	        <div class="list-group-item">
 	           <input type="password" placeholder="Password" class="form-control no-border" ng-model="user.password" required>
+	        </div>
+	        <div class="list-group-item">
+	           <img ng-src="{{captcha}}" class="form-control no-border"  ng-click="refresh(this)">
+	        </div>
+	        <div class="list-group-item">
+	           <input type="text" placeholder="Captcha" class="form-control no-border" ng-model="user.captcha" required>
 	        </div>
 	      </div>
 	      <button type="submit" class="btn btn-lg btn-primary btn-block" ng-click="login()" ng-disabled='form.$invalid'>Log in</button>
@@ -23,6 +29,6 @@
 	      <a ui-sref="access.signup" class="btn btn-lg btn-default btn-block">Create an account</a>
 	    </form>
 	  </div>
-	  <div class="text-center" ng-include="'tpl/blocks/page_footer.html'"></div>
+	  <div class="text-center" ng-include="'blocks/page_footer.html'"></div>
 	</div>
-	
+	<script><#include "/user/login.js"></script>

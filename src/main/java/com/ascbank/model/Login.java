@@ -10,6 +10,7 @@ import com.ascbank.model.base.CaptchaValidetorModel;
 import com.ascbank.validator.annotation.Captcha;
 import com.ascbank.verify.CaptchaCheck;
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.google.code.kaptcha.Constants;
 
 /**
  * @author jie
@@ -25,10 +26,10 @@ public class Login extends User implements CaptchaValidetorModel {
 	 *
 	 * @mbggenerated Wed Jul 13 16:52:44 CST 2016
 	 */
-	@NotEmpty(groups = { CaptchaCheck.class })
-	@Captcha(key = com.google.code.kaptcha.Constants.KAPTCHA_SESSION_KEY, groups = { CaptchaCheck.class }, message = "验证码错误")
 	@Transient
 	@JsonIgnore
+	@NotEmpty(groups = { CaptchaCheck.class })
+	@Captcha(key = Constants.KAPTCHA_SESSION_KEY, groups = { CaptchaCheck.class }, message = "验证码错误")
 	public transient String		captcha;
 	
 	/**
@@ -36,8 +37,8 @@ public class Login extends User implements CaptchaValidetorModel {
 	 *
 	 * @mbggenerated Wed Jul 13 16:52:44 CST 2016
 	 */
-	@JsonIgnore
 	@Transient
+	@JsonIgnore
 	private transient Boolean	save				= false;
 	
 	/**
@@ -72,7 +73,7 @@ public class Login extends User implements CaptchaValidetorModel {
 	 * @mbggenerated Wed Jul 13 16:52:44 CST 2016
 	 */
 	public void setCaptcha(String captcha) {
-		this.captcha = captcha == null ? null : captcha.trim();
+		this.captcha = (captcha == null ? null : captcha.trim());
 	}
 	
 	/**

@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
 	<display-name>ascbank</display-name>
+	
+	<init-param>
+            <param-name>detectAllViewResolvers</param-name>
+            <param-value>false</param-value>
+    </init-param>
+    
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext.xml</param-value>
@@ -12,7 +18,7 @@
 
 	<context-param>
 		<param-name>webAppRootKey</param-name>
-		<!-- ① Web 应用根目录以该属性名添加到系统参数中 -->
+		<!-- ① Web 应用根目录以该属性名添加到系统参数中 spring 中使用${webapp.root} 获取 -->
 		<param-value>webapp.root</param-value>
 	</context-param>
 	<!-- ② 负责将 Web 应用根目录以 webAppRootKey 上下文参数指定的属性名添加到系统参数中 -->
@@ -117,9 +123,8 @@
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-	</listener>
-	<listener>
-		<!-- 缓存清除监听器 -->
+		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
+  		<!-- 缓存清除监听器 -->
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
 
