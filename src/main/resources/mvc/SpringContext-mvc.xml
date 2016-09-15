@@ -23,6 +23,13 @@
 		<!-- <mvc:message-converters register-defaults="true"> //将StringHttpMessageConverter的默认编码设为UTF-8 <bean class="org.springframework.http.converter.StringHttpMessageConverter"> <constructor-arg value="UTF-8" /> </bean> //将Jackson2HttpMessageConverter的默认格式化输出设为true <bean class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter"> <property name="prettyPrint" value="true" /> </bean> </mvc:message-converters> -->
 	</mvc:annotation-driven>
 	<!-- 2016年8月3日 15:17:16 ↑ -->
+	
+	<bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter" />
+	<bean id="byteArrayHttpMessageConverter" class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
+	<bean id="resourceHttpMessageConverter" class="org.springframework.http.converter.ResourceHttpMessageConverter" />
+	<bean id="sourceHttpMessageConverter" class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
+	<bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
+	<!-- //xml 解析器 <bean id="xmlAwareFormHttpMessageConverter" class="org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter" /> <bean id="jaxb2RootElementHttpMessageConverter" class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter" /> <bean id="marshallingHttpMessageConverter" class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter"> <property name="marshaller" ref="castorMarshaller" /> <property name="unmarshaller" ref="castorMarshaller" /> </bean> <bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller" /> -->
 
 	<!-- //请求映射处理适配器 -->
 	<bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter">
@@ -33,20 +40,12 @@
 				<ref bean="resourceHttpMessageConverter" />
 				<ref bean="sourceHttpMessageConverter" />
 				<ref bean="mappingJackson2HttpMessageConverter" />
-
 				<!-- <ref bean="jaxb2RootElementHttpMessageConverter"/> <ref bean="marshallingHttpMessageConverter" /> <ref bean="xmlAwareFormHttpMessageConverter"/> -->
 			</util:list>
 		</property>
 
 	</bean>
 
-	<bean id="stringHttpMessageConverter" class="org.springframework.http.converter.StringHttpMessageConverter" />
-	<bean id="byteArrayHttpMessageConverter" class="org.springframework.http.converter.ByteArrayHttpMessageConverter" />
-	<bean id="resourceHttpMessageConverter" class="org.springframework.http.converter.ResourceHttpMessageConverter" />
-	<bean id="sourceHttpMessageConverter" class="org.springframework.http.converter.xml.SourceHttpMessageConverter" />
-	<bean id="mappingJackson2HttpMessageConverter" class="org.springframework.http.converter.json.MappingJackson2HttpMessageConverter" />
-
-	<!-- //xml 解析器 <bean id="xmlAwareFormHttpMessageConverter" class="org.springframework.http.converter.xml.XmlAwareFormHttpMessageConverter" /> <bean id="jaxb2RootElementHttpMessageConverter" class="org.springframework.http.converter.xml.Jaxb2RootElementHttpMessageConverter" /> <bean id="marshallingHttpMessageConverter" class="org.springframework.http.converter.xml.MarshallingHttpMessageConverter"> <property name="marshaller" ref="castorMarshaller" /> <property name="unmarshaller" ref="castorMarshaller" /> </bean> <bean id="castorMarshaller" class="org.springframework.oxm.castor.CastorMarshaller" /> -->
 
 	<!-- // 注解方法处理适配器 <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> <property name="messageConverters"> <list> <ref bean="byteArray_hmc" /> <ref bean="string_hmc" /> <ref bean="resource_hmc" /> <ref bean="source_hmc" /> <ref bean="xmlAwareForm_hmc" /> <ref bean="jaxb2RootElement_hmc" /> <ref bean="jackson_hmc" /> </list> </property> </bean> -->
 
@@ -70,9 +69,45 @@
 	<mvc:view-controller path="/index**" view-name="/index" status-code="200" />
 	<mvc:view-controller path="/manage" view-name="/manage/index" status-code="200" />
 	<!-- 静态资源文件 -->
-	<mvc:resources mapping="/public/**" location="/WEB-INF/public/" cache-period="360000"  order="0"/>
+	<!-- 定义无需Controller的url<->view直接映射 -->
+	<!-- 由于web.xml中设置是：由SpringMVC拦截所有请求,于是在读取静态资源文件的时候就会受到影响(说白了就是读不到) -->
+	<!-- 经过下面的配置，该标签的作用就是：所有页面中引用"/js/**"的资源，都会从"/resources/js/"里面进行查找 -->
+	<!-- 参考: https://github.com/zhangkaitao/spring4-1-showcase/blob/master/spring4.1-resource/src/main/resources/spring-mvc.xml -->
+	<!-- 我们可以访问http://IP:8080/xxx/js/my.css和http://IP:8080/xxx/resources/js/my.css对比出来 -->
+	<mvc:resources mapping="/public/**" location="/WEB-INF/public/" cache-period="31556926" order="0">
+		<mvc:resource-chain resource-cache="true">
+			<mvc:resolvers>
+				<mvc:version-resolver>
+					<mvc:content-version-strategy patterns="/**" />
+				</mvc:version-resolver>
 
-	<!-- <mvc:resources mapping="/upload/**" location="/WEB-INF/upload/" /> <mvc:resources mapping="/js/**" location="/WEB-INF/js/" /> <mvc:resources mapping="/css/**" location="/WEB-INF/css/" /> <mvc:resources mapping="/fonts/**" location="/WEB-INF/fonts/" /> <mvc:resources mapping="/plugins/**" location="/WEB-INF/plugins/" /> <mvc:resources mapping="/images/**" location="/WEB-INF/images/" /> -->
+				<bean class="org.springframework.web.servlet.resource.GzipResourceResolver" />
+				<bean class="org.springframework.web.servlet.resource.CachingResourceResolver">
+					<constructor-arg ref="cache" />
+				</bean>
+				<bean class="org.springframework.web.servlet.resource.VersionResourceResolver">
+					<property name="strategyMap">
+						<map>
+							<entry key="/**">
+								<bean class="org.springframework.web.servlet.resource.ContentVersionStrategy" />
+							</entry>
+						</map>
+					</property>
+				</bean>
+				<bean class="org.springframework.web.servlet.resource.PathResourceResolver" />
+
+			</mvc:resolvers>
+			<mvc:transformers>
+				<bean class="org.springframework.web.servlet.resource.CachingResourceTransformer">
+					<constructor-arg ref="cache" />
+				</bean>
+				<bean class="org.springframework.web.servlet.resource.CssLinkResourceTransformer" />
+			</mvc:transformers>
+		</mvc:resource-chain>
+	</mvc:resources>
+
+	<mvc:resources mapping="/**/*.html" location="/WEB-INF/views/" cache-period="31556926" order="100" />
+	<mvc:resources mapping="/**.html" location="/WEB-INF/views/" cache-period="31556926" order="101"/>
 	<!-- 当上面要访问的静态资源不包括在上面的配置中时，则根据此配置来访问 -->
 	<mvc:default-servlet-handler />
 
@@ -92,7 +127,7 @@
 				<entry key="json" value="application/json" />
 				<entry key="xls" value="application/vnd.ms-excel" />
 				<entry key="js" value="application/javascript" />
-				<entry key="html" value="*/*" />
+				<entry key="html" value="text/html" />
 			</map>
 		</property>
 	</bean>
@@ -104,78 +139,65 @@
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="freemarkerVariables">
 			<map><!--设置一些常用的全局变量 -->
-				<entry key="webRoot" value="/#{servletContext.servletContextName}"/>
-				<entry key="publicRoot" value="/#{servletContext.servletContextName}/public"/>
+				<entry key="webRoot" value="/#{servletContext.servletContextName}" />
+				<entry key="publicRoot" value="/#{servletContext.servletContextName}/public" />
 			</map>
 		</property>
 		<property name="freemarkerSettings">
 			<props>
-				<prop key="template_update_delay">0</prop>
-				<prop key="default_encoding">UTF-8</prop>
-				<prop key="number_format">0.##########</prop>
-				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<!-- 刷新模板的周期，单位为秒 -->
+				<prop key="template_update_delay">5</prop>
+				<!--模板的编码格式 -->
+				<prop key="defaultEncoding">UTF-8</prop>
+				<!--url编码格式 -->
+				<prop key="url_escaping_charset">UTF-8</prop>
+				<!--此属性可以防止模板解析空值时的错误 -->
 				<prop key="classic_compatible">true</prop>
-				<!-- <prop key="template_exception_handler">ignore</prop> -->
+				<!--该模板所使用的国际化语言环境选项 -->
+				<prop key="locale">zh_CN</prop>
+				<!--布尔值格式 -->
+				<prop key="boolean_format">true,false</prop>
+				<!--日期时间格式 -->
+				<prop key="datetime_format">yyyy-MM-dd HH:mm:ss</prop>
+				<!--时间格式 -->
+				<prop key="time_format">HH:mm:ss</prop>
+				<!--数字格式 -->
+				<prop key="number_format">0.######</prop>
+				<!--自动开启/关闭空白移除，默认为true -->
+				<prop key="whitespace_stripping">true</prop>
+				<prop key="template_exception_handler">ignore</prop>
 			</props>
 		</property>
 	</bean>
 
 	<!-- <bean id="configFileView" class="com.ascbank.web.servlet.view.GenericFileView" p:contentType="text/plain" p:url="" scope="prototype"/> -->
 	<!-- 根据客户端的不同的请求决定不同的 view进行响应, 如 /blog/1.json /blog/1.xml -->
-	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
+	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver" >
 		<!-- <property name="ignoreAcceptHeader" value="true"/> -->
 		<!-- <property name="defaultContentType" value="text/html"/> -->
+		<property name="order" value="1" />
 		<property name="contentNegotiationManager" ref="cnManager" />
 		<property name="viewResolvers">
 			<list>
 				<!-- bean name view resolver -->
 				<!-- <bean class="org.springframework.web.servlet.view.BeanNameViewResolver" p:order="1" /> -->
-				
-				
-				 <!-- freemarker视图解析器 -->
-				
+				<!-- freemarker视图解析器 -->
 				<bean class="org.springframework.web.servlet.view.freemarker.FreeMarkerViewResolver" p:order="2">
 					<property name="contentType" value="text/html;charset=UTF-8" />
-					<!-- 
-					// 此变量值为pageContext.request, 页面使用方法：rc.contextPath
-					 -->
+					<!-- // 此变量值为pageContext.request, 页面使用方法：rc.contextPath -->
 					<property name="requestContextAttribute" value="rc" />
 					<property name="exposeRequestAttributes" value="true" />
 					<property name="exposeSessionAttributes" value="true" />
 					<property name="viewNames" value="*.html" />
 					<property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
 					<property name="cache" value="true" />
-					<!-- 
-					// 这里需要注意一下，我注释了下面这样一行代码，这行代码的意思就是指引freemarker需要解析的文件的位置。 注释掉原因是因为 applicationContext.xml里有这样一行代码： <property name="templateLoaderPath" value="/WEB-INF/views/" /> 已经指定了视图位置。如果我们这里依然保留下方代码，页面回报406的找不到的错误
-				 	-->
+					<!-- // 这里需要注意一下，我注释了下面这样一行代码，这行代码的意思就是指引freemarker需要解析的文件的位置。 注释掉原因是因为 applicationContext.xml里有这样一行代码： <property name="templateLoaderPath" value="/WEB-INF/views/" /> 已经指定了视图位置。如果我们这里依然保留下方代码，页面回报406的找不到的错误 -->
 				</bean>
-				
-				
 				<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 通用解析器 -->
-				<!--
-				 <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="3">
-					<property name="prefix" value="/WEB-INF/views/" />
-					<property name="viewNames" value="*.html,*.js,*.css" />
-					<property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView" />
-				</bean>
-				 -->
-				<bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="2">
-					<property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView" />
-					<property name="viewNames" value="*.html,*.js,*.css" />
-					<property name="attributesMap">
-						<map>
-							<entry key="webRoot" value="/#{servletContext.servletContextName}"/>
-							<entry key="publicRoot" value="/#{servletContext.servletContextName}/public"/>
-						</map>
-					</property>
-					
-					<property name="prefix"  value="/WEB-INF/views/" />
-				</bean>
+				<!-- <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="3"> <property name="prefix" value="/WEB-INF/views/" /> <property name="viewNames" value="*.html,*.js,*.css" /> <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView" /> </bean> -->
+				<!-- <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="2"> <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView" /> <property name="viewNames" value="*.html,*.js,*.css" /> <property name="attributesMap"> <map> <entry key="webRoot" value="/#{servletContext.servletContextName}"/> <entry key="publicRoot" value="/#{servletContext.servletContextName}/public"/> </map> </property> <property name="prefix" value="/WEB-INF/views/" /> </bean> -->
 				<!-- <bean class="com.ascbank.web.viewresolver.GenericFileViewResolver"> <property name="prefix" value="/WEB-INF/views/" /> <property name="viewNames" value="configFileView"/> <property name="cache" value="true" /> </bean> -->
-				<!-- <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="2"> <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" /> <property name="prefix" value="/WEB-INF/views/" /> </bean> -->
 				<!-- <bean class="org.springframework.web.servlet.view.ResourceBundleViewResolver" p:order="2"> <property name="basename" value="views" /> <property name="defaultParentView" value="parentView" /> </bean> -->
-
-
 			</list>
 		</property>
 		<property name="defaultViews">
@@ -186,10 +208,9 @@
 					<!-- <property name="contentType" value="text/plain"/> -->
 				</bean>
 				<!-- xml视图 <bean class="org.springframework.web.servlet.view.xml.MarshallingView"> <constructor-arg ref="jaxb2Marshaller"/> </bean> -->
-
 			</list>
 		</property>
-		<property name="order" value="1" />
+		
 	</bean>
 	<!-- 默认的视图解析器 在上边的解析错误时使用 (默认使用html)- -->
 	<!-- <bean id="defaultViewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="2"> <property name="viewClass" value="org.springframework.web.servlet.view.JstlView" /> <property name="contentType" value="text/html" /> <property name="prefix" value="/WEB-INF/views" /> <property name="suffix" value=".jsp" /> </bean> -->

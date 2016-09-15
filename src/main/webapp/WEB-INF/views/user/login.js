@@ -6,7 +6,7 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function($s
 	var img="captcha/image.jpg";
     $scope.user = {};
     $scope.authError = null;
-    $scope.captcha=img
+    $scope.captcha=img;
     $scope.login = function() {
     	
 	    $scope.authError = null;
@@ -25,11 +25,13 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function($s
 	      .then(function(response) {
 	    	 console.log(response);
 	    	 var info = response.data;
+	    	 console.log(info);
 	        if (!info.success ) {
 	          $scope.authError = info.message;
 	        }else{
 	         // $state.go('app.dashboard-v1');
-	        	location.href= info.url;
+	        	location.href =document.getElementsByTagName("baes").src+ info.url;
+	        	//window.navigate(info.url);
 	        }
 	      }, function(x) {
 	        $scope.authError = 'Server Error';

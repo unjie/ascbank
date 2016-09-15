@@ -16,9 +16,9 @@
  *
  * @example <input ui-jq="datepicker" ui-options="{showOn:'click'},secondParameter,thirdParameter" ui-refresh="iChange">
  */
-angular.module('ui.jq', ['ui.load']).
+angular.module('ui.jq', ['oc.lazyLoad']).
   value('uiJqConfig', {}).
-  directive('uiJq', ['uiJqConfig', 'JQ_CONFIG', 'uiLoad', '$timeout', function uiJqInjectingFunction(uiJqConfig, JQ_CONFIG, uiLoad, $timeout) {
+  directive('uiJq', ['uiJqConfig', 'JQ_CONFIG', '$ocLazyLoad', '$timeout', function uiJqInjectingFunction(uiJqConfig, JQ_CONFIG, $ocLazyLoad, $timeout) {
 
   return {
     restrict: 'A',
@@ -70,7 +70,7 @@ angular.module('ui.jq', ['ui.load']).
         }
 
         if ( JQ_CONFIG[attrs.uiJq] ) {
-          uiLoad.load(JQ_CONFIG[attrs.uiJq]).then(function() {
+          $ocLazyLoad.load(JQ_CONFIG[attrs.uiJq]).then(function() {
             callPlugin();
             refresh();
           }).catch(function() {

@@ -18,11 +18,16 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class IndexController {
 	private Logger log = LoggerFactory.getLogger(IndexController.class);
-
+	
 	@RequestMapping(value = { "/**/*.html", "/*.html" }, method = RequestMethod.GET)
 	public String index(HttpServletRequest request) {
-		log.debug("======{}===========", request.getServletPath());
-		return request.getServletPath();
+		String path = request.getServletPath();
+		log.debug("======{}===========", path);
+		if (path.matches("/WEB-INF/")) {
+			return "/error/404.html";
+		}
+		
+		return path;
 		
 	}
 }
