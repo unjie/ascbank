@@ -31,6 +31,50 @@
       </li>
     </ul>
   </li>
+  
+  <!-- users manage -->
+  <li>
+  	<a href class="auto">      
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+      <i class="glyphicon glyphicon-user icon text-success-lter"></i>
+      <span class="font-bold" translate="aside.nav.USERSMANAGE">Users Manage</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a href>
+          <span translate="aside.nav.USERSMANAGE">Users Manage</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.user.users">
+          <span>Users</span>
+        </a>
+      </li>
+      
+      <li ui-sref-active="active">
+        <a ui-sref="app.user.roles">
+          <span>Roles</span>
+        </a>
+      </li>
+      
+       <li ui-sref-active="active">
+        <a ui-sref="app.user.permissions">
+          <span>Permissions</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  
+    <li ui-sref-active="active">
+    <a ui-sref="app.gantt">
+      <i class="glyphicon glyphicon-stats icon text-info-dker"></i>
+      <span class="font-bold" translate="aside.nav.GANTT">Gantt</span>
+    </a>
+  </li>
+  
   <li ui-sref-active="active">
     <a ui-sref="app.calendar">
       <i class="glyphicon glyphicon-calendar icon text-info-dker"></i>
@@ -38,12 +82,44 @@
     </a>
   </li>
   <li ui-sref-active="active">
-    <a ui-sref="app.mail.list">
+    <a ui-sref="app.mail.list({fold:'inbox'})">
       <b class="badge bg-info pull-right">9</b>
       <i class="glyphicon glyphicon-envelope icon text-info-lter"></i>
       <span class="font-bold" translate="aside.nav.EMAIL">Email</span>
     </a>
   </li>
+  <!-- Menu  -->
+    <li>
+  	<a href class="auto">      
+      <span class="pull-right text-muted">
+        <i class="fa fa-fw fa-angle-right text"></i>
+        <i class="fa fa-fw fa-angle-down text-active"></i>
+      </span>
+      <i class="glyphicon glyphicon-user icon text-success-lter"></i>
+      <span class="font-bold" translate="aside.nav.CONTENT"> Content Manage</span>
+    </a>
+    <ul class="nav nav-sub dk">
+      <li class="nav-sub-header">
+        <a href>
+          <span translate="aside.nav.CONTENT">Content Manage</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.conent.menu">
+          <span>Menu</span>
+        </a>
+      </li>
+      <li ui-sref-active="active">
+        <a ui-sref="app.conent.article">
+          <span>Article</span>
+        </a>
+      </li>
+    </ul>
+  </li>
+  
+  
+  
+  
   <li>
     <a href class="auto">
       <span class="pull-right text-muted">

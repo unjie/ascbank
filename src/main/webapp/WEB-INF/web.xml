@@ -104,7 +104,14 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-
+<!--
+ 	<servlet-mapping>
+	    <servlet-name>default</servlet-name>
+	    <url-pattern>*.ico</url-pattern>
+	    <url-pattern>*.css</url-pattern>
+	    <url-pattern>*.js</url-pattern>
+	</servlet-mapping> 
+-->
 	<servlet>
 		 <!-- 过滤器名称 -->
 		<servlet-name>DruidStatView</servlet-name> 
@@ -132,8 +139,9 @@
 		<session-timeout>30</session-timeout>
 	</session-config>
 	<welcome-file-list>
-		<welcome-file></welcome-file>
+		<welcome-file>index.html</welcome-file>
 	</welcome-file-list>
+
 
 
 	<error-page>

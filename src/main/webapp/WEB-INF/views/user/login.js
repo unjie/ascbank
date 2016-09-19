@@ -30,7 +30,9 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function($s
 	          $scope.authError = info.message;
 	        }else{
 	         // $state.go('app.dashboard-v1');
-	        	location.href =document.getElementsByTagName("baes").src+ info.url;
+	        	location.href ="."+ info.url;
+	        	// $('<a/>').attr("href","./");
+	        	// location.href =""
 	        	//window.navigate(info.url);
 	        }
 	      }, function(x) {

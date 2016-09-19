@@ -18,10 +18,10 @@ public class GenericFileView extends AbstractUrlBasedView {
 	
 	// 默认内容类型
 	private final static String	CONTENT_TYPE	= "text/plain";
-	
+
 	// http response conent
 	private String				responseContent;
-	
+
 	public GenericFileView() {
 		super();
 		setContentType(CONTENT_TYPE);
@@ -37,12 +37,12 @@ public class GenericFileView extends AbstractUrlBasedView {
 		response.getWriter().write(this.responseContent);
 		response.getWriter().close();
 	}
-	
+
 	@Override
 	public void setContentType(String contentType) {
 		super.setContentType(contentType);
 	}
-	
+
 	/**
 	 * 设置 http response content
 	 *
@@ -51,5 +51,5 @@ public class GenericFileView extends AbstractUrlBasedView {
 	public void setResponseContent(String responseContent) {
 		this.responseContent = responseContent;
 	}
-
+	
 }

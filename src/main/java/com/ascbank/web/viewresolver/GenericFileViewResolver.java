@@ -24,28 +24,21 @@ public class GenericFileViewResolver extends UrlBasedViewResolver {
 
 	@Override
 	protected View loadView(String viewName, Locale location) throws Exception {
+		log.debug("--------{}----{}-----{}------------", getPrefix(), viewName, getSuffix());
 		
-		// If this resolver is not supposed to handle the given view,
-		// return null to pass on to the next resolver in the chain.
-		if (!canHandle(viewName, location)) {
-			return null;
-		}
-
 		if (location == null) {
 			throw new Exception("No location specified for GenericFileViewResolver.");
 		}
+		log.debug("--------{}----{}-----{}------------", getPrefix(), viewName, getSuffix());
 		String requestedFilePath = getPrefix() + viewName + getSuffix();// location + viewName
 		Resource resource = null;
+		log.debug(requestedFilePath);
 		
-		try {
-			log.debug(requestedFilePath);
-			resource = getApplicationContext().getResource(requestedFilePath);
-			
-		} catch (Exception e) {
-			// 返回 null, 以便被下一个 resolver 处理
-			log.debug("No file found for file: " + requestedFilePath);
+		resource = getApplicationContext().getResource(requestedFilePath);
+		if (!resource.exists()) {
 			return null;
 		}
+		
 		log.debug("Requested file found: {},  viewName: {}", requestedFilePath, viewName);
 		// 根据视图名，获取相应的 view 对象
 		GenericFileView view = (GenericFileView) BeanUtils.instantiateClass(getViewClass());
@@ -56,8 +49,8 @@ public class GenericFileViewResolver extends UrlBasedViewResolver {
 			view.setContentType(contentType);
 		}
 		// 写入 view 内容
-		view.setResponseContent(resource.getURI().getPath());
+		view.setResponseContent(resource.getDescription());
 		return view;
 	}
-
+	
 }

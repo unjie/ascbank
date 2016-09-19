@@ -38,48 +38,27 @@
 						}
 					])
 				.config(function($stateProvider, $urlRouterProvider) {
-						$urlRouterProvider.otherwise('/access/signin');
+						$urlRouterProvider.otherwise('/error/404');
 						$stateProvider
-							.state(	'access', {
-								url: '/access',
+							.state(	'error', {
+								url: '/error',
 								template: '<div ui-view class="fade-in-right-big smooth"></div>'
 								})
-							.state('access.signin', {
-								url: '/signin',
-								templateUrl: './user/login.html',
-								/* resolve: {
-									deps: [
-										'$ocLazyLoad',
-										function($ocLazyLoad) {
-											return $ocLazyLoad.load([ './user/login.js']);
-										}
-									]
-								} */
+							.state('error.403', {
+								url: '/403',
+								templateUrl: './error/403.html',
+
 								})
-							.state('access.signup', {
-								url: '/signup',
-								templateUrl: './user/register.html',
-								/* resolve: {
-									deps: [
-										'$ocLazyLoad',
-										function($ocLazyLoad) {
-											return $ocLazyLoad.load([ './user/register.js']);
-										}
-									]
-								} */
-								})
-							.state('access.forgotpwd', {
-								url: '/forgotpwd',
-								templateUrl: './user/forgotpwd.html'
-							})
-							.state('access.lockme', {
-				                  url: '/lockme',
-				                  templateUrl: './user/lockme.html'
-				              })
-							.state('access.404', {
+							.state('error.404', {
 								url: '/404',
-								templateUrl: __P + '/tpl/page_404.html'
+								templateUrl: './error/404.html',
+
 								})
+							.state('error.500', {
+								url: '/500',
+								templateUrl: './error/500.html'
+							})
+
 
 					})
 				 .config(['$ocLazyLoadProvider', function($ocLazyLoadProvider) {

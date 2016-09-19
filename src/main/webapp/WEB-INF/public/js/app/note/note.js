@@ -1,5 +1,5 @@
 app.controller('NoteCtrl', ['$scope', '$http', function($scope, $http) {
-  $http.get('js/app/note/notes.json').then(function (resp) {
+  $http.get('./public/js/app/note/notes.json').then(function (resp) {
     $scope.notes = resp.data.notes;
     // set default note
     $scope.note = $scope.notes[0];

@@ -17,8 +17,11 @@
   "nav" : {
     "HEADER" : "Navigation",
     "DASHBOARD" : "Armaturenbrett",
+    "USERSMANAGE" : "User Manage",
+    "GANTT": "Gantt",
     "CALENDAR" : "Kalender",
     "EMAIL" : "E-Mail",
+    "CONTENT" : "Content Manage",
     "WIDGETS" : "Widgets",
     "components" : {
       "COMPONENTS" : "Komponenten",

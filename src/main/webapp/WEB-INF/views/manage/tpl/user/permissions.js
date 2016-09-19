@@ -1,4 +1,7 @@
-app.controller('GridDemoCtrl', ['$scope', '$http', function($scope, $http) {
+app.controller('PermissionsCtrl', ['$scope', '$http', function($scope, $http) {
+	
+	$scope.permissionSelections=[];
+	
     $scope.filterOptions = {
         filterText: "",
         useExternalFilter: true
@@ -11,7 +14,7 @@ app.controller('GridDemoCtrl', ['$scope', '$http', function($scope, $http) {
     };  
     $scope.setPagingData = function(data, page, pageSize){  
         var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
-        $scope.myData = pagedData;
+        $scope.permissionData = pagedData;
         $scope.totalServerItems = data.length;
         if (!$scope.$$phase) {
             $scope.$apply();
@@ -19,18 +22,18 @@ app.controller('GridDemoCtrl', ['$scope', '$http', function($scope, $http) {
     };
     $scope.getPagedDataAsync = function (pageSize, page, searchText) {
         setTimeout(function () {
-            var data,url='public/js/controllers/largeLoad.json';
+            var data,url='./permission/reads';
             if (searchText) {
                 var ft = searchText.toLowerCase();
                 $http.get(url).success(function (largeLoad) {    
-                    data = largeLoad.filter(function(item) {
+                    data = largeLoad.data.filter(function(item) {
                         return JSON.stringify(item).toLowerCase().indexOf(ft) != -1;
                     });
                     $scope.setPagingData(data,page,pageSize);
                 });            
             } else {
                 $http.get(url).success(function (largeLoad) {
-                    $scope.setPagingData(largeLoad,page,pageSize);
+                    $scope.setPagingData(largeLoad.data,page,pageSize);
                 });
             }
         }, 100);
@@ -50,9 +53,13 @@ app.controller('GridDemoCtrl', ['$scope', '$http', function($scope, $http) {
     }, true);
 
     $scope.gridOptions = {
-        data: 'myData',
+        data: 'permissionData',
         enablePaging: true,
         showFooter: true,
+        //enableCellEdit: true,
+        showFilter:true,
+        selectedItems: $scope.permissionSelections,
+        multiSelect: false,
         totalServerItems: 'totalServerItems',
         pagingOptions: $scope.pagingOptions,
         filterOptions: $scope.filterOptions

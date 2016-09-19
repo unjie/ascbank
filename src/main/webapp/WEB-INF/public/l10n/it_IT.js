@@ -17,8 +17,11 @@
   "nav" : {
     "HEADER" : "Navigazione",
     "DASHBOARD" : "Cruscotto",
+    "USERSMANAGE" : "User Manage",
+    "GANTT": "Gantt",
     "CALENDAR" : "Calendario",
     "EMAIL" : "Email",
+    "CONTENT" : "Content Manage",
     "WIDGETS" : "Widgets",
     "components" : {
       "COMPONENTS" : "Componenti",

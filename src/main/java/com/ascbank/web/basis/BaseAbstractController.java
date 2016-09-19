@@ -38,8 +38,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	protected Properties		systemConfig;
 	
 	@Override
-	@ResponseBody
-	// @RequiresPermissions(value = "add")
+	@ResponseBody// @RequiresPermissions(value = "add")
 	@RequestMapping(value = { "/create" }, method = { RequestMethod.PUT })
 	public JsonResultInfo create(@RequestBody @Validated(value = { AddCheck.class }) E entity, BindingResult br) {
 		
@@ -64,16 +63,14 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	}
 	
 	@Override
-	@ResponseBody
-	// @AutoPermissions(permission = "destroy")
+	@ResponseBody	// @AutoPermissions(permission = "destroy")
 	@RequestMapping(value = { "/destroy" }, method = { RequestMethod.DELETE })
 	public JsonResultInfo destroy(@RequestBody E entity) {
 		return this.destroy(entity);
 	}
 	
 	@Override
-	@ResponseBody
-	// @AutoPermissions(permission = "destroy")
+	@ResponseBody	// @AutoPermissions(permission = "destroy")
 	@RequestMapping(value = { "/destroy", "/destroy/{id}" }, method = { RequestMethod.DELETE })
 	public JsonResultInfo destroy(@PathVariable("id") T id) {
 		JsonResultInfo info = new JsonResultInfo();
@@ -102,8 +99,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	}
 	
 	@Override
-	@ResponseBody
-	// @AutoPermissions(permission = "read")
+	@ResponseBody	// @AutoPermissions(permission = "read")
 	@RequestMapping(value = { "/read/{id}" }, method = { RequestMethod.GET })
 	public JsonResultInfo read(@PathVariable("id") T id) {
 		// TODO Auto-generated method stub
@@ -121,8 +117,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	}
 	
 	@Override
-	@ResponseBody
-	// @RequiresPermissions(value = "read")
+	@ResponseBody	// @RequiresPermissions(value = "read")
 	@RequestMapping(value = { "/reads" }, method = { RequestMethod.GET })
 	public JsonResultInfo readAll(@PageableDefault(value = 15, sort = { "id" }, direction = Sort.Direction.DESC) Pageable pageable) {
 		JsonResultInfo info = new JsonResultInfo();
@@ -144,8 +139,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	}
 	
 	@Override
-	@ResponseBody
-	// @AutoPermissions(permission = "update")
+	@ResponseBody	// @AutoPermissions(permission = "update")
 	@RequestMapping(value = { "/update", "/update/{id}" }, method = { RequestMethod.PATCH, RequestMethod.POST })// produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }
 	public JsonResultInfo update(@RequestBody @Validated(value = { AddCheck.class }) E entity, BindingResult br) {
 		// TODO Auto-generated method stub

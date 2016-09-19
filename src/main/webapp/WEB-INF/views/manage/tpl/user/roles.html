@@ -1,0 +1,19 @@
+<div class="bg-light lter b-b wrapper-md">
+  <h1 class="m-n font-thin h3">Roles</h1>
+</div>
+<div class="wrapper-md" ng-controller="RolesCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Roles
+    </div>
+    <div class="table-responsive">
+      <div ng-grid="gridOptions" style="min-height:420px"></div>
+    </div>
+        <div class="table-responsive" style="margin: 2%">
+   		 <form  action="javascript:alert(''提交成功)" method="put"  id="roleForm" >
+   		 	<span ng-repeat=" (k,v ) in roleSelections[0]"  style="width:33%;float:left"><span style="width:30%;float:left">{{k}} :</span><input type="text"  name="{{k}}" value="{{v}}"/></span>
+   		 	<span  style="width:33%;float:left"><input type="submit"  value="提交" /></span>
+   		 </form>
+    </div>
+  </div>
+</div>

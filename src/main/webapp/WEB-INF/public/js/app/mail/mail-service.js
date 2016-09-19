@@ -1,6 +1,6 @@
 // A RESTful factory for retreiving mails from 'mails.json'
 app.factory('mails', ['$http', function ($http) {
-  var path = 'js/app/mail/mails.json';
+  var path = './public/js/app/mail/mails.json';
   var mails = $http.get(path).then(function (resp) {
     return resp.data.mails;
   });

@@ -1,0 +1,27 @@
+<div class="bg-light lter b-b wrapper-md" ng-init="
+    app.settings.asideFolded = true; 
+    app.settings.asideDock = true;
+  ">
+  <h1 class="m-n font-thin h3">Gantt</h1>
+</div>
+<div class="wrapper-md" ng-controller="GanttCtrl">
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      Gantt
+    </div>
+    <div class="table-responsive">
+		  <div gantt data="data">
+	        <!-- <gantt-table columns="['model.name']"></gantt-table> -->
+	        <gantt-tree></gantt-tree>
+	        <gantt-groups></gantt-groups>
+	        <gantt-tooltips></gantt-tooltips>
+	        <gantt-bounds></gantt-bounds>
+	        <gantt-progress></gantt-progress>
+	        <gantt-sortable></gantt-sortable>
+	        <gantt-movable></gantt-movable>
+	        <gantt-draw-task></gantt-draw-task>
+	        <gantt-resize-sensor></gantt-resize-sensor>
+	    </div>
+	</div>
+  </div>
+</div>
