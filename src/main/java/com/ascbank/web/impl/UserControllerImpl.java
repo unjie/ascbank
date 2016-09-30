@@ -16,9 +16,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ascbank.exception.UserException;
-import com.ascbank.model.Login;
-import com.ascbank.model.Register;
 import com.ascbank.model.User;
+import com.ascbank.model.derive.Login;
+import com.ascbank.model.derive.Register;
 import com.ascbank.service.UserService;
 import com.ascbank.verify.AddCheck;
 import com.ascbank.verify.CaptchaCheck;

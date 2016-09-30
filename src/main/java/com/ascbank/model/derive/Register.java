@@ -1,7 +1,7 @@
 /**
  *
  */
-package com.ascbank.model;
+package com.ascbank.model.derive;
 
 import org.hibernate.validator.constraints.NotEmpty;
 import org.springframework.data.annotation.Transient;

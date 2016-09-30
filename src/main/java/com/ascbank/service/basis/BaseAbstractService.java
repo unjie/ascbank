@@ -30,16 +30,16 @@ import com.ascbank.verify.ValidetorInterface;
  *
  */
 public abstract class BaseAbstractService<T extends Serializable, E extends PKEntity<T>, D extends BaseInterfaceDao<T, E>>
-implements BaseInterfaceService<T, E>, InjectionInterface<D>, ValidetorInterface<T, E>, GenericityInterface {
+		implements BaseInterfaceService<T, E>, InjectionInterface<D>, ValidetorInterface<T, E>, GenericityInterface {
 	/**
 	 *
 	 */
 	private static final long	serialVersionUID	= -8237810984312825562L;
 	@Autowired
 	D							beanDao;
-	
+
 	private final Logger		log					= LoggerFactory.getLogger(BaseAbstractService.class);
-	
+
 	@Override
 	@Transactional
 	@AutoPermissions
@@ -50,10 +50,10 @@ implements BaseInterfaceService<T, E>, InjectionInterface<D>, ValidetorInterface
 		if (log.isDebugEnabled()) {
 			log.debug("----------------- add entity={}------------------", entity);
 		}
-		assert (beanDao.insert(entity) == 1);
+		assert (beanDao.insertSelective(entity) == 1);
 		return entity;
 	}
-	
+
 	@Override
 	@Transactional
 	@AutoPermissions
@@ -65,24 +65,24 @@ implements BaseInterfaceService<T, E>, InjectionInterface<D>, ValidetorInterface
 		}
 		beanDao.deleteByPrimaryKey(id);
 	}
-	
+
 	public D getBean() {
 		return this.beanDao;
 	}
-	
+
 	/*
 	 * @Override public Class<?> getGenericity(Integer index) { return ResolvableType.forType(this.getClass().getGenericSuperclass()).resolveGeneric(index); }
 	 *
 	 * @Override public Class<?>[] getGenericitys() { return ResolvableType.forType(this.getClass().getGenericSuperclass()).resolveGenerics(); }
 	 */
-	
+
 	@Override
 	@AutoPermissions
 	// @Caching(cacheable = { @Cacheable(value = "Page", key = "#root.targetClass.getName()+'_page_'+#pageable.getPageNumber()+'_'+#pageable.getPageSize()+#pageable.sort.iterator().next().getProperty()+'_'+#pageable.sort.iterator().next().getDirection().name()",condition = "#pageable != null") })
 	public List<E> read(Pageable pageable) {
 		return beanDao.selelctByPageableAll(pageable);
 	}
-	
+
 	@Override
 	@AutoPermissions
 	// @Caching(cacheable = { @Cacheable(value = "Page", key = "#root.targetClass.getName()+'_'+#sort.iterator().next().getProperty()+'_'+#sort.iterator().next().getDirection().name()", condition = "#sort != null") })
@@ -91,7 +91,7 @@ implements BaseInterfaceService<T, E>, InjectionInterface<D>, ValidetorInterface
 		log.debug("----------------- readAll entity={}------------------", sort);
 		return beanDao.selelctBySortAll(sort);
 	}
-	
+
 	@Override
 	@AutoPermissions(permission = "read")
 	// @RequiresPermissions("read:*")
@@ -101,13 +101,13 @@ implements BaseInterfaceService<T, E>, InjectionInterface<D>, ValidetorInterface
 		log.debug("---------------read {}----", id);
 		return beanDao.selectByPrimaryKey(id);
 	}
-	
+
 	@Override
 	public void setBean(D bean) {
 		// TODO Auto-generated method stub
 		this.beanDao = bean;
 	}
-	
+
 	@Override
 	@Transactional
 	@AutoPermissions
@@ -117,19 +117,19 @@ implements BaseInterfaceService<T, E>, InjectionInterface<D>, ValidetorInterface
 		beanDao.updateByPrimaryKeySelective(entity);
 		return entity;
 	}
-	
+
 	@Override
 	public List<E> verify(Map<String, Object> map) {
 		
 		// TODO Auto-generated method stub
-		
+
 		List<SearchFilter> list = new ArrayList<SearchFilter>(); // 获取当前new的对象的 泛型的父类 类型
-		
+
 		for (Entry<String, Object> entry : map.entrySet()) {
 			list.add(new SearchFilter(entry.getKey(), Operator.EQ, entry.getValue()));
 		}
-		
+
 		return null;
-		
+
 	}
 }

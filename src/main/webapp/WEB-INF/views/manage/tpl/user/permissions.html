@@ -10,9 +10,11 @@
       <div ng-grid="gridOptions" style="min-height:420px"></div>
     </div>
         <div class="table-responsive" style="margin: 2%">
-   		 <form  action="javascript:alert(''提交成功)" method="put"  id="permissionForm" >
+   		 <form  action="javascript:alert('提交成功')" method="put"  id="permissionForm" >
    		 	<span ng-repeat=" (k,v ) in permissionSelections[0]"  style="width:33%;float:left"><span style="width:30%;float:left">{{k}} :</span><input type="text"  name="{{k}}" value="{{v}}"/></span>
-   		 	<span  style="width:33%;float:left"><input type="submit"  value="提交" /></span>
+   		 	<footer class="panel-footer text-right bg-light lter" ng-if="permissionSelections !=null">
+              <button type="submit" class="btn btn-success">Submit</button>
+            </footer>
    		 </form>
     </div>
   </div>

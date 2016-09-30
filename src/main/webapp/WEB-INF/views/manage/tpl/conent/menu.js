@@ -1,5 +1,7 @@
 app.controller('MenuCtrl', ['$scope','$http','$timeout',function($scope,$http, $timeout) {
 
+	var addData=[];
+	
 	$scope.data=[];
     setTimeout(function () {
       	var data,url='./menu/stems/root';
@@ -17,13 +19,19 @@ app.controller('MenuCtrl', ['$scope','$http','$timeout',function($scope,$http, $
         scope.remove();
       };
     $scope.newSubItem = function (scope) {
-          var nodeData = scope.$modelValue;
+          var nodeData = scope.$modelValue,newData;
           if(nodeData.children ==null )nodeData.children=[];
-          nodeData.children.push({
-            id: nodeData.id * 10 + nodeData.children.length+1,
-            title: nodeData.title + '.' + (nodeData.children.length + 1),
-            children: []
-          });
+          
+          newData={
+                  id: nodeData.id * 10 + nodeData.children.length+1,
+                  title: nodeData.title + '.' + (nodeData.children.length + 1),
+                  parentId: nodeData.id,
+                  stem: nodeData.stem+","+nodeData.id,
+                  children: []
+                };
+          
+          addData.push(newData);
+          nodeData.children.push(newData);
         };
         
     $scope.spread = function (scope) {
@@ -39,6 +47,19 @@ app.controller('MenuCtrl', ['$scope','$http','$timeout',function($scope,$http, $
         scope.toggle();
       };
 
- 
+      $scope.editSubItem= function (scope) {
+    	  console.log(scope);
+    	  $scope.menuSelection=scope.$modelValue;
+    	 
+      }
+      $scope.save= function(){
+    	  var url='./menu/create';
+    	  for( e in addData){
+    		   $http({method:'PUT' ,'url':url,'data':addData[e]}).success(function (largeLoad) {
+    			   console.log(largeLoad);
+    		   })
+    	  }
+      }
+      
      
 }]);

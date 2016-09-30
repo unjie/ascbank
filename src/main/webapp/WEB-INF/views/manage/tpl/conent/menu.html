@@ -17,6 +17,7 @@
       {{node.title}}
       <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
       <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
+	  <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="editSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-edit"></span></a>
     </div>
   </div>
   <ol ui-tree-nodes="" ng-model="node.children" ng-class="{hidden: collapsed}">
@@ -25,31 +26,127 @@
   </ol>
 </script>
 
-<div class="row">
-  <div class="col-sm-12">
-    <h3>Connected Trees</h3>
-  </div>
+<div class="bg-light lter b-b wrapper-md">
+    <h1 class="m-n font-thin h3">Connected Trees</h3>
 </div>
 
-<div class="row">
+<div class="wrapper-md" >
 
-  <div class="col-sm-6">
-    <h3>Tree 2</h3>
-    <div ui-tree id="tree2-root">
+  <div class="panel panel-default">
+    <div class="panel-heading">Tree  
+    	<a class="btn btn-sm btn-info pull-right" ng-click="save()">add Save <span class="glyphicon glyphicon-floppy-save"></span></a>
+    </div>
+    
+    <div ui-tree id="tree-root">
       <ol ui-tree-nodes="" ng-model="data">
         <li ng-repeat="node in data" ui-tree-node data-collapsed="true"  ng-include="'children_renderer.html'"></li>
       </ol>
     </div>
   </div>
-</div>
-
-<h3>Data binding</h3>
-
-
+  
   <div class="col-sm-6">
-    <pre class="code">{{ tree2 | json }}</pre>
+  	<form  action="javascript:alert('提交成功')" method="put"  id="menuForm"  class="form-horizontal form-validation">
+	   <div class="panel panel-default">
+	   	  <div class="panel-heading">
+	            <strong>{{menuSelection.title}} Editor </strong>
+	      </div>
+  	  	  <div class="panel-body" ng-repeat=" (k,v ) in menuSelection"  >  
+  	  	  		<div class="form-group">
+               <label class="col-sm-3 control-label">{{k}}</label>
+               <div class="col-sm-9">
+                 <input type="text" name="{{k}}" value="{{v}}" class="form-control" placeholder="{{k}}" required >    
+               </div>
+             </div>
+             <div class="line line-dashed b-b line-lg pull-in"></div>
+  	  	  </div>
+ 		  <footer class="panel-footer text-right bg-light lter" ng-if="menuSelection !=null">
+            <button type="submit" class="btn btn-success">Submit</button>
+          </footer>
+	    </div>
+  	 </form>
   </div>
+   <div class="col-sm-6">
+       <form name="forma" class="form-horizontal form-validation">
+         <div class="panel panel-default">
+           <div class="panel-heading">
+             <strong>Type constraints</strong>
+           </div>
+           <div class="panel-body">       
+             <div class="form-group">
+               <label class="col-sm-3 control-label">Url</label>
+               <div class="col-sm-9">
+                 <input type="url" class="form-control" placeholder="http://" ng-model="g.b" required >
+               </div>
+             </div>
+             <div class="line line-dashed b-b line-lg pull-in"></div>
+             <div class="form-group">
+               <label class="col-sm-3 control-label">Digits</label>
+               <div class="col-sm-9">
+                 <input type="text" class="form-control" placeholder="digits" ng-model="g.c" ng-pattern="/^[0-9]+$/" required >
+               </div>
+             </div>
+             <div class="line line-dashed b-b line-lg pull-in"></div>
+             <div class="form-group">
+               <label class="col-sm-3 control-label">Number</label>
+               <div class="col-sm-9">
+                 <input type="number" class="form-control" placeholder="number" ng-model="g.d" required >
+               </div>
+             </div>
+             <div class="line line-dashed b-b line-lg pull-in"></div>
+             <div class="form-group">
+               <label class="col-sm-3 control-label">Alphanum</label>
+               <div class="col-sm-9">
+                 <input type="text" class="form-control" placeholder="alphanumeric string" ng-model="g.e" ng-pattern="/^[a-zA-Z]+$/" required >
+               </div>
+             </div>
+             <div class="line line-dashed b-b line-lg pull-in"></div>
+             <div class="form-group">
+               <label class="col-sm-3 control-label">Date Iso</label>
+               <div class="col-sm-9">
+                 <input type="text" class="form-control" placeholder="YYYY-MM-DD" ng-model="g.f" ng-pattern="/[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])$/" required >
+               </div>
+             </div>
+             <div class="line line-dashed b-b line-lg pull-in"></div>
+             <div class="form-group">
+               <label class="col-sm-3 control-label">Phone</label>
+               <div class="col-sm-9">
+                 <input type="text" class="form-control" placeholder="(XXX) XXXX XXX" ng-model="g.g" ng-pattern="/\([0-9]{3}\) ([0-9]{3}) ([0-9]{3})$/" required >
+               </div>
+             </div>            
+             <div class="line line-dashed b-b line-lg pull-in"></div>
+             <div class="form-group">
+               <label class="col-sm-3 control-label">Equal To</label>
+               <div class="col-sm-9">
+                 <div class="row">
+                   <div class="col-sm-6"><input type="text" name="foo" class="form-control" ng-model="g.h" required></div>
+                   <div class="col-sm-6"><input type="text" name="confirm_foo" class="form-control" required ng-model="g.i" ui-validate=" '$value==g.h' " ui-validate-watch=" 'g.h' ">
+                   <span ng-show='forma.confirm_foo.$error.validator'>Not match!</span></div>
+                 </div>
+               </div>
+             </div>
+             <div class="line line-dashed b-b line-lg pull-in"></div>
+             <div class="form-group">
+               <label class="col-sm-3 control-label">Black-list</label>
+               <div class="col-sm-9">
+                 <input type="email" name="email" class="form-control" placeholder="input 'bad@domain.com'" ng-model="g.j" ui-validate="{blacklist : 'notBlackListed($value)' }" required>
+                 <span ng-show='forma.email.$error.blacklist'>This e-mail is black-listed!</span>
+               </div>
+             </div>
+           </div>
+           <footer class="panel-footer text-right bg-light lter">
+             <button type="submit" class="btn btn-success">Submit</button>
+           </footer>
+         </div>
+       </form>
+     </div>
+  
+
+  
 </div>
+
+
+
+
 
 
 </div>
