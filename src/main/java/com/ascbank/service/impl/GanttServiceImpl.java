@@ -10,7 +10,7 @@ import org.springframework.transaction.annotation.Transactional;
 import com.ascbank.dao.GanttMapper;
 import com.ascbank.model.Gantt;
 import com.ascbank.service.GanttService;
-import com.ascbank.service.basis.BaseAbstractService;
+import com.ascbank.service.basis.TreeAbstractService;
 
 /**
  * @author jie
@@ -18,11 +18,11 @@ import com.ascbank.service.basis.BaseAbstractService;
  */
 @Service("ganttService")
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
-public class GanttServiceImpl extends BaseAbstractService<Long, Gantt, GanttMapper> implements GanttService<Long, Gantt> {
-
+public class GanttServiceImpl extends TreeAbstractService<Long, Gantt, GanttMapper> implements GanttService<Long, Gantt> {
+	
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = -7207805758680856544L;
-	
+
 }
