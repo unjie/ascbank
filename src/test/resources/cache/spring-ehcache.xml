@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ehcache updateCheck="false" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://ehcache.org/ehcache.xsd">
+    <!--
+    name：Cache的唯一标识
+    maxElementsInMemory：内存中最大缓存对象数
+    maxElementsOnDisk：磁盘中最大缓存对象数，若是0表示无穷大
+    eternal：Element是否永久有效，一但设置了，timeout将不起作用
+    overflowToDisk：配置此属性，当内存中Element数量达到maxElementsInMemory时，Ehcache将会Element写到磁盘中
+    timeToIdleSeconds：设置Element在失效前的允许闲置时间。仅当element不是永久有效时使用，可选属性，默认值是0，也就是可闲置时间无穷大
+    timeToLiveSeconds：设置Element在失效前允许存活时间。最大时间介于创建时间和失效时间之间。仅当element不是永久有效时使用，默认是0.，也就是element存活时间无穷大
+    diskPersistent：是否缓存虚拟机重启期数据
+    diskExpiryThreadIntervalSeconds：磁盘失效线程运行时间间隔，默认是120秒
+    diskSpoolBufferSizeMB：这个参数设置DiskStore（磁盘缓存）的缓存区大小。默认是30MB。每个Cache都应该有自己的一个缓冲区
+    memoryStoreEvictionPolicy：当达到maxElementsInMemory限制时，Ehcache将会根据指定的策略去清理内存。默认策略是LRU（最近最少使用）。你可以设置为FIFO（先进先出）或是LFU（较少使用）
+    -->
+   
+	<!-- 配置自定义缓存 maxElementsInMemory：缓存中允许创建的最大对象数 eternal：缓存中对象是否为永久的，如果是，超时设置将被忽略，对象从不过期。 timeToIdleSeconds：缓存数据的钝化时间，也就是在一个元素消亡之前， 两次访问时间的最大时间间隔值，这只能在元素不是永久驻留时有效， 如果该值是 0 就意味着元素可以停顿无穷长的时间。 timeToLiveSeconds：缓存数据的生存时间，也就是一个元素从构建到消亡的最大时间间隔值， 这只能在元素不是永久驻留时有效，如果该值是0就意味着元素可以停顿无穷长的时间。 overflowToDisk：内存不足时，是否启用磁盘缓存。 memoryStoreEvictionPolicy：缓存满了之后的淘汰算法。 -->
+	<!-- DefaultCache setting. -->
+	<defaultCache maxElementsInMemory="0"    maxEntriesLocalHeap="0" eternal="false" timeToIdleSeconds="1800" timeToLiveSeconds="1800" overflowToDisk="true" diskPersistent="true" diskExpiryThreadIntervalSeconds="1800" />
+	<!-- Special objects setting. -->
+	<!-- Refresh demoCache every hour，按Cache实际大小而不是Element数量进行限制，超过限制后不保存到磁盘。 -->
+	<cache name="springEhcache" maxEntriesLocalDisk="0" maxBytesLocalHeap="80M" eternal="false" diskPersistent="true" diskExpiryThreadIntervalSeconds="3600" timeToIdleSeconds="860000" timeToLiveSeconds="860000" overflowToDisk="true" />
+	
+	<cache name="ServicCache" maxBytesLocalHeap="60M" />
+	
+	<cache name="Page" maxBytesLocalHeap="10M" />
+	
+	<cache name="Tree"  maxBytesLocalHeap="10M" eternal="false" diskPersistent="true" diskExpiryThreadIntervalSeconds="3600" timeToIdleSeconds="860000" timeToLiveSeconds="860000" overflowToDisk="true" />
+	<!-- Entity Cache -->
+	
+	<cache name="Menu" maxBytesLocalHeap="3M" />
+	
+	<cache name="Navigation" maxBytesLocalHeap="3M" />
+	
+	<cache name="Menus" maxBytesLocalHeap="3M" />
+	
+	<cache name="UrlFilter" maxBytesLocalHeap="5M"/>
+	
+	<cache name="User" maxBytesLocalHeap="5M"  />
+	
+	<cache name="Search" maxBytesLocalHeap="8M"  />
+	
+	<cache name="getGenericity" maxBytesLocalHeap="3M"  />
+<!--	
+	<cache name="Article" maxBytesLocalHeap="5M"  />
+	
+	<cache name="Gantt" maxBytesLocalHeap="5M" />
+	
+	<cache name="Keyword" maxBytesLocalHeap="5M" />
+	
+	<cache name="Permission" maxBytesLocalHeap="5M" />
+	
+	<cache name="Role" maxBytesLocalHeap="5M" />
+	
+	<cache name="Shortcut" maxBytesLocalHeap="5M" />
+	
+	<cache name="SystemInfo" maxBytesLocalHeap="5M" />
+-->
+	
+	<cache name="resource"
+           maxEntriesLocalHeap="2000"
+           eternal="false"
+           timeToIdleSeconds="1800"
+           timeToLiveSeconds="1800"
+           overflowToDisk="false"
+           statistics="true">
+    </cache>
+	
+</ehcache>

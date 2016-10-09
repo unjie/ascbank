@@ -1,6 +1,6 @@
 app.controller('MenuCtrl', ['$scope','$http','$timeout',function($scope,$http, $timeout) {
 
-	var addData=[];
+	//var addData=[];
 	
 	$scope.data=[];
     setTimeout(function () {
@@ -23,21 +23,36 @@ app.controller('MenuCtrl', ['$scope','$http','$timeout',function($scope,$http, $
           if(nodeData.children ==null )nodeData.children=[];
           
           newData={
-                  id: nodeData.id * 10 + nodeData.children.length+1,
-                  title: nodeData.title + '.' + (nodeData.children.length + 1),
-                  parentId: nodeData.id,
-                  stem: nodeData.stem+","+nodeData.id,
-                  children: []
+                  'id': null,
+                  'title': nodeData.title + '.' + (nodeData.children.length + 1),
+                  'parentId': nodeData.id,
+                  'stem': nodeData.stem+','+nodeData.id,
+                  'children': [],
+                  'alias':null,
+                  'author':null,
+                  'clicks':null,
+                  'description':null,
+                  'edittime':null,
+                  'isNavigation':true,
+                  'isPublish':true,
+                  'keyword':null,
+                  'sort':0,
+                  'style':"Article",
+                  'thumb':null,
+                  'url':null
                 };
           
-          addData.push(newData);
+       //   addData.push(newData);
           nodeData.children.push(newData);
+          
+          $scope.menuData=newData;
         };
         
     $scope.spread = function (scope) {
     	console.log(scope);
     	 setTimeout(function () {
     	      	var data,url='./menu/children/'+scope.$modelValue.id;
+    	      	
     	  	    	if(scope.$modelValue.children==null){
     	  			    $http.get(url).success(function (largeLoad) {
     	  			    	scope.$modelValue.children= largeLoad.data;
@@ -49,16 +64,21 @@ app.controller('MenuCtrl', ['$scope','$http','$timeout',function($scope,$http, $
 
       $scope.editSubItem= function (scope) {
     	  console.log(scope);
-    	  $scope.menuSelection=scope.$modelValue;
+    	  $scope.menuData=scope.$modelValue;
     	 
       }
-      $scope.save= function(){
-    	  var url='./menu/create';
-    	  for( e in addData){
-    		   $http({method:'PUT' ,'url':url,'data':addData[e]}).success(function (largeLoad) {
-    			   console.log(largeLoad);
-    		   })
-    	  }
+      $scope.save= function(menuData){
+	      	console.log(menuData);
+	    	var data= menuData,url='./menu/update',param={method:'PATCH' ,'url':url,'data':data};
+	    	if(data.id==null){
+	    		param.method='PUT';
+	    		param.url= './menu/create';
+	    	}
+		   $http(param).success(function (largeLoad) {
+			   console.log(largeLoad);
+			   $scope.menuData=largeLoad.data;
+		   })
+    	  
       }
       
      

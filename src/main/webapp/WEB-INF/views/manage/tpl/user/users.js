@@ -14,7 +14,9 @@ app.controller('UsersCtrl', ['$scope', '$http', function($scope, $http) {
     };  
     $scope.setPagingData = function(data, page, pageSize){  
         var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
-        $scope.userData = pagedData;
+        $scope.usersData = pagedData;
+        
+        console.log($scope.usersData);
         $scope.totalServerItems = data.length;
         if (!$scope.$$phase) {
             $scope.$apply();
@@ -41,6 +43,48 @@ app.controller('UsersCtrl', ['$scope', '$http', function($scope, $http) {
 
     $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
 
+    $scope.add=function(userData){
+    	$scope.userData={avatar: null,
+						description: null,
+						email: null,
+						encrypt: null,
+						id: null,
+						isOnline: null,
+						lastloginip: null,
+						lastlogintime: null,
+						password: null,
+//						repassword:null,
+						phone: null,
+						realName: null,
+						regtime: null,
+						username: null,
+						wechat: null,
+						wechatName: null};
+    }
+    
+    
+    $scope.save=function(userData){
+    	console.log(userData);
+    	var data= userData,url='./user/update',param={method:'PATCH' ,'url':url,'data':data};
+    	if(data.id==null){
+    		param.method='PUT';
+    		param.url= './user/create';
+    	}
+    	 $http(param).success(function (largeLoad) {    
+    		
+    		 if(userData.id==null && largeLoad.data.id !=null){
+    			 console.log($scope.usersData);
+    			 $scope.usersData.push(largeLoad.data);
+    		 }
+    		 $scope.userData= largeLoad.data;
+    	 });
+    }
+    $scope.afterSelectionChange=function(rowItem, event){
+    	console.log(rowItem);
+    	console.log(event);
+    	$scope.userData=rowItem.entity;
+    }
+    
     $scope.$watch('pagingOptions', function (newVal, oldVal) {
         if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
           $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
@@ -53,15 +97,21 @@ app.controller('UsersCtrl', ['$scope', '$http', function($scope, $http) {
     }, true);
 
     $scope.gridOptions = {
-        data: 'userData',
+        data: 'usersData',
         enablePaging: true,
         showFooter: true,
        // enableCellEdit: true,
         showFilter:true,
         selectedItems: $scope.userSelections,
+        afterSelectionChange : $scope.afterSelectionChange,
         multiSelect: false,
         totalServerItems: 'totalServerItems',
         pagingOptions: $scope.pagingOptions,
         filterOptions: $scope.filterOptions
     };
+    
+    
+    
+    
+    
 }]);

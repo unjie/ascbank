@@ -18,6 +18,7 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import com.ascbank.dao.MenuMapper;
 import com.ascbank.model.Menu;
+import com.ascbank.service.impl.MenuServiceImpl;
 
 /**
  * @author jie
@@ -34,29 +35,33 @@ public class MenuTest {
 	
 	@Test
 	public void menuAddTest() {
-		final MenuMapper am = (MenuMapper) context.getBean("menuMapper");
-		
-		final Menu record = new Menu();
-		record.setAlias("test");
+		MenuServiceImpl am = (MenuServiceImpl) context.getBean("menuService");
+
+		Menu record = new Menu();
+		record.setAlias("test3");
 		record.setAuthor("jiesun");
 		record.setDescription("test");
 		record.setEdittime(new Date());
 		record.setIsNavigation(true);
 		record.setIsPublish(true);
 		record.setKeyword("key");
-		record.setParentId(null);
+		record.setParentId(0L);
 		record.setSort((short) 0);
-		record.setStem("0");
+		record.setStem(",0");
 		record.setStyle("Article");
 		record.setThumb("");
-		record.setTitle("title");
+		record.setTitle("title3");
 		record.setUrl("/");
 		
 		logger.info("=======================insert Before record = " + record + "=========================");
 		
-		logger.info("=======================return = " + am.insertSelective(record) + "=========================");
-		
-		logger.info("=======================insert After record = " + record + "=========================");
+		try {
+			logger.info("=======================return = " + am.add(record) + "=========================");
+			logger.info("=======================insert After record = " + record + "=========================");
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 	}
 	
@@ -69,7 +74,7 @@ public class MenuTest {
 		
 	}
 	
-	@Test
+	// @Test
 	public void menuQueryTest() {
 		MenuMapper am = (MenuMapper) context.getBean("menuMapper");
 		Menu record = am.selectByPrimaryKey(2L);

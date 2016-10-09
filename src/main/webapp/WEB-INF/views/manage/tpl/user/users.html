@@ -4,18 +4,25 @@
 <div class="wrapper-md" ng-controller="UsersCtrl">
   <div class="panel panel-default">
     <div class="panel-heading">
-      Users
+      Users		
+      <a class="btn btn-sm btn-info pull-right" ng-click='add(userData)'>+ add <span class="glyphicon glyphicon-floppy-save"></span></a>
     </div>
     <div class="table-responsive">
       <div ng-grid="gridOptions" style="min-height:420px"></div>
     </div>
-    <div class="table-responsive" style="margin: 2%">
-   		 <form  action="javascript:alert('提交成功')" method="put"  id="userForm"  style="min-height:420px">
-   		 	<span ng-repeat=" (k,v ) in userSelections[0]"  style="width:33%;float:left"><span style="width:30%;float:left">{{k}} :</span><input type="text"  name="{{k}}" value="{{v}}"/></span>
-   		 	<footer class="panel-footer text-right bg-light lter" ng-if="userSelections !=null">
-              <button type="submit" class="btn btn-success">Submit</button>
+    <div class="table-responsive" style="margin: 2%" ng-if="userSelections && userSelections.length > 0">
+    	
+   		 <form  action="javascript:alert('提交成功')"  ng-submit="save(userData)" method="put"  id="userForm" name="userForm"  style="min-height:420px">
+   		 
+   		 	<span ng-repeat=" (k,v ) in userData"  style="width:33%;float:left"  ng-model="userData">
+   		 		<span style="width:30%;float:left">{{k}} :</span><input type="text"   ng-model="userData[k]" />
+   		 	</span>
+   		 	
+   		 	<footer class="panel-footer text-right bg-light lter" >
+              <button type="submit" class="btn btn-success"   ng-disabled="userFrom.$invalid">Submit</button>
             </footer>
    		 </form>
+   		 
     </div>
   </div>
 </div>

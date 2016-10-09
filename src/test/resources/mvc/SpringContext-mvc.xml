@@ -123,8 +123,8 @@
 		<property name="defaultEncoding" value="UTF-8" />
 		<property name="freemarkerVariables">
 			<map><!--设置一些常用的全局变量 -->
-				<entry key="webRoot" value="/#{servletContext.servletContextName}" />
-				<entry key="publicRoot" value="/#{servletContext.servletContextName}/public" />
+				<entry key="webRoot" value="/ascbank" />
+				<entry key="publicRoot" value="/ascbank/public" />
 			</map>
 		</property>
 		<property name="freemarkerSettings">
@@ -200,7 +200,7 @@
 				</bean>
 				<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 通用解析器 -->
 				<!-- <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="103"> <property name="prefix" value="/WEB-INF/views/" /> <property name="viewNames" value="*.html,*.js,*.css" /> <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView" /> </bean> -->
-				<!-- <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="103"> <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" /> <property name="viewNames" value="*.html,*.js,*.css" /> <property name="attributesMap"> <map> <entry key="webRoot" value="/#{servletContext.servletContextName}" /> <entry key="publicRoot" value="/#{servletContext.servletContextName}/public" /> </map> </property> <property name="prefix" value="/WEB-INF/views/" /> </bean> -->
+				<!-- <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="103"> <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" /> <property name="viewNames" value="*.html,*.js,*.css" /> <property name="attributesMap"> <map> <entry key="webRoot" value="/ascbank" /> <entry key="publicRoot" value="/ascbank/public" /> </map> </property> <property name="prefix" value="/WEB-INF/views/" /> </bean> -->
 				<!-- <bean class="com.ascbank.web.viewresolver.GenericFileViewResolver" p:order="103"> <property name="viewClass" value="com.ascbank.web.servlet.view.GenericFileView" /> <property name="prefix" value="/WEB-INF/views" /> <property name="viewNames" value="*.js,*.css" /> <property name="cache" value="true" /> </bean> -->
 				<!-- <bean class="org.springframework.web.servlet.view.ResourceBundleViewResolver" p:order="103"> <property name="basename" value="views" /> <property name="defaultParentView" value="parentView" /> </bean> -->
 			</list>
@@ -268,10 +268,10 @@
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<props>
-				<prop key="org.apache.shiro.authz.UnauthorizedException">/#{servletContext.servletContextName}/error/index.html#app/403</prop>
-				<prop key="javax.servlet.ServletException">/#{servletContext.servletContextName}/error/index.html#app/404</prop>
-				<prop key="java.io.FileNotFoundException">/#{servletContext.servletContextName}/error/index.html#app/404</prop>
-				 <prop key="java.lang.RuntimeException">/#{servletContext.servletContextName}/error/index.html#app/500</prop>
+				<prop key="org.apache.shiro.authz.UnauthorizedException">/ascbank/error/index.html#app/403</prop>
+				<prop key="javax.servlet.ServletException">/ascbank/error/index.html#app/404</prop>
+				<prop key="java.io.FileNotFoundException">/ascbank/error/index.html#app/404</prop>
+				 <prop key="java.lang.RuntimeException">/ascbank/error/index.html#app/500</prop>
 			</props>
 		</property>
 		<property name="statusCodes">

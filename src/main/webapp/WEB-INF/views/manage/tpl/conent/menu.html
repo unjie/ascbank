@@ -44,22 +44,22 @@
     </div>
   </div>
   
-  <div class="col-sm-6">
-  	<form  action="javascript:alert('提交成功')" method="put"  id="menuForm"  class="form-horizontal form-validation">
+  <div class="col-sm-6" ng-if="menuData != null">
+  	<form  action="javascript:alert('提交成功')" method="put"  id="menuForm"  ng-submit="save(menuData)" class="form-horizontal form-validation">
 	   <div class="panel panel-default">
 	   	  <div class="panel-heading">
-	            <strong>{{menuSelection.title}} Editor </strong>
+	            <strong>{{menuData.title}} Editor </strong>
 	      </div>
-  	  	  <div class="panel-body" ng-repeat=" (k,v ) in menuSelection"  >  
+  	  	  <div class="panel-body" ng-repeat=" (k,v ) in menuData"  >  
   	  	  		<div class="form-group">
                <label class="col-sm-3 control-label">{{k}}</label>
                <div class="col-sm-9">
-                 <input type="text" name="{{k}}" value="{{v}}" class="form-control" placeholder="{{k}}" required >    
+                 <input type="text"  ng-model="menuData[k]" class="form-control"  placeholder="{{k}}"  >    
                </div>
              </div>
              <div class="line line-dashed b-b line-lg pull-in"></div>
   	  	  </div>
- 		  <footer class="panel-footer text-right bg-light lter" ng-if="menuSelection !=null">
+ 		  <footer class="panel-footer text-right bg-light lter" >
             <button type="submit" class="btn btn-success">Submit</button>
           </footer>
 	    </div>

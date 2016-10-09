@@ -18,7 +18,6 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import com.ascbank.dependency.injection.InjectionInterface;
-import com.ascbank.exception.ArticleException;
 import com.ascbank.model.base.PKEntity;
 import com.ascbank.service.basis.BaseInterfaceService;
 import com.ascbank.verify.AddCheck;
@@ -30,13 +29,13 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 	 *
 	 */
 	private static final long	serialVersionUID	= -3550102906601887804L;
-	
+
 	@Autowired
 	protected S					beanService;
 	private Logger				log					= LoggerFactory.getLogger(BaseAbstractController.class);
 	@Autowired
 	protected Properties		systemConfig;
-	
+
 	@Override
 	@ResponseBody// @RequiresPermissions(value = "add")
 	@RequestMapping(value = { "/create" }, method = { RequestMethod.PUT })
@@ -45,13 +44,13 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		JsonResultInfo info = new JsonResultInfo();
 		try {
 			if (br.hasErrors()) {
-				throw new ArticleException(br.getAllErrors().iterator().next().getDefaultMessage());
+				throw new Exception(br.getGlobalError().getDefaultMessage());
 			}
 			// for (E e : entity) {
 			log.debug("------------create--->{}<------------------------", entity);
 			entity = this.getBeanService().add(entity);
 			// }
-			
+
 			info.setSuccess(true);
 			info.setMessage("{default.create.succeed}");
 			info.setData(entity);
@@ -61,14 +60,14 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		}
 		return info;
 	}
-	
+
 	@Override
 	@ResponseBody	// @AutoPermissions(permission = "destroy")
 	@RequestMapping(value = { "/destroy" }, method = { RequestMethod.DELETE })
 	public JsonResultInfo destroy(@RequestBody E entity) {
 		return this.destroy(entity);
 	}
-	
+
 	@Override
 	@ResponseBody	// @AutoPermissions(permission = "destroy")
 	@RequestMapping(value = { "/destroy", "/destroy/{id}" }, method = { RequestMethod.DELETE })
@@ -90,24 +89,24 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		}
 		return info;
 	}
-	
+
 	/**
 	 * @return the beanService
 	 */
 	public S getBeanService() {
 		return beanService;
 	}
-	
+
 	@Override
 	@ResponseBody	// @AutoPermissions(permission = "read")
 	@RequestMapping(value = { "/read/{id}" }, method = { RequestMethod.GET })
 	public JsonResultInfo read(@PathVariable("id") T id) {
 		// TODO Auto-generated method stub
-		
+
 		if (log.isDebugEnabled()) {
 			log.debug("--------read----{}---------", id.toString());
 		}
-		
+
 		JsonResultInfo info = new JsonResultInfo();
 		info.setData(this.getBeanService().read(id));
 		info.setSuccess(true);
@@ -115,7 +114,7 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		log.debug("------------------info =>{}-------------------", info);
 		return info;
 	}
-	
+
 	@Override
 	@ResponseBody	// @RequiresPermissions(value = "read")
 	@RequestMapping(value = { "/reads" }, method = { RequestMethod.GET })
@@ -131,13 +130,13 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		}
 		return info;
 	}
-	
+
 	@Override
 	public void setBean(S bean) {
 		// TODO Auto-generated method stub
 		this.beanService = bean;
 	}
-	
+
 	@Override
 	@ResponseBody	// @AutoPermissions(permission = "update")
 	@RequestMapping(value = { "/update", "/update/{id}" }, method = { RequestMethod.PATCH, RequestMethod.POST })// produces = { MediaType.APPLICATION_JSON_UTF8_VALUE }
@@ -147,8 +146,8 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		try {
 			if (br.hasErrors()) {
 				log.debug("-----------------------update--->{}<-------------", br.getAllErrors());
-				
-				throw new ArticleException(br.getAllErrors().toString());
+
+				throw new Exception(br.getAllErrors().toString());
 			}
 			// for (E e : entity) {
 			log.debug("-----------------------update--->{}<-------------", entity);
@@ -163,5 +162,5 @@ public abstract class BaseAbstractController<T extends Serializable, E extends P
 		}
 		return info;
 	}
-	
+
 }

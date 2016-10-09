@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p" xmlns:context="http://www.springframework.org/schema/context" xmlns:solr="http://www.springframework.org/schema/data/solr" xmlns:util="http://www.springframework.org/schema/util" xmlns:cache="http://www.springframework.org/schema/cache" xmlns:security="http://www.springframework.org/schema/security"
+	xsi:schemaLocation="http://www.springframework.org/schema/security http://www.springframework.org/schema/security/spring-security.xsd
+		http://www.springframework.org/schema/data/solr http://www.springframework.org/schema/data/solr/spring-solr-2.0.xsd
+		http://www.springframework.org/schema/cache http://www.springframework.org/schema/cache/spring-cache-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
+
+ <!-- 
+  #####################################
+  CONTEXT SETTINGS
+  #####################################
+   -->
+ <!--  <context:property-placeholder location="classpath:solr/solr.properties" ignore-resource-not-found="false" /> -->
+
+ <!-- 
+  ##################################### 
+  SOLR
+  #####################################
+ -->
+
+ 	<!-- <solr:embedded-solr-server id="solrServer" solrHome="${solr.host}" />  -->
+  
+  <solr:solr-client id="solrClient" url="http://localhost:8983/solr/gettingstarted" />
+  
+  
+  <bean id="solrTemplate" class="org.springframework.data.solr.core.SolrTemplate" scope="singleton">
+    <constructor-arg ref="solrClient" />
+  </bean>
+
+  <bean id="searchRepository" class="com.ascbank.solr.repository.impl.ArticleStrengthenRepositoryImpl">
+    <property name="solrOperations" ref="solrTemplate" />
+  </bean>
+
+</beans>

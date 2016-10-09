@@ -20,9 +20,6 @@ import com.ascbank.service.basis.TreeAbstractService;
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
 public class MenuServiceImpl extends TreeAbstractService<Long, Menu, MenuMapper> implements MenuService<Long, Menu> {
 	
-	/**
-	 *
-	 */
 	private static final long serialVersionUID = 7594942276660876994L;
-
+	
 }

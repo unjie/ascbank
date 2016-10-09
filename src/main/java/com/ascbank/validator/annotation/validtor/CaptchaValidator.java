@@ -17,12 +17,16 @@ import com.ascbank.validator.annotation.Captcha;
 public class CaptchaValidator implements ConstraintValidator<Captcha, String> {
 	
 	private static final Logger	log	= LoggerFactory.getLogger(CaptchaValidator.class);
-	
+
 	private String				key;
 	private int					length;
-	@Autowired
+	@Autowired(required = false)
 	private HttpSession			session;
-	
+
+	public HttpSession getSession() {
+		return session;
+	}
+
 	/**
 	 * @Captcha 验证码验证
 	 */
@@ -31,15 +35,19 @@ public class CaptchaValidator implements ConstraintValidator<Captcha, String> {
 		// TODO Auto-generated method stub
 		this.key = annotation.key();
 		this.length = annotation.length();
-		
+
 		CaptchaValidator.log.debug("-------------------------key :{}   length :{}--------------------------------", key, length);
 	}
-	
+
 	@Override
 	public boolean isValid(String captcha, ConstraintValidatorContext context) {
 		CaptchaValidator.log.debug("-------------------------{}--------------------------------", captcha);
 		return captcha != null && captcha.length() == length && captcha.equalsIgnoreCase((String) session.getAttribute(key));
-		
+
 	}
-	
+
+	public void setSession(HttpSession session) {
+		this.session = session;
+	}
+
 }

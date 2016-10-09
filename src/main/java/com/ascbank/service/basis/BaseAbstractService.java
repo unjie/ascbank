@@ -37,52 +37,53 @@ public abstract class BaseAbstractService<T extends Serializable, E extends PKEn
 	private static final long	serialVersionUID	= -8237810984312825562L;
 	@Autowired
 	D							beanDao;
-
+	
 	private final Logger		log					= LoggerFactory.getLogger(BaseAbstractService.class);
 
+	// @AutoPermissions(ids = "*")
 	@Override
 	@Transactional
-	@AutoPermissions
 	// @Caching(evict = { @CacheEvict(value = "Page", allEntries = true) }, put = { @CachePut(value = "springEhcache", key = "#root.targetClass.getName()+'_'+#result.id", condition = "#result !=null") })
 	public E add(E entity) {
 		// 类类型表达式：使用“T(Type)”来表示java.lang.Class实例，“Type”必须是类全限定名，“java.lang”包除外，即该包下的类可以不指定包名；使用类类型表达式还可以进行访问类静态方法及类静态字段。
 		// TODO Auto-generated method stub
-		if (log.isDebugEnabled()) {
-			log.debug("----------------- add entity={}------------------", entity);
-		}
-		assert (beanDao.insertSelective(entity) == 1);
+
+		log.debug("----------------- add entity={}------------------", entity);
+		int i = beanDao.insertSelective(entity);
+		assert (i == 1);
+
+		log.debug("----------------- add i={}------------------", i);
 		return entity;
 	}
 
+	@AutoPermissions
 	@Override
 	@Transactional
-	@AutoPermissions
 	// @Caching(evict = { @CacheEvict(value = "Page", allEntries = true), @CacheEvict(value = "springEhcache", key ="#root.targetClass.getName()+'_'+#id", condition = "#id !=null") })
 	public void delete(T id) {
 		// TODO Auto-generated method stub
-		if (log.isDebugEnabled()) {
-			log.debug("----------------- delete entity={}------------------", id);
-		}
+		log.debug("----------------- delete entity={}------------------", id);
+		
 		beanDao.deleteByPrimaryKey(id);
 	}
-
+	
 	public D getBean() {
 		return this.beanDao;
 	}
-
+	
 	/*
 	 * @Override public Class<?> getGenericity(Integer index) { return ResolvableType.forType(this.getClass().getGenericSuperclass()).resolveGeneric(index); }
 	 *
 	 * @Override public Class<?>[] getGenericitys() { return ResolvableType.forType(this.getClass().getGenericSuperclass()).resolveGenerics(); }
 	 */
-
+	
 	@Override
 	@AutoPermissions
 	// @Caching(cacheable = { @Cacheable(value = "Page", key = "#root.targetClass.getName()+'_page_'+#pageable.getPageNumber()+'_'+#pageable.getPageSize()+#pageable.sort.iterator().next().getProperty()+'_'+#pageable.sort.iterator().next().getDirection().name()",condition = "#pageable != null") })
 	public List<E> read(Pageable pageable) {
 		return beanDao.selelctByPageableAll(pageable);
 	}
-
+	
 	@Override
 	@AutoPermissions
 	// @Caching(cacheable = { @Cacheable(value = "Page", key = "#root.targetClass.getName()+'_'+#sort.iterator().next().getProperty()+'_'+#sort.iterator().next().getDirection().name()", condition = "#sort != null") })
@@ -91,7 +92,7 @@ public abstract class BaseAbstractService<T extends Serializable, E extends PKEn
 		log.debug("----------------- readAll entity={}------------------", sort);
 		return beanDao.selelctBySortAll(sort);
 	}
-
+	
 	@Override
 	@AutoPermissions(permission = "read")
 	// @RequiresPermissions("read:*")
@@ -101,35 +102,35 @@ public abstract class BaseAbstractService<T extends Serializable, E extends PKEn
 		log.debug("---------------read {}----", id);
 		return beanDao.selectByPrimaryKey(id);
 	}
-
+	
 	@Override
 	public void setBean(D bean) {
 		// TODO Auto-generated method stub
 		this.beanDao = bean;
 	}
-
+	
+	@AutoPermissions
 	@Override
 	@Transactional
-	@AutoPermissions
 	// @Caching(evict = { @CacheEvict(value = "Page", allEntries = true),@CacheEvict(value = "springEhcache", key = "#root.targetClass.getName()+'_'+#entity.id", condition = "#entity!=null and (#entity.id !=null)") }, put = { @CachePut(value = "springEhcache", key = "#root.targetClass.getName()+'_'+#result.id", condition = "#entity!=null") })
 	public E update(E entity) {
 		log.debug("----------------- update entity={}------------------", entity);
 		beanDao.updateByPrimaryKeySelective(entity);
 		return entity;
 	}
-
+	
 	@Override
 	public List<E> verify(Map<String, Object> map) {
 		
 		// TODO Auto-generated method stub
-
+		
 		List<SearchFilter> list = new ArrayList<SearchFilter>(); // 获取当前new的对象的 泛型的父类 类型
-
+		
 		for (Entry<String, Object> entry : map.entrySet()) {
 			list.add(new SearchFilter(entry.getKey(), Operator.EQ, entry.getValue()));
 		}
-
+		
 		return null;
-
+		
 	}
 }

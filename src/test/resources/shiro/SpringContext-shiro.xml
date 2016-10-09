@@ -1,0 +1,189 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" default-lazy-init="true" xmlns:context="http://www.springframework.org/schema/context" xmlns:mvc="http://www.springframework.org/schema/mvc" xmlns:aop="http://www.springframework.org/schema/aop" xsi:schemaLocation="http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc-4.2.xsd
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.2.xsd
+		http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+	<description>Shiro安全配置</description>
+	
+	<!-- 項目自定义的Realm -->
+	<!--  <bean id="shiroDbRealm" class="com.ascbank.security.realm.ShiroDbRealm" /> -->
+
+	<!-- 用户授权信息Cache, 采用EhCache Shiro 缓存管理器 实现利用Ehcache所有缓存功能的框架。 -->
+	<bean id="shiroEhcacheManagerFactory" class="org.springframework.cache.ehcache.EhCacheManagerFactoryBean">
+		<property name="configLocation" value="classpath:shiro/shiro-ehcache.xml" />
+		<property name="cacheManagerName" value="shiroEhcache" />
+		<property name="acceptExisting" value="true" />
+		<property name="shared" value="true" />
+	</bean>
+	
+	<!-- <bean id="shiroEhcacheManager" class="org.apache.shiro.cache.MemoryConstrainedCacheManager" /> -->
+	<!-- session 集群 -->
+	<!-- <bean id="shiroEhcacheManager" class="org.springrain.frame.shiro.ShiroRedisCacheManager"> <property name="cached" ref="redisCached" /> </bean> -->
+	
+	<bean id="shiroEhcacheManager" class="org.apache.shiro.cache.ehcache.EhCacheManager">
+		 <!-- <property name="cacheManagerConfigFile" value="classpath:Shiro/ehcache-shiro.xml" /> -->
+		<!-- See: applicationContext.xml 的 Spring 缓存配置 -->
+		<property name="cacheManager" ref="shiroEhcacheManagerFactory" />
+	</bean>
+
+	<bean id="authenticator" class="org.apache.shiro.authc.pam.ModularRealmAuthenticator" />
+
+	<!-- 会话ID生成器 -->
+	<bean id="sessionIdGenerator" class="org.apache.shiro.session.mgt.eis.JavaUuidSessionIdGenerator" />
+	
+	<!-- sessionIdCookie的实现,用于重写覆盖容器默认的JSESSIONID -->
+	<bean id="sharesession" class="org.apache.shiro.web.servlet.SimpleCookie">
+		<!-- cookie的name,对应的默认是 JSESSIONID -->
+		<constructor-arg value="sid" />
+		<property name="httpOnly" value="true" />
+		<property name="maxAge" value="-1" />
+	</bean>
+
+	<!-- 记住我 的cookie -->
+	<bean id="rememberMeCookie" class="org.apache.shiro.web.servlet.SimpleCookie">
+		<constructor-arg value="rememberMe" />
+		<property name="httpOnly" value="true" />
+		<property name="maxAge" value="2592000" /><!-- 30天 -->
+	</bean>
+
+	<!-- rememberMe管理器 -->
+	<bean id="rememberMeManager" class="org.apache.shiro.web.mgt.CookieRememberMeManager">
+		<!-- rememberMe cookie加密的密钥 建议每个项目都不一样 默认AES算法 密钥长度（128 256 512 位） -->
+		<property name="cipherKey" value="#{T(org.apache.shiro.codec.Base64).decode('4AvVhmFLUs0KTA3Kprsdag==')}" />
+		<property name="cookie" ref="rememberMeCookie" />
+	</bean>
+
+	<!-- 简单的基于内存的实现的SessionDAO将所有会话存储在内存中 ConcurrentMap -->
+	<bean id="sessionDAO" class="org.apache.shiro.session.mgt.eis.EnterpriseCacheSessionDAO">
+		<!-- 设置session 缓存名 -->
+		<property name="activeSessionsCacheName" value="shiro-activeSessionCache" />
+		<property name="sessionIdGenerator" ref="sessionIdGenerator" />
+	</bean>
+	<!-- 会话验证调度器 -->
+	<bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.quartz.QuartzSessionValidationScheduler">
+		<property name="sessionValidationInterval" value="1800000" />
+		<property name="sessionManager" ref="sessionManager" />
+	</bean>
+	<!-- <bean id="sessionValidationScheduler" class="org.apache.shiro.session.mgt.ExecutorServiceSessionValidationScheduler"> <property name="interval" value="1800000" /> </bean> -->
+	<!-- 会话管理器 -->
+	<bean id="sessionManager" class="org.apache.shiro.web.session.mgt.DefaultWebSessionManager">
+		<!-- 超时时间 -->
+		<property name="globalSessionTimeout" value="3600000" />
+		<property name="deleteInvalidSessions" value="true" />
+		<!-- 定时检查失效的session -->
+		<property name="sessionValidationSchedulerEnabled" value="true" />
+		<property name="sessionValidationScheduler" ref="sessionValidationScheduler" />
+		<!-- session存储的实现,SessionDAO实现依赖于一个企业缓存产品作为所有会话的EIS系统的记录 -->
+		<property name="sessionDAO" ref="sessionDAO" />
+		<property name="sessionIdCookieEnabled" value="true" />
+		<!-- sessionIdCookie的实现,用于重写覆盖容器默认的JSESSIONID -->
+		<property name="sessionIdCookie" ref="sharesession" />
+	</bean>
+
+
+
+	<!-- Shiro's main business-tier object for web-enabled applications -->
+	<bean id="securityManager" class="org.apache.shiro.web.mgt.DefaultWebSecurityManager">
+		<!-- 认证 -->
+		<property name="authenticator" ref="authenticator" />
+		<!-- session 管理器 -->
+		<property name="sessionManager" ref="sessionManager" />
+		<!-- 数据库认证的实现 org.springrain.frame.shiro.ShiroDbRealm -->
+		<property name="realm" ref="shiroDbRealm" />
+		<!-- 缓存管理器 -->
+		<property name="cacheManager" ref="shiroEhcacheManager" />
+		<!-- 记住我管理 -->
+		<property name="rememberMeManager" ref="rememberMeManager" />
+	</bean>
+
+	<!-- 相当于调用SecurityUtils.setSecurityManager(securityManager) -->
+	<bean class="org.springframework.beans.factory.config.MethodInvokingFactoryBean">
+		<property name="staticMethod" value="org.apache.shiro.SecurityUtils.setSecurityManager" />
+		<property name="arguments" ref="securityManager" />
+	</bean>
+
+
+
+	<bean id="hashedCredentialsMatcher" class="org.apache.shiro.authc.credential.HashedCredentialsMatcher">
+		<property name="hashAlgorithmName" value="MD5" />
+		<property name="storedCredentialsHexEncoded" value="true" />
+		<property name="hashIterations" value="1" />
+	</bean>
+
+	<bean id="formAuthenticationFilter" class="org.apache.shiro.web.filter.authc.FormAuthenticationFilter" />
+
+	<!-- Shiro Filter -->
+	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
+		<property name="securityManager" ref="securityManager" />
+		<property name="loginUrl" value="/user/index.html" />
+		<property name="successUrl" value="/admin/manage.html" />
+		<!-- 用户访问未对其授权的资源时,所显示的连接 -->
+		<!-- 若想更明显的测试此属性可以修改它的值,如unauthor.jsp,然后用[admin]登录后访问/admin/listUser.jsp就看见浏览器会显示unauthor.jsp -->
+		<property name="unauthorizedUrl" value="/403.html" />
+		<property name="filters">
+			<map>
+				<entry key="authc" value-ref="formAuthenticationFilter" />
+				<entry key="urlPermissions" value-ref="urlPermissions" />
+			</map>
+		</property>
+		<!-- Shiro连接约束配置,即过滤链的定义 -->
+		<!-- 此处可配合我的这篇文章来理解各个过滤连的作用http://blog.csdn.net/jadyer/article/details/12172839 -->
+		<!-- 下面value值的第一个'/'代表的路径是相对于HttpServletRequest.getContextPath()的值来的 -->
+		<!-- anon：它对应的过滤器里面是空的,什么都没做,这里.do和.jsp后面的*表示参数,比方说login.jsp?main这种 -->
+		<!-- authc：该过滤器下的页面必须验证后才能访问,它是Shiro内置的一个拦截器org.apache.shiro.web.filter.authc.FormAuthenticationFilter -->
+		<property name="filterChainDefinitions">
+			<value>
+				/captcha/**.jpg=anon
+				/public/**=anon
+				/blocks/**=anon
+				/user/logout=logout
+				/user/**=anon
+				/error/**=anon
+				/manage**=authc
+				/**=authc,urlPermissions
+				<!-- /security/account/view.do=authc,perms[SECURITY_ACCOUNT_VIEW] -->
+			</value>
+		</property>
+		<!-- <property name="filterChainDefinitionMap" ref="chainDefinitionSectionMetaSource" /> -->
+	</bean>
+	
+	
+	<bean id="urlPermissions" class="com.ascbank.security.filter.URLPermissionsFilter" />
+	
+
+	<!-- 起效权限注解,这个很少在web项目中用到,一般是控制url的访问,不是在controller中声明权限注解 -->
+	<!-- 保证实现了Shiro内部lifecycle(生命周期)函数的bean执行 -->
+	<bean id="lifecycleBeanPostProcessor" class="org.apache.shiro.spring.LifecycleBeanPostProcessor" />
+	<!-- 开启Shiro的注解(如@RequiresRoles,@RequiresPermissions),需借助SpringAOP扫描使用Shiro注解的类,并在必要时进行安全逻辑验证 -->
+
+	<!-- 配置以下两个bean即可实现此功能 -->
+	<!-- Enable Shiro Annotations for Spring-configured beans. Only run after the lifecycleBeanProcessor has run -->
+	<!-- 由于本例中并未使用Shiro注解,故注释掉这两个bean(个人觉得将权限通过注解的方式硬编码在程序中,查看起来不是很方便,没必要使用) -->
+	<!-- AOP式方法级权限检查 -->
+	<bean class="org.springframework.aop.framework.autoproxy.DefaultAdvisorAutoProxyCreator" depends-on="lifecycleBeanPostProcessor"  >
+		<property name="order" value="1"/>
+		<property name="proxyTargetClass" value="true" />
+	</bean>
+	<!-- 开启shiro安全注释 -->
+	<!-- Advisor(顾问) -->
+	<!-- 	
+	<bean class="org.apache.shiro.spring.security.interceptor.AuthorizationAttributeSourceAdvisor" >
+		<property name="securityManager" ref="securityManager" />
+	</bean>
+ -->
+	<!-- Enable Shiro Annotations for Spring-configured beans.  Only run after -->  
+	<bean class="com.ascbank.security.shiro.interceptor.PermissionsExpandAuthorizationAdvisor">  
+	    <property name="securityManager" ref="securityManager"/>  
+	</bean> 
+
+<!-- 	
+	<bean id="profiler" class="com.ascbank.security.shiro.aop.PermissionInterceptor" />
+	
+	<aop:config >
+		<aop:aspect id="permissionAspect" ref="profiler">
+			<aop:pointcut id="businessService" expression="execution(* com.ascbank.*.*(..)) &amp;&amp;@annotation(entityPermissions)" />
+			<aop:around method="doInterceptor" pointcut-ref="businessService"/>
+		</aop:aspect>
+	</aop:config>
+ -->
+</beans>
