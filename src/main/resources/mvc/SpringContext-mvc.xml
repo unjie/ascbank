@@ -9,6 +9,18 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
 	<!-- 启用注解 -->
+	
+	
+	<bean name="systemConfig" init-method="getObject" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
+		<property name="locations" value="classpath:systemConfig.properties" />
+		<property name="properties">
+			<props>
+				<prop key="WEB_ROOT_PATH">${webapp.root}</prop>
+			</props>
+		</property>
+	</bean>
+
+
 
 	<bean id="conversionService" class="org.springframework.format.support.FormattingConversionServiceFactoryBean" />
 	<bean class="org.springframework.data.repository.support.DomainClassConverter">
@@ -50,9 +62,7 @@
 	<!-- // 注解方法处理适配器 <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> <property name="messageConverters"> <list> <ref bean="byteArray_hmc" /> <ref bean="string_hmc" /> <ref bean="resource_hmc" /> <ref bean="source_hmc" /> <ref bean="xmlAwareForm_hmc" /> <ref bean="jaxb2RootElement_hmc" /> <ref bean="jackson_hmc" /> </list> </property> </bean> -->
 
 
-	<bean name="systemConfig" init-method="getObject" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
-		<property name="locations" value="classpath:systemConfig.properties" />
-	</bean>
+	
 
 	<!-- 自动扫描@Controller use-default-filters="false" -->
 	<context:component-scan base-package="com.ascbank">
@@ -61,6 +71,8 @@
 	</context:component-scan>
 
 
+
+	
 	<!-- 加载spring配置 分配不同该模块的配置，方便后期单独提取或转变项目格式 <import resource="springContext-configureServlet.xml"/> -->
 
 
@@ -76,7 +88,7 @@
 	<!-- 经过下面的配置，该标签的作用就是：所有页面中引用"/js/**"的资源，都会从"/resources/js/"里面进行查找 -->
 	<!-- 参考: https://github.com/zhangkaitao/spring4-1-showcase/blob/master/spring4.1-resource/src/main/resources/spring-mvc.xml -->
 	<!-- 我们可以访问http://IP:8080/xxx/js/my.css和http://IP:8080/xxx/resources/js/my.css对比出来 -->
-	<mvc:resources mapping="/public/**" location="/WEB-INF/public/" cache-period="31556926" order="1">
+	<mvc:resources mapping="/public/**" location="/public/" cache-period="31556926" order="1">
 		<mvc:resource-chain resource-cache="true">
 			<mvc:resolvers>
 				<!--
@@ -109,7 +121,7 @@
 			</mvc:transformers>
 		</mvc:resource-chain>
 	</mvc:resources>
-	<mvc:resources mapping="/img/**" location="/WEB-INF/public/img/" cache-period="31556926" order="2" />
+	<mvc:resources mapping="/img/**" location="/public/img/" cache-period="31556926" order="2" />
 	
 	<mvc:resources mapping="/**/*.js" location="/WEB-INF/views/" cache-period="31556926" order="3" />
 	<mvc:resources mapping="/**/*.css" location="/WEB-INF/views/" cache-period="31556926" order="4" />
@@ -268,10 +280,10 @@
 	<bean class="org.springframework.web.servlet.handler.SimpleMappingExceptionResolver">
 		<property name="exceptionMappings">
 			<props>
-				<prop key="org.apache.shiro.authz.UnauthorizedException">/#{servletContext.servletContextName}/error/index.html#app/403</prop>
-				<prop key="javax.servlet.ServletException">/#{servletContext.servletContextName}/error/index.html#app/404</prop>
-				<prop key="java.io.FileNotFoundException">/#{servletContext.servletContextName}/error/index.html#app/404</prop>
-				 <prop key="java.lang.RuntimeException">/#{servletContext.servletContextName}/error/index.html#app/500</prop>
+				<prop key="org.apache.shiro.authz.UnauthorizedException">/error/index.html</prop>
+				<prop key="javax.servlet.ServletException">/error/index.html</prop>
+				<prop key="java.io.FileNotFoundException">/error/index.html</prop>
+				 <prop key="java.lang.RuntimeException">/error/index.html</prop>
 			</props>
 		</property>
 		<property name="statusCodes">

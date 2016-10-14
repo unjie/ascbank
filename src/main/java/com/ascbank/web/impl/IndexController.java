@@ -28,9 +28,9 @@ public class IndexController {
 		/*
 		 * if (path.matches("/WEB-INF/")) { return "/error/404.html"; }
 		 */
-
+		
 		return path;
-
+		
 	}
-	
+
 }

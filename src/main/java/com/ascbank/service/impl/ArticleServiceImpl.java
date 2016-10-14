@@ -19,10 +19,16 @@ import com.ascbank.service.basis.BaseAbstractService;
 @Service("articleService")
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
 public class ArticleServiceImpl extends BaseAbstractService<Long, Article, ArticleMapper> implements ArticleService<Long, Article> {
-
+	
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = -4394290178373662665L;
 	
+	@Override
+	public Article readMenuIdForArticle(Long menuId) {
+		
+		return this.getBean().selelctByMenuId(menuId);
+	}
+
 }

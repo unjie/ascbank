@@ -10,7 +10,7 @@
     <div class="table-responsive">
       <div ng-grid="gridOptions" style="min-height:420px"></div>
     </div>
-    <div class="table-responsive" style="margin: 2%" ng-if="userSelections && userSelections.length > 0">
+    <div class="table-responsive" style="margin: 2%" ng-if="userData">
     	
    		 <form  action="javascript:alert('提交成功')"  ng-submit="save(userData)" method="put"  id="userForm" name="userForm"  style="min-height:420px">
    		 
