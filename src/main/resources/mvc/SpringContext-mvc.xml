@@ -283,7 +283,8 @@
 				<prop key="org.apache.shiro.authz.UnauthorizedException">/error/index.html</prop>
 				<prop key="javax.servlet.ServletException">/error/index.html</prop>
 				<prop key="java.io.FileNotFoundException">/error/index.html</prop>
-				 <prop key="java.lang.RuntimeException">/error/index.html</prop>
+				<prop key="java.lang.RuntimeException">/error/index.html</prop>
+				<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">/error/index.html</prop>  
 			</props>
 		</property>
 		<property name="statusCodes">

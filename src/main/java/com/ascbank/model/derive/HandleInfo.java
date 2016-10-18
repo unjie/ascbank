@@ -8,27 +8,20 @@ package com.ascbank.model.derive;
  *
  */
 public class HandleInfo {
-	private String		compressedFilename;
+	// private String compressedFilename;
 	private String		content;
 	private String		destination;
-	private String		folderName;
+	// private String folderName;
 	private String[]	items;
 	private String		newPath;
 	private String		path;
 
 	private String		perms;
 
-	private Integer		permsCode;
+	private String		permsCode;
 	private Boolean		recursive;
 	private String		toFilename;
-	
-	/**
-	 * @return the compressedFilename
-	 */
-	public String getCompressedFilename() {
-		return compressedFilename;
-	}
-	
+
 	public String getContent() {
 		return content;
 	}
@@ -38,13 +31,6 @@ public class HandleInfo {
 	 */
 	public String getDestination() {
 		return destination;
-	}
-	
-	/**
-	 * @return the folderName
-	 */
-	public String getFolderName() {
-		return folderName;
 	}
 	
 	public String[] getItems() {
@@ -69,7 +55,7 @@ public class HandleInfo {
 	/**
 	 * @return the permsCode
 	 */
-	public Integer getPermsCode() {
+	public String getPermsCode() {
 		return permsCode;
 	}
 	
@@ -86,15 +72,7 @@ public class HandleInfo {
 	public String getToFilename() {
 		return toFilename;
 	}
-	
-	/**
-	 * @param compressedFilename
-	 *            the compressedFilename to set
-	 */
-	public void setCompressedFilename(String compressedFilename) {
-		this.compressedFilename = compressedFilename;
-	}
-	
+
 	public void setContent(String content) {
 		this.content = content;
 	}
@@ -105,14 +83,6 @@ public class HandleInfo {
 	 */
 	public void setDestination(String destination) {
 		this.destination = destination;
-	}
-	
-	/**
-	 * @param folderName
-	 *            the folderName to set
-	 */
-	public void setFolderName(String folderName) {
-		this.folderName = folderName;
 	}
 	
 	public void setItems(String[] items) {
@@ -139,7 +109,7 @@ public class HandleInfo {
 	 * @param permsCode
 	 *            the permsCode to set
 	 */
-	public void setPermsCode(Integer permsCode) {
+	public void setPermsCode(String permsCode) {
 		this.permsCode = permsCode;
 	}
 	
@@ -166,7 +136,7 @@ public class HandleInfo {
 	 */
 	@Override
 	public String toString() {
-		return "HandleInfo [compressedFilename=" + compressedFilename + ", content=" + content + ", destination=" + destination + ", folderName=" + folderName + ", items=" + items + ", newPath=" + newPath + ", path=" + path + ", perms=" + perms + ", permsCode=" + permsCode + ", recursive=" + recursive + ", toFilename=" + toFilename + "]";
+		return "HandleInfo [ content=" + content + ", destination=" + destination + ", items=" + items + ", newPath=" + newPath + ", path=" + path + ", perms=" + perms + ", permsCode=" + permsCode + ", recursive=" + recursive + ", toFilename=" + toFilename + "]";
 	}
 
 }
