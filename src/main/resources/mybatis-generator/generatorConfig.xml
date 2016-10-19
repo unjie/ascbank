@@ -2,7 +2,7 @@
 <!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
 <generatorConfiguration >
 <classPathEntry location="X:\Program Files\apache-maven\.m2\repository\postgresql\postgresql\9.1-901-1.jdbc4\postgresql-9.1-901-1.jdbc4.jar"/>
-  <context id="postgresql"  targetRuntime="MyBatis3Simple">
+  <context id="postgresql"  >
     <jdbcConnection driverClass="org.postgresql.Driver" connectionURL="=jdbc:postgresql://localhost:5432/ascbank" userId="root" password="root123" />
     
     
@@ -33,7 +33,7 @@
     	<!-- 在targetPackage的基础上，根据数据库的schema再生成一层package，最终生成的类放在这个package下，默认为false -->
         <property name="enableSubPackages" value="true"/>
         <!-- 可以为所有生成的接口添加一个父接口，但是MBG只负责生成，不负责检查 -->
-        <property name="rootInterface" value="com.ascbank.dao.BaseInterfaceDao"/>
+        <property name="rootInterface" value="com.ascbank.dao.base.BaseInterfaceDao"/>
     </javaClientGenerator>
     
     
@@ -77,9 +77,11 @@
         注意，table里面很多参数都是对javaModelGenerator，context等元素的默认属性的一个复写；
      -->
      <!-- enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"  -->
-    <table tableName="article"  ></table> 
-    <table tableName="gantt" ></table> 
-    <table tableName="menu" ></table> 
+   <!--  <table tableName="article"  ></table>  -->
+    <table tableName="t_project" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
+    <table tableName="t_task" enableCountByExample="false" enableUpdateByExample="false" enableDeleteByExample="false" enableSelectByExample="false" selectByExampleQueryId="false"></table> 
+    <!-- <table tableName="t_file" ></table>  -->
+    <!-- <table tableName="menu" ></table> 
     <table tableName="navigation" ></table> 
     <table tableName="permission" ></table> 
     <table tableName="role" ></table> 
@@ -88,6 +90,6 @@
     <table tableName="system_info" ></table> 
     <table tableName="url_filter" ></table> 
     <table tableName="user" ></table> 
-    <table tableName="user_role" ></table> 
+    <table tableName="user_role" ></table>  -->
   </context>
 </generatorConfiguration>
