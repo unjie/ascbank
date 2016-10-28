@@ -23,7 +23,7 @@ public abstract class TreeAbstractController<T extends Serializable, E extends T
 	 *
 	 */
 	private static final long serialVersionUID = -7776431377505449845L;
-
+	
 	@Override
 	@ResponseBody
 	@RequestMapping(value = { "/children/{parentId:[\\d]+}" }, method = { RequestMethod.GET })
@@ -35,19 +35,19 @@ public abstract class TreeAbstractController<T extends Serializable, E extends T
 		info.setMessage("Succeed");
 		return info;
 	}
-
+	
 	@Override
 	@ResponseBody
 	@RequestMapping(value = { "/stems/{stem:[\\w]*}" }, method = { RequestMethod.GET })
 	public JsonResultInfo stem(@PathVariable("stem") String stem) {
 		// TODO Auto-generated method stub
 		JsonResultInfo info = new JsonResultInfo();
-		info.setData(beanService.getByStrm(stem.equalsIgnoreCase("root") ? "" : stem));
+		info.setData(beanService.getByStrm(stem.equalsIgnoreCase("root") ? "," : stem));
 		info.setSuccess(true);
 		info.setMessage("Succeed");
 		return info;
 	}
-	
+
 	@Override
 	@ResponseBody
 	@RequestMapping(value = { "/tree/{stem:([\\d]+,)+}" }, method = { RequestMethod.GET })
@@ -59,7 +59,7 @@ public abstract class TreeAbstractController<T extends Serializable, E extends T
 		info.setMessage("Succeed");
 		return info;
 	}
-	
+
 	@Override
 	@ResponseBody
 	@RequestMapping(value = { "/tree/{parentId:[\\d]+}" }, method = { RequestMethod.GET })

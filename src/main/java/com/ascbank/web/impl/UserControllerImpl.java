@@ -56,7 +56,7 @@ public class UserControllerImpl extends BaseAbstractController<Long, User, UserS
 		if (getBeanService().logout() != null) {
 			info.setSuccess(true);
 			info.setMessage("user exit successs");
-			info.setUrl(this.systemConfig.get("user_exit_successs").toString());
+			info.setData(this.systemConfig.get("user_exit_successs").toString());
 		} else {
 			info.setSuccess(false);
 			info.setMessage("user exit failure");
@@ -89,7 +89,7 @@ public class UserControllerImpl extends BaseAbstractController<Long, User, UserS
 					info.setSuccess(true);
 					info.setMessage("login successs");
 					log.debug("-----------{}---", user.toString());
-					info.setUrl(this.systemConfig.get("user_login_successs").toString());
+					info.setData(this.systemConfig.get("user_login_successs").toString());
 				} catch (UserException e) {
 					// br.addError(new ObjectError("error", e.getMessage()));
 					info.setError(e);
@@ -124,7 +124,7 @@ public class UserControllerImpl extends BaseAbstractController<Long, User, UserS
 				getBeanService().add(user);
 				info.setSuccess(true);
 				info.setMessage("login successs");
-				info.setUrl(this.systemConfig.get("user_register_successs").toString());
+				info.setData(this.systemConfig.get("user_register_successs").toString());
 			} catch (Exception e) {
 				// TODO Auto-generated catch block
 				// br.addError(new ObjectError("error", e.getMessage()));

@@ -26,16 +26,16 @@ public class ArticleControllerImpl extends BaseAbstractController<Long, Article,
 	 *
 	 */
 	private static final long serialVersionUID = -7713298953921279482L;
-
+	
 	@Override
 	@ResponseBody
 	@RequestMapping("/read/menuid/{menuId:[\\d]+}")
-	public JsonResultInfo read(@PathVariable("menuId") Long menuId) {
+	public JsonResultInfo reads(@PathVariable("menuId") Long menuId) {
 		JsonResultInfo jri = new JsonResultInfo();
 		jri.setData(this.beanService.readMenuIdForArticle(menuId));
 		jri.setSuccess(true);
 		jri.setMessage("reda Article success!");
 		return jri;
 	}
-
+	
 }
