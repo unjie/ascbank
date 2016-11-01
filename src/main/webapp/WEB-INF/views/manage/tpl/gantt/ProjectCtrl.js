@@ -1,6 +1,6 @@
 app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils', 'GanttObjectModel', 'ganttMouseOffset', 'ganttDebounce', 'moment', function($scope,$http, $timeout, $log, utils, ObjectModel,  mouseOffset, debounce, moment) {
     var objectModel;
-    var dataToRemove;
+  //  var dataToRemove;
     
 	$scope.data =[];
   
@@ -36,25 +36,64 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
 	
 	 $scope.taskSave=function(selectJson){
 		 console.log(selectJson);
-		 
-		 var data= selectJson,url='./'+(selectJson.to?'task':'project')+'/update',param={method:'PATCH' ,'url':url,'data':data};
+		 var type='task';
+		 var data= selectJson,url='./'+type+'/update',param={method:'PATCH' ,'url':url,'data':data};
 	    	if(data.id==null ||data.id.length >=36 ){
 	    		data.id=null;
 	    		param.method='PUT';
-	    		param.url= './'+(selectJson.to?'task':'project')+'/create';
+	    		param.url= './'+type+'/create';
 	    	}
 		   $http(param).success(function (largeLoad) {
 			   console.log(largeLoad);
-			   $scope.selectJson=largeLoad.data;
+			   var data =largeLoad.data,i,deos=data.dependencies;
+			   for(i in deos){
+				   deos[i].fromId = data.id;
+				   dependenciesSave(deos[i]);
+			   }
+			   $scope.live[type]=data;
 		   })
-		 
-		 
 	 }
+	 
+	 $scope.rowSave = function(selectJson){
+		 console.log(selectJson);
+		 var type='project';
+		 var data= selectJson,url='./'+type+'/update',param={method:'PATCH' ,'url':url,'data':data};
+	    	if(data.id==null ||data.id.length >=36 ){
+	    		data.id=null;
+	    		param.method='PUT';
+	    		param.url= './'+type+'/create';
+	    	}
+		   $http(param).success(function (largeLoad) {
+			   console.log(largeLoad);
+			   $scope.live[type]=largeLoad.data;
+		   })
+	 }
+	var dependenciesSave =function(selectJson){
+		 console.log(selectJson);
+		 var type='dependencies';
+		 var data= selectJson,url='./'+type+'/update',param={method:'PATCH' ,'url':url,'data':data};
+	    	if(data.id==null ||data.id.length >=36 ){
+	    		data.id=null;
+	    		param.method='PUT';
+	    		param.url= './'+type+'/create';
+	    	}
+		   $http(param).success(function (largeLoad) {
+			   console.log(largeLoad);
+			   selectJson=largeLoad.data;
+			   //$scope.live[type]=largeLoad.data;
+		   })
+	}
 	
+  var remove= function(id,type,fun){
+		 var url='./'+type+'/destroy/'+id,param={method:'DELETE' ,'url':url};
+		 console.log('remove',param);
+		 $http(param).success(fun);
+	 }
+	 
 	 
 	 $scope.newProject= function(){
 		 console.log("new Project");
-		 var selectJson =$scope.selectJson;
+		 var selectJson =$scope.live.row;
 		 selectJson = (selectJson.stem === undefined)?null:$scope.selectJson;
 		 console.log("new Project",selectJson);
 		 $scope.data.push({
@@ -62,26 +101,29 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
 				 name:"new Project "+(new Date().getTime()),
 				 parent: (!selectJson ? null:selectJson.id),
 				 stem:  (!selectJson ? ',':selectJson.stem+selectJson.id+","),
-				 color: '#FFFF00',
-				 content:null
+				 color: '#EEEEEE',
+				 content:'<i class="fa fa-align-justify"></i> {{row.model.name}}'
 			 });
 		 
 	 }
+	
+	 
     
 
     // Event handler
-    var logScrollEvent = function(left, date, direction) {
+/*    var logScrollEvent = function(left, date, direction) {
         if (date !== undefined) {
             $log.info('[Event] api.on.scroll: ' + left + ', ' + (date === undefined ? 'undefined' : date.format()) + ', ' + direction);
         }
     };
-
+*/
     // Event handler
+/*    
     var logDataEvent = function(eventName) {
         $log.info('[Event] ' + eventName);
     };
-
-    // Event handler
+*/
+   /* // Event handler
     var logTaskEvent = function(eventName, task) {
         $log.info('[Event] ' + eventName + ': ' + task.model.name);
     };
@@ -119,7 +161,7 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
     // Event handler
     var logReadyEvent = function() {
         $log.info('[Event] core.on.ready');
-    };
+    };*/
 
     // Event utility function
     var addEventName = function(eventName, func) {
@@ -159,7 +201,7 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
         autoExpand: 'none',
         taskOutOfRange: 'truncate',
         rowContentEnabled:true,
-        fromDate: moment().subtract(30, 'days').calendar(),
+        fromDate: moment().subtract(10, 'days').calendar(),
         toDate: moment().add(30, 'days').calendar(),
         rowContent: '<i class="fa fa-align-justify"></i> {{row.model.name}}',
         taskContent : '<i class="fa fa-tasks"></i> {{task.model.name}}',
@@ -245,9 +287,9 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
 
             api.core.on.ready($scope, function() {
                 // Log various events to console
-                api.scroll.on.scroll($scope, logScrollEvent);
-                api.core.on.ready($scope, logReadyEvent);
-
+               /* api.scroll.on.scroll($scope, logScrollEvent);
+                api.core.on.ready($scope, logReadyEvent);*/
+/*
                 api.data.on.remove($scope, addEventName('data.on.remove', logDataEvent));
                 api.data.on.load($scope, addEventName('data.on.load', logDataEvent));
                 api.data.on.clear($scope, addEventName('data.on.clear', logDataEvent));
@@ -257,9 +299,15 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
                 api.tasks.on.change($scope, addEventName('tasks.on.change', logTaskEvent));
                 api.tasks.on.rowChange($scope, addEventName('tasks.on.rowChange', logTaskEvent));
                 api.tasks.on.remove($scope, addEventName('tasks.on.remove', logTaskEvent));
-
+*/
+            	
+            	
                 if (api.tasks.on.moveBegin) {
-                    api.tasks.on.moveBegin($scope, addEventName('tasks.on.moveBegin', logTaskEvent));
+                    api.tasks.on.moveBegin($scope, addEventName('tasks.on.moveBegin', function(eventName, task) {
+                        $log.info('[Event] ' + eventName + ': ' + task.model.name);
+                        $log.info('[Event] ' + eventName + ': ' + task.row.model.id);
+                        task.model.parentId= task.row.model.id;
+                    }));
                     //api.tasks.on.move($scope, addEventName('tasks.on.move', logTaskEvent));
                     api.tasks.on.moveEnd($scope, addEventName('tasks.on.moveEnd', function(eventName, task) {
                         $log.info('[Event] ' + eventName + ': ' + task.model.name);
@@ -267,9 +315,9 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
                         task.model.parentId= task.row.model.id;
                     }));
 
-                    api.tasks.on.resizeBegin($scope, addEventName('tasks.on.resizeBegin', logTaskEvent));
+                    /*api.tasks.on.resizeBegin($scope, addEventName('tasks.on.resizeBegin', logTaskEvent));
                     //api.tasks.on.resize($scope, addEventName('tasks.on.resize', logTaskEvent));
-                    api.tasks.on.resizeEnd($scope, addEventName('tasks.on.resizeEnd', logTaskEvent));
+                    api.tasks.on.resizeEnd($scope, addEventName('tasks.on.resizeEnd', logTaskEvent));*/
                 }
 
                 if (api.tasks.on.drawBegin) {
@@ -279,10 +327,11 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
                         task.model.parentId= task.row.model.id;
                     }));
                     //api.tasks.on.draw($scope, addEventName('tasks.on.draw', logTaskEvent));
-                    api.tasks.on.drawEnd($scope, addEventName('tasks.on.drawEnd', logTaskEvent));
+                 //   api.tasks.on.drawEnd($scope, addEventName('tasks.on.drawEnd', logTaskEvent));
                 }
 
-                api.rows.on.add($scope, addEventName('rows.on.add', logRowEvent));
+                /*               
+ 				api.rows.on.add($scope, addEventName('rows.on.add', logRowEvent));
                 api.rows.on.change($scope, addEventName('rows.on.change', logRowEvent));
                 api.rows.on.move($scope, addEventName('rows.on.move', logRowEvent));
                 api.rows.on.remove($scope, addEventName('rows.on.remove', logRowEvent));
@@ -292,10 +341,11 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
                 api.side.on.resizeEnd($scope, addEventName('labels.on.resizeEnd', logLabelsEvent));
 
                 api.timespans.on.add($scope, addEventName('timespans.on.add', logTimespanEvent));
-                api.columns.on.generate($scope, logColumnsGenerateEvent);
+                */
+               /* api.columns.on.generate($scope, logColumnsGenerateEvent);
 
                 api.rows.on.filter($scope, logRowsFilterEvent);
-                api.tasks.on.filter($scope, logTasksFilterEvent);
+                api.tasks.on.filter($scope, logTasksFilterEvent);*/
 
                 //Tree expand collapsed
                 /*api.tree.on.expand($scope,addEventName('tree.on.expand', function(eventName, row,collapsed) {
@@ -303,21 +353,7 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
                     $log.info('[Event] ' + eventName + ': ' + row.id);
                    
                 }));*/
-                api.tree.on.collapsed($scope,addEventName('tree.on.collapsed', function(eventName,row) {
-                    console.info('[Event] ' + eventName ,  row);
-                    console.info('[Event] ' + eventName , row.collapsed);
-                    if(!row.collapsed){
-                    	var model =row.row.model,url='./project/children/'+model.id;
-                    	console.info('[row  model] ' , model );
-                    	$http.get(url).success(function (largeLoad) {
-	           	           	 var data=  largeLoad.data;
-	           	           	 console.log(data);
-	           	           	 if( !!data &&data.length >0)
-	           	           	$scope.data=$scope.data.concat(data);
-           	            });
-                    	
-                    }
-                }));
+                
                 /*api.data.on.change($scope, function(newData) {
                 	console.log(newData);
                     if (dataToRemove === undefined) {
@@ -331,20 +367,16 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
                 // When gantt is ready, load data.
                 // `data` attribute could have been used too.
                 $scope.load();
-
                 
                 // Add some DOM events
                 api.directives.on.new($scope, function(directiveName, directiveScope, element) {
                     if (directiveName === 'ganttTask') {
                         element.bind('click', function(event) {
                             event.stopPropagation();
-                        //   $scope.selectJson=directiveScope.task.model;
                            console.log(directiveScope);
                            //remove select task 
-                           dataToRemove =[{ id       : directiveScope.task.row.model.id,
-                        	   							tasks  : [{ id:directiveScope.task.model.id}]
-                           							}];
-                            logTaskEvent('task-click', directiveScope.task);
+                      //   dataToRemove =[{ id       : directiveScope.task.row.model.id, tasks  : [{ id:directiveScope.task.model.id}] }];
+                       //     logTaskEvent('task-click', directiveScope.task);
                         });
                         element.bind('mousedown touchstart', function(event) {
                             event.stopPropagation();
@@ -359,9 +391,8 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
                     } else if (directiveName === 'ganttRow') {
                         element.bind('click', function(event) {
                             event.stopPropagation();
-                         //  $scope.selectJson=directiveScope.row.model;
                             console.log(directiveScope);
-                            logRowEvent('row-click', directiveScope.row);
+                           // logRowEvent('row-click', directiveScope.row);
                         });
                         element.bind('mousedown touchstart', function(event) {
                             event.stopPropagation();
@@ -370,12 +401,10 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
                         });
                     } else if (directiveName === 'ganttRowLabel') {
                         element.bind('click', function() {
-                        	//Editor Porject Row
-                        	 $scope.selectJson=directiveScope.row.model;
                         	//Remove Project Row 
-                        	 dataToRemove =[{ id : directiveScope.row.model.id}];
+                        //	 dataToRemove =[{ id : directiveScope.row.model.id}];
                              
-                            logRowEvent('row-label-click', directiveScope.row);
+                          //  logRowEvent('row-label-click', directiveScope.row);
                         });
                         element.bind('mousedown touchstart', function() {
                             $scope.live.row = directiveScope.row.model;
@@ -387,7 +416,31 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
                 api.tasks.on.rowChange($scope, function(task) {
                     $scope.live.row = task.row.model;
                 });
-
+                setTimeout(function(){
+                	api.tree.on.collapsed($scope,addEventName('tree.on.collapsed', function(eventName,row) {
+                        console.info('[Event] ' + eventName ,  row);
+                        console.info('[Event] ' + eventName , row.collapsed);
+                        if(!row.collapsed && (!row.isCollapseDisabled())){
+                        	var model =row.row.model,url='./project/children/'+model.id;
+                        	console.info('[row  model] ' , model );
+                        	$http.get(url).success(function (largeLoad) {
+    	           	           	 var data=  largeLoad.data;
+    	           	           	 console.log(data);
+    	           	           	 if( !!data && data.length >0)
+    	           	           		 $scope.data=$scope.data.concat(data);
+               	            });
+                        }
+                    }));
+                	
+                	api.dependencies.on.remove($scope,addEventName('dependencies.on.remove', function(eventName,dependencies) {
+                		console.info('[Event] ' + eventName ,  dependencies);
+                		console.info('[remove] ' + eventName ,  dependencies.model.id);
+                		remove(dependencies.model.id,'dependencies');
+                	}));
+                	
+                },100)
+                
+                
                 objectModel = new ObjectModel(api);
             });
         }
@@ -456,8 +509,36 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
     };
 
     // Remove data action
-    $scope.remove = function() {
+    $scope.remove = function(model) {
+    	console.log("Remove data action ",model);
+    	var dataToRemove;
+    	if(model.tasks === undefined){
+    		dataToRemove=[{ id:model.parentId,tasks:[{id:model.id}]}];
+    		remove(model.id,'task',function(largeLoad){
+    			
+    		});
+    	}else {
+    		dataToRemove=[{id:model.id}];
+    		//remove task
+    		var isAllSuccess =true;
+    		for(i in model.tasks){
+    			remove(model.tasks[i].id,'task',function(largeLoad){
+    				console.log('remove project  > task  ',largeLoad );
+    				isAllSuccess = largeLoad.success && isAllSuccess;
+    			}) 
+    		}
+    		if(isAllSuccess){
+    			setTimeout(function(){
+        			//remove row   
+            		remove(model.id,'project',function(largeLoad){
+            			
+            		});
+    			},100);
+    		}
+		}
+    	
         $scope.api.data.remove(dataToRemove);
+                
         $scope.api.dependencies.refresh();
     };
 
@@ -566,7 +647,7 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
         $scope.live.rowJson = angular.toJson($scope.live.row, true);
         
         
-        $scope.selectJson=task;
+       // $scope.selectJson=task;
     });
 
     $scope.$watchCollection('live.row', function(row) {
@@ -576,7 +657,7 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
         }
         
         
-        $scope.selectJson=row;
+        ///$scope.selectJson=row;
     });
 
     $scope.$watchCollection('live.row.tasks', function() {

@@ -1,324 +1,368 @@
-<div class="bg-light lter b-b wrapper-md" >
-  <h1 class="m-n font-thin h3">Gantt</h1>
+<div class="bg-light lter b-b wrapper-md">
+	<h1 class="m-n font-thin h3">Gantt</h1>
 </div>
-<<style>
+<
+<style>
 <!--
-.container-content{margin:10px}.top-buffer{margin-top:8px}.navbar-right-spacing{margin-right:160px}.btn:focus{color:#333;background-color:#fff;border-color:#ccc}.btn.active:focus{color:#333;background-color:#ebebeb;border-color:#adadad}.ng-cloak,[ng-cloak],[ng\:cloak]{display:none!important}.gantt-timeframe-holiday{border:2px solid #000;opacity:.6}.gantt-row-milestone{font-weight:700;vertical-align:middle;color:#fff}div.live-table{display:table;width:100%}div.live-row{display:table-row}div.live-cell{display:table-cell;padding:5px;width:50%}textarea.live-row,textarea.live-task{width:100%;height:300px;font-family:Consolas,"Liberation Mono",Menlo,Courier,monospace;font-size:.9em;color:#333}
+.container-content {
+	margin: 10px
+}
+
+.top-buffer {
+	margin-top: 8px
+}
+
+.navbar-right-spacing {
+	margin-right: 160px
+}
+
+.btn:focus {
+	color: #333;
+	background-color: #fff;
+	border-color: #ccc
+}
+
+.btn.active:focus {
+	color: #333;
+	background-color: #ebebeb;
+	border-color: #adadad
+}
+
+.ng-cloak, [ng-cloak], [ng\:cloak] {
+	display: none !important
+}
+
+.gantt-timeframe-holiday {
+	border: 2px solid #000;
+	opacity: .6
+}
+
+.gantt-row-milestone {
+	font-weight: 700;
+	vertical-align: middle;
+	color: #fff
+}
+
+div.live-table {
+	display: table;
+	width: 100%
+}
+
+div.live-row {
+	display: table-row
+}
+
+div.live-cell {
+	display: table-cell;
+	padding: 5px;
+	width: 50%
+}
+
+textarea.live-row, textarea.live-task {
+	width: 100%;
+	height: 300px;
+	font-family: Consolas, "Liberation Mono", Menlo, Courier, monospace;
+	font-size: .9em;
+	color: #333
+}
 -->
 </style>
 <div class="wrapper-md" ng-controller="ProjectCtrl" ng-init="app.settings.asideFolded = true;  app.settings.asideDock = true;">
-    <div class="container-content" ng-show="false">
-        <div class="container-fluid">
-            <div class="row top-buffer">
-                <div class="col-md-12">
-                    <i class="fa fa-cog fa-spin"></i> Loading angular-gantt demo ...
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="container-content" ng-cloak="true">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel-group" bs-collapse>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a href="" bs-collapse-toggle>Options</a>
-                                </h4>
-                            </div>
-                            <div class="panel-collapse" bs-collapse-target>
-                                <div class="panel-body">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                            <div class="form-inline">
-                                                <div class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa-search"></i> Scale</label><br>
-                                                    <button type="button" style="width: 5em; text-align: left" class="btn btn-default" ng-model="options.scale" bs-options="s for s in ['minute', '5 minutes', 'hour', '3 hours', 'day', 'week', '2 weeks', 'month', 'quarter', '6 months', 'year']" bs-select></button>
-                                                </div>
-                                                <div class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa-sort"></i> Sort</label><br>
-                                                    <button type="button" style="width: 6em; text-align: left" class="btn btn-default" ng-model="options.sortMode" bs-options="m.value as m.label for m in [{label: 'disabled', value: undefined}, {label: 'name', value: 'model.name'}, {label: 'from', value: 'from'}, {label: 'to', value: 'to'}]" bs-select></button>
-                                                </div>
-                                                <div class="form-group input-append text-center">
-                                                    <label class="control-label"><i class="fa fa-filter"></i> Filter Tasks</label><br>
-                                                    <input type="text" class="form-control" style="width: 8em; text-align: left" ng-model="options.filterTask">
-                                                </div>
-                                                <div class="form-group input-append text-center">
-                                                    <label class="control-label"><i class="fa fa-filter"></i> Filter Rows</label><br>
-                                                    <input type="text" class="form-control" style="width: 8em; text-align: left" ng-model="options.filterRow">
-                                                </div>
-
-                                                <div class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa-clock-o"></i> Today</label><br>
-                                                    <button type="button" style="width: 6em; text-align: left" class="btn btn-default" ng-model="options.currentDate" bs-options="d for d in ['none', 'line', 'column']" bs-select></button>
-                                                </div>
-
-                                                <div class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa-expand"></i> Expand</label><br>
-                                                    <button type="button" style="width: 6em; text-align: left" class="btn btn-default" ng-model="options.autoExpand" bs-options="e for e in ['none', 'both', 'left', 'right']" bs-select></button>
-                                                </div>
-
-                                                <div class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa-scissors"></i> Out of range</label><br>
-                                                    <button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.taskOutOfRange" bs-options="e for e in ['expand', 'truncate']" bs-select></button>
-                                                </div>
-
-                                                <div class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa-pencil-square-o"></i> Edit</label><br>
-                                                    <button type="button" class="btn btn-default" ng-model="options.draw" bs-checkbox>Draw</button>
-                                                    <button type="button" class="btn btn-default" ng-model="options.readOnly" bs-checkbox>Read Only</button>
-                                                </div>
-
-                                                <div class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa-magnet"></i> Magnet</label><br>
-                                                    <button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.columnMagnet" bs-options="m for m in ['column', '1 second', '1 minute', '5 minutes', '15 minutes', '1 hour', '1 day', '5 days']" bs-select></button>
-                                                    <button type="button" class="btn btn-default" ng-model="options.daily" bs-checkbox>Daily</button>
-                                                    <button type="button" class="btn btn-default" ng-model="options.timeFramesMagnet" bs-checkbox>TimeFrames</button>
-                                                </div>
-
-                                                <div class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa-bars"></i> Side</label><br>
-                                                    <div class="btn-group" bs-checkbox-group>
-                                                        <button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.sideMode" bs-options="s for s in ['Tree', 'Table', 'TreeTable', 'Disabled']" bs-select></button>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa-gear"></i> Groups</label><br>
-                                                    <div class="btn-group" bs-checkbox-group>
-                                                        <button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.groupDisplayMode" bs-options="s for s in ['group', 'overview', 'promote', 'Disabled']" bs-select></button>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa-crop"></i> Layout</label><br>
-                                                    <div class="btn-group" bs-checkbox-group>
-                                                        <button type="button" class="btn btn-default" ng-model="options.maxHeight" bs-checkbox>Height</button>
-                                                        <button ng-disabled="!canAutoWidth(options.scale)" type="button" class="btn btn-default" ng-model="options.width" bs-checkbox>Width</button>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa-search"></i> Zoom</label><br>
-                                                    <input ng-disabled="!options.width" type="number" ng-model="options.zoom" step="0.1" min="0.1" max="5" class="form-control" />
-                                                </div>
-
-
-                                                <div class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa-text-width"></i> Labels</label><br>
-                                                    <div class="btn-group" bs-checkbox-group>
-                                                        <button type="button" class="btn btn-default" ng-model="options.labelsEnabled" bs-checkbox>Show</button>
-                                                        <button type="button" class="btn btn-default" ng-model="options.allowSideResizing" bs-checkbox>Resizable</button>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa-code"></i> Content</label><br>
-                                                    <div class="btn-group" bs-checkbox-group>
-                                                        <button type="button" class="btn btn-default" ng-model="options.rowContentEnabled" bs-checkbox>Rows</button>
-                                                        <button type="button" class="btn btn-default" ng-model="options.taskContentEnabled" bs-checkbox>Tasks</button>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa-calendar"></i> <i class="fa fa-arrows-h"></i> <i class="fa fa-calendar"></i> Date range</label><br>
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" ng-model="options.fromDate" max-date="{{options.toDate}}" start-date="{{options.currentDateValue.toString()}}" start-week="1" placeholder="From" bs-datepicker>
-                                                    </div>
-                                                    <div class="form-group">
-                                                        <input type="text" class="form-control" ng-model="options.toDate" min-date="{{options.fromDate}}" start-date="{{options.currentDateValue.toString()}}" start-week="1" placeholder="To" bs-datepicker>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group text-center">
-                                                    <div class="form-group">
-                                                        <label class="control-label"><i class="fa fa-sign-out"></i> Working</label><br>
-                                                        <button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.timeFramesWorkingMode" bs-options="e for e in ['visible', 'hidden', 'cropped']" bs-select></button>
-                                                    </div>
-
-                                                    <div class="form-group">
-                                                        <label class="control-label"><i class="fa fa-sign-out"></i> Non-working</label><br>
-                                                        <button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.timeFramesNonWorkingMode" bs-options="e for e in ['visible', 'hidden', 'cropped']" bs-select></button>
-                                                    </div>
-                                                </div>
-
-                                                <div ng-if="options.sideMode === 'Tree' || options.sideMode === 'TreeTable'" class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa fa-chevron-circle-right"></i> Tree actions</label><br>
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-default" ng-click="expandAll()">Expand all</button>
-                                                        <button class="btn btn-default" ng-click="collapseAll()">Collapse all</button>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group text-center">
-                                                    <div class="form-group">
-                                                        <label class="control-label"><i class="fa fa-link"></i> Dependencies</label><br>
-                                                        <button type="button" class="btn btn-default" ng-model="options.dependencies.enabled" bs-checkbox>Enabled</button>
-                                                        <button type="button" class="btn btn-default" ng-model="options.dependencies.conflictChecker" bs-checkbox>Conflicts</button>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa-database"></i> Data actions</label><br>
-                                                    <div class="btn-group">
-                                                        <button class="btn btn-default" ng-click="reload()">Reload</button>
-                                                        <button class="btn btn-default" ng-click="remove()">Remove</button>
-                                                        <button class="btn btn-default" ng-click="clear()">Clear</button>
-                                                    </div>
-                                                </div>
-
-                                                <div class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa-database"></i>Add Overlapping Task</label><br>
-                                                    <div class="form-group">
-                                                        <input type="number" ng-model="options.targetDataAddRowIndex" step="1" min="0" class="form-control" placeholder="Row Index"/>
-                                                        <button class="btn btn-default" ng-click="addOverlapTaskToTargetRowIndex()">Add</button>
-                                                    </div>
-                                                </div>
+	<div class="container-content" ng-show="false">
+		<div class="container-fluid">
+			<div class="row top-buffer">
+				<div class="col-md-12">
+					<i class="fa fa-cog fa-spin"></i> Loading angular-gantt demo ...
+				</div>
+			</div>
+		</div>
+	</div>
+	<div class="container-content" ng-cloak="true">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+					<div class="panel-group" bs-collapse>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a href="" bs-collapse-toggle>Options</a>
+								</h4>
+							</div>
+							<div class="panel-collapse" bs-collapse-target>
+								<div class="panel-body">
+									<div class="container-fluid">
+										<div class="row">
+											<div class="form-inline">
 												<div class="form-group text-center">
-                                                    <label class="control-label"><i class="fa fa-database"></i>Add New Project </label><br>
-                                                    <div class="form-group">
-                                                        <button class="btn btn-default" ng-click="newProject()">Add</button>
-                                                    </div>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="row top-buffer">
-                <div class="col-md-12">
-                    <div class="panel-group" bs-collapse>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a href="" bs-collapse-toggle>Gantt</a>
-                                </h4>
-                            </div>
-                            <div class="panel-collapse" bs-collapse-target>
-                                <div class="panel-body">
-                                    <div gantt
-                                         data="data"
-                                         timespans="timespans"
-                                         show-side="options.labelsEnabled"
-                                         daily="options.daily"
-                                         filter-task="{'name': options.filterTask}"
-                                         filter-row="{'name': options.filterRow}"
-                                         sort-mode="options.sortMode"
-                                         view-scale="options.scale"
-                                         column-width="getColumnWidth(options.width, options.scale, options.zoom)"
-                                         auto-expand="options.autoExpand"
-                                         task-out-of-range="options.taskOutOfRange"
-                                         from-date = "options.fromDate"
-                                         to-date = "options.toDate"
-                                         allow-side-resizing = "options.allowSideResizing"
-                                         task-content = "options.taskContentEnabled ? options.taskContent : undefined"
-                                         row-content = "options.rowContentEnabled ? options.rowContent : undefined"
-                                         current-date="options.currentDate"
-                                         current-date-value="options.currentDateValue"
-                                         headers="options.width && options.shortHeaders || options.longHeaders"
-                                         max-height="options.maxHeight && 300 || 0"
-                                         time-frames="options.timeFrames"
-                                         date-frames="options.dateFrames"
-                                         time-frames-working-mode="options.timeFramesWorkingMode"
-                                         time-frames-non-working-mode="options.timeFramesNonWorkingMode"
-                                         time-frames-magnet="options.timeFramesMagnet"
-                                         api="options.api"
-                                         column-magnet="options.columnMagnet">
-                                        <gantt-tree enabled="options.sideMode === 'Tree' || options.sideMode === 'TreeTable'"
-                                                    header-content="options.treeHeaderContent"
-                                                    keep-ancestor-on-filter-row="true">
-                                        </gantt-tree>
-                                        <gantt-table enabled="options.sideMode === 'Table' || options.sideMode === 'TreeTable'"
-                                                     columns="options.sideMode === 'TreeTable' ? options.treeTableColumns : options.columns"
-                                                     headers="options.columnsHeaders"
-                                                     classes="options.columnsClasses"
-                                                     formatters="options.columnsFormatters"
-                                                     contents="options.columnsContents"
-                                                     header-contents="options.columnsHeaderContents">
-                                        </gantt-table>
-                                        <gantt-groups enabled="options.groupDisplayMode === 'group' || options.groupDisplayMode === 'overview' || options.groupDisplayMode === 'promote'" display="options.groupDisplayMode"></gantt-groups>
-                                        <gantt-tooltips></gantt-tooltips>
-                                        <gantt-bounds></gantt-bounds>
-                                        <gantt-progress></gantt-progress>
-                                        <gantt-sortable></gantt-sortable>
-                                        <gantt-movable enabled="!options.readOnly"></gantt-movable>
-                                        <gantt-draw-task
-                                            enabled="options.canDraw"
-                                            move-threshold="2"
-                                            task-factory="options.drawTaskFactory">
-                                        </gantt-draw-task>
-                                        <gantt-overlap></gantt-overlap>
-                                        <gantt-resize-sensor></gantt-resize-sensor>
-                                        <gantt-dependencies
-                                            enabled="options.dependencies.enabled"
-                                            conflict-checker="options.dependencies.conflictChecker"
-                                            read-only="options.readOnly">
-                                        </gantt-dependencies>
-                                    </div>
-                                </div>
-                                <div class="panel-body">
-                                    <div class="live-table">
-                                        <div class="live-cell" ng-show="live.row.tasks.length > 0">
-                                            <h4><button type="button" style="text-align: left" class="btn btn-default" ng-model="live.task" bs-options="t as t.name for t in live.row.tasks" bs-select></button> (Task object)</h4>
-                                            <textarea class="live-task" ng-model="live.taskJson"></textarea>
-                                        </div>
-                                        <div class="live-cell" ng-show="data.length > 0">
-                                            <h4><button type="button" style="text-align: left" class="btn btn-default" ng-model="live.row" bs-options="r as r.name for r in data" bs-select></button> (Row object)</h4>
-                                            <textarea class="live-row" ng-model="live.rowJson"></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
-
-      <div class="container-content" ng-cloak="true">
-        <div class="container-fluid">
-            <div class="row">
-                <div class="col-md-12">
-                    <div class="panel-group" bs-collapse>
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h4 class="panel-title">
-                                    <a href="" bs-collapse-toggle>Form Options</a>
-                                </h4>
-                            </div>
-                            <div class="panel-collapse" bs-collapse-target>
-                                <div class="panel-body">
-                                    <div class="container-fluid">
-                                        <div class="row">
-                                        			<div class="table-responsive" ng-if="selectJson">
-															 <form  action="javascript:alert('提交成功')"  ng-submit="taskSave(selectJson)" method="put"  id="taskForm" name="taskForm"  style="min-height:420px">
-												   		 
-												   		 	<span ng-repeat=" (k,v ) in selectJson"  style="width:33%;float:left"  ng-model="selectJson">
-												   		 		<span style="width:30%;float:left">{{k}} :</span><input type="text"   ng-model="selectJson[k]" />
-												   		 	</span>
-												   		 	
-												   		 	<footer class="panel-footer text-right bg-light lter" >
-												              <button type="submit" class="btn btn-success"   ng-disabled="taskFrom.$invalid">Submit</button>
-												            </footer>
-												   		 </form>
+													<label class="control-label"><i class="fa fa-search"></i> Scale</label><br>
+													<button type="button" style="width: 5em; text-align: left" class="btn btn-default" ng-model="options.scale" bs-options="s for s in ['minute', '5 minutes', 'hour', '3 hours', 'day', 'week', '2 weeks', 'month', 'quarter', '6 months', 'year']" bs-select></button>
+												</div>
+												<div class="form-group text-center">
+													<label class="control-label"><i class="fa fa-sort"></i> Sort</label><br>
+													<button type="button" style="width: 6em; text-align: left" class="btn btn-default" ng-model="options.sortMode" bs-options="m.value as m.label for m in [{label: 'disabled', value: undefined}, {label: 'name', value: 'model.name'}, {label: 'from', value: 'from'}, {label: 'to', value: 'to'}]" bs-select></button>
+												</div>
+												<div class="form-group input-append text-center">
+													<label class="control-label"><i class="fa fa-filter"></i> Filter Tasks</label><br> <input type="text" class="form-control" style="width: 8em; text-align: left" ng-model="options.filterTask">
+												</div>
+												<div class="form-group input-append text-center">
+													<label class="control-label"><i class="fa fa-filter"></i> Filter Rows</label><br> <input type="text" class="form-control" style="width: 8em; text-align: left" ng-model="options.filterRow">
+												</div>
+												<div class="form-group text-center">
+													<label class="control-label"><i class="fa fa-clock-o"></i> Today</label><br>
+													<button type="button" style="width: 6em; text-align: left" class="btn btn-default" ng-model="options.currentDate" bs-options="d for d in ['none', 'line', 'column']" bs-select></button>
+												</div>
+												<div class="form-group text-center">
+													<label class="control-label"><i class="fa fa-expand"></i> Expand</label><br>
+													<button type="button" style="width: 6em; text-align: left" class="btn btn-default" ng-model="options.autoExpand" bs-options="e for e in ['none', 'both', 'left', 'right']" bs-select></button>
+												</div>
+												<div class="form-group text-center">
+													<label class="control-label"><i class="fa fa-scissors"></i> Out of range</label><br>
+													<button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.taskOutOfRange" bs-options="e for e in ['expand', 'truncate']" bs-select></button>
+												</div>
+												<div class="form-group text-center">
+													<label class="control-label"><i class="fa fa-pencil-square-o"></i> Edit</label><br>
+													<button type="button" class="btn btn-default" ng-model="options.draw" bs-checkbox>Draw</button>
+													<button type="button" class="btn btn-default" ng-model="options.readOnly" bs-checkbox>Read Only</button>
+												</div>
+												<div class="form-group text-center">
+													<label class="control-label"><i class="fa fa-magnet"></i> Magnet</label><br>
+													<button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.columnMagnet" bs-options="m for m in ['column', '1 second', '1 minute', '5 minutes', '15 minutes', '1 hour', '1 day', '5 days']" bs-select></button>
+													<button type="button" class="btn btn-default" ng-model="options.daily" bs-checkbox>Daily</button>
+													<button type="button" class="btn btn-default" ng-model="options.timeFramesMagnet" bs-checkbox>TimeFrames</button>
+												</div>
+												<div class="form-group text-center">
+													<label class="control-label"><i class="fa fa-bars"></i> Side</label><br>
+													<div class="btn-group" bs-checkbox-group>
+														<button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.sideMode" bs-options="s for s in ['Tree', 'Table', 'TreeTable', 'Disabled']" bs-select></button>
 													</div>
-                                        
+												</div>
+												<div class="form-group text-center">
+													<label class="control-label"><i class="fa fa-gear"></i> Groups</label><br>
+													<div class="btn-group" bs-checkbox-group>
+														<button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.groupDisplayMode" bs-options="s for s in ['group', 'overview', 'promote', 'Disabled']" bs-select></button>
+													</div>
+												</div>
+												<div class="form-group text-center">
+													<label class="control-label"><i class="fa fa-crop"></i> Layout</label><br>
+													<div class="btn-group" bs-checkbox-group>
+														<button type="button" class="btn btn-default" ng-model="options.maxHeight" bs-checkbox>Height</button>
+														<button ng-disabled="!canAutoWidth(options.scale)" type="button" class="btn btn-default" ng-model="options.width" bs-checkbox>Width</button>
+													</div>
+												</div>
+												<div class="form-group text-center">
+													<label class="control-label"><i class="fa fa-search"></i> Zoom</label><br> <input ng-disabled="!options.width" type="number" ng-model="options.zoom" step="0.1" min="0.1" max="5" class="form-control" />
+												</div>
+												<div class="form-group text-center">
+													<label class="control-label"><i class="fa fa-text-width"></i> Labels</label><br>
+													<div class="btn-group" bs-checkbox-group>
+														<button type="button" class="btn btn-default" ng-model="options.labelsEnabled" bs-checkbox>Show</button>
+														<button type="button" class="btn btn-default" ng-model="options.allowSideResizing" bs-checkbox>Resizable</button>
+													</div>
+												</div>
+												<div class="form-group text-center">
+													<label class="control-label"><i class="fa fa-code"></i> Content</label><br>
+													<div class="btn-group" bs-checkbox-group>
+														<button type="button" class="btn btn-default" ng-model="options.rowContentEnabled" bs-checkbox>Rows</button>
+														<button type="button" class="btn btn-default" ng-model="options.taskContentEnabled" bs-checkbox>Tasks</button>
+													</div>
+												</div>
+												<div class="form-group text-center">
+													<label class="control-label"><i class="fa fa-calendar"></i> <i class="fa fa-arrows-h"></i> <i class="fa fa-calendar"></i> Date range</label><br>
+													<div class="form-group">
+														<input type="text" class="form-control" ng-model="options.fromDate" max-date="{{options.toDate}}" start-date="{{options.currentDateValue.toString()}}" start-week="1" placeholder="From" bs-datepicker>
+													</div>
+													<div class="form-group">
+														<input type="text" class="form-control" ng-model="options.toDate" min-date="{{options.fromDate}}" start-date="{{options.currentDateValue.toString()}}" start-week="1" placeholder="To" bs-datepicker>
+													</div>
+												</div>
+												<div class="form-group text-center">
+													<div class="form-group">
+														<label class="control-label"><i class="fa fa-sign-out"></i> Working</label><br>
+														<button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.timeFramesWorkingMode" bs-options="e for e in ['visible', 'hidden', 'cropped']" bs-select></button>
+													</div>
+													<div class="form-group">
+														<label class="control-label"><i class="fa fa-sign-out"></i> Non-working</label><br>
+														<button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.timeFramesNonWorkingMode" bs-options="e for e in ['visible', 'hidden', 'cropped']" bs-select></button>
+													</div>
+												</div>
+												<div ng-if="options.sideMode === 'Tree' || options.sideMode === 'TreeTable'" class="form-group text-center">
+													<label class="control-label"><i class="fa fa fa-chevron-circle-right"></i> Tree actions</label><br>
+													<div class="btn-group">
+														<button class="btn btn-default" ng-click="expandAll()">Expand all</button>
+														<button class="btn btn-default" ng-click="collapseAll()">Collapse all</button>
+													</div>
+												</div>
+												<div class="form-group text-center">
+													<div class="form-group">
+														<label class="control-label"><i class="fa fa-link"></i> Dependencies</label><br>
+														<button type="button" class="btn btn-default" ng-model="options.dependencies.enabled" bs-checkbox>Enabled</button>
+														<button type="button" class="btn btn-default" ng-model="options.dependencies.conflictChecker" bs-checkbox>Conflicts</button>
+													</div>
+												</div>
+												<div class="form-group text-center">
+													<label class="control-label"><i class="fa fa-database"></i> Data actions</label><br>
+													<div class="btn-group">
+														<button class="btn btn-default" ng-click="reload()">Reload</button>
+														<!-- <button class="btn btn-default" ng-click="remove()">Remove</button> -->
+														<button class="btn btn-default" ng-click="clear()">Clear</button>
+													</div>
+												</div>
+												<div class="form-group text-center">
+													<label class="control-label"><i class="fa fa-database"></i>Add Overlapping Task</label><br>
+													<div class="form-group">
+														<input type="number" ng-model="options.targetDataAddRowIndex" step="1" min="0" class="form-control" placeholder="Row Index" />
+														<button class="btn btn-default" ng-click="addOverlapTaskToTargetRowIndex()">Add</button>
+													</div>
+												</div>
+												<div class="form-group text-center">
+													<label class="control-label"><i class="fa fa-database"></i>Add New Project </label><br>
+													<div class="form-group">
+														<button class="btn btn-default" ng-click="newProject()">Add</button>
+													</div>
+												</div>
+											</div>
 										</div>
 									</div>
 								</div>
 							</div>
 						</div>
 					</div>
-			   </div>
-			 </div>
+				</div>
+			</div>
+			<div class="row top-buffer">
+				<div class="col-md-12">
+					<div class="panel-group" bs-collapse>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a href="" bs-collapse-toggle>Gantt</a>
+								</h4>
+							</div>
+							<div class="panel-collapse" bs-collapse-target>
+								<div class="panel-body">
+									<div gantt data="data" timespans="timespans" show-side="options.labelsEnabled" daily="options.daily" filter-task="{'name': options.filterTask}" filter-row="{'name': options.filterRow}" sort-mode="options.sortMode" view-scale="options.scale" column-width="getColumnWidth(options.width, options.scale, options.zoom)" auto-expand="options.autoExpand" task-out-of-range="options.taskOutOfRange" from-date="options.fromDate" to-date="options.toDate" allow-side-resizing="options.allowSideResizing" task-content="options.taskContentEnabled ? options.taskContent : undefined" row-content="options.rowContentEnabled ? options.rowContent : undefined" current-date="options.currentDate" current-date-value="options.currentDateValue" headers="options.width && options.shortHeaders || options.longHeaders" max-height="options.maxHeight && 300 || 0" time-frames="options.timeFrames" date-frames="options.dateFrames" time-frames-working-mode="options.timeFramesWorkingMode"
+										time-frames-non-working-mode="options.timeFramesNonWorkingMode" time-frames-magnet="options.timeFramesMagnet" api="options.api" column-magnet="options.columnMagnet">
+										<gantt-tree enabled="options.sideMode === 'Tree' || options.sideMode === 'TreeTable'" header-content="options.treeHeaderContent" keep-ancestor-on-filter-row="true"> </gantt-tree>
+										<gantt-table enabled="options.sideMode === 'Table' || options.sideMode === 'TreeTable'" columns="options.sideMode === 'TreeTable' ? options.treeTableColumns : options.columns" headers="options.columnsHeaders" classes="options.columnsClasses" formatters="options.columnsFormatters" contents="options.columnsContents" header-contents="options.columnsHeaderContents"> </gantt-table>
+										<gantt-groups enabled="options.groupDisplayMode === 'group' || options.groupDisplayMode === 'overview' || options.groupDisplayMode === 'promote'" display="options.groupDisplayMode"></gantt-groups>
+										<gantt-tooltips></gantt-tooltips>
+										<gantt-bounds></gantt-bounds>
+										<gantt-progress></gantt-progress>
+										<gantt-sortable></gantt-sortable>
+										<gantt-movable enabled="!options.readOnly"></gantt-movable>
+										<gantt-draw-task enabled="options.canDraw" move-threshold="2" task-factory="options.drawTaskFactory"> </gantt-draw-task>
+										<gantt-overlap></gantt-overlap>
+										<gantt-resize-sensor></gantt-resize-sensor>
+										<gantt-dependencies enabled="options.dependencies.enabled" conflict-checker="options.dependencies.conflictChecker" read-only="options.readOnly"> </gantt-dependencies>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
 		</div>
-	</div>  
+	</div>
+	<div class="container-content" ng-cloak="true">
+		<div class="container-fluid">
+			<div class="row">
+				<div class="col-md-12">
+				<!-- task attr editor -->
+				<div bs-active-pane="tabs.activeTab" bs-tabs>
+			      <div data-title="Task" name="Task"  bs-pane>
+			      
+			      <div class="panel-group" bs-collapse>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a href="" bs-collapse-toggle>Task Form Options</a>
+								</h4>
+							</div>
+							<div class="panel-collapse" bs-collapse-target>
+								<div class="panel-body">
+									<div class="container-fluid">
+										<div class="row">
+											<div class="table-responsive" ng-if="live.task">
+												<form action="javascript:alert('提交成功')" ng-submit="taskSave(live.task)" method="put" id="taskForm" name="taskForm">
+													<span ng-repeat=" (k,v ) in live.task" style="width: 33%; float: left" ng-model="live.task"> <span style="width: 30%; float: left">{{k}} :</span><input type="text" ng-model="live.task[k]" />
+													</span>
+													<footer class="panel-footer text-right bg-light lter">
+														<button type="submit" class="btn btn-success" ng-disabled="taskFrom.$invalid">Submit</button>
+														<button type="button" class="btn btn-success" ng-click="remove(live.task)">Remove</button>
+													</footer>
+												</form>
+											</div>
+										</div>
+									</div>
+									<div class="live-table">
+										<div class="live-cell" ng-show="live.row.tasks.length > 0">
+											<h4>
+												<button type="button" style="text-align: left" class="btn btn-default" ng-model="live.task" bs-options="t as t.name for t in live.row.tasks" bs-select></button>
+												(Task object)
+											</h4>
+											<textarea class="live-task" ng-model="live.taskJson"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			      
+			      	
+			      </div>
+			      
+			      <!-- project attr edit -->
+			       <div data-title="Project" name="Project"  bs-pane>
+			       
+			       
+			       <div class="panel-group" bs-collapse>
+						<div class="panel panel-default">
+							<div class="panel-heading">
+								<h4 class="panel-title">
+									<a href="" bs-collapse-toggle>Project Form Options</a>
+								</h4>
+							</div>
+							<div class="panel-collapse" bs-collapse-target>
+								<div class="panel-body">
+									<div class="container-fluid">
+										<div class="row">
+											<div class="table-responsive" ng-if="live.row">
+												<form action="javascript:alert('提交成功')" ng-submit="rowSave(live.row)" method="put" id="rowForm" name="rowForm" >
+													<span ng-repeat=" (k,v ) in live.row" style="width: 33%; float: left" ng-model="live.row"> <span style="width: 30%; float: left">{{k}} :</span><input type="text" ng-model="live.row[k]" />
+													</span>
+													<footer class="panel-footer text-right bg-light lter">
+														<button type="submit" class="btn btn-success" ng-disabled="rowFrom.$invalid">Submit</button>
+														<button type="button" class="btn btn-success" ng-click="remove(live.row)">Remove</button>
+													</footer>
+												</form>
+											</div>
+										</div>
+									</div>
+									<div class="live-table">
+										<div class="live-cell" ng-show="data.length > 0">
+											<h4>
+												<button type="button" style="text-align: left" class="btn btn-default" ng-model="live.row" bs-options="r as r.name for r in data" bs-select></button>
+												(Row object)
+											</h4>
+											<textarea class="live-row" ng-model="live.rowJson"></textarea>
+										</div>
+									</div>
+								</div>
+							</div>
+						</div>
+					</div>
+			       
+			       
+			       </div>
+			    </div>
+				
+					<!--   // -->
+					
+					
+				</div>
+			</div>
+		</div>
+	</div>
+	
 </div>
 <!--script>< #  include "/manage/tpl/gantt/ProjectCtrl.js"></script -->

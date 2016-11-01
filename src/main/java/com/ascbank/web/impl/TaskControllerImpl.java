@@ -26,7 +26,7 @@ public class TaskControllerImpl extends BaseAbstractController<Long, Task, TaskS
 	 *
 	 */
 	private static final long serialVersionUID = 6497433358626430389L;
-
+	
 	@Override
 	@ResponseBody
 	@RequestMapping("/read/parentid/{parentid:[\\d]+}")

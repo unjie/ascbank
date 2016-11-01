@@ -9224,10 +9224,10 @@ angular.module('gantt.tree.templates', []).run(['$templateCache', function($temp
         '     ng-style="{\'height\': row.model.height}">\n' +
         '    <div class="gantt-valign-container">\n' +
         '        <div class="gantt-valign-content">\n' +
-        '            <a ng-disabled="isCollapseDisabled()" data-nodrag\n' +
+        '            <a  data-nodrag\n' + //ng-disabled="isCollapseDisabled()"
         '               class="gantt-tree-handle-button btn btn-xs"\n' +
         '               ng-class="{\'gantt-tree-collapsed\': collapsed, \'gantt-tree-expanded\': !collapsed}"\n' +
-        '               ng-click="!isCollapseDisabled() && toggle()"><span\n' +
+        '               ng-click="toggle()"><span\n' + //!isCollapseDisabled() && 
         '                class="gantt-tree-handle glyphicon glyphicon-chevron-down"\n' +
         '                ng-class="{\n' +
         '                \'glyphicon-chevron-right\': collapsed, \'glyphicon-chevron-down\': !collapsed,\n' +

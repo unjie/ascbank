@@ -26,10 +26,10 @@ public class TaskServiceImpl extends BaseAbstractService<Long, Task, TaskMapper>
 	 *
 	 */
 	private static final long serialVersionUID = -7187225558380515542L;
-	
+
 	@Override
 	public List<Task> readParentId(Long parentid) {
 		return this.getBean().selelctByParentId(parentid);
 	}
-	
+
 }
