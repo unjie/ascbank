@@ -1,28 +1,148 @@
 <div class="bg-light lter b-b wrapper-md">
-  <h1 class="m-n font-thin h3">Users</h1>
+	<h1 class="m-n font-thin h3">Users</h1>
 </div>
 <div class="wrapper-md" ng-controller="UsersCtrl">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Users		
-      <a class="btn btn-sm btn-info pull-right" ng-click='add(userData)'>+ add <span class="glyphicon glyphicon-floppy-save"></span></a>
-    </div>
-    <div class="table-responsive">
-      <div ng-grid="gridOptions" style="min-height:420px"></div>
-    </div>
-    <div class="table-responsive" style="margin: 2%" ng-if="userData">
-    	
-   		 <form  action="javascript:alert('提交成功')"  ng-submit="save(userData)" method="put"  id="userForm" name="userForm"  style="min-height:420px">
-   		 
-   		 	<span ng-repeat=" (k,v ) in userData"  style="width:33%;float:left"  ng-model="userData">
-   		 		<span style="width:30%;float:left">{{k}} :</span><input type="text"   ng-model="userData[k]" />
-   		 	</span>
-   		 	
-   		 	<footer class="panel-footer text-right bg-light lter" >
-              <button type="submit" class="btn btn-success"   ng-disabled="userFrom.$invalid">Submit</button>
-            </footer>
-   		 </form>
-   		 
-    </div>
-  </div>
+	<div class="panel panel-default">
+		<div class="panel-heading">
+			Users <a class="btn btn-sm btn-info pull-right" ng-click='add(userData)'>+ add <span class="glyphicon glyphicon-floppy-save"></span></a>
+		</div>
+		<div class="table-responsive">
+			<div ng-grid="gridOptions" style="min-height: 420px"></div>
+		</div>
+	</div>
+	<div class="row" ng-if="userData">
+		<div class="col-sm-6">
+			<div class="panel panel-default">
+				<div class="panel-heading">User From Editor</div>
+				<div class="panel-body">
+					<form class="bs-example form-horizontal" action="javascript:alert('提交成功')" ng-submit="save(userData)" method="put" id="userForm" name="userForm">
+						<!--
+						 <div class="form-group" ng-repeat=" (k,v ) in userData" ng-model="userData">
+							<label class="col-lg-2 control-label">{{k}}</label>
+							<div class="col-lg-10">
+								<input class="form-control" placeholder="{{k}}" ng-model="userData[k]"> <span class="help-block m-b-none">Example block-level help text here.</span>
+							</div>
+						</div> 
+						-->
+						<!-- ngRepeat: (k,v ) in userData -->
+						<div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">id</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="id" ng-model="userData.id"  type="number" readonly="readonly"> <span class="help-block m-b-none">Example block-level help text here.</span>
+							</div>
+						</div>
+						
+						<div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">avatar</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="avatar" ng-model="userData.avatar" type="image"  ng-click=""> <span class="help-block m-b-none">Example block-level help text here.</span>
+							</div>
+						</div>
+						
+						<div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">isOnline</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="isOnline" ng-model="userData.isOnline" readonly="readonly"  type="checkbox"> <span class="help-block m-b-none">Example block-level help text here.</span>
+							</div>
+						</div>
+						
+						<div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">username</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="username" ng-model="userData.username" type="text" required="required"> <span class="help-block m-b-none">Example block-level help text here.</span>
+							</div>
+						</div>
+						
+						<div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">email</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="email" ng-model="userData.email" type="email"> <span class="help-block m-b-none">Example block-level help text here.</span>
+							</div>
+						</div>
+						
+
+			
+						<div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">password</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="password" ng-model="userData.password" type="text"> <span class="help-block m-b-none">Example block-level help text here.</span>
+							</div>
+						</div>
+						
+						<div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">phone</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="phone" ng-model="userData.phone" type="numbe" max="18999999999" min="13000000000"> <span class="help-block m-b-none">Example block-level help text here.</span>
+							</div>
+						</div>
+						
+						<div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">realName</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="realName" ng-model="userData.realName" type="text"> <span class="help-block m-b-none">Example block-level help text here.</span>
+							</div>
+						</div>
+						
+						<div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">description</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="description" ng-model="userData.description" type="text"> <span class="help-block m-b-none">Example block-level help text here.</span>
+							</div>
+						</div>
+						
+						<div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">regtime</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="regtime" ng-model="userData.regtime" type="datetime" readonly="readonly"> <span class="help-block m-b-none">Example block-level help text here.</span>
+							</div>
+						</div>
+
+						
+						<div class="form-group">
+							<label class="col-lg-2 control-label ng-binding">encrypt</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="encrypt" ng-model="userData.encrypt" type="text" readonly="readonly"> <span class="help-block m-b-none">Example block-level help text here.</span>
+							</div>
+						</div>
+						
+
+						
+						<div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">lastloginip</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="lastloginip" ng-model="userData.lastloginip" type="text" readonly="readonly"> <span class="help-block m-b-none">Example block-level help text here.</span>
+							</div>
+						</div>
+						
+						<div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">lastlogintime</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="lastlogintime" ng-model="userData.lastlogintime" type="text" readonly="readonly"> <span class="help-block m-b-none">Example block-level help text here.</span>
+							</div>
+						</div>
+												
+						<div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">wechat</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="wechat" ng-model="userData.wechat" type="text"> <span class="help-block m-b-none">Example block-level help text here.</span>
+							</div>
+						</div>
+						
+						<div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">wechatName</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="wechatName" ng-model="userData.wechatName" type="text"> <span class="help-block m-b-none">Example block-level help text here.</span>
+							</div>
+						</div>
+						
+						<div class="form-group">
+							<div class="col-lg-offset-2 col-lg-10">
+								<button type="submit" class="btn btn-sm btn-info" ng-disabled="userFrom.$invalid">Sign in</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>
