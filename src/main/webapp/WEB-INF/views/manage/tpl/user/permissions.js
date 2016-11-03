@@ -1,6 +1,34 @@
 app.controller('PermissionsCtrl', ['$scope', '$http', function($scope, $http) {
 	
-	$scope.permissionSelections=[];
+	$scope.save = function(permissionData) {
+		console.log(permissionData);
+		var data = permissionData, url = './permission/update', param = {
+			method : 'PATCH',
+			'url' : url,
+			'data' : data
+		};
+		if (data.id == null) {
+			param.method = 'PUT';
+			param.url = './permission/create';
+		}
+		$http(param).success(function(largeLoad) {
+			if (permissionData.id == null && largeLoad.data.id != null) {
+				console.log($scope.usersData);
+				$scope.permissionsData.push(largeLoad.data);
+			}
+			$scope.permissionData = largeLoad.data;
+		});
+	}
+	$scope.add = function(permissionData) {
+		$scope.permissionData = {
+			id:null,
+			description: '新建权限,请修改说明,以便其他管理组识别区分!',
+			entityIds:'',
+			name:'',
+			permission:''
+		};
+	}
+	//$scope.permissionSelections=[];
 	
     $scope.filterOptions = {
         filterText: "",
@@ -14,7 +42,7 @@ app.controller('PermissionsCtrl', ['$scope', '$http', function($scope, $http) {
     };  
     $scope.setPagingData = function(data, page, pageSize){  
         var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
-        $scope.permissionData = pagedData;
+        $scope.permissionsData = pagedData;
         $scope.totalServerItems = data.length;
         if (!$scope.$$phase) {
             $scope.$apply();
@@ -51,14 +79,20 @@ app.controller('PermissionsCtrl', ['$scope', '$http', function($scope, $http) {
           $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);
         }
     }, true);
-
+    $scope.afterSelectionChange = function(rowItem, event) {
+		console.log(rowItem);
+		console.log(event);
+		$scope.permissionData = rowItem.entity;
+		
+	}
     $scope.gridOptions = {
-        data: 'permissionData',
+        data: 'permissionsData',
         enablePaging: true,
         showFooter: true,
         //enableCellEdit: true,
         showFilter:true,
-        selectedItems: $scope.permissionSelections,
+        //selectedItems: $scope.permissionSelections,
+        afterSelectionChange : $scope.afterSelectionChange,
         multiSelect: false,
         totalServerItems: 'totalServerItems',
         pagingOptions: $scope.pagingOptions,

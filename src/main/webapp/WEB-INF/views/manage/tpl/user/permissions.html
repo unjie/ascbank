@@ -1,21 +1,51 @@
 <div class="bg-light lter b-b wrapper-md">
-  <h1 class="m-n font-thin h3">Permissions</h1>
+	<h1 class="m-n font-thin h3">Permissions</h1>
 </div>
 <div class="wrapper-md" ng-controller="PermissionsCtrl">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Permissions
-    </div>
-    <div class="table-responsive">
-      <div ng-grid="gridOptions" style="min-height:420px"></div>
-    </div>
-        <div class="table-responsive" style="margin: 2%">
-   		 <form  action="javascript:alert('提交成功')" method="put"  id="permissionForm" >
-   		 	<span ng-repeat=" (k,v ) in permissionSelections[0]"  style="width:33%;float:left"><span style="width:30%;float:left">{{k}} :</span><input type="text"  name="{{k}}" value="{{v}}"/></span>
-   		 	<footer class="panel-footer text-right bg-light lter" ng-if="permissionSelections !=null">
-              <button type="submit" class="btn btn-success">Submit</button>
-            </footer>
-   		 </form>
-    </div>
-  </div>
+	<div class="panel panel-default">
+		<div class="panel-heading">Permissions</div>
+		<div class="panel-body">
+			<div class="row wrapper">
+				<div class="col-lg-6">
+					<button class="btn m-b-xs btn-sm btn-info btn-addon" ng-click='add(userData)'>
+						<i class="glyphicon icon-user-follow"></i>Add Permission
+					</button>
+				</div>
+				<div class="col-lg-4">
+					<div class="input-group">
+						<input type="text" class="form-control" ng-model="filterOptions.filterText"> <span class="input-group-btn">
+							<button class="btn btn-default btn-info" type="button">Search</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="table-responsive">
+				<div ng-grid="gridOptions" style="min-height: 420px"></div>
+			</div>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col-sm-12" ng-if="permissionData">
+			<div class="panel panel-default">
+				<div class="panel-heading">User From Editor</div>
+				<div class="panel-body">
+					<form class="bs-example form-horizontal" action="javascript:alert('提交成功')" method="put" id="permissionForm">
+						<div class="form-group" ng-repeat=" (k,v ) in permissionData" ng-model="permissionData">
+							<label class="col-lg-2 control-label">{{k}}</label>
+							<div class="col-lg-10">
+								<input class="form-control" placeholder="{{k}}" ng-model="permissionData[k]">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-lg-offset-2 col-lg-10">
+								<button type="button" class="btn m-b-xs btn-sm btn-info btn-addon" ng-disabled="userFrom.$invalid" ng-click="save(permissionData)">
+									<i class="fa  fa-save"></i>Save
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>
 </div>

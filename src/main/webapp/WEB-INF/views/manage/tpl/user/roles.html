@@ -1,21 +1,108 @@
 <div class="bg-light lter b-b wrapper-md">
-  <h1 class="m-n font-thin h3">Roles</h1>
+	<h1 class="m-n font-thin h3">Roles</h1>
 </div>
 <div class="wrapper-md" ng-controller="RolesCtrl">
-  <div class="panel panel-default">
-    <div class="panel-heading">
-      Roles
-    </div>
-    <div class="table-responsive">
-      <div ng-grid="gridOptions" style="min-height:420px"></div>
-    </div>
-        <div class="table-responsive" style="margin: 2%">
-   		 <form  action="javascript:alert('提交成功')" method="put"  id="roleForm" >
-   		 	<span ng-repeat=" (k,v ) in roleSelections[0]"  style="width:33%;float:left"><span style="width:30%;float:left">{{k}} :</span><input type="text"  name="{{k}}" value="{{v}}"/></span>
-   		 	<footer class="panel-footer text-right bg-light lter" ng-if="roleSelections !=null">
-              <button type="submit" class="btn btn-success">Submit</button>
-            </footer>
-   		 </form>
-    </div>
-  </div>
+	<div class="panel panel-default">
+		<div class="panel-heading">Roles</div>
+		<div class="panel-body">
+			<div class="row wrapper">
+				<div class="col-lg-6">
+					<button class="btn m-b-xs btn-sm btn-info btn-addon" ng-click='add(roleData)'>
+						<i class="glyphicon icon-user-follow"></i>Add User
+					</button>
+					<!-- data-placement="right" data-animation="am-slide-rigth"  -->
+					<button type="button" class="btn m-b-xs btn-sm btn-info btn-addon" data-template-url="aside/attrEditorForm.tpl.html" data-animation="aside am-slide-right" data-placement="right" bs-aside="aside" data-container="body">
+						<i class="glyphicon icon-user-follow"></i>Custom aside
+					</button>
+				</div>
+				<div class="col-lg-4">
+					<div class="input-group">
+						<input type="text" class="form-control" ng-model="filterOptions.filterText"> <span class="input-group-btn">
+							<button class="btn btn-default btn-info" type="button">Search</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="table-responsive">
+				<div ng-grid="gridOptions" style="min-height: 420px"></div>
+			</div>
+		</div>
+	</div>
+	<script type="text/ng-template" id="aside/attrEditorForm.tpl.html">
+	<div class="row">
+		<div class="col-sm-12" ng-if="roleData">
+			<div class="panel panel-default">
+				<div class="panel-heading">User From Editor</div>
+				<div class="panel-body">
+					<form class="bs-example form-horizontal " action="javascript:alert('提交成功')" method="put" id="roleForm">
+						<!-- 
+						<div class="form-group" ng-repeat=" (k,v ) in roleData" ng-model="roleData">
+							<label class="col-lg-2 control-label">{{k}}</label>
+							<div class="col-lg-10">
+								<input class="form-control" placeholder="{{k}}" ng-model="roleData[k]">
+							</div>
+						</div>
+					 	-->
+						<!-- ngRepeat: (k,v ) in roleData -->
+						<div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">id</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="id" ng-model="roleData.id" readonly="readonly" type="number">
+							</div>
+						</div>
+						<div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">description</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="description" ng-model="roleData.description" type="text">
+							</div>
+						</div>
+						<!--
+						 <div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">permissions</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="permissions" ng-model="roleData[k]">
+							</div>
+						</div>
+						 -->
+						<div class="form-group ">
+							<label class="col-lg-2 control-label ng-binding">roleName</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="roleName" ng-model="roleData.roleName" type="text" required="required">
+							</div>
+						</div>
+						<div class="form-group">
+							<div class="col-lg-offset-2 col-lg-10">
+								<button type="button"class="btn m-b-xs btn-sm btn-info btn-addon"  ng-disabled="roleFrom.$invalid" ng-click="save(roleData)">
+									<i class="fa  fa-save"></i>Save
+								</button>
+								<button type="button" class="btn m-b-xs btn-sm btn-info btn-addon"  ng-disabled="roleFrom.$invalid"  ng-click='permissionsEditor(roleData)'>
+									<i class="fa fa-shield"></i>Editor Role Permission
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-12" ng-if="roleData.rolePermissionsData">
+			<div class="panel panel-default">
+				<div class="panel-heading">User Permission From Editor</div>
+				<div class="panel-body">
+					<div class="col-sm-9 panel-body">{{rolePermissionsData}}</div>
+					<div class="col-sm-9 panel-body">
+						<button type="button" class="btn btn-default" ng-model="roleData.rolePermissionsData" data-html="1" data-multiple="1" data-animation="am-flip-x" bs-options="premi.id as premi.description for premi in permissions" bs-select>
+							Action <span class="caret"></span>
+						</button>
+					</div>
+					<div class="col-sm-9 panel-body">
+						<button class="btn m-b-xs btn-sm btn-info btn-addon" ng-click='savePermission(roleData.rolePermissionsData)'>
+							<i class="fa fa-shield"></i>Save
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
+		
+	</div>
+</script>
 </div>

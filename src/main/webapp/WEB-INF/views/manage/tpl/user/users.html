@@ -3,15 +3,34 @@
 </div>
 <div class="wrapper-md" ng-controller="UsersCtrl">
 	<div class="panel panel-default">
-		<div class="panel-heading">
-			Users <a class="btn btn-sm btn-info pull-right" ng-click='add(userData)'>+ add <span class="glyphicon glyphicon-floppy-save"></span></a>
-		</div>
-		<div class="table-responsive">
-			<div ng-grid="gridOptions" style="min-height: 420px"></div>
+		<div class="panel-heading">Users</div>
+		<div class="panel-body">
+			<div class="row wrapper">
+				<div class="col-lg-6">
+					<button class="btn m-b-xs btn-sm btn-info btn-addon" ng-click='add(userData)'>
+						<i class="glyphicon icon-user-follow"></i>Add User
+					</button>
+					<!-- data-placement="right" data-animation="am-slide-rigth"  -->
+					<button type="button" class="btn m-b-xs btn-sm btn-info btn-addon" data-template-url="aside/attrEditorForm.tpl.html"  data-animation="aside am-slide-right" data-placement="right"  bs-aside="aside" data-container="body">
+						<i class="glyphicon icon-user-follow"></i>Custom aside
+					</button>
+				</div>
+				<div class="col-lg-4">
+					<div class="input-group">
+						<input type="text" class="form-control" ng-model="filterOptions.filterText"> <span class="input-group-btn">
+							<button class="btn btn-default btn-info" type="button">Search</button>
+						</span>
+					</div>
+				</div>
+			</div>
+			<div class="table-responsive">
+				<div ng-grid="gridOptions" style="min-height: 420px"></div>
+			</div>
 		</div>
 	</div>
-	<div class="row" ng-if="userData">
-		<div class="col-sm-6">
+<script type="text/ng-template" id="aside/attrEditorForm.tpl.html">
+	<div class="row">
+		<div class="col-sm-12" ng-if="userData">
 			<div class="panel panel-default">
 				<div class="panel-heading">User From Editor</div>
 				<div class="panel-body">
@@ -20,7 +39,7 @@
 						 <div class="form-group" ng-repeat=" (k,v ) in userData" ng-model="userData">
 							<label class="col-lg-2 control-label">{{k}}</label>
 							<div class="col-lg-10">
-								<input class="form-control" placeholder="{{k}}" ng-model="userData[k]"> <span class="help-block m-b-none">Example block-level help text here.</span>
+								<input class="form-control" placeholder="{{k}}" ng-model="userData[k]"> 
 							</div>
 						</div> 
 						-->
@@ -28,121 +47,149 @@
 						<div class="form-group ">
 							<label class="col-lg-2 control-label ng-binding">id</label>
 							<div class="col-lg-10">
-								<input class="form-control " placeholder="id" ng-model="userData.id"  type="number" readonly="readonly"> <span class="help-block m-b-none">Example block-level help text here.</span>
+								<input class="form-control " placeholder="id" ng-model="userData.id" type="number" readonly="readonly"> 
 							</div>
 						</div>
-						
 						<div class="form-group ">
 							<label class="col-lg-2 control-label ng-binding">avatar</label>
 							<div class="col-lg-10">
-								<input class="form-control " placeholder="avatar" ng-model="userData.avatar" type="image"  ng-click=""> <span class="help-block m-b-none">Example block-level help text here.</span>
+								<image class="form-control " placeholder="avatar" ng-model="userData.avatar" type="image" ng-click="editorAvatar(userData)"> 
 							</div>
 						</div>
-						
 						<div class="form-group ">
 							<label class="col-lg-2 control-label ng-binding">isOnline</label>
 							<div class="col-lg-10">
-								<input class="form-control " placeholder="isOnline" ng-model="userData.isOnline" readonly="readonly"  type="checkbox"> <span class="help-block m-b-none">Example block-level help text here.</span>
+								<label class="i-switch m-t-xs m-r"> <input type="checkbox" placeholder="isOnline" ng-model="userData.isOnline" readonly="readonly"> <i></i>
+								</label> 
 							</div>
 						</div>
-						
 						<div class="form-group ">
 							<label class="col-lg-2 control-label ng-binding">username</label>
 							<div class="col-lg-10">
-								<input class="form-control " placeholder="username" ng-model="userData.username" type="text" required="required"> <span class="help-block m-b-none">Example block-level help text here.</span>
+								<input class="form-control " placeholder="username" ng-model="userData.username" type="text" required="required"> 
 							</div>
 						</div>
-						
 						<div class="form-group ">
 							<label class="col-lg-2 control-label ng-binding">email</label>
 							<div class="col-lg-10">
-								<input class="form-control " placeholder="email" ng-model="userData.email" type="email"> <span class="help-block m-b-none">Example block-level help text here.</span>
+								<input class="form-control " placeholder="email" ng-model="userData.email" type="email"> 
 							</div>
 						</div>
-						
-
-			
 						<div class="form-group ">
 							<label class="col-lg-2 control-label ng-binding">password</label>
 							<div class="col-lg-10">
-								<input class="form-control " placeholder="password" ng-model="userData.password" type="text"> <span class="help-block m-b-none">Example block-level help text here.</span>
+								<input class="form-control " placeholder="password" ng-model="userData.password" type="text"> 
 							</div>
 						</div>
-						
 						<div class="form-group ">
 							<label class="col-lg-2 control-label ng-binding">phone</label>
 							<div class="col-lg-10">
-								<input class="form-control " placeholder="phone" ng-model="userData.phone" type="numbe" max="18999999999" min="13000000000"> <span class="help-block m-b-none">Example block-level help text here.</span>
+								<input class="form-control " placeholder="phone" ng-model="userData.phone" type="numbe" max="18999999999" min="13000000000"> 
 							</div>
 						</div>
-						
 						<div class="form-group ">
 							<label class="col-lg-2 control-label ng-binding">realName</label>
 							<div class="col-lg-10">
-								<input class="form-control " placeholder="realName" ng-model="userData.realName" type="text"> <span class="help-block m-b-none">Example block-level help text here.</span>
+								<input class="form-control " placeholder="realName" ng-model="userData.realName" type="text"> 
 							</div>
 						</div>
-						
 						<div class="form-group ">
 							<label class="col-lg-2 control-label ng-binding">description</label>
 							<div class="col-lg-10">
-								<input class="form-control " placeholder="description" ng-model="userData.description" type="text"> <span class="help-block m-b-none">Example block-level help text here.</span>
+								<input class="form-control " placeholder="description" ng-model="userData.description" type="text"> 
 							</div>
 						</div>
-						
 						<div class="form-group ">
 							<label class="col-lg-2 control-label ng-binding">regtime</label>
 							<div class="col-lg-10">
-								<input class="form-control " placeholder="regtime" ng-model="userData.regtime" type="datetime" readonly="readonly"> <span class="help-block m-b-none">Example block-level help text here.</span>
+								<input class="form-control " placeholder="regtime" ng-model="userData.regtime" type="datetime" readonly="readonly" data-date-format="yyyy-MM-dd HH:dd:ss" data-date-type="number" data-autoclose="1" bs-datepicker> 
 							</div>
 						</div>
-
-						
 						<div class="form-group">
 							<label class="col-lg-2 control-label ng-binding">encrypt</label>
 							<div class="col-lg-10">
-								<input class="form-control " placeholder="encrypt" ng-model="userData.encrypt" type="text" readonly="readonly"> <span class="help-block m-b-none">Example block-level help text here.</span>
+								<input class="form-control " placeholder="encrypt" ng-model="userData.encrypt" type="text" readonly="readonly"> 
 							</div>
 						</div>
-						
-
-						
 						<div class="form-group ">
 							<label class="col-lg-2 control-label ng-binding">lastloginip</label>
 							<div class="col-lg-10">
-								<input class="form-control " placeholder="lastloginip" ng-model="userData.lastloginip" type="text" readonly="readonly"> <span class="help-block m-b-none">Example block-level help text here.</span>
+								<input class="form-control " placeholder="lastloginip" ng-model="userData.lastloginip" type="text" readonly="readonly"> 
 							</div>
 						</div>
-						
 						<div class="form-group ">
 							<label class="col-lg-2 control-label ng-binding">lastlogintime</label>
 							<div class="col-lg-10">
-								<input class="form-control " placeholder="lastlogintime" ng-model="userData.lastlogintime" type="text" readonly="readonly"> <span class="help-block m-b-none">Example block-level help text here.</span>
+								<input class="form-control " placeholder="lastlogintime" ng-model="userData.lastlogintime" type="datetime" readonly="readonly" data-date-format="yyyy-MM-dd HH:dd:ss" data-date-type="number" data-autoclose="1" bs-datepicker> 
 							</div>
 						</div>
-												
 						<div class="form-group ">
 							<label class="col-lg-2 control-label ng-binding">wechat</label>
 							<div class="col-lg-10">
-								<input class="form-control " placeholder="wechat" ng-model="userData.wechat" type="text"> <span class="help-block m-b-none">Example block-level help text here.</span>
+								<input class="form-control " placeholder="wechat" ng-model="userData.wechat" type="text"> 
 							</div>
 						</div>
-						
 						<div class="form-group ">
 							<label class="col-lg-2 control-label ng-binding">wechatName</label>
 							<div class="col-lg-10">
-								<input class="form-control " placeholder="wechatName" ng-model="userData.wechatName" type="text"> <span class="help-block m-b-none">Example block-level help text here.</span>
+								<input class="form-control " placeholder="wechatName" ng-model="userData.wechatName" type="text"> 
 							</div>
 						</div>
-						
 						<div class="form-group">
 							<div class="col-lg-offset-2 col-lg-10">
-								<button type="submit" class="btn btn-sm btn-info" ng-disabled="userFrom.$invalid">Sign in</button>
+								<button type="button"class="btn m-b-xs btn-sm btn-info btn-addon"  ng-disabled="userFrom.$invalid" ng-click="save(userData)">
+									<i class="fa  fa-save"></i>Save
+								</button>
+								<button type="button" class="btn m-b-xs btn-sm btn-info btn-addon"  ng-disabled="userFrom.$invalid"  ng-click='rolesEditor(userData)'>
+									<i class="glyphicon icon-users"></i>Editor User Role
+								</button>
+								<button type="button" class="btn m-b-xs btn-sm btn-info btn-addon"  ng-disabled="userFrom.$invalid"  ng-click='permissionsEditor(userData)'>
+									<i class="fa fa-shield"></i>Editor User Permission
+								</button>
 							</div>
 						</div>
 					</form>
 				</div>
 			</div>
 		</div>
+		<div class="col-sm-4" ng-if="userData.userRolesData">
+			<div class="panel panel-default">
+				<div class="panel-heading">User Roles From Editor</div>
+				<div class="panel-body">
+					<div class="form-group">
+						<div class="col-sm-9 panel-body">{{userRolesData}}</div>
+						<div class="col-sm-9 panel-body">
+							<button type="button" class="btn btn-default" ng-model="userData.userRolesData" data-html="1" data-multiple="1" data-animation="am-flip-x" bs-options="role.id as role.roleName for role in roles" bs-select>
+								Action <span class="caret"></span>
+							</button>
+						</div>
+						<div class="col-sm-9 panel-body">
+							<button class="btn m-b-xs btn-sm btn-info btn-addon" ng-click='saveRoles(userData.userRolesData)'>
+								<i class="glyphicon icon-users"></i>Save
+							</button>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="col-sm-4" ng-if="userData.userPermissionsData">
+			<div class="panel panel-default">
+				<div class="panel-heading">User Permission From Editor</div>
+				<div class="panel-body">
+					<div class="col-sm-9 panel-body">{{userPermissionsData}}</div>
+					<div class="col-sm-9 panel-body">
+						<button type="button" class="btn btn-default" ng-model="userData.userPermissionsData" data-html="1" data-multiple="1" data-animation="am-flip-x" bs-options="premi.id as premi.description for premi in permissions" bs-select>
+							Action <span class="caret"></span>
+						</button>
+					</div>
+					<div class="col-sm-9 panel-body">
+						<button class="btn m-b-xs btn-sm btn-info btn-addon" ng-click='savePermission(userData.userPermissionsData)'>
+							<i class="fa fa-shield"></i>Save
+						</button>
+					</div>
+				</div>
+			</div>
+		</div>
 	</div>
+</script>
 </div>

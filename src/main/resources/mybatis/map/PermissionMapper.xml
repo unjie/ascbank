@@ -104,13 +104,13 @@
 		from t_permission
 	</select>
 	<select id="selectRole2Permissions" resultMap="BaseResultMap" parameterType="java.lang.Long">
-		select  id, description, entity_ids, name, permission
-		from t_permission LEFT JOIN t_role_permission as rp on rp.permission_id=t_permission.id
+		select  tp.id, tp.description, tp.entity_ids, tp.name, tp.permission
+		from t_permission as tp LEFT JOIN t_role_permission as rp on rp.permission_id=tp.id
 		where rp.role_id=#{id,jdbcType=BIGINT}
 	</select>
 	<select id="selectUser2Permissions" resultMap="BaseResultMap" parameterType="java.lang.Long">
-		select  id, description, entity_ids, name, permission
-		from t_permission LEFT JOIN t_user_permission as up on up.permission_id=t_permission.id
+		select  tp.id, tp.description, tp.entity_ids, tp.name, tp.permission
+		from t_permission as tp LEFT JOIN t_user_permission as up on up.permission_id=tp.id
 		where up.user_id=#{id,jdbcType=BIGINT}
 	</select>
 </mapper>
