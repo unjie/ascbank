@@ -1,7 +1,5 @@
 <div class="hbox hbox-auto-xs hbox-auto-sm" ng-controller="MenuCtrl">
-
-
-<script type="text/ng-template" id="children_renderer.html">
+	<script type="text/ng-template" id="children_renderer.html">
   <div class="tree-node">
     <div class="pull-left tree-handle" ui-tree-handle>
       <span class="glyphicon glyphicon-list"></span>
@@ -15,9 +13,9 @@
         </span>
       </a>
       {{node.title}}
-      <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span></a>
-      <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
-	  <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="editSubItem(this)" style="margin-right: 8px;"><span class="glyphicon glyphicon-edit"></span></a>
+      <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="removeSubItem(this)"><span class="glyphicon glyphicon-remove"></span></a>
+      <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newSubItem(this.$modelValue)" style="margin-right: 8px;"><span class="glyphicon glyphicon-plus"></span></a>
+	  <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="editSubItem(this.$modelValue)" style="margin-right: 8px;"><span class="glyphicon glyphicon-edit"></span></a>
     </div>
   </div>
   <ol ui-tree-nodes="" ng-model="node.children" ng-class="{hidden: collapsed}">
@@ -25,128 +23,175 @@
     </li>
   </ol>
 </script>
+	<div class="bg-light lter b-b wrapper-md">
+		<h1 class="m-n font-thin h3">
+			Connected Trees
+			</h3>
+	</div>
+	<div class="wrapper-md">
+		<div class="panel panel-default">
+			<div class="panel-heading">Tree</div>
+			<div class="panel-body">
+				<div class="row">
+					<div class="col-sm-6">
+						<footer class="panel-footer text-right bg-light lter">
+							<button type="button" class="btn m-b-xs btn-sm btn-info btn-addon" ng-click='newMenuRoot()'>
+								<i class="fa fa-dot-circle-o"></i>Add Menu Root
+							</button>
+						</footer>
 
-<div class="bg-light lter b-b wrapper-md">
-    <h1 class="m-n font-thin h3">Connected Trees</h3>
-</div>
+						<div ui-tree id="tree-root">
+							<ol ui-tree-nodes="" ng-model="data">
+								<li ng-repeat="node in data" ui-tree-node data-collapsed="true" ng-include="'children_renderer.html'"></li>
+							</ol>
+						</div>
+					</div>
+							<div class="col-sm-6" ng-if="menuData != null">
+			<div class="panel panel-default">
+				<div class="panel-heading">
+					<strong>{{menuData.title}} Editor </strong>
+				</div>
+				<div class="panel-body">
+					<!-- 
+						<div class="form-group" >
+							<label class="col-sm-3 control-label">{{k}}</label>
+							<div class="col-sm-9">
+								<input type="text" ng-model="menuData[k]" class="form-control" placeholder="{{k}}">
+							</div>
+						</div>
+					 -->
+					<form class="form-horizontal form-validation ng-pristine ng-valid" action="javascript:alert('提交成功')" method="put" id="menuForm" ng-submit="save(menuData)">
+						<div class="form-group">
+							<label class="col-sm-3 control-label ">id</label>
+							<div class="col-sm-9">
+								<input type="text" ng-model="menuData.id" class="form-control " placeholder="id" readonly="readonly">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label ">parentId</label>
+							<div class="col-sm-9">
+								<input type="text" ng-model="menuData.parentId" class="form-control " placeholder="parentId" readonly="readonly">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label ">alias</label>
+							<div class="col-sm-9">
+								<input type="text" ng-model="menuData.alias" class="form-control " placeholder="alias">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label ">title</label>
+							<div class="col-sm-9">
+								<input type="text" ng-model="menuData.title" class="form-control " placeholder="title">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label ">description</label>
+							<div class="col-sm-9">
+								<input type="text" ng-model="menuData.description" class="form-control " placeholder="description">
+							</div>
+						</div>
+						<!-- 
+						<div class="form-group">
+							<label class="col-sm-3 control-label ">isNavigation</label>
+							<div class="col-sm-9">
+								<input type="checkbox" ng-model="menuData.isNavigation" class="form-control " placeholder="isNavigation">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label ">isPublish</label>
+							<div class="col-sm-9">
+								<input type="checkbox" ng-model="menuData.isPublish" class="form-control " placeholder="isPublish">
+							</div>
+						</div>
+						 -->
+						<div class="form-group ">
+							<label class="col-lg-3 control-label">isNavigation</label>
+							<div class="col-lg-9">
+								<label class="i-switch m-t-xs m-r"> <input type="checkbox" placeholder="isNavigation" ng-model="menuData.isNavigation"> <i></i>
+								</label>
+							</div>
+						</div>
+						<div class="form-group ">
+							<label class="col-lg-3 control-label">isPublish</label>
+							<div class="col-lg-9">
+								<label class="i-switch m-t-xs m-r"> <input type="checkbox" placeholder="isPublish" ng-model="menuData.isPublish"> <i></i>
+								</label>
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label ">keyword</label>
+							<div class="col-sm-9">
+								<input type="text" ng-model="menuData.keyword" class="form-control " placeholder="keyword">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label ">sort</label>
+							<div class="col-sm-9">
+								<input type="number" ng-model="menuData.sort" class="form-control " placeholder="sort">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label ">style</label>
+							<div class="col-sm-9">
+								<input type="text" ng-model="menuData.style" class="form-control " placeholder="style">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label ">thumb</label>
+							<div class="col-sm-9">
+								<input type="text" ng-model="menuData.thumb" class="form-control " placeholder="thumb">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label ">url</label>
+							<div class="col-sm-9">
+								<input type="text" ng-model="menuData.url" class="form-control " placeholder="url">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label ">author</label>
+							<div class="col-sm-9">
+								<input type="text" ng-model="menuData.author" class="form-control " placeholder="author">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label ">clicks</label>
+							<div class="col-sm-9">
+								<input type="text" ng-model="menuData.clicks" class="form-control " placeholder="clicks">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label ">stem</label>
+							<div class="col-sm-9">
+								<input type="text" ng-model="menuData.stem" class="form-control " placeholder="stem" readonly="readonly">
+							</div>
+						</div>
+						<div class="form-group">
+							<label class="col-sm-3 control-label ">edittime</label>
+							<div class="col-sm-9">
+								<input type="text" ng-model="menuData.edittime" class="form-control " placeholder="edittime" readonly="readonly">
+							</div>
+						</div>
+						<!-- 
+						<div class="form-group">
+							<label class="col-sm-3 control-label ">children</label>
+							<div class="col-sm-9">
+								<input type="text" ng-model="menuData[k]" class="form-control" placeholder="children" style="">
+							</div>
+						</div>
+						 -->
+						<footer class="panel-footer text-right bg-light lter">
+							<button type="submit" class="btn btn-success">Submit</button>
+						</footer>
+					</form>
+				</div>
+			</div>
+		</div>
+					
+				</div>
+			</div>
+		</div>
 
-<div class="wrapper-md" >
-
-  <div class="panel panel-default">
-    <div class="panel-heading">Tree  
-    	<a class="btn btn-sm btn-info pull-right" ng-click="save()">add Save <span class="glyphicon glyphicon-floppy-save"></span></a>
-    </div>
-    
-    <div ui-tree id="tree-root">
-      <ol ui-tree-nodes="" ng-model="data">
-        <li ng-repeat="node in data" ui-tree-node data-collapsed="true"  ng-include="'children_renderer.html'"></li>
-      </ol>
-    </div>
-  </div>
-  
-  <div class="col-sm-6" ng-if="menuData != null">
-  	<form  action="javascript:alert('提交成功')" method="put"  id="menuForm"  ng-submit="save(menuData)" class="form-horizontal form-validation">
-	   <div class="panel panel-default">
-	   	  <div class="panel-heading">
-	            <strong>{{menuData.title}} Editor </strong>
-	      </div>
-  	  	  <div class="panel-body" ng-repeat=" (k,v ) in menuData"  >  
-  	  	  		<div class="form-group">
-               <label class="col-sm-3 control-label">{{k}}</label>
-               <div class="col-sm-9">
-                 <input type="text"  ng-model="menuData[k]" class="form-control"  placeholder="{{k}}"  >    
-               </div>
-             </div>
-             <div class="line line-dashed b-b line-lg pull-in"></div>
-  	  	  </div>
- 		  <footer class="panel-footer text-right bg-light lter" >
-            <button type="submit" class="btn btn-success">Submit</button>
-          </footer>
-	    </div>
-  	 </form>
-  </div>
-   <div class="col-sm-6">
-       <form name="forma" class="form-horizontal form-validation">
-         <div class="panel panel-default">
-           <div class="panel-heading">
-             <strong>Type constraints</strong>
-           </div>
-           <div class="panel-body">       
-             <div class="form-group">
-               <label class="col-sm-3 control-label">Url</label>
-               <div class="col-sm-9">
-                 <input type="url" class="form-control" placeholder="http://" ng-model="g.b" required >
-               </div>
-             </div>
-             <div class="line line-dashed b-b line-lg pull-in"></div>
-             <div class="form-group">
-               <label class="col-sm-3 control-label">Digits</label>
-               <div class="col-sm-9">
-                 <input type="text" class="form-control" placeholder="digits" ng-model="g.c" ng-pattern="/^[0-9]+$/" required >
-               </div>
-             </div>
-             <div class="line line-dashed b-b line-lg pull-in"></div>
-             <div class="form-group">
-               <label class="col-sm-3 control-label">Number</label>
-               <div class="col-sm-9">
-                 <input type="number" class="form-control" placeholder="number" ng-model="g.d" required >
-               </div>
-             </div>
-             <div class="line line-dashed b-b line-lg pull-in"></div>
-             <div class="form-group">
-               <label class="col-sm-3 control-label">Alphanum</label>
-               <div class="col-sm-9">
-                 <input type="text" class="form-control" placeholder="alphanumeric string" ng-model="g.e" ng-pattern="/^[a-zA-Z]+$/" required >
-               </div>
-             </div>
-             <div class="line line-dashed b-b line-lg pull-in"></div>
-             <div class="form-group">
-               <label class="col-sm-3 control-label">Date Iso</label>
-               <div class="col-sm-9">
-                 <input type="text" class="form-control" placeholder="YYYY-MM-DD" ng-model="g.f" ng-pattern="/[0-9]{4}-(0[1-9]|1[012])-(0[1-9]|1[0-9]|2[0-9]|3[01])$/" required >
-               </div>
-             </div>
-             <div class="line line-dashed b-b line-lg pull-in"></div>
-             <div class="form-group">
-               <label class="col-sm-3 control-label">Phone</label>
-               <div class="col-sm-9">
-                 <input type="text" class="form-control" placeholder="(XXX) XXXX XXX" ng-model="g.g" ng-pattern="/\([0-9]{3}\) ([0-9]{3}) ([0-9]{3})$/" required >
-               </div>
-             </div>            
-             <div class="line line-dashed b-b line-lg pull-in"></div>
-             <div class="form-group">
-               <label class="col-sm-3 control-label">Equal To</label>
-               <div class="col-sm-9">
-                 <div class="row">
-                   <div class="col-sm-6"><input type="text" name="foo" class="form-control" ng-model="g.h" required></div>
-                   <div class="col-sm-6"><input type="text" name="confirm_foo" class="form-control" required ng-model="g.i" ui-validate=" '$value==g.h' " ui-validate-watch=" 'g.h' ">
-                   <span ng-show='forma.confirm_foo.$error.validator'>Not match!</span></div>
-                 </div>
-               </div>
-             </div>
-             <div class="line line-dashed b-b line-lg pull-in"></div>
-             <div class="form-group">
-               <label class="col-sm-3 control-label">Black-list</label>
-               <div class="col-sm-9">
-                 <input type="email" name="email" class="form-control" placeholder="input 'bad@domain.com'" ng-model="g.j" ui-validate="{blacklist : 'notBlackListed($value)' }" required>
-                 <span ng-show='forma.email.$error.blacklist'>This e-mail is black-listed!</span>
-               </div>
-             </div>
-           </div>
-           <footer class="panel-footer text-right bg-light lter">
-             <button type="submit" class="btn btn-success">Submit</button>
-           </footer>
-         </div>
-       </form>
-     </div>
-  
-
-  
-</div>
-
-
-
-
-
-
+	</div>
 </div>

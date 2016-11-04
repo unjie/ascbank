@@ -40,7 +40,7 @@ app.controller('PermissionsCtrl', ['$scope', '$http', function($scope, $http) {
         pageSize: 250,
         currentPage: 1
     };  
-    $scope.setPagingData = function(data, page, pageSize){  
+    $scope.setPagingData = function(data, page, pageSize){
         var pagedData = data.slice((page - 1) * pageSize, page * pageSize);
         $scope.permissionsData = pagedData;
         $scope.totalServerItems = data.length;

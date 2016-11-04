@@ -85,7 +85,12 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
 	}
 	
   var remove= function(id,type,fun){
+	  if(id==null || id.length >=36){
+		  console.log("未保存 ID : ",id);
+		  return;
+	  }
 		 var url='./'+type+'/destroy/'+id,param={method:'DELETE' ,'url':url};
+		 
 		 console.log('remove',param);
 		 $http(param).success(fun);
 	 }
@@ -94,7 +99,7 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
 	 $scope.newProject= function(){
 		 console.log("new Project");
 		 var selectJson =$scope.live.row;
-		 selectJson = (selectJson.stem === undefined)?null:$scope.selectJson;
+		 (!!selectJson.stem) || (selectJson = null);
 		 console.log("new Project",selectJson);
 		 $scope.data.push({
 				 id:utils.randomUuid(),
@@ -330,19 +335,21 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
                  //   api.tasks.on.drawEnd($scope, addEventName('tasks.on.drawEnd', logTaskEvent));
                 }
 
-                /*               
+                 /*            
  				api.rows.on.add($scope, addEventName('rows.on.add', logRowEvent));
                 api.rows.on.change($scope, addEventName('rows.on.change', logRowEvent));
                 api.rows.on.move($scope, addEventName('rows.on.move', logRowEvent));
                 api.rows.on.remove($scope, addEventName('rows.on.remove', logRowEvent));
-
+                */
+                /* 
                 api.side.on.resizeBegin($scope, addEventName('labels.on.resizeBegin', logLabelsEvent));
                 //api.side.on.resize($scope, addEventName('labels.on.resize', logLabelsEvent));
                 api.side.on.resizeEnd($scope, addEventName('labels.on.resizeEnd', logLabelsEvent));
 
                 api.timespans.on.add($scope, addEventName('timespans.on.add', logTimespanEvent));
                 */
-               /* api.columns.on.generate($scope, logColumnsGenerateEvent);
+               /* 
+                api.columns.on.generate($scope, logColumnsGenerateEvent);
 
                 api.rows.on.filter($scope, logRowsFilterEvent);
                 api.tasks.on.filter($scope, logTasksFilterEvent);*/
@@ -514,6 +521,7 @@ app.controller('ProjectCtrl', ['$scope', '$http','$timeout', '$log', 'ganttUtils
     	var dataToRemove;
     	if(model.tasks === undefined){
     		dataToRemove=[{ id:model.parentId,tasks:[{id:model.id}]}];
+    		
     		remove(model.id,'task',function(largeLoad){
     			
     		});

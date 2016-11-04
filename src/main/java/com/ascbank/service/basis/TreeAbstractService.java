@@ -6,6 +6,9 @@ package com.ascbank.service.basis;
 import java.io.Serializable;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.ascbank.dao.base.TreeInterfaceDao;
 import com.ascbank.model.base.TreeEntity;
 
@@ -19,14 +22,27 @@ public abstract class TreeAbstractService<T extends Serializable, E extends Tree
 	/**
 	 *
 	 */
-	private static final long serialVersionUID = 5377582627680895086L;
-	
+	private static final long	serialVersionUID	= 5377582627680895086L;
+
+	private Logger				log					= LoggerFactory.getLogger(TreeAbstractService.class);
+
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.ascbank.service.basis.BaseAbstractService#delete(java.io.Serializable)
+	 */
+	@Override
+	public void delete(String stem) {
+		// TODO Auto-generated method stub
+		this.beanDao.deleteByLikeStem_(stem);
+	}
+
 	@Override
 	public List<E> getByParnetId(T parentId) {
 		// TODO Auto-generated method stub
 		return this.beanDao.selectByParentId(parentId);
 	}
-	
+
 	@Override
 	public List<E> getByStrm(String stem) {
 		// TODO Auto-generated method stub
@@ -41,25 +57,25 @@ public abstract class TreeAbstractService<T extends Serializable, E extends Tree
 		} else if (e.getStem() != null) {
 			e.setChildren(getTree(e.getStem()));
 		}
-		
+
 		return e;
 	}
-
+	
 	@Override
 	public List<E> getTree(String stem) {
 		// TODO Auto-generated method stub
-
-		List<E> es = this.beanDao.selectLikeStem_(stem);
+		log.debug("----------> {} <--------", stem);
+		List<E> es = this.beanDao.selectByLikeStem_(stem);
 		if (es.isEmpty() && es.size() < 1) {
 			return null;
 		}
 		for (E e : es) {
 			((TreeEntity<T, E>) e).setChildren(this.getTree(e.getStem()));
 		}
-		
+
 		return es;
 	}
-
+	
 	@Override
 	public List<E> getTree(T parentId) {
 		// TODO Auto-generated method stub
@@ -67,12 +83,12 @@ public abstract class TreeAbstractService<T extends Serializable, E extends Tree
 		if (es.isEmpty() && es.size() < 1) {
 			return null;
 		}
-
+		
 		for (E e : es) {
 			((TreeEntity<T, E>) e).setChildren(this.getTree(e.getId()));
 		}
-		
+
 		return es;
 	}
-
+	
 }

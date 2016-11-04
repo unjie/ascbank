@@ -4,6 +4,7 @@
 package com.ascbank.test.mybatis;
 
 import java.util.Date;
+import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
@@ -33,7 +34,7 @@ public class MenuTest {
 	@Autowired
 	ApplicationContext	context;
 	
-	@Test
+	// @Test
 	public void menuAddTest() {
 		MenuServiceImpl am = (MenuServiceImpl) context.getBean("menuService");
 
@@ -68,16 +69,16 @@ public class MenuTest {
 	// @Test
 	public void menuDeleteTest() {
 		MenuMapper am = (MenuMapper) context.getBean("menuMapper");
-		int record = am.deleteByPrimaryKey(1L);
+		int record = am.deleteByLikeStem_(",18,");
 		
 		logger.info("=======================" + record + "=========================");
 		
 	}
 	
-	// @Test
+	@Test
 	public void menuQueryTest() {
 		MenuMapper am = (MenuMapper) context.getBean("menuMapper");
-		Menu record = am.selectByPrimaryKey(2L);
+		List<Menu> record = am.selectByLikeStem_(",18,");
 		
 		logger.info("=======================" + record + "=========================");
 		

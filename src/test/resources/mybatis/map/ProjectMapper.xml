@@ -47,9 +47,9 @@
   </delete>
   
   <delete id="deleteByLikeStem_" parameterType="java.lang.String">
-		<bind name="stem" value="_parameter + '%'" />
+		<bind name="pattern" value="stem + '%'" />
 		delete from t_project
-		where stem like #{stem}
+		where stem like #{pattern}
 	</delete>
   <insert id="insert" parameterType="com.ascbank.model.Project" useGeneratedKeys="true"  keyProperty="id"  keyColumn="id"  >
     <!--
@@ -179,15 +179,14 @@
 		where parent_id = #{parentId,jdbcType=BIGINT}
 	</select>
 	<select id="selectByLikeStem_" resultMap="BaseResultMap" parameterType="java.lang.String">
-		<bind name="stem" value="_parameter + '%'" />
+		<bind name="pattern" value="stem + '%'" />
 		select
 		<include refid="Base_Column_List" />
 		from t_project
-		where stem LIKE #{stem}
+		where stem LIKE #{pattern}
 	</select>
 	
 	<select id="selectByStem" resultMap="BaseResultMap" parameterType="java.lang.String">
-		<bind name="stem" value="_parameter" />
 		select
 		<include refid="Base_Column_List" />
 		from t_project

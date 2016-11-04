@@ -52,6 +52,11 @@
 
 	<bean name="systemConfig" init-method="getObject" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="locations" value="classpath:systemConfig.properties" />
+		<property name="properties">
+			<props>
+				<prop key="WEB_ROOT_PATH">./</prop>
+			</props>
+		</property>
 	</bean>
 
 	<!-- 自动扫描@Controller use-default-filters="false" -->
