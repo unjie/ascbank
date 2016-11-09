@@ -11,9 +11,9 @@
 						<i class="glyphicon icon-user-follow"></i>Add User
 					</button>
 					<!-- data-placement="right" data-animation="am-slide-rigth"  -->
-					<button type="button" class="btn m-b-xs btn-sm btn-info btn-addon" data-template-url="aside/attrEditorForm.tpl.html"  data-animation="aside am-slide-right" data-placement="right"  bs-aside="aside" data-container="body">
+					<!-- <button type="button" class="btn m-b-xs btn-sm btn-info btn-addon" data-template-url="aside/attrEditorForm.tpl.html"  data-animation="aside am-slide-right" data-placement="right"  bs-aside="aside" data-container="body">
 						<i class="glyphicon icon-user-follow"></i>Custom aside
-					</button>
+					</button> -->
 				</div>
 				<div class="col-lg-4">
 					<div class="input-group">
@@ -102,7 +102,7 @@
 						<div class="form-group ">
 							<label class="col-lg-2 control-label ng-binding">regtime</label>
 							<div class="col-lg-10">
-								<input class="form-control " placeholder="regtime" ng-model="userData.regtime" type="datetime" readonly="readonly" data-date-format="yyyy-MM-dd HH:dd:ss" data-date-type="number" data-autoclose="1" bs-datepicker> 
+								<input class="form-control " placeholder="regtime" ng-model="userData.regtime" readonly="readonly" type="text" uib-datepicker-popup="yyyy年MM月dd日 hh:mm:ss" > 
 							</div>
 						</div>
 						<div class="form-group">
@@ -120,7 +120,7 @@
 						<div class="form-group ">
 							<label class="col-lg-2 control-label ng-binding">lastlogintime</label>
 							<div class="col-lg-10">
-								<input class="form-control " placeholder="lastlogintime" ng-model="userData.lastlogintime" type="datetime" readonly="readonly" data-date-format="yyyy-MM-dd HH:dd:ss" data-date-type="number" data-autoclose="1" bs-datepicker> 
+								<input class="form-control " placeholder="lastlogintime" ng-model="userData.lastlogintime" type="text" uib-datepicker-popup="yyyy年MM月dd日 hh:mm:ss"  readonly="readonly" > 
 							</div>
 						</div>
 						<div class="form-group ">

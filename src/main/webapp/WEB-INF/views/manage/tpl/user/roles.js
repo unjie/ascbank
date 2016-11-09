@@ -132,7 +132,13 @@ app.controller('RolesCtrl', ['$scope', '$http', function($scope, $http) {
 		console.log(rowItem);
 		console.log(event);
 		$scope.roleData = rowItem.entity;
-		
+		$uibModal.open({
+		    size: 'lg m-n no-padder',//aside
+			templateUrl : 'aside/attrEditorForm.tpl.html',
+			controller: function($scope) {
+				$scope.roleData= rowItem.entity;
+			}
+		});
 	}
     $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
 

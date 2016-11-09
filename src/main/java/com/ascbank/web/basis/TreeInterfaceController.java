@@ -8,11 +8,13 @@ public interface TreeInterfaceController<T extends Serializable, E extends TreeE
 	
 	JsonResultInfo children(T stem);
 	
-	JsonResultInfo destroy(String entity);
+	// JsonResultInfo destroy(String entity);
 
+	JsonResultInfo destroyStemTree(String stem);
+	
 	JsonResultInfo stem(String stem);
 	
 	JsonResultInfo treeChildren(String stem);
-	
+
 	JsonResultInfo treeChildren(T parentId);
 }

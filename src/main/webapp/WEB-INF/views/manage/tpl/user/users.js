@@ -1,7 +1,8 @@
 app.controller('UsersCtrl', [
 		'$scope',
 		'$http',
-		function($scope, $http) {
+		'$uibModal',
+		function($scope, $http,$uibModal) {
 			// /http://angular-ui.github.io/ui-grid/
 			//$scope.userSelections = [];
 			//  $aside({	scope : $scope,	template : 'attrEditorForm.tpl.html',	show : true});
@@ -148,6 +149,8 @@ app.controller('UsersCtrl', [
 						$scope.usersData.push(largeLoad.data);
 					}
 					$scope.userData = largeLoad.data;
+					
+					
 				});
 			}
 
@@ -205,7 +208,13 @@ app.controller('UsersCtrl', [
 				console.log(rowItem);
 				console.log(event);
 				$scope.userData = rowItem.entity;
-				
+				$uibModal.open({
+				    size: 'lg m-n no-padder',//aside
+					templateUrl : 'aside/attrEditorForm.tpl.html',
+					controller: function($scope) {
+						$scope.userData= rowItem.entity;
+					}
+				});
 			}
 
 			$scope.$watch('pagingOptions', function(newVal, oldVal) {

@@ -84,7 +84,7 @@ app.controller('ArticlesCtrl', ['$scope', '$http', function($scope,$http) {
 											id: null,
 											context: "请输入文本类容,可以使用html javascript css 等....",
 											menuId:null,
-											uploadtime:null,
+											uploadtime:new Date(),
 					    				 };
     }
     

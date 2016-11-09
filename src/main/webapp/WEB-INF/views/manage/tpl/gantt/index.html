@@ -1,7 +1,6 @@
 <div class="bg-light lter b-b wrapper-md">
 	<h1 class="m-n font-thin h3">Gantt</h1>
 </div>
-<
 <style>
 <!--
 .container-content {
@@ -94,12 +93,12 @@ textarea.live-row, textarea.live-task {
 										<div class="row">
 											<div class="form-inline">
 												<div class="form-group text-center">
-													<label class="control-label"><i class="fa fa-search"></i> Scale</label><br>
-													<button type="button" style="width: 5em; text-align: left" class="btn btn-default" ng-model="options.scale" bs-options="s for s in ['minute', '5 minutes', 'hour', '3 hours', 'day', 'week', '2 weeks', 'month', 'quarter', '6 months', 'year']" bs-select></button>
+													<label class="control-label"><i class="fa fa-search"></i> Scale</label><br> <select class="form-control " ng-model="options.scale" ng-options="s for s in ['minute', '5 minutes', 'hour', '3 hours', 'day', 'week', '2 weeks', 'month', 'quarter', '6 months', 'year']"></select>
+													<!-- <button type="button" style="width: 5em; text-align: left" class="btn btn-default" ng-model="options.scale" bs-options="s for s in ['minute', '5 minutes', 'hour', '3 hours', 'day', 'week', '2 weeks', 'month', 'quarter', '6 months', 'year']" bs-select></button> -->
 												</div>
 												<div class="form-group text-center">
-													<label class="control-label"><i class="fa fa-sort"></i> Sort</label><br>
-													<button type="button" style="width: 6em; text-align: left" class="btn btn-default" ng-model="options.sortMode" bs-options="m.value as m.label for m in [{label: 'disabled', value: undefined}, {label: 'name', value: 'model.name'}, {label: 'from', value: 'from'}, {label: 'to', value: 'to'}]" bs-select></button>
+													<label class="control-label"><i class="fa fa-sort"></i> Sort</label><br> <select class="form-control " ng-model="options.sortMode" ng-options="m.value as m.label for m in [{label: 'disabled', value: undefined}, {label: 'name', value: 'model.name'}, {label: 'from', value: 'from'}, {label: 'to', value: 'to'}]"></select>
+													<!-- <button type="button" style="width: 6em; text-align: left" class="btn btn-default" ng-model="options.sortMode" bs-options="m.value as m.label for m in [{label: 'disabled', value: undefined}, {label: 'name', value: 'model.name'}, {label: 'from', value: 'from'}, {label: 'to', value: 'to'}]" bs-select></button> -->
 												</div>
 												<div class="form-group input-append text-center">
 													<label class="control-label"><i class="fa fa-filter"></i> Filter Tasks</label><br> <input type="text" class="form-control" style="width: 8em; text-align: left" ng-model="options.filterTask">
@@ -108,45 +107,47 @@ textarea.live-row, textarea.live-task {
 													<label class="control-label"><i class="fa fa-filter"></i> Filter Rows</label><br> <input type="text" class="form-control" style="width: 8em; text-align: left" ng-model="options.filterRow">
 												</div>
 												<div class="form-group text-center">
-													<label class="control-label"><i class="fa fa-clock-o"></i> Today</label><br>
-													<button type="button" style="width: 6em; text-align: left" class="btn btn-default" ng-model="options.currentDate" bs-options="d for d in ['none', 'line', 'column']" bs-select></button>
+													<label class="control-label"><i class="fa fa-clock-o"></i> Today</label><br> <select class="form-control " ng-model="options.currentDate" ng-options="d for d in ['none', 'line', 'column']"></select>
+													<!-- <button type="button" style="width: 6em; text-align: left" class="btn btn-default" ng-model="options.currentDate" bs-options="d for d in ['none', 'line', 'column']" bs-select></button> -->
 												</div>
 												<div class="form-group text-center">
-													<label class="control-label"><i class="fa fa-expand"></i> Expand</label><br>
-													<button type="button" style="width: 6em; text-align: left" class="btn btn-default" ng-model="options.autoExpand" bs-options="e for e in ['none', 'both', 'left', 'right']" bs-select></button>
+													<label class="control-label"><i class="fa fa-expand"></i> Expand</label><br> <select class="form-control " ng-model="options.autoExpand" ng-options="e for e in ['none', 'both', 'left', 'right']"></select>
+													<!-- <button type="button" style="width: 6em; text-align: left" class="btn btn-default" ng-model="options.autoExpand" bs-options="e for e in ['none', 'both', 'left', 'right']" bs-select></button> -->
 												</div>
 												<div class="form-group text-center">
-													<label class="control-label"><i class="fa fa-scissors"></i> Out of range</label><br>
-													<button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.taskOutOfRange" bs-options="e for e in ['expand', 'truncate']" bs-select></button>
+													<label class="control-label"><i class="fa fa-scissors"></i> Out of range</label><br> <select class="form-control " ng-model="options.taskOutOfRange" ng-options="e for e in ['expand', 'truncate']"></select>
+													<!-- <button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.taskOutOfRange" bs-options="e for e in ['expand', 'truncate']" bs-select></button> -->
 												</div>
 												<div class="form-group text-center">
 													<label class="control-label"><i class="fa fa-pencil-square-o"></i> Edit</label><br>
-													<button type="button" class="btn btn-default" ng-model="options.draw" bs-checkbox>Draw</button>
-													<button type="button" class="btn btn-default" ng-model="options.readOnly" bs-checkbox>Read Only</button>
+													<button type="button" class="btn btn-default" ng-model="options.draw" uib-btn-checkbox="" btn-checkbox-true="true" btn-checkbox-false="false">Draw</button>
+													<button type="button" class="btn btn-default" ng-model="options.readOnly" uib-btn-checkbox="" btn-checkbox-true="true" btn-checkbox-false="false">Read Only</button>
 												</div>
 												<div class="form-group text-center">
-													<label class="control-label"><i class="fa fa-magnet"></i> Magnet</label><br>
-													<button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.columnMagnet" bs-options="m for m in ['column', '1 second', '1 minute', '5 minutes', '15 minutes', '1 hour', '1 day', '5 days']" bs-select></button>
-													<button type="button" class="btn btn-default" ng-model="options.daily" bs-checkbox>Daily</button>
-													<button type="button" class="btn btn-default" ng-model="options.timeFramesMagnet" bs-checkbox>TimeFrames</button>
+													<label class="control-label"><i class="fa fa-magnet"></i> Magnet</label><br> <select class="form-control " ng-model="options.columnMagnet" ng-options="m for m in ['column', '1 second', '1 minute', '5 minutes', '15 minutes', '1 hour', '1 day', '5 days']"></select>
+													<!-- <button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.columnMagnet" bs-options="m for m in ['column', '1 second', '1 minute', '5 minutes', '15 minutes', '1 hour', '1 day', '5 days']" bs-select></button> -->
+													<button type="button" class="btn btn-default" ng-model="options.daily" uib-btn-checkbox="" btn-checkbox-true="true" btn-checkbox-false="false">Daily</button>
+													<button type="button" class="btn btn-default" ng-model="options.timeFramesMagnet" uib-btn-checkbox="" btn-checkbox-true="true" btn-checkbox-false="false">TimeFrames</button>
 												</div>
 												<div class="form-group text-center">
 													<label class="control-label"><i class="fa fa-bars"></i> Side</label><br>
 													<div class="btn-group" bs-checkbox-group>
-														<button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.sideMode" bs-options="s for s in ['Tree', 'Table', 'TreeTable', 'Disabled']" bs-select></button>
+														<select class="form-control " ng-model="options.sideMode" ng-options="s for s in ['Tree', 'Table', 'TreeTable', 'Disabled']"></select>
+														<!-- <button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.sideMode" bs-options="s for s in ['Tree', 'Table', 'TreeTable', 'Disabled']" bs-select></button> -->
 													</div>
 												</div>
 												<div class="form-group text-center">
 													<label class="control-label"><i class="fa fa-gear"></i> Groups</label><br>
 													<div class="btn-group" bs-checkbox-group>
-														<button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.groupDisplayMode" bs-options="s for s in ['group', 'overview', 'promote', 'Disabled']" bs-select></button>
+														<select class="form-control " ng-model="options.groupDisplayMode" ng-options="s for s in ['group', 'overview', 'promote', 'Disabled']"></select>
+														<!-- <button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.groupDisplayMode" bs-options="s for s in ['group', 'overview', 'promote', 'Disabled']" bs-select></button> -->
 													</div>
 												</div>
 												<div class="form-group text-center">
 													<label class="control-label"><i class="fa fa-crop"></i> Layout</label><br>
 													<div class="btn-group" bs-checkbox-group>
-														<button type="button" class="btn btn-default" ng-model="options.maxHeight" bs-checkbox>Height</button>
-														<button ng-disabled="!canAutoWidth(options.scale)" type="button" class="btn btn-default" ng-model="options.width" bs-checkbox>Width</button>
+														<button type="button" class="btn btn-default" ng-model="options.maxHeight" uib-btn-checkbox="" btn-checkbox-true="true" btn-checkbox-false="false">Height</button>
+														<button ng-disabled="!canAutoWidth(options.scale)" type="button" class="btn btn-default" ng-model="options.width" uib-btn-checkbox="" btn-checkbox-true="true" btn-checkbox-false="false">Width</button>
 													</div>
 												</div>
 												<div class="form-group text-center">
@@ -155,34 +156,50 @@ textarea.live-row, textarea.live-task {
 												<div class="form-group text-center">
 													<label class="control-label"><i class="fa fa-text-width"></i> Labels</label><br>
 													<div class="btn-group" bs-checkbox-group>
-														<button type="button" class="btn btn-default" ng-model="options.labelsEnabled" bs-checkbox>Show</button>
-														<button type="button" class="btn btn-default" ng-model="options.allowSideResizing" bs-checkbox>Resizable</button>
+														<button type="button" class="btn btn-default" ng-model="options.labelsEnabled" uib-btn-checkbox="" btn-checkbox-true="true" btn-checkbox-false="false">Show</button>
+														<button type="button" class="btn btn-default" ng-model="options.allowSideResizing" uib-btn-checkbox="" btn-checkbox-true="true" btn-checkbox-false="false">Resizable</button>
 													</div>
 												</div>
 												<div class="form-group text-center">
 													<label class="control-label"><i class="fa fa-code"></i> Content</label><br>
 													<div class="btn-group" bs-checkbox-group>
-														<button type="button" class="btn btn-default" ng-model="options.rowContentEnabled" bs-checkbox>Rows</button>
-														<button type="button" class="btn btn-default" ng-model="options.taskContentEnabled" bs-checkbox>Tasks</button>
+														<button type="button" class="btn btn-default" ng-model="options.rowContentEnabled" uib-btn-checkbox="" btn-checkbox-true="true" btn-checkbox-false="false">Rows</button>
+														<button type="button" class="btn btn-default" ng-model="options.taskContentEnabled" uib-btn-checkbox="" btn-checkbox-true="true" btn-checkbox-false="false">Tasks</button>
 													</div>
 												</div>
 												<div class="form-group text-center">
 													<label class="control-label"><i class="fa fa-calendar"></i> <i class="fa fa-arrows-h"></i> <i class="fa fa-calendar"></i> Date range</label><br>
-													<div class="form-group">
+													<div class="input-group w-md">
+														<input type="text" class="form-control" placeholder="To" ng-model="options.toDate" datepicker-popup="yyyy年MM月dd日 hh:mm:ss" is-open="true" datepicker-options="{maxDate: options.toDate,minDate: options.currentDateValue, startingDay: 1}" ng-required="true" close-text="Close" /> <span class="input-group-btn">
+															<button type="button" class="btn btn-default" ng-click="open($event)">
+																<i class="glyphicon glyphicon-calendar"></i>
+															</button>
+														</span>
+													</div>
+													<div class="input-group w-md">
+														<input type="text" class="form-control" placeholder="From" ng-model="options.fromDate" datepicker-popup="yyyy年MM月dd日 hh:mm:ss" is-open="true" datepicker-options="{maxDate: options.fromDate,minDate: options.currentDateValue, startingDay: 1}" ng-required="true" close-text="Close" /> <span class="input-group-btn">
+															<button type="button" class="btn btn-default" ng-click="open($event)">
+																<i class="glyphicon glyphicon-calendar"></i>
+															</button>
+														</span>
+													</div>
+													<!--
+													 <div class="form-group">
 														<input type="text" class="form-control" ng-model="options.fromDate" max-date="{{options.toDate}}" start-date="{{options.currentDateValue.toString()}}" start-week="1" placeholder="From" bs-datepicker>
 													</div>
 													<div class="form-group">
 														<input type="text" class="form-control" ng-model="options.toDate" min-date="{{options.fromDate}}" start-date="{{options.currentDateValue.toString()}}" start-week="1" placeholder="To" bs-datepicker>
 													</div>
+													 -->
 												</div>
 												<div class="form-group text-center">
 													<div class="form-group">
-														<label class="control-label"><i class="fa fa-sign-out"></i> Working</label><br>
-														<button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.timeFramesWorkingMode" bs-options="e for e in ['visible', 'hidden', 'cropped']" bs-select></button>
+														<label class="control-label"><i class="fa fa-sign-out"></i> Working</label><br> <select class="form-control " ng-model="options.timeFramesWorkingMode" ng-options="e for e in ['visible', 'hidden', 'cropped']"></select>
+														<!-- <button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.timeFramesWorkingMode" bs-options="e for e in ['visible', 'hidden', 'cropped']" bs-select></button> -->
 													</div>
 													<div class="form-group">
-														<label class="control-label"><i class="fa fa-sign-out"></i> Non-working</label><br>
-														<button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.timeFramesNonWorkingMode" bs-options="e for e in ['visible', 'hidden', 'cropped']" bs-select></button>
+														<label class="control-label"><i class="fa fa-sign-out"></i> Non-working</label><br> <select class="form-control " ng-model="options.timeFramesNonWorkingMode" ng-options="e for e in ['visible', 'hidden', 'cropped']"></select>
+														<!-- <button type="button" style="width: 8em; text-align: left" class="btn btn-default" ng-model="options.timeFramesNonWorkingMode" bs-options="e for e in ['visible', 'hidden', 'cropped']" bs-select></button> -->
 													</div>
 												</div>
 												<div ng-if="options.sideMode === 'Tree' || options.sideMode === 'TreeTable'" class="form-group text-center">
@@ -195,8 +212,8 @@ textarea.live-row, textarea.live-task {
 												<div class="form-group text-center">
 													<div class="form-group">
 														<label class="control-label"><i class="fa fa-link"></i> Dependencies</label><br>
-														<button type="button" class="btn btn-default" ng-model="options.dependencies.enabled" bs-checkbox>Enabled</button>
-														<button type="button" class="btn btn-default" ng-model="options.dependencies.conflictChecker" bs-checkbox>Conflicts</button>
+														<button type="button" class="btn btn-default" ng-model="options.dependencies.enabled" uib-btn-checkbox="" btn-checkbox-true="true" btn-checkbox-false="false">Enabled</button>
+														<button type="button" class="btn btn-default" ng-model="options.dependencies.conflictChecker" uib-btn-checkbox="" btn-checkbox-true="true" btn-checkbox-false="false">Conflicts</button>
 													</div>
 												</div>
 												<div class="form-group text-center">
@@ -267,18 +284,16 @@ textarea.live-row, textarea.live-task {
 		<div class="container-fluid">
 			<div class="row">
 				<div class="col-md-12">
-				<!-- task attr editor -->
-				<div bs-active-pane="tabs.activeTab" bs-tabs>
-			      <div data-title="Task" name="Task"  bs-pane>
-			      
-			      <div class="panel-group" bs-collapse>
+					<!-- task attr editor -->
+					<uib-tabset active="active"> <uib-tab index="0" heading="Task">
+					<div class="panel-group" >
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h4 class="panel-title">
-									<a href="" bs-collapse-toggle>Task Form Options</a>
+									<a href="" >Task Form Options</a>
 								</h4>
 							</div>
-							<div class="panel-collapse" bs-collapse-target>
+							<div class="panel-collapse" >
 								<div class="panel-body">
 									<div class="container-fluid">
 										<div class="row">
@@ -297,7 +312,8 @@ textarea.live-row, textarea.live-task {
 									<div class="live-table">
 										<div class="live-cell" ng-show="live.row.tasks.length > 0">
 											<h4>
-												<button type="button" style="text-align: left" class="btn btn-default" ng-model="live.task" bs-options="t as t.name for t in live.row.tasks" bs-select></button>
+												<select class="form-control " ng-model="live.task" ng-options="t as t.name for t in live.row.tasks"></select>
+												<!-- <button type="button" style="text-align: left" class="btn btn-default" ng-model="live.task" bs-options="t as t.name for t in live.row.tasks" bs-select></button> -->
 												(Task object)
 											</h4>
 											<textarea class="live-task" ng-model="live.taskJson"></textarea>
@@ -307,27 +323,20 @@ textarea.live-row, textarea.live-task {
 							</div>
 						</div>
 					</div>
-			      
-			      	
-			      </div>
-			      
-			      <!-- project attr edit -->
-			       <div data-title="Project" name="Project"  bs-pane>
-			       
-			       
-			       <div class="panel-group" bs-collapse>
+					</uib-tab> <uib-tab index="1" heading="Project">
+					<div class="panel-group" >
 						<div class="panel panel-default">
 							<div class="panel-heading">
 								<h4 class="panel-title">
-									<a href="" bs-collapse-toggle>Project Form Options</a>
+									<a href="" >Project Form Options</a>
 								</h4>
 							</div>
-							<div class="panel-collapse" bs-collapse-target>
+							<div class="panel-collapse" >
 								<div class="panel-body">
 									<div class="container-fluid">
 										<div class="row">
 											<div class="table-responsive" ng-if="live.row">
-												<form action="javascript:alert('提交成功')" ng-submit="rowSave(live.row)" method="put" id="rowForm" name="rowForm" >
+												<form action="javascript:alert('提交成功')" ng-submit="rowSave(live.row)" method="put" id="rowForm" name="rowForm">
 													<span ng-repeat=" (k,v ) in live.row" style="width: 33%; float: left" ng-model="live.row"> <span style="width: 30%; float: left">{{k}} :</span><input type="text" ng-model="live.row[k]" />
 													</span>
 													<footer class="panel-footer text-right bg-light lter">
@@ -341,7 +350,8 @@ textarea.live-row, textarea.live-task {
 									<div class="live-table">
 										<div class="live-cell" ng-show="data.length > 0">
 											<h4>
-												<button type="button" style="text-align: left" class="btn btn-default" ng-model="live.row" bs-options="r as r.name for r in data" bs-select></button>
+												<select class="form-control " ng-model="live.row" ng-options="r as r.name for r in data"></select>
+												<!-- <button type="button" style="text-align: left" class="btn btn-default" ng-model="live.row" bs-options="r as r.name for r in data" bs-select></button> -->
 												(Row object)
 											</h4>
 											<textarea class="live-row" ng-model="live.rowJson"></textarea>
@@ -351,18 +361,11 @@ textarea.live-row, textarea.live-task {
 							</div>
 						</div>
 					</div>
-			       
-			       
-			       </div>
-			    </div>
-				
+					</uib-tab> </uib-tabset>
 					<!--   // -->
-					
-					
 				</div>
 			</div>
 		</div>
 	</div>
-	
 </div>
 <!--script>< #  include "/manage/tpl/gantt/ProjectCtrl.js"></script -->

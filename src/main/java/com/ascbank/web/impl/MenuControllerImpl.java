@@ -23,5 +23,5 @@ public class MenuControllerImpl extends TreeAbstractController<Long, Menu, MenuS
 	 *
 	 */
 	private static final long serialVersionUID = 333386088325045809L;
-
+	
 }

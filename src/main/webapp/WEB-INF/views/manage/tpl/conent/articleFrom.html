@@ -1,0 +1,58 @@
+		<div class="panel panel-default">
+			<div class="panel-heading">
+				<strong>{{articleData.menuId}} Editor </strong>
+			</div>
+			<div class="panel-body">
+				<!-- 
+   		 <form  action="javascript:alert('提交成功')"  ng-submit="save(articleData)" method="put"  id="articleForm" name="articleForm"  style="min-height:420px">
+   		 	<div ng-repeat=" (k,v ) in articleData"  >
+   		 		<div class="line line-dashed b-b line-lg pull-in"></div>
+		        <div class="form-group" ng-if="v.length>=12">
+		          <label class="col-sm-2 control-label">{{k}} :</label>
+		          <div class="col-sm-10">
+		            <textarea  ng-model="articleData[k]"  froala   class="form-control" ></textarea>
+		          </div>
+		        </div>
+   				<div class="form-group"  ng-if="!(v.length>=12)" >
+   		 			 <label class="col-sm-2 control-label">{{k}} :</label>
+   		 			 <div class="col-sm-10">
+   		 				<input type="text"   ng-model="articleData[k]" /> 
+   		 			</div>
+   		 		</div>	
+   		 	</div>
+   		 	<footer class="panel-footer text-right bg-light lter" >
+              <button type="submit" class="btn btn-success"   ng-disabled="articleFrom.$invalid">Submit</button>
+            </footer>
+   		 </form> 
+   		 -->
+				<form action="javascript:alert('提交成功')" ng-submit="save(articleData)" method="put" id="articleForm" name="articleForm" style="min-height: 420px">
+					<div class="form-group ">
+						<label class="col-sm-2 control-label ">id :</label>
+						<div class="col-sm-4">
+							<input type="number" ng-model="articleData.id" class="form-control" readonly="readonly">
+						</div>
+					</div>
+					<div class="form-group ">
+						<label class="col-sm-2 control-label ">menuId :</label>
+						<div class="col-sm-4">
+							<input type="text" ng-model="articleData.menuId" class="form-control" readonly="readonly">
+						</div>
+					</div>
+					<div class="form-group ">
+						<label class="col-sm-2 control-label ">uploadtime :</label>
+						<div class="col-sm-4">
+							<input type="text" ng-model="articleData.uploadtime" class="form-control" readonly="readonly" uib-datepicker-popup="yyyy年MM月dd日 hh:mm:ss">
+						</div>
+					</div>
+					<div class="form-group "">
+						<label class="col-sm-12 control-label ">context :</label>
+						<div class="col-sm-12">
+							<textarea ng-model="articleData.context" froala="" class="form-control "></textarea>
+						</div>
+					</div>
+					<footer class="col-sm-12 panel-footer text-right bg-light lter">
+						<button type="submit" class="btn btn-success" ng-disabled="articleFrom.$invalid">Submit</button>
+					</footer>
+				</form>
+			</div>
+		</div>

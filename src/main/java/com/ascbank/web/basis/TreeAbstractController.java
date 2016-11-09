@@ -38,8 +38,8 @@ public abstract class TreeAbstractController<T extends Serializable, E extends T
 
 	@Override
 	@ResponseBody
-	@RequestMapping(value = { "/destroy/{stem:[\\d,]+}" }, method = { RequestMethod.GET })
-	public JsonResultInfo destroy(@PathVariable("stem") String stem) {
+	@RequestMapping(value = { "/destroy/stem/{stem:,[\\d,]+}" }, method = { RequestMethod.GET })
+	public JsonResultInfo destroyStemTree(@PathVariable("stem") String stem) {
 		// TODO Auto-generated method stub
 
 		JsonResultInfo info = new JsonResultInfo();
