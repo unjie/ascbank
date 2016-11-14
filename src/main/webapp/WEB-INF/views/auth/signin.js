@@ -2,7 +2,7 @@
 
 /* Controllers */
   // signin controller
-app.controller('SigninFormController', ['$scope', '$http', '$state', function($scope,  $http, $state) {
+app.controller('SigninFormController', ['$scope','$cookies', '$http', '$state', function($scope, $cookies, $http, $state) {
 	var img="captcha/image.jpg";
     $scope.user = {};
     $scope.authError = null;
@@ -29,8 +29,8 @@ app.controller('SigninFormController', ['$scope', '$http', '$state', function($s
 	        if (!info.success ) {
 	          $scope.authError = info.message;
 	        }else{
-	         // $state.go('app.dashboard-v1');
-	        	$cookieStore.put('user',info.data);   	
+	         
+	        	$cookies.put('user',info.data);   	
 	        	$state.go('app.index');
 	        }
 	      }, function(x) {

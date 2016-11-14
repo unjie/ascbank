@@ -115,11 +115,11 @@
 	<!-- Shiro Filter -->
 	<bean id="shiroFilter" class="org.apache.shiro.spring.web.ShiroFilterFactoryBean">
 		<property name="securityManager" ref="securityManager" />
-		<property name="loginUrl" value="/auth/index.html" />
-		<property name="successUrl" value="/index.html" />
+		<property name="loginUrl" value="/index.html#/access/signin " />
+		<property name="successUrl" value="/index.html#/app/index" />
 		<!-- 用户访问未对其授权的资源时,所显示的连接 -->
 		<!-- 若想更明显的测试此属性可以修改它的值,如unauthor.jsp,然后用[admin]登录后访问/admin/listUser.jsp就看见浏览器会显示unauthor.jsp -->
-		<property name="unauthorizedUrl" value="/403.html" />
+		<property name="unauthorizedUrl" value="/index.html#/access/403" />
 		<property name="filters">
 			<map>
 				<entry key="authc" value-ref="formAuthenticationFilter" />
@@ -137,6 +137,8 @@
 				/public/**=anon
 				/blocks/**=anon
 				/auth/exit=logout
+				/**.js=anon
+				/index**=anon
 				/auth/**=anon
 				/error/**=anon
 				/**=authc,urlPermissions
