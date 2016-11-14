@@ -24,13 +24,13 @@ import com.ascbank.validator.annotation.interfaced.ValidetorInterface;
 @SuppressWarnings("rawtypes")
 // @SupportedValidationTarget(value = { ValidationTarget.PARAMETERS })
 public class UniqueValidator implements ConstraintValidator<Unique, Persistable<? extends Serializable>> {
-	
+
 	private static final Logger	log	= LoggerFactory.getLogger(UniqueValidator.class);
-	
+
 	private String[]			attributes;
 	private BeanFactory			beanFactory;
 	private ValidetorInterface	validetorBean;
-	
+
 	/**
 	 * @Unque 验证 bean 需要实现ValidetorInterface 接口 bean Class与BeanName 只需要传入一个,BeanName优先于Class 如果都不设置这默认验证不通过
 	 */
@@ -43,19 +43,19 @@ public class UniqueValidator implements ConstraintValidator<Unique, Persistable<
 								: beanFactory.getBean(annotation.verifyClass()))
 								: (beanFactory.getBean(annotation.verifyBean()))
 								: null;
-								
+
 								this.validetorBean = (obj instanceof ValidetorInterface) ? (ValidetorInterface) obj : null;
-								
+
 								this.attributes = annotation.attributes();
-								
+
 	}
-	
+
 	@Override
 	public boolean isValid(Persistable value, ConstraintValidatorContext context) {
 		if (value == null) {
 			return true;
 		}
-		
+
 		Map<String, Object> map = new HashMap<String, Object>();
 		for (String attr : attributes) {
 			Object obj;
@@ -72,12 +72,12 @@ public class UniqueValidator implements ConstraintValidator<Unique, Persistable<
 				e.printStackTrace();
 				UniqueValidator.log.debug(e.toString());
 			}
-			
+
 		}
-		
+
 		@SuppressWarnings("unchecked")
 		List<PKEntity> list = this.validetorBean.verify(map);
-		
+
 		UniqueValidator.log.debug("-----------------list.size() ={}---------------", list.size());
 		if (list.size() > 1) {
 			return false;
@@ -86,14 +86,14 @@ public class UniqueValidator implements ConstraintValidator<Unique, Persistable<
 			UniqueValidator.log.debug("-----------------e.getId() :{} == value.getId() : {}---------------", e.getId(), value.getId());
 			return (!e.isNew()) && (e.getId() == value.getId());
 		}
-		
+
 		return true;
-		
+
 	}
-	
+
 	@Resource
 	public void setBeanFactory(BeanFactory beanFactory) {
 		this.beanFactory = beanFactory;
 	}
-	
+
 }

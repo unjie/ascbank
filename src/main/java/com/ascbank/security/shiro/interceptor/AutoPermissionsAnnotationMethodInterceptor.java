@@ -12,19 +12,19 @@ import com.ascbank.security.shiro.aop.AutoPermissionsAnnotationHandler;
 import com.ascbank.security.shiro.aop.MethodInvocationAnnotationHandler;
 
 public class AutoPermissionsAnnotationMethodInterceptor extends AuthorizingAnnotationMethodInterceptor {
-	
+
 	public AutoPermissionsAnnotationMethodInterceptor() {
 		super(new AutoPermissionsAnnotationHandler());
 	}
-	
+
 	public AutoPermissionsAnnotationMethodInterceptor(AnnotationResolver resolver) {
 		super(new AutoPermissionsAnnotationHandler(), resolver);
 	}
-	
+
 	@Override
 	public void assertAuthorized(MethodInvocation mi) throws AuthorizationException {
 		try {
-			
+
 			Annotation a = getAnnotation(mi);
 			MethodInvocationAnnotationHandler miah = new MethodInvocationAnnotationHandler();
 			a = miah.MethodAnnotationHandler(mi, a);
@@ -39,5 +39,5 @@ public class AutoPermissionsAnnotationMethodInterceptor extends AuthorizingAnnot
 			throw ae;
 		}
 	}
-	
+
 }

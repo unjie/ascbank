@@ -16,10 +16,10 @@ import com.ascbank.service.UrlFilterService;
  */
 @Service("urlFilterService")
 public class UrlFilterServiceImpl implements UrlFilterService<Long, UrlFilter> {
-	
+
 	@Autowired
 	private UrlFilterMapper urlFilterMapper;
-	
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -30,10 +30,10 @@ public class UrlFilterServiceImpl implements UrlFilterService<Long, UrlFilter> {
 		// TODO Auto-generated method stub
 		return urlFilterMapper.selectByURL(url);
 	}
-	
+
 	@Override
 	public void setUrlFilterMapper(UrlFilterMapper urlFilterMapper) {
 		this.urlFilterMapper = urlFilterMapper;
 	}
-	
+
 }

@@ -2,11 +2,11 @@ app.controller('UsersCtrl', [
 		'$scope',
 		'$http',
 		'$uibModal',
-		function($scope, $http,$uibModal) {
+		function($scope, $http, $uibModal) {
 			// /http://angular-ui.github.io/ui-grid/
-			//$scope.userSelections = [];
-			//  $aside({	scope : $scope,	template : 'attrEditorForm.tpl.html',	show : true});
-			
+			// $scope.userSelections = [];
+			// $aside({ scope : $scope, template : 'attrEditorForm.tpl.html',
+			// show : true});
 
 			setTimeout(function() {
 				$scope.roles = [];
@@ -41,18 +41,38 @@ app.controller('UsersCtrl', [
 					wechatName : null
 				};
 			}
-			
-			
+
+			$scope.save = function(userData) {
+				console.log(userData);
+				var data = userData, url = './user/update', param = {
+					method : 'PATCH',
+					'url' : url,
+					'data' : data
+				};
+				if (data.id == null) {
+					param.method = 'PUT';
+					param.url = './user/create';
+				}
+				$http(param).success(function(largeLoad) {
+					if (userData.id == null && largeLoad.data.id != null) {
+						console.log($scope.usersData);
+						$scope.usersData.push(largeLoad.data);
+					}
+					$scope.userData = largeLoad.data;
+
+				});
+			}
+
 			$scope.rolesEditor = function(userData) {
 				console.log(userData);
 				if (!userData || !userData.id) {
 					alert("请先 [选择行/保存数据] 后,再操作!!");
 					return;
 				}
-
 				if (!!userData.roles) {
 					for ( var i in userData.roles) {
-						if(!$scope.userData.userRolesData)$scope.userData.userRolesData=[];
+						if (!$scope.userData.userRolesData)
+							$scope.userData.userRolesData = [];
 						$scope.userData.userRolesData
 								.push(userData.roles[i].roleId);
 					}
@@ -90,7 +110,8 @@ app.controller('UsersCtrl', [
 				}
 
 				if (!!userData.permissions) {
-					if(!$scope.userData.userRolesData)$scope.userData.userRolesData=[];
+					if (!$scope.userData.userRolesData)
+						$scope.userData.userRolesData = [];
 					for ( var i in userData.permissions) {
 						$scope.userData.userRolesData
 								.push(userData.permissions[i].roleId);
@@ -132,33 +153,10 @@ app.controller('UsersCtrl', [
 
 			}
 
-			$scope.save = function(userData) {
-				console.log(userData);
-				var data = userData, url = './user/update', param = {
-					method : 'PATCH',
-					'url' : url,
-					'data' : data
-				};
-				if (data.id == null) {
-					param.method = 'PUT';
-					param.url = './user/create';
-				}
-				$http(param).success(function(largeLoad) {
-					if (userData.id == null && largeLoad.data.id != null) {
-						console.log($scope.usersData);
-						$scope.usersData.push(largeLoad.data);
-					}
-					$scope.userData = largeLoad.data;
-					
-					
-				});
-			}
-
-			
 			$scope.filterOptions = {
-					filterText : "",
-					useExternalFilter : true 
-				};
+				filterText : "",
+				useExternalFilter : true
+			};
 			$scope.totalServerItems = 0;
 			$scope.pagingOptions = {
 				pageSizes : [ 250, 500, 1000 ],
@@ -208,15 +206,17 @@ app.controller('UsersCtrl', [
 				console.log(rowItem);
 				console.log(event);
 				$scope.userData = rowItem.entity;
-				$uibModal.open({
-				    size: 'lg m-n no-padder',//aside
-					templateUrl : 'aside/attrEditorForm.tpl.html',
-					controller: function($scope) {
-						$scope.userData= rowItem.entity;
-					}
-				});
-			}
 
+			}
+			$scope.$watch('userData', function(newVal, oldVal) {
+				if (newVal !== oldVal && (!oldVal || oldVal.id !=newVal.id)) {
+					$uibModal.open({
+						size : 'lg m-n no-padder',// aside
+						templateUrl : 'aside/attrEditorForm.tpl.html',
+						scope : $scope
+					});
+				}
+			}, true)
 			$scope.$watch('pagingOptions', function(newVal, oldVal) {
 				if (newVal !== oldVal
 						&& newVal.currentPage !== oldVal.currentPage) {
@@ -239,7 +239,7 @@ app.controller('UsersCtrl', [
 				showFooter : true,
 				// enableCellEdit: true,
 				showFilter : true,
-			//	selectedItems : $scope.userSelections,
+				// selectedItems : $scope.userSelections,
 				afterSelectionChange : $scope.afterSelectionChange,
 				multiSelect : false,
 				totalServerItems : 'totalServerItems',

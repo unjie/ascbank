@@ -3,10 +3,6 @@ package com.ascbank.service.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.shiro.SecurityUtils;
-import org.apache.shiro.authc.AuthenticationException;
-import org.apache.shiro.authc.UsernamePasswordToken;
-import org.apache.shiro.subject.Subject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,20 +16,34 @@ import com.ascbank.dao.PermissionMapper;
 import com.ascbank.dao.UserMapper;
 import com.ascbank.dao.UserPermissionMapper;
 import com.ascbank.dependency.injection.InjectionInterface;
-import com.ascbank.exception.UserException;
 import com.ascbank.model.Permission;
 import com.ascbank.model.User;
 import com.ascbank.model.UserPermission;
-import com.ascbank.model.derive.Login;
 import com.ascbank.service.UserService;
 import com.ascbank.service.basis.BaseAbstractService;
 import com.ascbank.util.Digests;
 import com.ascbank.util.Encodes;
 
+/**
+ * @author jie
+ *
+ */
+/**
+ * @author jie
+ *
+ */
+/**
+ * @author jie
+ *
+ */
+/**
+ * @author jie
+ *
+ */
 @Service("userService")
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
 public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper> implements UserService<Long, User>, InjectionInterface<UserMapper> {
-	
+
 	/**
 	 *
 	 */
@@ -52,16 +62,24 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 	@Autowired(required = false)
 	private UserPermissionMapper	userPermissionMap;
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.ascbank.service.basis.BaseAbstractService#add(com.ascbank.model.base.PKEntity)
+	 *
+	 * 添加用用户
+	 */
 	@Override
 	@Transactional
 	public User add(User user) {
 		entryptPassword(user);
 
 		// 插入 User
-		getBean().insertSelective(user);
+		// getBean().insertSelective(user);
+		super.add(user);
 		log.debug(" User  :  {}", user);
 		// 创建Permission 对象
-		Permission perm = new Permission(null, user.getId().toString(), "User", "read,update", "[ " + user.getUsername() + " ] User Permission");
+		Permission perm = new Permission(null, user.getId().toString(), "User", "read,update", "[ " + user.getUsername() + " ] User Permission(read,update) User table ID : " + user.getId());
 
 		log.debug(" Permission  :  {}", perm);
 		// 插入perm对象
@@ -94,6 +112,13 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 		return !cacheUser.getUsername().equals(username);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.ascbank.service.UserService#entryptPassword(com.ascbank.model.User)
+	 *
+	 * 用户密码加密,及盐的生成
+	 */
 	@Override
 	public User entryptPassword(User user) {
 		byte[] salt = null;
@@ -107,49 +132,24 @@ public class UserServiceImpl extends BaseAbstractService<Long, User, UserMapper>
 		return user;
 	}
 
-	@Override
-	public User login(User user) throws UserException {
-		
-		UsernamePasswordToken upt = new UsernamePasswordToken(user.getUsername(), user.getPassword(), ((Login) user).getSave());
-		Subject subject = SecurityUtils.getSubject();
-		try {
-			if (log.isDebugEnabled()) {
-				log.debug("-------->>>>>" + user);
-			}
-			subject.login(upt);
-
-		} catch (AuthenticationException e) {
-			if (log.isInfoEnabled()) {
-				log.error("登录失败错误信息:" + e);
-			}
-			upt.clear();
-			throw new UserException("{User.nameAndPassword.error}");
-		}
-
-		return user;
-
-	}
-
-	@Override
-	public User logout() {
-		Subject subject = SecurityUtils.getSubject();
-
-		if (subject != null) {
-			
-			User user = this.read((String) subject.getPrincipal());
-			log.debug("----logout {}-------------", user);
-			subject.logout();
-			return user;
-		}
-		return null;
-	}
-
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.ascbank.service.UserService#read(java.lang.String) 根据用户名获取用户信息
+	 */
 	@Override
 	public User read(String username) {
 		// TODO Auto-generated method stub
 		return getBean().selectByUsername(username);
 	}
 
+	/*
+	 * (non-Javadoc)
+	 *
+	 * @see com.ascbank.service.basis.BaseAbstractService#update(com.ascbank.model.base.PKEntity)
+	 *
+	 * 更新用户信息
+	 */
 	@Override
 	@Transactional
 	public User update(User user) {

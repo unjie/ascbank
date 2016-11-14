@@ -19,10 +19,10 @@ import com.ascbank.service.basis.TreeAbstractService;
 @Service("projectService")
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
 public class ProjectServiceImpl extends TreeAbstractService<Long, Project, ProjectMapper> implements ProjectService<Long, Project> {
-	
+
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 3586505244920588895L;
-	
+
 }

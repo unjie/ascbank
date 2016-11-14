@@ -14,7 +14,7 @@ import com.ascbank.model.base.PKEntity;
  *
  */
 public interface ValidetorInterface<T extends Serializable, E extends PKEntity<T>> {
-	
+
 	public List<E> verify(Map<String, Object> map);
-	
+
 }

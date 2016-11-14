@@ -92,9 +92,12 @@
 				<div class="panel-body">
 					<div class="col-sm-9 panel-body">{{rolePermissionsData}}</div>
 					<div class="col-sm-9 panel-body">
+						<!--
 						<button type="button" class="btn btn-default" ng-model="roleData.rolePermissionsData" data-html="1" data-multiple="1" data-animation="am-flip-x" bs-options="premi.id as premi.description for premi in permissions" bs-select>
 							Action <span class="caret"></span>
 						</button>
+						-->
+						<select ui-jq="chosen" ng-model="roleData.rolePermissionsData" multiple class="w-md" ng-options="p.id as p.description for p in permissions"></select>
 					</div>
 					<div class="col-sm-9 panel-body">
 						<button class="btn m-b-xs btn-sm btn-info btn-addon" ng-click='savePermission(roleData.rolePermissionsData)'>

@@ -149,5 +149,5 @@ public class Permission extends PKEntity<Long> {
 	public String toString() {
 		return "Permission [description=" + description + ", entityIds=" + entityIds + ", name=" + name + ", permission=" + permission + ", Id=" + getId() + "]";
 	}
-	
+
 }

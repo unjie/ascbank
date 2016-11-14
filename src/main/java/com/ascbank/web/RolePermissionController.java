@@ -14,9 +14,9 @@ import com.ascbank.web.basis.JsonResultInfo;
  *
  */
 public interface RolePermissionController<T extends Serializable, E extends PKEntity<T>> extends BaseInterfaceController<T, E> {
-	
+
 	JsonResultInfo readPermissionId(Long permissionId);
-	
+
 	JsonResultInfo readRoleId(Long roleId);
-	
+
 }

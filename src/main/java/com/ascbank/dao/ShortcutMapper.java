@@ -6,5 +6,5 @@ import com.ascbank.repository.mybatis.MyBatisRepository;
 
 @MyBatisRepository
 public interface ShortcutMapper extends BaseInterfaceDao<Long, Shortcut> {
-	
+
 }

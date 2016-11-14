@@ -13,5 +13,5 @@ import com.ascbank.web.basis.BaseInterfaceController;
  *
  */
 public interface ProjectController<T extends Serializable, E extends TreeEntity<T, E>> extends BaseInterfaceController<T, E> {
-	
+
 }

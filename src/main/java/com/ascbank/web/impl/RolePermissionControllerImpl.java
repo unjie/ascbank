@@ -21,7 +21,7 @@ import com.ascbank.web.basis.JsonResultInfo;
 @Controller
 @RequestMapping("/rolepermission")
 public class RolePermissionControllerImpl extends BaseAbstractController<Long, RolePermission, RolePermissionService<Long, RolePermission>> implements RolePermissionController<Long, RolePermission> {
-	
+
 	/**
 	 *
 	 */
@@ -37,7 +37,7 @@ public class RolePermissionControllerImpl extends BaseAbstractController<Long, R
 		jri.setMessage("reda Article success!");
 		return jri;
 	}
-	
+
 	@Override
 	@ResponseBody
 	@RequestMapping("/read/roleid/{roleId:[\\d]+}")

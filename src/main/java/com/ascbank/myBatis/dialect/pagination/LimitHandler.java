@@ -26,14 +26,14 @@ public interface LimitHandler {
 	 * @return Query statement with LIMIT clause applied.
 	 */
 	String processSql(String sql, Pageable selection);
-	
+
 	/**
 	 * Does this handler support some form of limiting query results via a SQL clause?
 	 *
 	 * @return True if this handler supports some form of LIMIT.
 	 */
 	boolean supportsLimit();
-	
+
 	/**
 	 * Does this handler's LIMIT support (if any) additionally support specifying an offset?
 	 *

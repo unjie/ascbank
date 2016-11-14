@@ -19,10 +19,10 @@ import com.ascbank.service.basis.BaseAbstractService;
 @Service("fileInfoService")
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
 public class FileInfoServiceImpl extends BaseAbstractService<Long, FileInfo, FileInfoMapper> implements FileInfoService<Long, FileInfo> {
-	
+
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 8248606702925998294L;
-	
+
 }

@@ -15,7 +15,7 @@ import com.ascbank.validator.annotation.Captcha;
 // @SupportedValidationTarget(value = { ValidationTarget.PARAMETERS,
 // ValidationTarget.ANNOTATED_ELEMENT })
 public class CaptchaValidator implements ConstraintValidator<Captcha, String> {
-	
+
 	private static final Logger	log	= LoggerFactory.getLogger(CaptchaValidator.class);
 
 	private String				key;

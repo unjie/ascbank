@@ -21,7 +21,7 @@ import com.ascbank.web.basis.JsonResultInfo;
 @Controller
 @RequestMapping("/userrole")
 public class UserRoleControllerImpl extends BaseAbstractController<Long, UserRole, UserRoleService<Long, UserRole>> implements UserRoleController<Long, UserRole> {
-	
+
 	/**
 	 *
 	 */
@@ -37,7 +37,7 @@ public class UserRoleControllerImpl extends BaseAbstractController<Long, UserRol
 		jri.setMessage("reda Article success!");
 		return jri;
 	}
-	
+
 	@Override
 	@ResponseBody
 	@RequestMapping("/read/userid/{userId:[\\d]+}")
@@ -48,5 +48,5 @@ public class UserRoleControllerImpl extends BaseAbstractController<Long, UserRol
 		jri.setMessage("reda Article success!");
 		return jri;
 	}
-	
+
 }

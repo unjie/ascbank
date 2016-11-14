@@ -159,9 +159,12 @@
 					<div class="form-group">
 						<div class="col-sm-9 panel-body">{{userRolesData}}</div>
 						<div class="col-sm-9 panel-body">
+							<!--
 							<button type="button" class="btn btn-default" ng-model="userData.userRolesData" data-html="1" data-multiple="1" data-animation="am-flip-x" bs-options="role.id as role.roleName for role in roles" bs-select>
 								Action <span class="caret"></span>
 							</button>
+							-->
+							<select ui-jq="chosen" ng-model="userData.userPermissionsData" multiple class="w-md" ng-options="r.id as r.roleName  for r in roles"></select>
 						</div>
 						<div class="col-sm-9 panel-body">
 							<button class="btn m-b-xs btn-sm btn-info btn-addon" ng-click='saveRoles(userData.userRolesData)'>
@@ -178,9 +181,12 @@
 				<div class="panel-body">
 					<div class="col-sm-9 panel-body">{{userPermissionsData}}</div>
 					<div class="col-sm-9 panel-body">
+						<!--
 						<button type="button" class="btn btn-default" ng-model="userData.userPermissionsData" data-html="1" data-multiple="1" data-animation="am-flip-x" bs-options="premi.id as premi.description for premi in permissions" bs-select>
 							Action <span class="caret"></span>
 						</button>
+						-->
+						<select ui-jq="chosen" ng-model="userData.userPermissionsData" multiple class="w-md" ng-options="p.id as p.description  for p in permissions"></select>
 					</div>
 					<div class="col-sm-9 panel-body">
 						<button class="btn m-b-xs btn-sm btn-info btn-addon" ng-click='savePermission(userData.userPermissionsData)'>

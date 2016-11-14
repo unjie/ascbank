@@ -99,10 +99,10 @@ public class Article extends PKEntity<Long> {
 	public void setUploadtime(Date uploadtime) {
 		this.uploadtime = uploadtime;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "Article [context=" + context + ", menuId=" + menuId + ", uploadtime=" + uploadtime + ", getId()=" + getId() + "]";
 	}
-	
+
 }

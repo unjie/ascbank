@@ -5,5 +5,5 @@ package com.ascbank.base.jpa;
  *
  */
 public class PeakJpaRepositoryFactory {
-	
+
 }

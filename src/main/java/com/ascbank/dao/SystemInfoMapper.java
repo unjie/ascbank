@@ -6,5 +6,5 @@ import com.ascbank.repository.mybatis.MyBatisRepository;
 
 @MyBatisRepository
 public interface SystemInfoMapper extends BaseInterfaceDao<Long, SystemInfo> {
-	
+
 }

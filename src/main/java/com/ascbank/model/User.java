@@ -18,7 +18,7 @@ import com.ascbank.verify.LoginCheck;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 public class User extends PKEntity<Long> {
-	
+
 	private static final long	serialVersionUID	= 2814743973946334631L;
 
 	/**

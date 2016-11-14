@@ -4,15 +4,15 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 public class StringUtil {
-	
+
 	/**************
 	 * 首字母大写
 	 */
 	public static String capitalize(String str) {
-		
+
 		return str.replaceFirst(str.substring(0, 1), str.substring(0, 1).toUpperCase());
 	}
-	
+
 	/**
 	 *
 	 * Java属性名转数据库表列名
@@ -39,12 +39,12 @@ public class StringUtil {
 		}
 		return sb.toString();
 	}
-	
+
 	public static boolean isNullOrEmpty(String ids) {
 		// TODO Auto-generated method stub
 		return ids == null || ids.isEmpty();
 	}
-	
+
 	/************
 	 * 判断字符串是否为纯数字
 	 */
@@ -56,5 +56,5 @@ public class StringUtil {
 		}
 		return true;
 	}
-	
+
 }

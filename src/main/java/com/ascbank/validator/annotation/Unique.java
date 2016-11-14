@@ -25,7 +25,7 @@ import com.ascbank.validator.annotation.validtor.UniqueValidator;
 @Target({ TYPE, ANNOTATION_TYPE })
 @Retention(RUNTIME)
 public @interface Unique {
-	
+
 	// 指定多个时使用
 	@Target({ FIELD, METHOD, PARAMETER, ANNOTATION_TYPE })
 	@Retention(RUNTIME)
@@ -33,20 +33,20 @@ public @interface Unique {
 	public @interface List {
 		Unique[] value();
 	}
-	
+
 	String[] attributes();
-	
+
 	Class<?>[] groups() default {};
-	
+
 	String message() default "{default.update.unique.validated}";
-	
+
 	Class<? extends Payload>[] payload() default {};
-	
+
 	// ConstraintTarget validationAppliesTo() default ConstraintTarget.IMPLICIT;
-	
+
 	String verifyBean() default "";
-	
+
 	@SuppressWarnings("rawtypes")
 	Class<? extends ValidetorInterface> verifyClass() default ValidetorInterface.class;
-	
+
 }

@@ -16,11 +16,11 @@ import org.apache.shiro.spring.security.interceptor.AopAllianceAnnotationsAuthor
 import com.ascbank.security.shiro.interceptor.AutoPermissionsAnnotationMethodInterceptor;
 
 public class AopPermissionsExpandAnnotationsAuthorizingMethodInterceptor extends AopAllianceAnnotationsAuthorizingMethodInterceptor {
-	
+
 	public AopPermissionsExpandAnnotationsAuthorizingMethodInterceptor() {
 		List<AuthorizingAnnotationMethodInterceptor> interceptors =
 				new ArrayList<AuthorizingAnnotationMethodInterceptor>(5);
-		
+
 		// use a Spring-specific Annotation resolver - Spring's AnnotationUtils is nicer than the
 		// raw JDK resolution process.
 		AnnotationResolver resolver = new SpringAnnotationResolver();
@@ -32,8 +32,8 @@ public class AopPermissionsExpandAnnotationsAuthorizingMethodInterceptor extends
 		interceptors.add(new GuestAnnotationMethodInterceptor(resolver));
 		// 自定义
 		interceptors.add(new AutoPermissionsAnnotationMethodInterceptor());
-		
+
 		setMethodInterceptors(interceptors);
 	}
-	
+
 }

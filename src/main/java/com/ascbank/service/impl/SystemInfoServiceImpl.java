@@ -24,5 +24,5 @@ public class SystemInfoServiceImpl extends BaseAbstractService<Long, SystemInfo,
 	 *
 	 */
 	private static final long serialVersionUID = -8968224557117459349L;
-	
+
 }

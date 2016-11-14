@@ -21,12 +21,12 @@ import com.ascbank.web.basis.JsonResultInfo;
 @Controller
 @RequestMapping("/article")
 public class ArticleControllerImpl extends BaseAbstractController<Long, Article, ArticleService<Long, Article>> implements ArticleController<Long, Article> {
-	
+
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = -7713298953921279482L;
-	
+
 	@Override
 	@ResponseBody
 	@RequestMapping("/read/menuid/{menuId:[\\d]+}")
@@ -37,5 +37,5 @@ public class ArticleControllerImpl extends BaseAbstractController<Long, Article,
 		jri.setMessage("reda Article success!");
 		return jri;
 	}
-	
+
 }

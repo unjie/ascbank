@@ -87,9 +87,7 @@ app.controller('PermissionsCtrl', ['$scope', '$http', function($scope, $http) {
 		/*$uibModal.open({
 		    size: 'lg m-n no-padder',//aside
 			templateUrl : 'aside/attrEditorForm.tpl.html',
-			controller: function($scope) {
-				$scope.permissionData = rowItem.entity;
-			}
+			scope:$scope
 		});*/
 		
 	}

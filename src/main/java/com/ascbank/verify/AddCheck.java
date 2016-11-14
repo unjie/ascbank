@@ -5,5 +5,5 @@ package com.ascbank.verify;
  *
  */
 public interface AddCheck {
-	
+
 }

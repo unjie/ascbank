@@ -21,12 +21,12 @@ import com.ascbank.web.basis.JsonResultInfo;
 @Controller
 @RequestMapping("/userpermission")
 public class UserPermissionControllerImpl extends BaseAbstractController<Long, UserPermission, UserPermissionService<Long, UserPermission>> implements UserPermissionController<Long, UserPermission> {
-	
+
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = -7746422836218600107L;
-	
+
 	@Override
 	@ResponseBody
 	@RequestMapping("/read/permissionid/{permissionId:[\\d]+}")

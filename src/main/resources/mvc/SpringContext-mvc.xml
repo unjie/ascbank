@@ -9,8 +9,8 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
 	<!-- 启用注解 -->
-	
-	
+
+
 	<bean name="systemConfig" init-method="getObject" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="locations" value="classpath:systemConfig.properties" />
 		<property name="properties">
@@ -62,7 +62,7 @@
 	<!-- // 注解方法处理适配器 <bean class="org.springframework.web.servlet.mvc.annotation.AnnotationMethodHandlerAdapter"> <property name="messageConverters"> <list> <ref bean="byteArray_hmc" /> <ref bean="string_hmc" /> <ref bean="resource_hmc" /> <ref bean="source_hmc" /> <ref bean="xmlAwareForm_hmc" /> <ref bean="jaxb2RootElement_hmc" /> <ref bean="jackson_hmc" /> </list> </property> </bean> -->
 
 
-	
+
 
 	<!-- 自动扫描@Controller use-default-filters="false" -->
 	<context:component-scan base-package="com.ascbank">
@@ -72,14 +72,13 @@
 
 
 
-	
+
 	<!-- 加载spring配置 分配不同该模块的配置，方便后期单独提取或转变项目格式 <import resource="springContext-configureServlet.xml"/> -->
 
 
 	<!-- 映射静态文件 -->
-	
-	 <mvc:view-controller path="/" view-name="/index.html" status-code="200" />
-	<mvc:view-controller path="/index**" view-name="/index.html" status-code="200" />
+
+	<mvc:view-controller path="/" view-name="/index.html" status-code="200" />
 	<mvc:view-controller path="/manage**" view-name="/manage/index.html" status-code="200" />
 	<!-- -->
 	<!-- 静态资源文件 -->
@@ -91,26 +90,12 @@
 	<mvc:resources mapping="/public/**" location="/public/" cache-period="31556926" order="1">
 		<mvc:resource-chain resource-cache="true">
 			<mvc:resolvers>
-				<!--
-				 <mvc:version-resolver>
-					<mvc:content-version-strategy patterns="/**" />
-				</mvc:version-resolver>
-				 -->
+				<!-- <mvc:version-resolver> <mvc:content-version-strategy patterns="/**" /> </mvc:version-resolver> -->
 				<bean class="org.springframework.web.servlet.resource.GzipResourceResolver" />
 				<bean class="org.springframework.web.servlet.resource.CachingResourceResolver">
 					<constructor-arg ref="cache" />
 				</bean>
-				<!--
-				 <bean class="org.springframework.web.servlet.resource.VersionResourceResolver">
-					<property name="strategyMap">
-						<map>
-							<entry key="/**">
-								<bean class="org.springframework.web.servlet.resource.ContentVersionStrategy" />
-							</entry>
-						</map>
-					</property>
-				</bean>
-				 -->
+				<!-- <bean class="org.springframework.web.servlet.resource.VersionResourceResolver"> <property name="strategyMap"> <map> <entry key="/**"> <bean class="org.springframework.web.servlet.resource.ContentVersionStrategy" /> </entry> </map> </property> </bean> -->
 				<bean class="org.springframework.web.servlet.resource.PathResourceResolver" />
 			</mvc:resolvers>
 			<mvc:transformers>
@@ -122,9 +107,10 @@
 		</mvc:resource-chain>
 	</mvc:resources>
 	<mvc:resources mapping="/img/**" location="/public/img/" cache-period="31556926" order="2" />
-	
-	<mvc:resources mapping="/**/*.js" location="/WEB-INF/views/" cache-period="31556926" order="3" />
-	<mvc:resources mapping="/**/*.css" location="/WEB-INF/views/" cache-period="31556926" order="4" />
+	<mvc:resources mapping="/**/*.html" location="/WEB-INF/views/" cache-period="31556926" order="3" />
+	<!-- <mvc:resources mapping="/**/*.htm" location="/WEB-INF/views/" cache-period="31556926" order="4" /> -->
+	<mvc:resources mapping="/**/*.js" location="/WEB-INF/views/" cache-period="31556926" order="4" />
+	<mvc:resources mapping="/**/*.css" location="/WEB-INF/views/" cache-period="31556926" order="5" />
 
 
 
@@ -136,7 +122,6 @@
 		<property name="freemarkerVariables">
 			<map><!--设置一些常用的全局变量 -->
 				<entry key="webRoot" value="/#{servletContext.servletContextName}" />
-				<entry key="publicRoot" value="/#{servletContext.servletContextName}/public" />
 			</map>
 		</property>
 		<property name="freemarkerSettings">
@@ -166,6 +151,27 @@
 		</property>
 	</bean>
 
+	<!--
+	 <bean class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="urlMap">
+			<map>
+				<entry key="/**/*.html">
+					<bean id="resourceHandler" class="org.springframework.web.servlet.resource.ResourceHttpRequestHandler">
+						<property name="locations" value="/WEB-INF/views/" />
+						<property name="supportedMethods">
+							<list>
+								<value>GET</value>
+							</list>
+						</property>
+
+					</bean>
+				</entry>
+			</map>
+		</property>
+		<property name="order" value="100000" />
+	</bean>
+	 -->
+
 	<!-- <bean id="configFileView" class="com.ascbank.web.servlet.view.GenericFileView" p:contentType="text/plain" p:url="" scope="prototype"/> -->
 	<!-- 根据客户端的不同的请求决定不同的 view进行响应, 如 /blog/1.json /blog/1.xml org.springframework.web.servlet.view.ContentNegotiatingViewResolver -->
 	<bean class="org.springframework.web.servlet.view.ContentNegotiatingViewResolver">
@@ -178,7 +184,7 @@
 				<property name="ignoreAcceptHeader" value="true" />
 				<!-- path扩展名至mimeType的映射,即 /user.json => application/json -->
 				<property name="favorPathExtension" value="true" />
-				<property name="defaultContentType" value="text/html" />
+				<property name="defaultContentType" value="text/*" />
 				<!-- Parameter用于开启 /userinfo/123?format=json 的支持 -->
 				<property name="favorParameter" value="true" />
 				<!-- favorPathExtension, favorParameter是true时才起作用 -->
@@ -194,6 +200,7 @@
 			</bean>
 		</property>
 
+
 		<property name="viewResolvers">
 			<list>
 				<!-- bean name view resolver -->
@@ -205,11 +212,12 @@
 					<property name="requestContextAttribute" value="rc" />
 					<property name="exposeRequestAttributes" value="true" />
 					<property name="exposeSessionAttributes" value="true" />
-					<property name="viewNames" value="*.html" />
+					<property name="viewNames" value="*.htm" />
 					<property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" />
 					<property name="cache" value="true" />
 					<!-- // 这里需要注意一下，我注释了下面这样一行代码，这行代码的意思就是指引freemarker需要解析的文件的位置。 注释掉原因是因为 applicationContext.xml里有这样一行代码： <property name="templateLoaderPath" value="/WEB-INF/views/" /> 已经指定了视图位置。如果我们这里依然保留下方代码，页面回报406的找不到的错误 -->
 				</bean>
+
 				<!-- 对模型视图名称的解析，即在模型视图名称添加前后缀 通用解析器 -->
 				<!-- <bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver" p:order="103"> <property name="prefix" value="/WEB-INF/views/" /> <property name="viewNames" value="*.html,*.js,*.css" /> <property name="viewClass" value="org.springframework.web.servlet.view.InternalResourceView" /> </bean> -->
 				<!-- <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver" p:order="103"> <property name="viewClass" value="org.springframework.web.servlet.view.freemarker.FreeMarkerView" /> <property name="viewNames" value="*.html,*.js,*.css" /> <property name="attributesMap"> <map> <entry key="webRoot" value="/#{servletContext.servletContextName}" /> <entry key="publicRoot" value="/#{servletContext.servletContextName}/public" /> </map> </property> <property name="prefix" value="/WEB-INF/views/" /> </bean> -->
@@ -264,6 +272,7 @@
 		<property name="cookieMaxAge" value="-1" />
 		<property name="defaultLocale" value="zh_CN" />
 	</bean>
+
 	<!--End 国际化消息 -->
 
 
@@ -284,7 +293,7 @@
 				<prop key="javax.servlet.ServletException">/error/index.html</prop>
 				<prop key="java.io.FileNotFoundException">/error/index.html</prop>
 				<prop key="java.lang.RuntimeException">/error/index.html</prop>
-				<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">/error/index.html</prop>  
+				<prop key="org.springframework.web.multipart.MaxUploadSizeExceededException">/error/index.html</prop>
 			</props>
 		</property>
 		<property name="statusCodes">

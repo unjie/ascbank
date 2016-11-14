@@ -29,7 +29,7 @@ import com.ascbank.service.UrlFilterService;
 public class URLPermissionsFilter extends AuthorizationFilter {
 	private final Logger						log	= LoggerFactory.getLogger(URLPermissionsFilter.class);
 	private UrlFilterService<Long, UrlFilter>	urlFilterService;
-	
+
 	/**
 	 * 根据请求URL产生权限字符串，这里只产生，而比对的事交给Realm
 	 *
@@ -41,10 +41,10 @@ public class URLPermissionsFilter extends AuthorizationFilter {
 		HttpServletRequest req = (HttpServletRequest) request;
 		String path = req.getServletPath().toLowerCase();
 		UrlFilter urlFilter = urlFilterService.read(path);
-		
+
 		return urlFilter;
 	}
-	
+
 	/**
 	 * @param mappedValue
 	 *            指的是在声明url时指定的权限字符串，如/User/create.do=perms[User:create]. 我们要动态产生这个权限字符串，所以这个配置对我们没用
@@ -54,10 +54,10 @@ public class URLPermissionsFilter extends AuthorizationFilter {
 			throws IOException {
 		Boolean bool = true;// super.isAccessAllowed(request, response,
 		// buildPermissions(request));
-		
+
 		UrlFilter urlFilter = buildPermissions(request);
 		if (urlFilter != null) {
-			
+
 			Subject subject = getSubject(request, response);
 			if (!StringUtils.isEmpty(urlFilter.getRoles())) {
 				for (String role : urlFilter.getRoles().split(",")) {
@@ -70,11 +70,11 @@ public class URLPermissionsFilter extends AuthorizationFilter {
 				bool = subject.isPermittedAll(urlFilter.getPermissions().split(","));
 			}
 		}
-		
+
 		log.debug("-------------{}-------------", bool);
 		return bool;
 	}
-	
+
 	@Resource(name = "urlFilterService")
 	public void setUrlFilterService(UrlFilterService<Long, UrlFilter> urlFilterService) {
 		this.urlFilterService = urlFilterService;

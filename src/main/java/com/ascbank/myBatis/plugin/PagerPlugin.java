@@ -47,11 +47,11 @@ import com.ascbank.util.StringUtil;
 @Intercepts({ @Signature(type = StatementHandler.class, method = "prepare", args = { Connection.class }), @Signature(type = ResultSetHandler.class, method = "handleResultSets", args = { Statement.class })
 })
 public class PagerPlugin implements Interceptor {
-	
+
 	private Dialect						dialect;
-	
+
 	private final ThreadLocal<Integer>	tl	= new ThreadLocal<Integer>();
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
 	public Object intercept(Invocation invocation) throws Throwable {
@@ -92,19 +92,19 @@ public class PagerPlugin implements Interceptor {
 		}
 		return result;
 	}
-	
+
 	@Override
 	public Object plugin(Object target) {
 		return Plugin.wrap(target, this);
 	}
-	
+
 	public void setDialect(Dialect dialect) {
 		this.dialect = dialect;
 	}
-	
+
 	@Override
 	public void setProperties(Properties properties) {
-		
+
 	}
-	
+
 }

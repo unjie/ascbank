@@ -196,12 +196,11 @@ app
 										nodeData,
 										function(data) {
 											console.log(data);
+											$scope.articleData=data.article;
 											$uibModal.open({
 											    size: 'lg m-n no-padder',//aside
 												templateUrl : './manage/tpl/conent/articleFrom.html',
-												controller: function($scope) {
-													$scope.articleData =  data.article; 
-												}
+												scope:$scope
 											});
 
 										});

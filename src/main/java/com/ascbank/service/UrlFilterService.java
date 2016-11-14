@@ -14,9 +14,9 @@ import com.ascbank.model.base.PKEntity;
  *
  */
 public interface UrlFilterService<T extends Serializable, E extends PKEntity<T>> {
-	
+
 	UrlFilter read(String url);
-	
+
 	void setUrlFilterMapper(UrlFilterMapper urlFilterMapper);
-	
+
 }

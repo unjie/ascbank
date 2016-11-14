@@ -15,7 +15,7 @@ import org.springframework.web.servlet.view.AbstractUrlBasedView;
  *
  */
 public class GenericFileView extends AbstractUrlBasedView {
-	
+
 	// 默认内容类型
 	private final static String	CONTENT_TYPE	= "text/plain";
 
@@ -24,13 +24,13 @@ public class GenericFileView extends AbstractUrlBasedView {
 
 	public GenericFileView() {
 		super();
-		setContentType(CONTENT_TYPE);
+		setContentType(GenericFileView.CONTENT_TYPE);
 	}
-	
+
 	@Override
 	protected void renderMergedOutputModel(Map<String, Object> model,
 			HttpServletRequest request, HttpServletResponse response)
-			throws Exception {
+					throws Exception {
 		// 设置 content type
 		response.setContentType(getContentType());
 		// 写入 response 内容
@@ -51,5 +51,5 @@ public class GenericFileView extends AbstractUrlBasedView {
 	public void setResponseContent(String responseContent) {
 		this.responseContent = responseContent;
 	}
-	
+
 }

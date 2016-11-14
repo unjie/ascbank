@@ -21,7 +21,7 @@ import com.ascbank.service.basis.BaseAbstractService;
 @Service("userRoleService")
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
 public class UserRoleServiceImpl extends BaseAbstractService<Long, UserRole, UserRoleMapper> implements UserRoleService<Long, UserRole> {
-	
+
 	/**
 	 *
 	 */
@@ -29,7 +29,7 @@ public class UserRoleServiceImpl extends BaseAbstractService<Long, UserRole, Use
 
 	@Override
 	public List<UserRole> readRoleId(Long toId) {
-		
+
 		return getBean().selecRoleId(toId);
 	}
 
@@ -37,5 +37,5 @@ public class UserRoleServiceImpl extends BaseAbstractService<Long, UserRole, Use
 	public List<UserRole> readUserId(Long fromId) {
 		return getBean().selectUserId(fromId);
 	}
-	
+
 }

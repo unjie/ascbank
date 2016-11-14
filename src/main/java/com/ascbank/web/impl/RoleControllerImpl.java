@@ -18,7 +18,7 @@ import com.ascbank.web.basis.BaseAbstractController;
 @Controller
 @RequestMapping("/role")
 public class RoleControllerImpl extends BaseAbstractController<Long, Role, RoleService<Long, Role>> implements RoleController<Long, Role> {
-	
+
 	/**
 	 *
 	 */

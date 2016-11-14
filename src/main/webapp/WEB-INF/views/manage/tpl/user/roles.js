@@ -1,4 +1,4 @@
-app.controller('RolesCtrl', ['$scope', '$http', function($scope, $http) {
+app.controller('RolesCtrl', ['$scope','$uibModal', '$http', function($scope,$uibModal, $http) {
 	
 	//$scope.roleSelections=[];
 	
@@ -81,15 +81,6 @@ app.controller('RolesCtrl', ['$scope', '$http', function($scope, $http) {
 	
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
     $scope.filterOptions = {
         filterText: "",
         useExternalFilter: true
@@ -132,16 +123,21 @@ app.controller('RolesCtrl', ['$scope', '$http', function($scope, $http) {
 		console.log(rowItem);
 		console.log(event);
 		$scope.roleData = rowItem.entity;
-		$uibModal.open({
-		    size: 'lg m-n no-padder',//aside
-			templateUrl : 'aside/attrEditorForm.tpl.html',
-			controller: function($scope) {
-				$scope.roleData= rowItem.entity;
-			}
-		});
+		
 	}
+    
+    
     $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage);
 
+    $scope.$watch('roleData', function (newVal, oldVal) {
+        if (newVal !== oldVal &&( !oldVal || newVal.id !== oldVal.id )) {
+        	$uibModal.open({
+    		    size: 'lg m-n no-padder',
+    			templateUrl : 'aside/attrEditorForm.tpl.html',
+    			scope:$scope
+    		});
+        }
+    }, true);
     $scope.$watch('pagingOptions', function (newVal, oldVal) {
         if (newVal !== oldVal && newVal.currentPage !== oldVal.currentPage) {
           $scope.getPagedDataAsync($scope.pagingOptions.pageSize, $scope.pagingOptions.currentPage, $scope.filterOptions.filterText);

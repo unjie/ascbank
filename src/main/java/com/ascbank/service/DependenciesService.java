@@ -15,9 +15,9 @@ import com.ascbank.service.basis.BaseInterfaceService;
  *
  */
 public interface DependenciesService<T extends Serializable, E extends PKEntity<T>> extends BaseInterfaceService<T, E> {
-	
+
 	List<Dependencies> readFromId(Long fromId);
-	
+
 	List<Dependencies> readToId(Long toId);
-	
+
 }

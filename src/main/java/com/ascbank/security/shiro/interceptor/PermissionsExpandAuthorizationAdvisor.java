@@ -19,21 +19,21 @@ import com.ascbank.security.shiro.authz.annotation.AutoPermissions;
  */
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class PermissionsExpandAuthorizationAdvisor extends AuthorizationAttributeSourceAdvisor {
-	
+
 	private static final Logger							log						= LoggerFactory.getLogger(PermissionsExpandAuthorizationAdvisor.class);
-	
+
 	// 权限注解
 	private static final Class<? extends Annotation>[]	SELF_ANNOTATION_CLASSES	= new Class[] { AutoPermissions.class };
-	
+
 	private static final long							serialVersionUID		= 3706056055344294174L;
-	
+
 	/**
 	 * Create a new AuthorizationAttributeSourceAdvisor.
 	 */
 	public PermissionsExpandAuthorizationAdvisor() {
 		setAdvice(new AopPermissionsExpandAnnotationsAuthorizingMethodInterceptor());
 	}
-	
+
 	private boolean isSelfAnnotationPresent(Method method) {
 		for (Class<? extends Annotation> annClass : PermissionsExpandAuthorizationAdvisor.SELF_ANNOTATION_CLASSES) {
 			Annotation a = AnnotationUtils.findAnnotation(method, annClass);
@@ -43,14 +43,14 @@ public class PermissionsExpandAuthorizationAdvisor extends AuthorizationAttribut
 		}
 		return false;
 	}
-	
+
 	/**
 	 * 匹配带有注解的方法
 	 */
 	@Override
 	public boolean matches(Method method, Class targetClass) {
 		boolean flag = super.matches(method, targetClass);
-		
+
 		// 如果方法上没有权限注解，尝试获取类上的默认权限注解
 		if (!flag) {
 			if (isSelfAnnotationPresent(method)) {
@@ -58,7 +58,7 @@ public class PermissionsExpandAuthorizationAdvisor extends AuthorizationAttribut
 				return true;
 			}
 			if (targetClass != null) {
-				
+
 				try {
 					method = targetClass.getMethod(method.getName(), method.getParameterTypes());
 					if (isSelfAnnotationPresent(method)) {
@@ -72,5 +72,5 @@ public class PermissionsExpandAuthorizationAdvisor extends AuthorizationAttribut
 		}
 		return flag;
 	}
-	
+
 }

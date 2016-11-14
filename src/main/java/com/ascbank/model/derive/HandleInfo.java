@@ -3,10 +3,14 @@
  */
 package com.ascbank.model.derive;
 
+import com.fasterxml.jackson.annotation.JsonInclude;
+import com.fasterxml.jackson.annotation.JsonInclude.Include;
+
 /**
  * @author jie
  *
  */
+@JsonInclude(value = Include.NON_NULL)
 public class HandleInfo {
 	// private String compressedFilename;
 	private String		content;
@@ -15,13 +19,13 @@ public class HandleInfo {
 	private String[]	items;
 	private String		newPath;
 	private String		path;
-
+	
 	private String		perms;
-
+	
 	private String		permsCode;
 	private Boolean		recursive;
 	private String		toFilename;
-
+	
 	public String getContent() {
 		return content;
 	}
@@ -44,7 +48,7 @@ public class HandleInfo {
 	public String getPath() {
 		return path;
 	}
-
+	
 	/**
 	 * @return the perms
 	 */
@@ -72,7 +76,7 @@ public class HandleInfo {
 	public String getToFilename() {
 		return toFilename;
 	}
-
+	
 	public void setContent(String content) {
 		this.content = content;
 	}
@@ -128,7 +132,7 @@ public class HandleInfo {
 	public void setToFilename(String toFilename) {
 		this.toFilename = toFilename;
 	}
-
+	
 	/*
 	 * (non-Javadoc)
 	 *
@@ -138,5 +142,5 @@ public class HandleInfo {
 	public String toString() {
 		return "HandleInfo [ content=" + content + ", destination=" + destination + ", items=" + items + ", newPath=" + newPath + ", path=" + path + ", perms=" + perms + ", permsCode=" + permsCode + ", recursive=" + recursive + ", toFilename=" + toFilename + "]";
 	}
-
+	
 }

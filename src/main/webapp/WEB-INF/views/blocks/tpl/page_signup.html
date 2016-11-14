@@ -18,12 +18,6 @@
             <div class="list-group-item">
                <input type="password" placeholder="Password" class="form-control no-border" ng-model="user.password" required>
             </div>
-            <div class="list-group-item">
-	           <img src="captcha/image.jpg" class="form-control no-border" >
-	        </div>
-	        <div class="list-group-item">
-	           <input type="text" placeholder="Captcha" class="form-control no-border" ng-model="user.captcha" required>
-	        </div>
           </div>
           <div class="checkbox m-b-md m-t-none">
             <label class="i-checks">
@@ -36,6 +30,5 @@
           <a ui-sref="access.signin" class="btn btn-lg btn-default btn-block">Sign in</a>
         </form>
       </div>
-      <div class="text-center" ng-include="'blocks/page_footer.html'"></div>
+      <div class="text-center" ng-include="'tpl/blocks/page_footer.html'"></div>
     </div>
-    <script><#include "/user/register.js"/></script>

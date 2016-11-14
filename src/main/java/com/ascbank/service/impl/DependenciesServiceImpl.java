@@ -21,20 +21,20 @@ import com.ascbank.service.basis.BaseAbstractService;
 @Service("dependenciesService")
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
 public class DependenciesServiceImpl extends BaseAbstractService<Long, Dependencies, DependenciesMapper> implements DependenciesService<Long, Dependencies> {
-	
+
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = -815822323760563958L;
-	
+
 	@Override
 	public List<Dependencies> readFromId(Long fromId) {
 		return getBean().selectFromId(fromId);
 	}
-	
+
 	@Override
 	public List<Dependencies> readToId(Long toId) {
-		
+
 		return getBean().selectToId(toId);
 	}
 

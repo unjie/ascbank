@@ -18,7 +18,7 @@ import com.ascbank.service.basis.TreeInterfaceService;
  *
  */
 public abstract class TreeAbstractController<T extends Serializable, E extends TreeEntity<T, E>, S extends TreeInterfaceService<T, E>> extends BaseAbstractController<T, E, S> implements TreeInterfaceController<T, E> {
-	
+
 	/**
 	 *
 	 */
@@ -58,7 +58,7 @@ public abstract class TreeAbstractController<T extends Serializable, E extends T
 		}
 		return info;
 	}
-	
+
 	@Override
 	@ResponseBody
 	@RequestMapping(value = { "/stems/{stem:[\\w]*}" }, method = { RequestMethod.GET })
@@ -70,7 +70,7 @@ public abstract class TreeAbstractController<T extends Serializable, E extends T
 		info.setMessage("Succeed");
 		return info;
 	}
-	
+
 	@Override
 	@ResponseBody
 	@RequestMapping(value = { "/tree/{stem:([\\d]+,)+}" }, method = { RequestMethod.GET })

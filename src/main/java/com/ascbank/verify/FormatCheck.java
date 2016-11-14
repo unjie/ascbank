@@ -8,5 +8,5 @@ package com.ascbank.verify;
  *
  */
 public interface FormatCheck {
-	
+
 }

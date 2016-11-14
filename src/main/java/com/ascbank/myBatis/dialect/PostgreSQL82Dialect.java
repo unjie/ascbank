@@ -13,13 +13,13 @@ import com.ascbank.myBatis.dialect.pagination.LimitHelper;
  *
  */
 public class PostgreSQL82Dialect extends AbstractDialect implements Dialect {
-	
+
 	private static final AbstractLimitHandler LIMIT_HANDLER = new AbstractLimitHandler() {
 		@Override
 		public boolean bindLimitParametersInReverseOrder() {
 			return true;
 		}
-		
+
 		@Override
 		public String processSql(String sql, Pageable selection) {
 			final boolean hasOffset = LimitHelper.hasFirstRow(selection);
@@ -27,17 +27,17 @@ public class PostgreSQL82Dialect extends AbstractDialect implements Dialect {
 			int max = LimitHelper.getMaxRows(selection);
 			return sql + (hasOffset ? String.format(" limit %s offset %s", first, max) : String.format(" limit %s", max));
 		}
-		
+
 		@Override
 		public boolean supportsLimit() {
 			return true;
 		}
 	};
-	
+
 	@Override
 	public String getLimitSql(String querySql, Pageable pageable) {
 		// TODO Auto-generated method stub
 		return PostgreSQL82Dialect.LIMIT_HANDLER.processSql(querySql, pageable);
 	}
-	
+
 }

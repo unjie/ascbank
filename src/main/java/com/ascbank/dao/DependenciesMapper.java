@@ -8,11 +8,11 @@ import com.ascbank.repository.mybatis.MyBatisRepository;
 
 @MyBatisRepository
 public interface DependenciesMapper extends BaseInterfaceDao<Long, Dependencies> {
-	
+
 	Dependencies selectFromAndToId(Dependencies dep);
-	
+
 	List<Dependencies> selectFromId(Long fromId);
-	
+
 	List<Dependencies> selectToId(Long toId);
-	
+
 }

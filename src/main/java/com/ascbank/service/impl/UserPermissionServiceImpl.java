@@ -21,18 +21,18 @@ import com.ascbank.service.basis.BaseAbstractService;
 @Service("userPermissionService")
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
 public class UserPermissionServiceImpl extends BaseAbstractService<Long, UserPermission, UserPermissionMapper> implements UserPermissionService<Long, UserPermission> {
-	
+
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = -815822323760563958L;
-	
+
 	@Override
 	public List<UserPermission> readPermissionId(Long permissionId) {
-		
+
 		return getBean().selectPermissionId(permissionId);
 	}
-	
+
 	@Override
 	public List<UserPermission> readUserId(Long userId) {
 		return getBean().selectUserId(userId);

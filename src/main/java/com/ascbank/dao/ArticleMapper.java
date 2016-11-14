@@ -6,7 +6,7 @@ import com.ascbank.repository.mybatis.MyBatisRepository;
 
 @MyBatisRepository
 public interface ArticleMapper extends BaseInterfaceDao<Long, Article> {
-	
+
 	Article selelctByMenuId(Long menuId);
 
 }

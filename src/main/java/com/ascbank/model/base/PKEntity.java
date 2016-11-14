@@ -10,7 +10,7 @@ import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 
 @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
 public abstract class PKEntity<PK extends Serializable> implements Persistable<PK> {
-	
+
 	/**
 	 *
 	 */
@@ -26,7 +26,7 @@ public abstract class PKEntity<PK extends Serializable> implements Persistable<P
 	 */
 	@Override
 	public boolean equals(Object obj) {
-		
+
 		if (null == obj) {
 			return false;
 		}
@@ -61,7 +61,7 @@ public abstract class PKEntity<PK extends Serializable> implements Persistable<P
 	 */
 	@Override
 	public int hashCode() {
-		
+
 		int hashCode = 17;
 
 		hashCode += null == getId() ? 0 : getId().hashCode() * 31;

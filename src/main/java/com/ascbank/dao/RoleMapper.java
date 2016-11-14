@@ -6,5 +6,5 @@ import com.ascbank.repository.mybatis.MyBatisRepository;
 
 @MyBatisRepository
 public interface RoleMapper extends BaseInterfaceDao<Long, Role> {
-	
+
 }

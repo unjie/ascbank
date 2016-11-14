@@ -18,10 +18,10 @@ import com.ascbank.web.basis.TreeAbstractController;
 @Controller
 @RequestMapping("/menu")
 public class MenuControllerImpl extends TreeAbstractController<Long, Menu, MenuService<Long, Menu>> implements MenuController<Long, Menu> {
-	
+
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 333386088325045809L;
-	
+
 }

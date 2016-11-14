@@ -17,17 +17,17 @@ import org.apache.commons.lang3.StringEscapeUtils;
  * @author calvin
  */
 public class Encodes {
-	
+
 	private static final char[]	BASE62					= "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz".toCharArray();
 	private static final String	DEFAULT_URL_ENCODING	= "UTF-8";
-	
+
 	/**
 	 * Base64解码.
 	 */
 	public static byte[] decodeBase64(String input) {
 		return Base64.decodeBase64(input);
 	}
-	
+
 	/**
 	 * Hex解码.
 	 */
@@ -38,7 +38,7 @@ public class Encodes {
 			throw Exceptions.unchecked(e);
 		}
 	}
-	
+
 	/**
 	 * Base62编码。
 	 */
@@ -49,56 +49,56 @@ public class Encodes {
 		}
 		return new String(chars);
 	}
-	
+
 	/**
 	 * Base64编码.
 	 */
 	public static String encodeBase64(byte[] input) {
 		return Base64.encodeBase64String(input);
 	}
-	
+
 	/**
 	 * Hex编码.
 	 */
 	public static String encodeHex(byte[] input) {
 		return Hex.encodeHexString(input);
 	}
-	
+
 	/**
 	 * Base64编码, URL安全(将Base64中的URL非法字符'+'和'/'转为'-'和'_', 见RFC3548).
 	 */
 	public static String encodeUrlSafeBase64(byte[] input) {
 		return Base64.encodeBase64URLSafeString(input);
 	}
-	
+
 	/**
 	 * Html 转码.
 	 */
 	public static String escapeHtml(String html) {
 		return StringEscapeUtils.escapeHtml4(html);
 	}
-	
+
 	/**
 	 * Xml 转码.
 	 */
 	public static String escapeXml(String xml) {
 		return StringEscapeUtils.escapeXml11(xml);
 	}
-	
+
 	/**
 	 * Html 解码.
 	 */
 	public static String unescapeHtml(String htmlEscaped) {
 		return StringEscapeUtils.unescapeHtml4(htmlEscaped);
 	}
-	
+
 	/**
 	 * Xml 解码.
 	 */
 	public static String unescapeXml(String xmlEscaped) {
 		return StringEscapeUtils.unescapeXml(xmlEscaped);
 	}
-	
+
 	/**
 	 * URL 解码, Encode默认为UTF-8.
 	 */
@@ -109,7 +109,7 @@ public class Encodes {
 			throw Exceptions.unchecked(e);
 		}
 	}
-	
+
 	/**
 	 * URL 编码, Encode默认为UTF-8.
 	 */

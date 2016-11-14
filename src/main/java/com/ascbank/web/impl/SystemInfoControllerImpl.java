@@ -18,7 +18,7 @@ import com.ascbank.web.basis.BaseAbstractController;
 @Controller
 @RequestMapping("/systeminfo")
 public class SystemInfoControllerImpl extends BaseAbstractController<Long, SystemInfo, SystemInfoService<Long, SystemInfo>> implements SystemInfoController<Long, SystemInfo> {
-	
+
 	/**
 	 *
 	 */

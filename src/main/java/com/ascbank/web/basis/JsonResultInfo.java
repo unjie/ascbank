@@ -16,7 +16,7 @@ import com.fasterxml.jackson.annotation.JsonInclude.Include;
  */
 @JsonInclude(value = Include.NON_NULL)
 public class JsonResultInfo {
-	
+
 	private Object				data;
 
 	private Object				error;
@@ -28,19 +28,19 @@ public class JsonResultInfo {
 	// private String url;
 
 	private boolean				success	= false;
-	
+
 	public Object getData() {
 		return data;
 	}
-	
+
 	public Object getError() {
 		return error;
 	}
-	
+
 	public String getMessage() {
 		return message;
 	}
-	
+
 	public boolean isSuccess() {
 		return success;
 	}

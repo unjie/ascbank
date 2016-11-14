@@ -19,20 +19,20 @@ import com.ascbank.model.base.PKEntity;
  */
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
 public interface BaseInterfaceService<T extends Serializable, E extends PKEntity<T>> extends Serializable {
-	
+
 	@Transactional
 	public abstract E add(E entity) throws Exception;
-	
+
 	@Transactional
 	public abstract void delete(T id) throws Exception;
-	
+
 	public abstract List<E> read(Pageable pageable);
-	
+
 	public abstract List<E> read(Sort sort);
-	
+
 	public abstract E read(T id);
-	
+
 	@Transactional
 	public abstract E update(E entity) throws Exception;
-	
+
 }

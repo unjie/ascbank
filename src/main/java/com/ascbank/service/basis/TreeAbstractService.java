@@ -18,7 +18,7 @@ import com.ascbank.model.base.TreeEntity;
  */
 
 public abstract class TreeAbstractService<T extends Serializable, E extends TreeEntity<T, E>, D extends TreeInterfaceDao<T, E>> extends BaseAbstractService<T, E, D> implements TreeInterfaceService<T, E> {
-	
+
 	/**
 	 *
 	 */
@@ -48,10 +48,10 @@ public abstract class TreeAbstractService<T extends Serializable, E extends Tree
 		// TODO Auto-generated method stub
 		return this.beanDao.selectByStem(stem);
 	}
-	
+
 	@Override
 	public E getTree(E e) {
-		
+
 		if (e.getId() != null) {
 			e.setChildren(getTree(e.getId()));
 		} else if (e.getStem() != null) {
@@ -60,7 +60,7 @@ public abstract class TreeAbstractService<T extends Serializable, E extends Tree
 
 		return e;
 	}
-	
+
 	@Override
 	public List<E> getTree(String stem) {
 		// TODO Auto-generated method stub
@@ -75,7 +75,7 @@ public abstract class TreeAbstractService<T extends Serializable, E extends Tree
 
 		return es;
 	}
-	
+
 	@Override
 	public List<E> getTree(T parentId) {
 		// TODO Auto-generated method stub
@@ -83,12 +83,12 @@ public abstract class TreeAbstractService<T extends Serializable, E extends Tree
 		if (es.isEmpty() && es.size() < 1) {
 			return null;
 		}
-		
+
 		for (E e : es) {
 			((TreeEntity<T, E>) e).setChildren(this.getTree(e.getId()));
 		}
 
 		return es;
 	}
-	
+
 }

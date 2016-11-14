@@ -6,13 +6,13 @@ import com.ascbank.repository.mybatis.MyBatisRepository;
 
 @MyBatisRepository
 public interface UserMapper extends BaseInterfaceDao<Long, User> {
-	
+
 	User selectByEmail(String email);
 
 	User selectByPhone(Long phone);
-	
+
 	User selectByUser(User user);
 
 	User selectByUsername(String username);
-	
+
 }

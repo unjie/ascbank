@@ -15,9 +15,9 @@ import com.ascbank.service.basis.BaseInterfaceService;
  *
  */
 public interface UserPermissionService<T extends Serializable, E extends PKEntity<T>> extends BaseInterfaceService<T, E> {
-	
+
 	List<UserPermission> readPermissionId(Long PermissionId);
-	
+
 	List<UserPermission> readUserId(Long userId);
 
 }

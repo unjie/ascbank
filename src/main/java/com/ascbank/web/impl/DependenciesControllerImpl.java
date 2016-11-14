@@ -21,12 +21,12 @@ import com.ascbank.web.basis.JsonResultInfo;
 @Controller
 @RequestMapping("/dependencies")
 public class DependenciesControllerImpl extends BaseAbstractController<Long, Dependencies, DependenciesService<Long, Dependencies>> implements DependenciesController<Long, Dependencies> {
-	
+
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = -7713298953921279482L;
-	
+
 	@Override
 	@ResponseBody
 	@RequestMapping("/read/fromid/{fromId:[\\d]+}")

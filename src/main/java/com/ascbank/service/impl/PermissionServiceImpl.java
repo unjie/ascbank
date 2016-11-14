@@ -19,10 +19,10 @@ import com.ascbank.service.basis.BaseAbstractService;
 @Service("permissionService")
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
 public class PermissionServiceImpl extends BaseAbstractService<Long, Permission, PermissionMapper> implements PermissionService<Long, Permission> {
-	
+
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = -889644476025098304L;
-	
+
 }

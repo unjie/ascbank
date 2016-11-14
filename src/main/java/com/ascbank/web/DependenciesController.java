@@ -14,9 +14,9 @@ import com.ascbank.web.basis.JsonResultInfo;
  *
  */
 public interface DependenciesController<T extends Serializable, E extends PKEntity<T>> extends BaseInterfaceController<T, E> {
-	
+
 	JsonResultInfo readFromId(Long fromId);
-	
+
 	JsonResultInfo readToId(Long toId);
-	
+
 }

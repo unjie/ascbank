@@ -22,7 +22,7 @@ angular.module('app')
               .state('app', {
                   abstract: true,
                   url: '/app',
-                  templateUrl: 'tpl/app.html'
+                //  templateUrl: 'tpl/app.html'
               })
               .state('app.dashboard-v1', {
                   url: '/dashboard-v1',

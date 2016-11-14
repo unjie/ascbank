@@ -21,7 +21,7 @@ import com.ascbank.service.basis.BaseAbstractService;
 @Service("rolePermissionService")
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
 public class RolePermissionServiceImpl extends BaseAbstractService<Long, RolePermission, RolePermissionMapper> implements RolePermissionService<Long, RolePermission> {
-	
+
 	/**
 	 *
 	 */
@@ -29,7 +29,7 @@ public class RolePermissionServiceImpl extends BaseAbstractService<Long, RolePer
 
 	@Override
 	public List<RolePermission> readPermissionId(Long permissionId) {
-		
+
 		return getBean().selectPermissionId(permissionId);
 	}
 
@@ -37,5 +37,5 @@ public class RolePermissionServiceImpl extends BaseAbstractService<Long, RolePer
 	public List<RolePermission> readRoleId(Long roleId) {
 		return getBean().selectRoleId(roleId);
 	}
-	
+
 }

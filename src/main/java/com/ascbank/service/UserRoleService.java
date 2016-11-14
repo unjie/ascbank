@@ -15,9 +15,9 @@ import com.ascbank.service.basis.BaseInterfaceService;
  *
  */
 public interface UserRoleService<T extends Serializable, E extends PKEntity<T>> extends BaseInterfaceService<T, E> {
-	
+
 	List<UserRole> readRoleId(Long toId);
-	
+
 	List<UserRole> readUserId(Long fromId);
-	
+
 }

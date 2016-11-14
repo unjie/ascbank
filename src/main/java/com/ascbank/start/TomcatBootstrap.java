@@ -15,14 +15,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class TomcatBootstrap {
-	
+
 	private static final Logger LOG = LoggerFactory.getLogger(TomcatBootstrap.class);
-	
+
 	private static Tomcat createTomcat(int port, String contextPath, String docBase, LifecycleListener lifecycleListener) throws Exception {
 		String tmpdir = System.getProperty("java.io.tmpdir");
 		Tomcat tomcat = new Tomcat();
 		tomcat.setBaseDir(tmpdir);
-		
+
 		tomcat.getHost().setAppBase(tmpdir);
 		tomcat.getHost().setAutoDeploy(false);
 		tomcat.getHost().setDeployOnStartup(false);
@@ -39,20 +39,20 @@ public class TomcatBootstrap {
 		server.addLifecycleListener(new JreMemoryLeakPreventionListener());
 		return tomcat;
 	}
-	
+
 	private static String getDefaultDocBase() {
 		File classpathDir = new File(Thread.currentThread().getContextClassLoader().getResource(".").getFile());
 		File projectDir = classpathDir.getParentFile().getParentFile();
 		return new File(projectDir, "src/main/webapp").getPath();
 	}
-	
+
 	private static LifecycleListener getLifecycleListener(String path) {
-		
+
 		ContextConfig listener = new ContextConfig();
 		listener.setDefaultWebXml(path);
 		return listener;
 	}
-	
+
 	public static void main(String[] args) throws Exception { // 提升性能(https://wiki.apache.org/tomcat/HowTo/FasterStartUp)
 		System.setProperty("tomcat.util.scan.StandardJarScanFilter.jarsToSkip", "*.jar");
 		// System.setProperty("securerandom.source","file:/dev/./urandom");
@@ -63,7 +63,7 @@ public class TomcatBootstrap {
 		final Tomcat tomcat = TomcatBootstrap.createTomcat(port, contextPath, docBase, TomcatBootstrap.getLifecycleListener("/WEB-INF/web.xml"));
 		tomcat.start();
 		Runtime.getRuntime().addShutdownHook(new Thread() {
-			
+
 			@Override
 			public void run() {
 				try {
@@ -75,7 +75,7 @@ public class TomcatBootstrap {
 		});
 		tomcat.getServer().await();
 	}
-	
+
 	// 在这里调整参数优化
 	private static Connector newNioConnector() {
 		Connector connector = new Connector("org.apache.coyote.http11.Http11NioProtocol");
@@ -83,5 +83,5 @@ public class TomcatBootstrap {
 		Http11NioProtocol protocol = (Http11NioProtocol) connector.getProtocolHandler();
 		return connector;
 	}
-	
+
 }

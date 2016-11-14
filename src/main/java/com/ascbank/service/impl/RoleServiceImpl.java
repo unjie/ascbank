@@ -19,10 +19,10 @@ import com.ascbank.service.basis.BaseAbstractService;
 @Service("roleService")
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
 public class RoleServiceImpl extends BaseAbstractService<Long, Role, RoleMapper> implements RoleService<Long, Role> {
-	
+
 	/**
 	 *
 	 */
 	private static final long serialVersionUID = 7808011505169491578L;
-	
+
 }

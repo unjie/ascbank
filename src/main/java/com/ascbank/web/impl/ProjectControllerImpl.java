@@ -18,7 +18,7 @@ import com.ascbank.web.basis.TreeAbstractController;
 @Controller
 @RequestMapping("/project")
 public class ProjectControllerImpl extends TreeAbstractController<Long, Project, ProjectService<Long, Project>> implements ProjectController<Long, Project> {
-	
+
 	/**
 	 *
 	 */

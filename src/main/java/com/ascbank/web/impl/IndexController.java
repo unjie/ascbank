@@ -1,6 +1,3 @@
-/**
- *
- */
 package com.ascbank.web.impl;
 
 import javax.servlet.http.HttpServletRequest;
@@ -19,18 +16,17 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class IndexController {
 	private Logger log = LoggerFactory.getLogger(IndexController.class);
-	
+
 	@Order(200)
-	@RequestMapping(value = { "/**/*.html", }, method = RequestMethod.GET)
+	@RequestMapping(value = { "/**/*.htm", }, method = RequestMethod.GET)
 	public String htmlExtension(HttpServletRequest request) {
 		String path = request.getServletPath();
 		log.debug("======{}===========", path);
 		/*
 		 * if (path.matches("/WEB-INF/")) { return "/error/404.html"; }
 		 */
-		
-		return path;
-		
-	}
 
+		return path + "l";
+
+	}
 }

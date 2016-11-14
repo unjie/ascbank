@@ -21,7 +21,7 @@ import com.ascbank.service.basis.BaseAbstractService;
 @Service("taskService")
 @Transactional(readOnly = true, isolation = Isolation.READ_UNCOMMITTED)
 public class TaskServiceImpl extends BaseAbstractService<Long, Task, TaskMapper> implements TaskService<Long, Task> {
-	
+
 	/**
 	 *
 	 */

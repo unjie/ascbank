@@ -8,8 +8,8 @@ import com.ascbank.repository.mybatis.MyBatisRepository;
 
 @MyBatisRepository
 public interface RolePermissionMapper extends BaseInterfaceDao<Long, RolePermission> {
-	
+
 	List<RolePermission> selectPermissionId(Long permissionId);
-	
+
 	List<RolePermission> selectRoleId(Long roleId);
 }

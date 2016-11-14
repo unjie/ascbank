@@ -7,6 +7,6 @@ import java.util.Map;
 import org.springframework.data.domain.Persistable;
 
 public interface ValidetorInterface<T extends Serializable, E extends Persistable<T>> {
-	
+
 	public List<E> verify(Map<String, Object> map);
 }

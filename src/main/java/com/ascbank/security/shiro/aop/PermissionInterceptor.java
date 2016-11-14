@@ -20,13 +20,13 @@ import com.ascbank.util.StringUtil;
 //@Aspect
 //@Component
 public class PermissionInterceptor {
-	
+
 	private static final Logger log = LoggerFactory.getLogger(PermissionInterceptor.class);
-	
+
 	/******************************************
 	 * <bean id="profiler" class= "com.ascbank.security.annotation.PermissionInterceptor"/> <aop:config> <aop:aspect id="myAspect" ref="profiler"> <aop:pointcut id= "businessService" expression= "execution(* com.ascbank.*.*(..)) &amp;&amp;@annotation(entityPermissions)" /> <aop:before pointcut-ref="businessService" method="doInterceptor"/> </aop:aspect> </aop:config>
 	 ******************************************/
-	
+
 	@SuppressWarnings({ "unchecked", "rawtypes" })
 	// @Around("execution(* com.ascbank.*(..)) && @annotation(entityPermissions)")
 	public Object doInterceptor(ProceedingJoinPoint pjp, AutoPermissions autoPermissions) throws Throwable {
@@ -39,7 +39,7 @@ public class PermissionInterceptor {
 			String[] permission = autoPermissions.permission();
 			String ids = autoPermissions.ids();
 			String entityName = autoPermissions.entity();
-			
+
 			Object arg0 = pjp.getArgs()[0];
 			PermissionInterceptor.log.debug("------------------->（AOP）拦截到了:{}", arg0);
 			if (ids.isEmpty() && arg0 != null) {
@@ -61,26 +61,26 @@ public class PermissionInterceptor {
 					}
 				}
 			}
-			
+
 			if (arg0 != null && entityName.isEmpty()) {
 				entityName = arg0.getClass().getSimpleName();
 			}
 			ids = (StringUtil.isNullOrEmpty(ids) ? "" : (":" + ids));
-			
+
 			if (permission.length == 1) {
 				currentUser.checkPermission(entityName + ":" + permission[0] + ids);
 				// permission = new String[] { pjp.getSignature().getName() };
 			}
-			
+
 			for (int i = 0; 1 <= permission.length; i++) {
 				// 当前登录人 具有权限
 				permission[i] = entityName + ":" + permission[i] + ids;
 			}
-			
+
 			if (Logical.AND.equals(autoPermissions.logical())) {
 				currentUser.checkPermissions(permission);
 			}
-			
+
 			if (Logical.OR.equals(autoPermissions.logical())) {
 				// Avoid processing exceptions unnecessarily - "delay" throwing
 				// the exception by calling hasRole first
@@ -95,9 +95,9 @@ public class PermissionInterceptor {
 				if (!hasAtLeastOnePermission) {
 					currentUser.checkPermission(permission[0]);
 				}
-				
+
 			}
-			
+
 		} else {
 			isPermissioin = true;
 		}

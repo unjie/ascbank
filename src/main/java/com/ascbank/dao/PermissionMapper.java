@@ -6,5 +6,5 @@ import com.ascbank.repository.mybatis.MyBatisRepository;
 
 @MyBatisRepository
 public interface PermissionMapper extends BaseInterfaceDao<Long, Permission> {
-	
+
 }

@@ -14,7 +14,7 @@ import com.ascbank.web.basis.JsonResultInfo;
  *
  */
 public interface ArticleController<T extends Serializable, E extends PKEntity<T>> extends BaseInterfaceController<T, E> {
-	
+
 	JsonResultInfo reads(Long menuId);
-	
+
 }

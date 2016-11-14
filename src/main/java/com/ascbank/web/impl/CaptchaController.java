@@ -26,7 +26,7 @@ import com.google.code.kaptcha.Producer;
 @RequestMapping("/captcha")
 public class CaptchaController {
 	private Producer captchaProducer;
-	
+
 	@RequestMapping("/**.jpg")
 	public ModelAndView handleRequest(HttpServletRequest request, HttpServletResponse response) throws Exception {
 		response.setDateHeader("Expires", 0);
@@ -54,7 +54,7 @@ public class CaptchaController {
 		}
 		return null;
 	}
-	
+
 	@Resource(name = "captchaProducer")
 	public void setCaptchaProducer(Producer captchaProducer) {
 		this.captchaProducer = captchaProducer;
