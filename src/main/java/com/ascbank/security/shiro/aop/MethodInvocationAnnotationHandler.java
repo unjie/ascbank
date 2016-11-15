@@ -22,29 +22,29 @@ import com.ascbank.security.shiro.authz.annotation.AutoPermissions;
  *
  */
 public class MethodInvocationAnnotationHandler {
-
+	
 	private static final Logger log = LoggerFactory.getLogger(MethodInvocationAnnotationHandler.class);
-
+	
 	@SuppressWarnings({ "rawtypes", "unchecked" })
 	public Annotation MethodAnnotationHandler(MethodInvocation mi, Annotation a) {
 		// Subject currentUser = SecurityUtils.getSubject();
 		if (!(a instanceof AutoPermissions)) {
 			return a;
 		}
-
+		
 		AutoPermissions ap = (AutoPermissions) a;
-
+		
 		String[] permission = ap.permission();
 		String ids = ap.ids();
 		String entityName = ap.entity();
 		Object[] arg = mi.getArguments();
 		String authentication = "";
-
+		
 		MethodInvocationAnnotationHandler.log.debug("------------------->（AOP）拦截到了:{}", arg);
-
+		
 		if (entityName.isEmpty()) {
 			if (arg != null) {
-
+				
 				for (Object obj : arg) {
 					MethodInvocationAnnotationHandler.log.debug("------------------->（AOP）拦截到了{}", obj);
 					if (obj instanceof Persistable) {
@@ -68,26 +68,26 @@ public class MethodInvocationAnnotationHandler {
 									ids += ((Persistable) ob).getId() + ",";
 								}
 								ids.substring(0, ids.length() - 1);
-
+								
 							}
 							MethodInvocationAnnotationHandler.log.debug("------------------->1.（AOP）拦截到了:{}", entityName);
 						}
-
+						
 					}
 					MethodInvocationAnnotationHandler.log.debug("------------------->（AOP）拦截到了{}", obj);
-
+					
 				}
 			}
-
+			
 			if (entityName.isEmpty()) {
 				if (mi.getThis() instanceof GenericityInterface) {
 					GenericityInterface gi = (GenericityInterface) mi.getThis();
 					Class[] clazz = gi.getGenericitys();
-
+					
 					for (Class cls : clazz) {
 						if (Persistable.class.isAssignableFrom(cls)) {
 							entityName = cls.getSimpleName();
-
+							
 							if (ids.isEmpty() && arg != null && cls.getSuperclass().getConstructors()[0].equals(arg[0])) {
 								ids = arg[0].toString();
 							}
@@ -111,16 +111,16 @@ public class MethodInvocationAnnotationHandler {
 			// authentication += StringUtils.arrayToDelimitedString(permission, ",");
 			// String[] p = permission.clone();
 			for (int i = 0; i < permission.length; i++) {
-				permission[1] = authentication + permission[i] + ids;
+				permission[i] = authentication + permission[i] + ids;
 			}
 			AutoPermissions.AUTHENTICATION[0] = permission;
 		}
-
+		
 		// ap.AUTHENTICATION[0] = authentication + (ids.isEmpty() ? "" : (":" + ids));
-
+		
 		MethodInvocationAnnotationHandler.log.debug("------------------->{}（AOP）拦截到了:{}", (authentication + ":" + ids).toString(), AutoPermissions.AUTHENTICATION[0]);
-
+		
 		return a;
 	}
-
+	
 }

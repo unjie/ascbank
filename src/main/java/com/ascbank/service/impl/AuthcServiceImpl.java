@@ -25,7 +25,7 @@ import com.ascbank.shiro.authc.LoginToken;
 public class AuthcServiceImpl implements AuthcService<Login> {
 	
 	private Logger log = LoggerFactory.getLogger(AuthcServiceImpl.class);
-	
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -44,6 +44,7 @@ public class AuthcServiceImpl implements AuthcService<Login> {
 			subject.login(upt);
 			log.debug("--------------login----------------- user:   {}", user);
 			user = upt.getLogin();
+			user.setSave(null);
 			user.setPassword(null);
 			log.debug("--------------login----------------- LoginToken:   {}", upt);
 			upt.clear();
@@ -53,7 +54,7 @@ public class AuthcServiceImpl implements AuthcService<Login> {
 			throw new UserException("{User.nameAndPassword.error}");
 		}
 	}
-	
+
 	/*
 	 * (non-Javadoc)
 	 *
@@ -62,7 +63,7 @@ public class AuthcServiceImpl implements AuthcService<Login> {
 	@Override
 	public String logout() {
 		Subject subject = SecurityUtils.getSubject();
-		
+
 		if (subject != null) {
 			String username = (String) subject.getPrincipal();
 			log.debug("----logout {}-------------", username);
@@ -71,5 +72,5 @@ public class AuthcServiceImpl implements AuthcService<Login> {
 		}
 		return null;
 	}
-	
+
 }

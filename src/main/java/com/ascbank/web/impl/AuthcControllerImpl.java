@@ -80,7 +80,10 @@ public class AuthcControllerImpl implements AuthcController<Login>, InjectionInt
 	@RequestMapping(value = { "/login" }, method = { RequestMethod.POST })
 	public JsonResultInfo login(@RequestBody @Validated(value = { CaptchaCheck.class, LoginCheck.class }) Login user, BindingResult br) {
 		log.debug("----------User : {}-----BR : {}----", user, br);
+		
 		JsonResultInfo info = new JsonResultInfo();
+		// 验证码以验证后面无需使用
+		user.setCaptcha(null);
 		if (user != null && (user.getUsername() != null || user.getEmail() != null || user.getPhone() != null)) {
 			if (br.hasErrors()) {
 				log.debug("------------------{}-------------------", br.getAllErrors());
@@ -92,7 +95,7 @@ public class AuthcControllerImpl implements AuthcController<Login>, InjectionInt
 				
 				try {
 					beanService.login(user);
-
+					
 					info.setData(user);
 					info.setMessage("login successs");
 					log.debug("-----------{}---", user.toString());

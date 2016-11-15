@@ -1,0 +1,115 @@
+
+<div class="container w-auto-xs" ng-controller="InfoController">
+	<div class="row">
+		<div class="col-sm-12" ng-if="user">
+			<div class="panel panel-default">
+				<div class="panel-heading">{{user.username}} User Info</div>
+				<div class="panel-body">
+					<form class="bs-example form-horizontal" action="javascript:alert('提交成功')" ng-submit="save(user)" method="put" id="userForm" name="userForm">
+						<!-- 
+						<div class="form-group col-sm-6">
+							<label class="col-lg-2 control-label ng-binding">id</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="id" ng-model="user.id" type="number" readonly="readonly">
+							</div>
+						</div>
+						 -->
+						<div class="form-group  col-sm-6">
+							<label class="col-lg-2 control-label ng-binding">avatar</label>
+							<div class="col-lg-10">
+								<image class="avatar " placeholder="avatar" ng-model="user.avatar" ng-src="{{user.avatar || 'img/a0.jpg'}}" width="25%" type="image" ng-click="editorAvatar(user)">
+							</div>
+						</div>
+						<div class="form-group col-sm-6">
+							<label class="col-lg-2 control-label ng-binding">isOnline</label>
+							<div class="col-lg-10">
+								<label class="i-switch m-t-xs m-r"> <input type="checkbox" placeholder="isOnline" ng-model="user.isOnline" readonly="readonly"> <i></i>
+								</label>
+							</div>
+						</div>
+						<div class="form-group col-sm-6">
+							<label class="col-lg-2 control-label ng-binding">username</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="username" ng-model="user.username" type="text" required="required">
+							</div>
+						</div>
+						<div class="form-group col-sm-6">
+							<label class="col-lg-2 control-label ng-binding">email</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="email" ng-model="user.email" type="email">
+							</div>
+						</div>
+						<!-- 
+						<div class="form-group col-sm-6">
+							<label class="col-lg-2 control-label ng-binding">password</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="password" ng-model="user.password" type="text">
+							</div>
+						</div> 
+						-->
+						<div class="form-group col-sm-6">
+							<label class="col-lg-2 control-label ng-binding">phone</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="phone" ng-model="user.phone" type="numbe" max="18999999999" min="13000000000" >
+							</div>
+						</div>
+						<div class="form-group col-sm-6">
+							<label class="col-lg-2 control-label ng-binding">realName</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="realName" ng-model="user.realName" type="text">
+							</div>
+						</div>
+						<div class="form-group col-sm-6">
+							<label class="col-lg-2 control-label ng-binding">regtime</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="regtime" ng-model="user.regtime" readonly="readonly" type="text" uib-datepicker-popup="yyyy年MM月dd日 hh:mm:ss">
+							</div>
+						</div>
+						<div class="form-group col-sm-6">
+							<label class="col-lg-2 control-label ng-binding">encrypt</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="encrypt" ng-model="user.encrypt" type="text" readonly="readonly">
+							</div>
+						</div>
+						<div class="form-group col-sm-6">
+							<label class="col-lg-2 control-label ng-binding">lastloginip</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="lastloginip" ng-model="user.lastloginip" type="text" readonly="readonly">
+							</div>
+						</div>
+						<div class="form-group col-sm-6">
+							<label class="col-lg-2 control-label ng-binding">lastlogintime</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="lastlogintime" ng-model="user.lastlogintime" type="text" uib-datepicker-popup="yyyy年MM月dd日 hh:mm:ss" readonly="readonly">
+							</div>
+						</div>
+						<div class="form-group col-sm-6">
+							<label class="col-lg-2 control-label ng-binding">wechat</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="wechat" ng-model="user.wechat" type="text">
+							</div>
+						</div>
+						<div class="form-group col-sm-6">
+							<label class="col-lg-2 control-label ng-binding">wechatName</label>
+							<div class="col-lg-10">
+								<input class="form-control " placeholder="wechatName" ng-model="user.wechatName" type="text">
+							</div>
+						</div>
+						<div class="form-group col-sm-6">
+							<label class="col-lg-2 control-label ng-binding">description</label>
+							<div class="col-lg-10">
+								<textarea class="form-control " placeholder="description" ng-model="user.description" ></textarea>
+							</div>
+						</div>
+						<div class="form-group col-sm-12">
+							<div class="col-lg-offset-2 col-lg-10">
+								<button type="button" class="btn m-b-xs btn-sm btn-info btn-addon" ng-disabled="userFrom.$invalid" ng-click="save(user)">
+									<i class="fa  fa-save"></i>Save
+								</button>
+							</div>
+						</div>
+					</form>
+				</div>
+			</div>
+		</div>
+	</div>

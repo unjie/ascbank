@@ -150,7 +150,9 @@
 	
 	
 	<bean id="urlPermissions" class="com.ascbank.security.filter.URLPermissionsFilter" />
-	
+	<bean id="logout" class="org.apache.shiro.web.filter.authc.LogoutFilter"> 
+        <property name="redirectUrl" value="/index.html#/access/signin" /> 
+    </bean> 
 
 	<!-- 起效权限注解,这个很少在web项目中用到,一般是控制url的访问,不是在controller中声明权限注解 -->
 	<!-- 保证实现了Shiro内部lifecycle(生命周期)函数的bean执行 -->

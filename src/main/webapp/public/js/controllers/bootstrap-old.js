@@ -305,4 +305,3 @@ var app =  	angular.module('app');
       $scope.mytime = null;
     };
   }]);
-  
