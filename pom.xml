@@ -361,6 +361,14 @@
 		 
 		<!--[END] servlet -->
 		
+		<!--[START] tuckey RESTful 使用正则规则 规划url 重定向 -->
+		<dependency>
+			<groupId>org.tuckey</groupId>
+			<artifactId>urlrewritefilter</artifactId>
+			<version>4.0.4</version>
+		</dependency>
+		<!--[END] tuckey -->	
+		
 		<!--[START] tomcat -->
  		<!--
 		<dependency>

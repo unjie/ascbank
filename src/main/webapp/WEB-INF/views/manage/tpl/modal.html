@@ -2,8 +2,8 @@
 	<h3 class="modal-title">Modal!</h3>
 </div>
 <div class="modal-body">
-	<ul>
-		<li ng-repeat="item in items"><a ng-click="selected.item = item">{{ item }}</a></li>
+	<ul uib-carousel >
+		<li uib-slide ng-repeat="item in items"><a ng-click="selected.item = item">{{ item }}<!-- <img ng-src="{{slide.image}}" style="margin:auto;"> --></a></li>
 	</ul>
 	Selected: <b>{{ selected.item }}</b>
 </div>

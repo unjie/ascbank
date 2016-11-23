@@ -11,10 +11,10 @@ angular.module('app')
           angular.forEach(classes, function( _class ) {
             var target = targets[(targets.length && key)];            
             ( _class.indexOf( '*' ) !== -1 ) && magic(_class, target);
-            $( target ).toggleClass(_class);
+            angular.element( target ).toggleClass(_class);
             key ++;
           });
-          $(el).toggleClass('active');
+          angular.element(el).toggleClass('active');
 
           function magic(_class, target){
             var patt = new RegExp( '\\s' + 
@@ -27,7 +27,7 @@ angular.module('app')
             while ( patt.test( cn ) ) {
               cn = cn.replace( patt, ' ' );
             }
-            $(target)[0].className = $.trim( cn );
+            angular.element(target)[0].className = $.trim( cn );
           }
         });
       }

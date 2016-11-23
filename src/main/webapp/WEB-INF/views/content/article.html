@@ -1,0 +1,149 @@
+<div  class="col-sm-12" ng-controller="ArticleCtrl">
+<div class="bg-light lter b-b wrapper-md" >
+  <h1 class="m-n font-thin h3">{{menuData.title}}</h1>
+</div>
+<div class="wrapper-md">
+  <div class="row">
+    <div class="col-sm-9">
+      <div class="blog-post">
+         <div class="panel"   ng-include="url">
+        </div>
+        <!--
+        <div class="panel"  ng-bind-template="menuData.article.context">
+        </div>
+         -->
+      </div>
+      
+      <h4 class="m-t-lg m-b">3 Comments</h4>
+      <div>
+        <div>
+          <a class="pull-left thumb-sm">
+            <img src="img/a0.jpg" class="img-circle">
+          </a>
+          <div class="m-l-xxl m-b">
+            <div>
+              <a href><strong>John smith</strong></a>
+              <label class="label bg-info m-l-xs">Editor</label> 
+              <span class="text-muted text-xs block m-t-xs">
+                24 minutes ago
+              </span>
+            </div>
+            <div class="m-t-sm">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Morbi id neque quam. Aliquam sollicitudin venenatis ipsum ac feugiat. Vestibulum.</div>
+          </div>
+        </div>
+
+        <div class="m-l-xxl">
+          <a class="pull-left thumb-sm">
+            <img src="img/a1.jpg" class="img-circle">
+          </a>
+          <div class="m-l-xxl m-b">
+            <div>
+              <a href><strong>John smith</strong></a>
+              <label class="label bg-dark m-l-xs">Admin</label> 
+              <span class="text-muted text-xs block m-t-xs">
+                26 minutes ago
+              </span>
+            </div>
+            <div class="m-t-sm">Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</div>
+          </div>
+        </div>
+
+        <div>
+          <a class="pull-left thumb-sm">
+            <img src="img/a2.jpg" class="img-circle">
+          </a>
+          <div class="m-l-xxl m-b">
+            <div>
+              <a href><strong>John smith</strong></a>
+              <label class="label bg-dark m-l-xs">Admin</label> 
+              <span class="text-muted text-xs block m-t-xs">
+                26 minutes ago
+              </span>
+            </div>
+            <blockquote class="m-t">
+              <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer posuere erat a ante.</p>
+              <small>Someone famous in <cite title="Source Title">Source Title</cite></small>
+            </blockquote>
+            <div class="m-t-sm">Lorem ipsum dolor sit amet, consecteter adipiscing elit, sed diam nonummy nibh euismod tincidunt ut laoreet.</div>
+          </div>
+        </div>
+
+      </div>
+      <h4 class="m-t-lg m-b">Leave a comment</h4>
+      <form>
+        <div class="form-group">
+          <label>Comment</label>
+          <textarea class="form-control" rows="5" placeholder="Type your comment"></textarea>
+        </div>
+        <div class="form-group">
+          <button type="submit" class="btn btn-success">Submit comment</button>
+        </div>
+      </form>
+    </div>
+    <div class="col-sm-3">
+      <h5 class="font-bold">Categories</h5>
+      <ul class="list-group">
+        <li class="list-group-item">
+          <a href>
+            <span class="badge pull-right">15</span>
+            Photograph
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href>
+            <span class="badge pull-right">30</span>
+            Life style
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href>
+            <span class="badge pull-right">9</span>
+            Food
+          </a>
+        </li>
+        <li class="list-group-item">
+          <a href>
+            <span class="badge pull-right">4</span>
+            Travel world
+          </a>
+        </li>
+      </ul>
+      <div class="tags m-b-lg l-h-2x">
+        <a href class="label bg-primary">Bootstrap</a> <a href class="label bg-primary">Application</a> <a href class="label bg-primary">Apple</a> <a href class="label bg-primary">Less</a> <a href class="label bg-primary">Theme</a> <a href class="label bg-primary">Wordpress</a>
+      </div>
+      <h5 class="font-bold">Recent Posts</h5>
+      <div>
+        <div>
+          <a class="pull-left thumb thumb-wrapper m-r">
+            <img src="img/b0.jpg">
+          </a>
+          <div class="clear">                        
+            <a href class="font-semibold text-ellipsis">Bootstrap 3: What you need to know</a>
+            <div class="text-xs block m-t-xs"><a href>Travel</a> 2 minutes ago</div>
+          </div>
+        </div>
+        <div class="line"></div>
+        <div>
+          <a class="pull-left thumb thumb-wrapper m-r">
+            <img src="img/b1.jpg">
+          </a>
+          <div class="clear">                        
+            <a href class="font-semibold text-ellipsis">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</a>
+            <div class="text-xs block m-t-xs"><a href>Design</a> 2 hours ago</div>
+          </div>
+        </div>
+        <div class="line"></div>
+        <div>
+          <a class="pull-left thumb thumb-wrapper m-r">
+            <img src="img/b2.jpg">
+          </a>
+          <div class="clear">                        
+            <a href class="font-semibold text-ellipsis">Sed diam nonummy nibh euismod tincidunt ut laoreet</a>
+            <div class="text-xs block m-t-xs"><a href>MFC</a> 1 week ago</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+</div>

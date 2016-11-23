@@ -1,6 +1,6 @@
 app.controller('MailCtrl', ['$scope', function($scope) {
   $scope.folds = [
-    {name: 'Inbox', filter:''},
+    {name: 'Inbox', filter:'inbox'},
     {name: 'Starred', filter:'starred'},
     {name: 'Sent', filter:'sent'},
     {name: 'Important', filter:'important'},
