@@ -11,7 +11,6 @@ app.directive('uiMenu', [ '$templateCache', '$http', '$state', function( $templa
 		template : '<div  ><ul class="list-unstyled l-h-2x padder"  ng-model="menusData"><li ng-repeat="node in menusData"  data-collapsed="true" ng-include="\'navigation/menu.html\'"></li></ul></div>',
 		link : function(scope, el, attr) {
 			// el.addClass('hide');
-			// $ocLazyLoad.load(attr.uiTree || 'public/vendor/angular/angular-ui-tree/angular-ui-tree.min.js').then(function() {
 			scope.menusData = [] || attr.menus;
 			if (scope.menusData.length < 1) {
 				setTimeout(function() {
@@ -45,10 +44,8 @@ app.directive('uiMenu', [ '$templateCache', '$http', '$state', function( $templa
 				console.log(sco);
 				console.log('app.article.read({menuId:' + sco.node.id+'})');
 				$state.go('app.article.read',{menuId: sco.node.id});
-				//location.href='#/app/article/'+ sco.node.id;
 			}
 
-			// });
 		}
 	};
 } ]);

@@ -107,10 +107,11 @@
 		</mvc:resource-chain>
 	</mvc:resources>
 	<mvc:resources mapping="/img/**" location="/public/img/" cache-period="31556926" order="2" />
-	<mvc:resources mapping="/**/*.html" location="/WEB-INF/views/" cache-period="31556926" order="3" />
+	<mvc:resources  mapping="/images/**"  location="/WEB-INF/upload/images/" cache-period="31556926" order="3" />
+	<mvc:resources mapping="/**/*.html" location="/WEB-INF/views/" cache-period="31556926" order="4" />
 	<!-- <mvc:resources mapping="/**/*.htm" location="/WEB-INF/views/" cache-period="31556926" order="4" /> -->
-	<mvc:resources mapping="/**/*.js" location="/WEB-INF/views/" cache-period="31556926" order="4" />
-	<mvc:resources mapping="/**/*.css" location="/WEB-INF/views/" cache-period="31556926" order="5" />
+	<mvc:resources mapping="/**/*.js" location="/WEB-INF/views/" cache-period="31556926" order="5" />
+	<mvc:resources mapping="/**/*.css" location="/WEB-INF/views/" cache-period="31556926" order="6" />
 
 
 

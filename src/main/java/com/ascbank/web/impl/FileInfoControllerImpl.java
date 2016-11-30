@@ -48,10 +48,14 @@ import com.ascbank.web.basis.JsonResultInfo;
  * @author jie
  *
  */
+/**
+ * @author jie
+ *
+ */
 @Controller
 @RequestMapping("/file")
 public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInfo, FileInfoService<Long, FileInfo>> implements FileInfoController {
-
+	
 	// listUrl: "file/reads",--
 	// uploadUrl: "file/upload",--
 	// renameUrl: "file/rename",
@@ -66,26 +70,25 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 	// compressUrl: "file/compress",
 	// extractUrl: "file/extract",
 	// permissionsUrl: "file/permissions",
-
+	
 	/**
 	 *
 	 */
 	private static final long	serialVersionUID	= -8861014305471354851L;
-
+	
 	private Path				driveRoot;
-
+	
 	private final Logger		log					= LoggerFactory.getLogger(FileInfoControllerImpl.class);
-
-	// JSON Request content
-	// {
-	// "action": "compress",
-	// "items": ["/public_html/photos", "/public_html/docs"],
-	// "destination": "/public_html/backups",
-	// "compressedFilename": "random-files.zip"
-	// }}
-
-	// JSON Response
-	// { "result": { "success": true, "error": null } }
+	
+	/**
+	 * 压缩文件 <br/>
+	 * JSON Request content<br/>
+	 * { "action": "compress", "items": ["/public_html/photos", "/public_html/docs"], "destination": "/public_html/backups", "compressedFilename": "random-files.zip" }} <br/>
+	 * JSON Response<br/>
+	 * { "result": { "success": true, "error": null } }
+	 *
+	 * @see com.ascbank.web.FileInfoController#compress(com.ascbank.model.derive.HandleInfo)
+	 */
 	@Override
 	@ResponseBody
 	@RequestMapping(value = { "/compress" }, method = { RequestMethod.OPTIONS, RequestMethod.POST })
@@ -102,15 +105,15 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 			for (String p : info.getItems()) {
 				File f = driveRoot.resolve(Paths.get(p)).toFile();
 				FileUtilsIntensify.putFileZip(zipOut, f);
-
+				
 			}
-
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 			log.error("/compress Error {} ", e.getMessage());
 			log.debug("/compress Error {} ", e.getMessage());
-
+			
 			jri.setSuccess(false);
 			jri.setMessage("compress " + info.getItems() + " Fail !");
 		} finally {
@@ -127,32 +130,32 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 		log.debug("---------{}-------------", jri);
 		return jri;
 	}
-
-	// JSON Request content
-	// {
-	// "action": "getContent",
-	// "item": "/public_html/index.php"
-	// }
-
-	// JSON Response
-	// { "result": "<?php echo random(); ?>" }
+	
+	/**
+	 * 读取内容 JSON Request content<br/>
+	 * { "action": "getContent", "path": "/public_html/index.php" } <br/>
+	 * JSON Response<br/>
+	 * { "data": "<?php echo random(); ?>" }
+	 *
+	 * @see com.ascbank.web.FileInfoController#content(com.ascbank.model.derive.HandleInfo)
+	 */
 	@Override
 	@ResponseBody
 	@RequestMapping(value = { "/content" }, method = { RequestMethod.OPTIONS, RequestMethod.POST })
 	public JsonResultInfo content(@RequestBody HandleInfo info) {
 		log.debug("---------{}-------------", info);
 		JsonResultInfo jri = new JsonResultInfo();
-
+		
 		Path dirPath = driveRoot.resolve(Paths.get(info.getPath()));
 		File file = dirPath.toFile();
-
+		
 		if (!file.isFile()) {
 			// if not a file, it is a folder, show this error.
 			jri.setError(info.getPath() + " not File ! ");
 			jri.setSuccess(false);
 			return jri;
 		}
-
+		
 		try {
 			jri.setData(FileUtils.readFileToString(file));
 			jri.setMessage(info.getPath() + " File Read Success ! ");
@@ -163,26 +166,33 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 			log.error("{} ERROR {}", dirPath, e);
 			jri.setError(" ERROR : " + e);
 		}
-
+		
 		log.debug("---------{}-------------", jri);
 		return jri;
 	}
-
+	
+	/**
+	 * 复制<br/>
+	 * JSON Request content<br/>
+	 * {Items:{'file1.js',file2.js},newPath:'./new/'}
+	 *
+	 * @see com.ascbank.web.FileInfoController#copy(com.ascbank.model.derive.HandleInfo)
+	 **/
 	@Override
 	@ResponseBody
 	@RequestMapping(value = { "/copy" }, method = { RequestMethod.OPTIONS, RequestMethod.POST })
 	public JsonResultInfo copy(@RequestBody HandleInfo info) {
-
+		
 		log.debug("---------{}-------------", info);
 		JsonResultInfo jri = new JsonResultInfo();
-
+		
 		Path dirPath = driveRoot.resolve(Paths.get(info.getNewPath()));
-
+		
 		File srcFile = null, destFile = null;
 		jri.setSuccess(true);
 		jri.setMessage("/copy File Success ! ");
 		for (String p : info.getItems()) {
-
+			
 			srcFile = driveRoot.resolve(Paths.get(p)).toFile();
 			destFile = dirPath.resolve(Paths.get(((info.getItems().length > 1) ? srcFile.getName() : info.getToFilename()))).toFile();
 			try {
@@ -199,32 +209,35 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 				e.printStackTrace();
 			}
 		}
-
+		
 		return jri;
 	}
-
-	// JSON Response
-	// { "result": { "success": true, "error": null } }
-
-	// JSON Request content
-	// {
-	// "action": "createFolder",
-	// "newPath": "/public_html/new-folder"
-	// }
+	
+	/**
+	 * 创建文件夹<br/>
+	 * JSON Response<br>
+	 * { "success": true, "error": null }<br/>
+	 * JSON Request content <br/>
+	 * "action": "createFolder", <br/>
+	 * "newPath": "/public_html/new-folder" <br/>
+	 * }
+	 *
+	 * @see com.ascbank.web.FileInfoController#createFolder(com.ascbank.model.derive.HandleInfo)
+	 **/
 	@Override
 	@ResponseBody
 	@RequestMapping(value = "/create", method = { RequestMethod.PUT, RequestMethod.POST })
 	public JsonResultInfo createFolder(@RequestBody HandleInfo info) {
 		log.debug("---------{}-------------", info);
 		JsonResultInfo jri = new JsonResultInfo();
-
+		
 		Path dirPath = driveRoot.resolve(Paths.get(info.getNewPath()));
-
+		
 		if (dirPath.toFile().exists()) {
 			jri.setMessage("Directory Exist !");
 			jri.setSuccess(true);
 		} else {
-
+			
 			if (dirPath.toFile().mkdirs()) {
 				jri.setMessage("Directory mkdirs successs !");
 				jri.setSuccess(true);
@@ -232,33 +245,36 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 				jri.setMessage("Directory mkdirs  Failure!");
 				jri.setSuccess(false);
 			}
-
+			
 		}
 		return jri;
 	}
-
-	// Http query params
-	//
-	// [fileManagerConfig.downloadFileUrl]?action=download&path=/public_html/image.jpg
-	// Response
-	//
-	// -File content
+	
+	/**
+	 * 单个文件下载<br/>
+	 * Http query params<br>
+	 * [fileManagerConfig.downloadFileUrl]?action=download&path=/public_html/image.jpg <br/>
+	 * Response <br/>
+	 * -File content
+	 *
+	 * @see com.ascbank.web.FileInfoController#download(java.lang.String, javax.servlet.http.HttpServletResponse)
+	 */
 	@Override
 	@RequestMapping(value = "/download", method = { RequestMethod.POST, RequestMethod.GET })
 	public void download(@RequestParam("path") String path, HttpServletResponse response) {
 		log.debug("---------{}-------------", path);
-		Path realPath = driveRoot.resolve(Paths.get(path));
-
+		Path realPath = driveRoot.resolve(path);
+		
 		// Catch download requests
-
+		
 		// [$config.downloadFileUrl]?mode=download&preview=true&path=/public_html/image.jpg
 		// String mode = request.getParameter("mode");
 		// boolean preview = BooleanUtils.toBoolean(request.getParameter("preview"));
 		// String path = request.getParameter("path");
 		log.debug("/download: {}  ", realPath);
-
+		
 		File file = realPath.toFile();// new File(REPOSITORY_BASE_PATH, path);
-
+		
 		if (!file.isFile()) {
 			// if not a file, it is a folder, show this error.
 			try {
@@ -271,18 +287,18 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 			}
 			return;
 		}
-
+		
 		// se imageName non ha estensione o non è immagine sballa! ;)
 		// response.setHeader("Content-Type", getServletContext().getMimeType(imageName));
-
+		
 		response.setHeader("Content-Type", new MimetypesFileTypeMap().getContentType(file));
 		response.setHeader("Content-Length", String.valueOf(file.length()));
 		response.setHeader("Content-Disposition", "inline; filename=\"" + file.getName() + "\"");
-
+		
 		FileInputStream input = null;
 		BufferedOutputStream output = null;
 		try {
-
+			
 			input = new FileInputStream(file);
 			output = new BufferedOutputStream(response.getOutputStream());
 			byte[] buffer = new byte[8192];
@@ -290,9 +306,9 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 				output.write(buffer, 0, length);
 			}
 		} catch (Throwable t) {
-
+			
 			log.error(">>>>      /download IOExcption {}  ", t);
-
+			
 		} finally {
 			if (output != null) {
 				try {
@@ -309,20 +325,19 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 				}
 			}
 		}
-
+		
 		// return "forward:" + realPath.toString();
 	}
-
-	// JSON Request content
-	//
-	// {
-	// "action": "downloadMultiple",
-	// "items": ["/public_html/image1.jpg", "/public_html/image2.jpg"],
-	// "toFilename": "multiple-items.zip"
-	// }}
-	// Response
-	//
-	// -File content
+	
+	/**
+	 * 多个文件打包压缩下载 <br/>
+	 * JSON Request content <br/>
+	 * { "items": ["/public_html/image1.jpg", "/public_html/image2.jpg"], "toFilename": "multiple-items.zip" }} <br/>
+	 * Response <br/>
+	 * -File content
+	 *
+	 * @see com.ascbank.web.FileInfoController#downloads(com.ascbank.model.derive.HandleInfo, javax.servlet.http.HttpServletResponse)
+	 */
 	@Override
 	@RequestMapping(value = { "/downloads" }, method = { RequestMethod.OPTIONS, RequestMethod.POST })
 	public void downloads(@RequestBody HandleInfo info, HttpServletResponse response) {
@@ -334,9 +349,9 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 			for (String p : info.getItems()) {
 				File f = driveRoot.resolve(Paths.get(p)).toFile();
 				FileUtilsIntensify.putFileZip(zipOut, f);
-
+				
 			}
-
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -355,24 +370,23 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 		info.setPath(zippath.toString());
 		this.download(zippath.toString(), response);
 	}
-
-	// JSON Request content
-	//
-	// {
-	// "action": "edit",
-	// "item": "/public_html/index.php",
-	// "content": "<?php echo random(); ?>"
-	// }
-	// JSON Response
-	//
-	// { "result": { "success": true, "error": null } }
+	
+	/**
+	 * 编辑文件内容 <br/>
+	 * JSON Request content <br/>
+	 * { "action": "edit", "item": "/public_html/index.php", "content": "<?php echo random(); ?>" } <br/>
+	 * JSON Response <br/>
+	 * { "result": { "success": true, "error": null } }
+	 *
+	 * @see com.ascbank.web.FileInfoController#eidt(com.ascbank.model.derive.HandleInfo)
+	 */
 	@Override
 	@ResponseBody
 	@RequestMapping(value = { "/eidt" }, method = { RequestMethod.OPTIONS, RequestMethod.POST })
 	public JsonResultInfo eidt(@RequestBody HandleInfo info) {
 		log.debug("---------{}-------------", info);
 		JsonResultInfo jri = new JsonResultInfo();
-
+		
 		Path pa = driveRoot.resolve(Paths.get(info.getPath()));
 		try {
 			FileUtils.writeStringToFile(pa.toFile(), info.getContent());
@@ -382,13 +396,13 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 			log.error("/edit saveFile  {}", e);
 			jri.setSuccess(false);
 			jri.setMessage(info.getPath() + " File Save  Fail!");
-
+			
 		}
-
+		
 		log.debug("---------{}-------------", jri);
 		return jri;
 	}
-
+	
 	// JSON Request content
 	//
 	// {
@@ -405,15 +419,15 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 	public JsonResultInfo extract(@RequestBody HandleInfo info) {
 		log.debug("---------{}-------------", info);
 		JsonResultInfo jri = new JsonResultInfo();
-
+		
 		Path pa = driveRoot.resolve(Paths.get(info.getPath()));
-
+		
 		try {
 			FileUtilsIntensify.uncompress(pa.toFile(), driveRoot.resolve(Paths.get(info.getDestination())));
-
+			
 			jri.setSuccess(true);
 			jri.setMessage("File uncompress Success !");
-
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -423,7 +437,7 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 		log.debug("---------{}-------------", jri);
 		return jri;
 	}
-
+	
 	/**
 	 * @return the driveRoot
 	 */
@@ -431,7 +445,7 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 	public Path getDriveRoot() {
 		return driveRoot;
 	}
-
+	
 	// JSON Request content
 	//
 	// {
@@ -448,12 +462,12 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 	public JsonResultInfo move(@RequestBody HandleInfo info) {
 		log.debug("---------{}-------------", info);
 		JsonResultInfo jri = new JsonResultInfo();
-
+		
 		//////////////////////////////////////////////////////////////
-
+		
 		File destFile = null;
 		File srcFile = null;
-
+		
 		jri.setSuccess(true);
 		jri.setMessage("/move File Success ! ");
 		for (String p : info.getItems()) {
@@ -472,15 +486,15 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 				jri.setError(jri.getError() + " \n " + e.getMessage());
 				e.printStackTrace();
 			}
-
+			
 		}
-
+		
 		/////////////////////////////////////////////////////////////
-
+		
 		log.debug("---------{}-------------", jri);
 		return jri;
 	}
-
+	
 	// JSON Response
 	// { "result": { "success": true, "error": null } }
 	@Override
@@ -490,24 +504,24 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 		log.debug("---------{}-------------", info);
 		JsonResultInfo jri = new JsonResultInfo();
 		File file = driveRoot.resolve(Paths.get(info.getPath())).toFile();
-
+		
 		try {
 			setPermissions(file, info.getPermsCode(), info.getRecursive());
-
+			
 			jri.setSuccess(true);
 			jri.setMessage("File permissions " + info.getPermsCode() + " Success !");
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
-
+			
 			jri.setSuccess(false);
 			jri.setMessage("File permissions " + info.getPermsCode() + " File !");
 			e.printStackTrace();
 		}
-
+		
 		log.debug("---------{}-------------", jri);
 		return jri;
 	}
-
+	
 	// JSON Request content
 	//
 	// {
@@ -536,14 +550,14 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 	@RequestMapping(value = "/reads", method = { RequestMethod.GET, RequestMethod.POST })
 	public JsonResultInfo reads(@RequestBody HandleInfo info) throws IOException {
 		log.debug("---------{}-----{}--------", info, driveRoot.toString());
-
+		
 		JsonResultInfo jri = new JsonResultInfo();
 		List<FileInfo> data = new ArrayList<FileInfo>();
 		log.debug("-------{}---------", driveRoot);
-
+		
 		log.debug("-------{}---------", info.getPath());
-		Path infoPath = driveRoot.resolve(Paths.get(info.getPath()));
-
+		Path infoPath = driveRoot.resolve(info.getPath());
+		
 		log.debug("--{}----------", infoPath);
 		File infoFile = infoPath.toFile();
 		log.debug("--{}----------", infoFile.getPath());
@@ -561,17 +575,17 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 				finfo.setType(file.isDirectory() ? FileType.dir : FileType.file);
 				finfo.setSize(attrs.size());
 				finfo.setPerms(null);
-
+				
 				data.add(finfo);
 			}
-
+			
 		}
 		log.debug("--{}----------", data);
 		jri.setData(data);
 		log.debug("--{}----------", jri);
 		return jri;
 	}
-
+	
 	// JSON Request content
 	//
 	// {
@@ -597,17 +611,17 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 				} else {
 					jri.setError(jri.getError() + p + " Delete  Fail ! \n");
 				}
-
+				
 				jri.setMessage(info.getPath() + " Directory delete On Exit  Success!");
 			} else {
 				jri.setMessage(info.getPath() + " Directory delete On Exit  Fail!");
 				jri.setSuccess(false);
 			}
 		}
-
+		
 		return jri;
 	}
-
+	
 	// JSON Request content
 	// {
 	// "action": "changePermissions",
@@ -616,7 +630,7 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 	// "permsCode": "rw-r-x-wx",
 	// "recursive": true
 	// }
-
+	
 	// JSON Request content
 	//
 	// {
@@ -633,7 +647,7 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 	public JsonResultInfo rename(@RequestBody HandleInfo info) {
 		log.debug("---------{}-------------", info);
 		JsonResultInfo jri = new JsonResultInfo();
-
+		
 		log.debug("-------{}---------", info.getPath());
 		try {
 			File srcFile = driveRoot.resolve(Paths.get(info.getPath())).toFile();
@@ -643,7 +657,7 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 			} else {
 				FileUtils.moveDirectory(srcFile, destFile);
 			}
-
+			
 			jri.setSuccess(true);
 			jri.setMessage("rename  " + info.getPath() + " to " + info.getNewPath() + "Success !");
 		} catch (IOException e) {
@@ -655,7 +669,7 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 		log.debug("---------{}-------------", jri);
 		return jri;
 	}
-
+	
 	/**
 	 * @param driveRoot
 	 *            the driveRoot to set
@@ -666,7 +680,7 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 		log.debug("---------{}--", driveRoot);
 		this.driveRoot = Paths.get(driveRoot);
 	}
-
+	
 	private String setPermissions(File file, String permsCode, boolean recursive) throws IOException {
 		// http://www.programcreek.com/java-api-examples/index.php?api=java.nio.file.attribute.PosixFileAttributes
 		PosixFileAttributeView fileAttributeView = Files.getFileAttributeView(file.toPath(), PosixFileAttributeView.class);
@@ -678,13 +692,13 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 		}
 		return permsCode;
 	}
-
+	
 	/*
 	 * @Test public void test() throws IOException { HandleInfo hi = new HandleInfo(); hi.setPath("/"); FileController fc = new FileController(); fc.setDriveRoot("X:/Workspaces/Java/GIT/ascbank/src/main/webapp/WEB-INF/upload"); JsonResultInfo jri = fc.reads(hi); for (FileInfo fi : (List<FileInfo>) jri.getData()) { log.debug("-------------{}---------", fi); }
 	 *
 	 * }
 	 */
-
+	
 	// Http post request payload
 	//
 	// ------WebKitFormBoundaryqBnbHc6RKfXVAf9j
@@ -699,7 +713,7 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 	// { "result": { "success": true, "error": null } }
 	@Override
 	@ResponseBody
-	@RequestMapping(value = { "/upload" }, method = { RequestMethod.OPTIONS, RequestMethod.POST })
+	@RequestMapping(value = { "/upload" }, method = { RequestMethod.POST })
 	public JsonResultInfo upload(MultipartHttpServletRequest request, @RequestParam(name = "destination") String destination) {
 		// 如果只是上传一个文件，则只需要MultipartFile类型接收文件即可，而且无需显式指定@RequestParam注解
 		// 如果想上传多个文件，那么这里就要用MultipartFile[]类型来接收文件，并且还要指定@RequestParam注解
@@ -708,11 +722,12 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 		JsonResultInfo jri = new JsonResultInfo();
 		Map<String, MultipartFile> files = request.getMultiFileMap().toSingleValueMap();
 		log.debug("----/upload files length {} ", files.size());
-
+		jri.setSuccess(true);
+		FileInfo fileInfos[] = new FileInfo[files.size()];
+		int i = 0;
+		
 		for (MultipartFile file : files.values()) {
-
 			if (file.isEmpty()) {
-				jri.setSuccess(false);
 				jri.setMessage("File undefined  ! ");
 				log.debug("file undefined !");
 			} else {
@@ -720,23 +735,31 @@ public class FileInfoControllerImpl extends BaseAbstractController<Long, FileInf
 				log.debug("文件类型: {}", file.getContentType());
 				log.debug("文件名称: {}", file.getName());
 				log.debug("文件原名: {}", file.getOriginalFilename());
+				Path path = driveRoot.resolve(destination).resolve(file.getOriginalFilename());
+				File pathFile = path.toFile();
 				// 如果用的是Tomcat服务器，则文件会上传到\\%TOMCAT_HOME%\\webapps\\YourWebProject\\WEB-INF\\upload\\文件夹中
 				// String realPath = request.getSession().getServletContext().getRealPath(systemConfig.getProperty("FILES_UPLOAD_PATH"));// "/WEB-INF/upload"
 				// 这里不必处理IO流关闭的问题，因为FileUtils.copyInputStreamToFile()方法内部会自动把用到的IO流关掉，我是看它的源码才知道的
 				try {
-					FileUtils.copyInputStreamToFile(file.getInputStream(), driveRoot.resolve(Paths.get(destination, file.getOriginalFilename())).toFile());
-
+					if (!pathFile.exists()) {
+						pathFile.mkdirs();
+					}
+					file.transferTo(pathFile);// copyInputStreamToFile(file.getInputStream(), driveRoot.resolve(path.toFile());
+					fileInfos[i] = new FileInfo();
+					// FileInfo finfo = fileInfos[i].clone();
+					fileInfos[i].setPath(driveRoot.relativize(path).toString().replaceAll("\\\\", "/"));
+					i++;
+					jri.setSuccess(jri.isSuccess() && true);
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
 					log.error("/upload  {} Fail !", file.getName());
-
-					jri.setError(jri.getError() + " /upload " + file.getName() + " Fail !");
+					jri.setError(jri.getError() + " /upload " + path + " Fail !");
 					e.printStackTrace();
 				}
-
 			}
 		}
+		jri.setData(fileInfos);
 		return jri;
 	}
-
+	
 }

@@ -13,75 +13,75 @@
 }(function(a) {
     "use strict";
     a.extend(a.FE.POPUP_TEMPLATES, {
-        "image.insert": "[_BUTTONS_][_UPLOAD_LAYER_][_BY_URL_LAYER_][_PROGRESS_BAR_]",
-        "image.edit": "[_BUTTONS_]",
-        "image.alt": "[_BUTTONS_][_ALT_LAYER_]",
-        "image.size": "[_BUTTONS_][_SIZE_LAYER_]"
+        "file.insert": "[_BUTTONS_][_UPLOAD_LAYER_][_BY_URL_LAYER_][_PROGRESS_BAR_]",
+//        "file.edit": "[_BUTTONS_]",
+//        "file.alt": "[_BUTTONS_][_ALT_LAYER_]",
+//        "file.size": "[_BUTTONS_][_SIZE_LAYER_]"
     }),
     a.extend(a.FE.DEFAULTS, {
-        imageInsertButtons: ["imageBack", "|", "imageUpload", "imageByURL"],
-        imageEditButtons: ["imageReplace", "imageAlign", "imageRemove", "|", "imageLink", "linkOpen", "linkEdit", "linkRemove", "-", "imageDisplay", "imageStyle", "imageAlt", "imageSize"],
-        imageAltButtons: ["imageBack", "|"],
-        imageSizeButtons: ["imageBack", "|"],
-        imageUploadURL: "./file/upload",
-        imageUploadParam: "files",
-        imageUploadParams: {},
-        imageUploadToS3: !1,
-        imageUploadMethod: "POST",
-        imageMaxSize: 10485760,
-        imageAllowedTypes: ["jpeg", "jpg", "png", "gif", "svg+xml"],
-        imageResize: !0,
-        imageResizeWithPercent: !1,
-        imageRoundPercent: !1,
-        imageDefaultWidth: 300,
-        imageDefaultAlign: "center",
-        imageDefaultDisplay: "block",
-        imageSplitHTML: !1,
-        imageStyles: {
+        fileInsertButtons: ["fileBack", "|", "fileUpload", "fileByURL"],
+        fileEditButtons: ["fileReplace", "fileAlign", "fileRemove", "|", "fileLink", "linkOpen", "linkEdit", "linkRemove", "-", "fileDisplay", "fileStyle", "fileAlt", "fileSize"],
+        fileAltButtons: ["fileBack", "|"],
+        fileSizeButtons: ["fileBack", "|"],
+        fileUploadURL: "./file/upload",
+        fileUploadParam: "files",
+        fileUploadParams: {},
+        fileUploadToS3: !1,
+        fileUploadMethod: "POST",
+        fileMaxSize: 10485760,
+        fileAllowedTypes: ["jpeg", "jpg", "png", "gif", "svg+xml"],
+        fileResize: !0,
+        fileResizeWithPercent: !1,
+        fileRoundPercent: !1,
+        fileDefaultWidth: 300,
+        fileDefaultAlign: "center",
+        fileDefaultDisplay: "block",
+        fileSplitHTML: !1,
+        fileStyles: {
             "fr-rounded": "Rounded",
             "fr-bordered": "Bordered"
         },
-        imageMove: !0,
-        imageMultipleStyles: !0,
-        imageTextNear: !0,
-        imagePaste: !0,
-        imagePasteProcess: !1,
-        imageMinWidth: 16,
-        imageOutputSize: !1
+        fileMove: !0,
+        fileMultipleStyles: !0,
+        fileTextNear: !0,
+        filePaste: !0,
+        filePasteProcess: !1,
+        fileMinWidth: 16,
+        fileOutputSize: !1
     }),
-    a.FE.PLUGINS.image = function(b) {
+    a.FE.PLUGINS.file = function(b) {
         function c() {
-            var a = b.popups.get("image.insert")
-              , c = a.find(".fr-image-by-url-layer input");
+            var a = b.popups.get("file.insert")
+              , c = a.find(".fr-file-by-url-layer input");
             c.val(""),
             qa && c.val(qa.attr("src")),
             c.trigger("change")
         }
         function d() {
-            var a = b.$tb.find('.fr-command[data-cmd="insertImage"]')
-              , c = b.popups.get("image.insert");
+            var a = b.$tb.find('.fr-command[data-cmd="insertfile"]')
+              , c = b.popups.get("file.insert");
             if (c || (c = L()),
             r(),
             !c.hasClass("fr-active"))
-                if (b.popups.refresh("image.insert"),
-                b.popups.setContainer("image.insert", b.$tb),
+                if (b.popups.refresh("file.insert"),
+                b.popups.setContainer("file.insert", b.$tb),
                 a.is(":visible")) {
                     var d = a.offset().left + a.outerWidth() / 2
                       , e = a.offset().top + (b.opts.toolbarBottom ? 10 : a.outerHeight() - 10);
-                    b.popups.show("image.insert", d, e, a.outerHeight())
+                    b.popups.show("file.insert", d, e, a.outerHeight())
                 } else
                     b.position.forSelection(c),
-                    b.popups.show("image.insert")
+                    b.popups.show("file.insert")
         }
-        function e() {
-            var c = b.popups.get("image.edit");
+      /*  function e() {
+           var c = b.popups.get("file.edit");
             c || (c = p()),
-            b.popups.setContainer("image.edit", a(b.opts.scrollableContainer)),
-            b.popups.refresh("image.edit");
+            b.popups.setContainer("file.edit", a(b.opts.scrollableContainer)),
+            b.popups.refresh("file.edit");
             var d = qa.offset().left + qa.outerWidth() / 2
               , e = qa.offset().top + qa.outerHeight();
-            b.popups.show("image.edit", d, e, qa.outerHeight())
-        }
+            b.popups.show("file.edit", d, e, qa.outerHeight())
+        }*/
         function f() {
             r()
         }
@@ -90,9 +90,9 @@
                 var c = a.css("float");
                 a.css("float", "none"),
                 "block" == a.css("display") ? (a.css("float", c),
-                b.opts.imageEditButtons.indexOf("imageAlign") >= 0 && (0 === parseInt(a.css("margin-left"), 10) && (a.attr("style") || "").indexOf("margin-right: auto") >= 0 ? a.addClass("fr-fil") : 0 === parseInt(a.css("margin-right"), 10) && (a.attr("style") || "").indexOf("margin-left: auto") >= 0 && a.addClass("fr-fir")),
+                b.opts.fileEditButtons.indexOf("fileAlign") >= 0 && (0 === parseInt(a.css("margin-left"), 10) && (a.attr("style") || "").indexOf("margin-right: auto") >= 0 ? a.addClass("fr-fil") : 0 === parseInt(a.css("margin-right"), 10) && (a.attr("style") || "").indexOf("margin-left: auto") >= 0 && a.addClass("fr-fir")),
                 a.addClass("fr-dib")) : (a.css("float", c),
-                b.opts.imageEditButtons.indexOf("imageAlign") >= 0 && ("left" == a.css("float") ? a.addClass("fr-fil") : "right" == a.css("float") && a.addClass("fr-fir")),
+                b.opts.fileEditButtons.indexOf("fileAlign") >= 0 && ("left" == a.css("float") ? a.addClass("fr-fil") : "right" == a.css("float") && a.addClass("fr-fir")),
                 a.addClass("fr-dii")),
                 a.css("margin", ""),
                 a.css("float", ""),
@@ -106,10 +106,10 @@
         function h() {
             for (var c = "IMG" == b.$el.get(0).tagName ? [b.$el.get(0)] : b.$el.get(0).querySelectorAll("img"), d = 0; d < c.length; d++) {
                 var e = a(c[d]);
-                (b.opts.imageEditButtons.indexOf("imageAlign") >= 0 || b.opts.imageEditButtons.indexOf("imageDisplay") >= 0) && g(e),
+                (b.opts.fileEditButtons.indexOf("fileAlign") >= 0 || b.opts.fileEditButtons.indexOf("fileDisplay") >= 0) && g(e),
                 e.attr("width") && (e.css("width", e.width()),
                 e.removeAttr("width")),
-                b.opts.imageTextNear || e.removeClass("fr-dii").addClass("fr-dib"),
+                b.opts.fileTextNear || e.removeClass("fr-dii").addClass("fr-dib"),
                 b.opts.iframe && e.on("load", b.size.syncIframe)
             }
         }
@@ -117,12 +117,12 @@
             var c, d = Array.prototype.slice.call(b.$el.get(0).querySelectorAll("img")), e = [];
             for (c = 0; c < d.length; c++)
                 e.push(d[c].getAttribute("src")),
-                a(d[c]).toggleClass("fr-draggable", b.opts.imageMove),
+                a(d[c]).toggleClass("fr-draggable", b.opts.fileMove),
                 "" === d[c].className && d[c].removeAttribute("class"),
                 "" === d[c].getAttribute("style") && d[c].removeAttribute("style");
             if (Da)
                 for (c = 0; c < Da.length; c++)
-                    e.indexOf(Da[c].getAttribute("src")) < 0 && b.events.trigger("image.removed", [a(Da[c])]);
+                    e.indexOf(Da[c].getAttribute("src")) < 0 && b.events.trigger("file.removed", [a(Da[c])]);
             Da = d
         }
         function j() {
@@ -152,7 +152,7 @@
             sa.data("start-width", qa.width()),
             sa.data("start-height", qa.height());
             var d = qa.width();
-            if (b.opts.imageResizeWithPercent) {
+            if (b.opts.fileResizeWithPercent) {
                 var e = qa.parentsUntil(b.$el, b.html.blockTagsQuery()).get(0) || b.$el.get(0);
                 qa.css("width", (d / a(e).outerWidth() * 100).toFixed(2) + "%")
             } else
@@ -175,17 +175,17 @@
                   , f = d - e
                   , g = sa.data("start-width");
                 if ((sa.hasClass("fr-hnw") || sa.hasClass("fr-hsw")) && (f = 0 - f),
-                b.opts.imageResizeWithPercent) {
+                b.opts.fileResizeWithPercent) {
                     var h = qa.parentsUntil(b.$el, b.html.blockTagsQuery()).get(0) || b.$el.get(0);
                     g = ((g + f) / a(h).outerWidth() * 100).toFixed(2),
-                    b.opts.imageRoundPercent && (g = Math.round(g)),
+                    b.opts.fileRoundPercent && (g = Math.round(g)),
                     qa.css("width", g + "%"),
                     qa.css("height", "").removeAttr("height")
                 } else
-                    g + f >= b.opts.imageMinWidth && qa.css("width", g + f),
+                    g + f >= b.opts.fileMinWidth && qa.css("width", g + f),
                     qa.css("height", sa.data("start-height") * qa.width() / sa.data("start-width"));
                 j(),
-                b.events.trigger("image.resize", [oa()])
+                b.events.trigger("file.resize", [oa()])
             }
         }
         function n(a) {
@@ -198,16 +198,16 @@
                 sa = null ,
                 ta.hide(),
                 j(),
-                e(),
+//                e(),
                 b.undo.saveStep(),
-                b.events.trigger("image.resizeEnd", [oa()])
+                b.events.trigger("file.resizeEnd", [oa()])
             }
         }
         function o(a, c) {
             b.edit.on(),
             qa && qa.addClass("fr-error"),
             t(b.language.translate("Something went wrong. Please try again.")),
-            b.events.trigger("image.error", [{
+            b.events.trigger("file.error", [{
                 code: a,
                 message: Ca[a]
             }, c])
@@ -215,37 +215,37 @@
         function p(a) {
             if (a)
                 return b.$wp && b.events.$on(b.$wp, "scroll", function() {
-                    qa && b.popups.isVisible("image.edit") && e()
+                    qa /*&& b.popups.isVisible("file.edit") && e()*/
                 }),
                 !0;
             var c = "";
-            b.opts.imageEditButtons.length > 0 && (c += '<div class="fr-buttons">',
-            c += b.button.buildList(b.opts.imageEditButtons),
+            b.opts.fileEditButtons.length > 0 && (c += '<div class="fr-buttons">',
+            c += b.button.buildList(b.opts.fileEditButtons),
             c += "</div>");
             var d = {
                 buttons: c
             }
-              , f = b.popups.create("image.edit", d);
+//              , f = b.popups.create("file.edit", d);
             return f
         }
         function q(c) {
-            var d = b.popups.get("image.insert");
+            var d = b.popups.get("file.insert");
             if (d || (d = L()),
             d.find(".fr-layer.fr-active").removeClass("fr-active").addClass("fr-pactive"),
-            d.find(".fr-image-progress-bar-layer").addClass("fr-active"),
+            d.find(".fr-file-progress-bar-layer").addClass("fr-active"),
             d.find(".fr-buttons").hide(),
             qa) {
-                b.popups.setContainer("image.insert", a(b.opts.scrollableContainer));
+                b.popups.setContainer("file.insert", a(b.opts.scrollableContainer));
                 var e = qa.offset().left + qa.width() / 2
                   , f = qa.offset().top + qa.height();
-                b.popups.show("image.insert", e, f, qa.outerHeight())
+                b.popups.show("file.insert", e, f, qa.outerHeight())
             }
             "undefined" == typeof c && s("Uploading", 0)
         }
         function r(a) {
-            var c = b.popups.get("image.insert");
+            var c = b.popups.get("file.insert");
             c && (c.find(".fr-layer.fr-pactive").addClass("fr-active").removeClass("fr-pactive"),
-            c.find(".fr-image-progress-bar-layer").removeClass("fr-active"),
+            c.find(".fr-file-progress-bar-layer").removeClass("fr-active"),
             c.find(".fr-buttons").show(),
             (a || b.$el.find("img.fr-error").length) && (b.events.focus(),
             b.$el.find("img.fr-error").remove(),
@@ -254,9 +254,9 @@
             b.undo.dropRedo()))
         }
         function s(a, c) {
-            var d = b.popups.get("image.insert");
+            var d = b.popups.get("file.insert");
             if (d) {
-                var e = d.find(".fr-image-progress-bar-layer");
+                var e = d.find(".fr-file-progress-bar-layer");
                 e.find("h3").text(a + (c ? " " + c + "%" : "")),
                 e.removeClass("fr-error"),
                 c ? (e.find("div").removeClass("fr-indeterminate"),
@@ -265,16 +265,16 @@
         }
         function t(a) {
             q();
-            var c = b.popups.get("image.insert")
-              , d = c.find(".fr-image-progress-bar-layer");
+            var c = b.popups.get("file.insert")
+              , d = c.find(".fr-file-progress-bar-layer");
             d.addClass("fr-error"),
             d.find("h3").text(a)
         }
         function u() {
-            var a = b.popups.get("image.insert")
-              , c = a.find(".fr-image-by-url-layer input");
+            var a = b.popups.get("file.insert")
+              , c = a.find(".fr-file-by-url-layer input");
             c.val().length > 0 && (q(),
-            s("Loading image"),
+            s("Loading file"),
             x(c.val(), !0, [], qa),
             c.val(""),
             c.blur())
@@ -284,17 +284,17 @@
         }
         function w() {
             var c = a(this);
-            b.popups.hide("image.insert"),
+            b.popups.hide("file.insert"),
             c.removeClass("fr-uploading"),
             c.next().is("br") && c.next().remove(),
             v(c),
-            b.events.trigger("image.loaded", [c])
+            b.events.trigger("file.loaded", [c])
         }
         function x(a, c, d, e, f) {
             b.edit.off(),
-            s("Loading image"),
+            s("Loading file"),
             c && (a = b.helpers.sanitizeURL(a));
-            var g = new Image;
+            var g = new file;
             g.onload = function() {
                 var c, g;
                 if (e) {
@@ -315,12 +315,12 @@
                     b.edit.on(),
                     i(),
                     b.undo.saveStep(),
-                    b.events.trigger(h ? "image.replaced" : "image.inserted", [c, f])
+                    b.events.trigger(h ? "file.replaced" : "file.inserted", [c, f])
                 } else
                     c = D(a, d, w),
                     i(),
                     b.undo.saveStep(),
-                    b.events.trigger("image.inserted", [c, f])
+                    b.events.trigger("file.inserted", [c, f])
             }
             ,
             g.onerror = function() {
@@ -331,7 +331,7 @@
         }
         function y(c) {
             try {
-                if (b.events.trigger("image.uploaded", [c], !0) === !1)
+                if (b.events.trigger("file.uploaded", [c], !0) === !1)
                     return b.edit.on(),
                     !1;
                 var d = a.parseJSON(c).data[0];
@@ -346,7 +346,7 @@
             try {
                 var d = a(c).find("Location").text()
                   , e = a(c).find("Key").text();
-                return b.events.trigger("image.uploadedToS3", [d, e, c], !0) === !1 ? (b.edit.on(),
+                return b.events.trigger("file.uploadedToS3", [d, e, c], !0) === !1 ? (b.edit.on(),
                 !1) : d
             } catch (f) {
                 return o(ya, c),
@@ -354,13 +354,13 @@
             }
         }
         function A(a) {
-            s("Loading image");
+            s("Loading file");
             var c = this.status
               , d = this.response
               , e = this.responseXML
               , f = this.responseText;
             try {
-                if (b.opts.imageUploadToS3)
+                if (b.opts.fileUploadToS3)
                     if (201 == c) {
                         var g = z(e);
                         g && x(g, !1, [], a, d || e)
@@ -389,15 +389,15 @@
             if (d && "undefined" != typeof d)
                 for (f in d)
                     d.hasOwnProperty(f) && "link" != f && (g += " data-" + f + '="' + d[f] + '"');
-            var h = b.opts.imageDefaultWidth;
-            h && "auto" != h && (h += b.opts.imageResizeWithPercent ? "%" : "px");
-            var i = a('<img class="' + (b.opts.imageDefaultDisplay ? "fr-di" + b.opts.imageDefaultDisplay[0] : "") + (b.opts.imageDefaultAlign && "center" != b.opts.imageDefaultAlign ? " fr-fi" + b.opts.imageDefaultAlign[0] : "") + '" src="' + c + '"' + g + (h ? ' style="width: ' + h + ';"' : "") + ">");
+            var h = b.opts.fileDefaultWidth;
+            h && "auto" != h && (h += b.opts.fileResizeWithPercent ? "%" : "px");
+            var i = a('<img class="' + (b.opts.fileDefaultDisplay ? "fr-di" + b.opts.fileDefaultDisplay[0] : "") + (b.opts.fileDefaultAlign && "center" != b.opts.fileDefaultAlign ? " fr-fi" + b.opts.fileDefaultAlign[0] : "") + '" src="' + c + '"' + g + (h ? ' style="width: ' + h + ';"' : "") + ">");
             i.on("load", e),
             b.edit.on(),
             b.events.focus(!0),
             b.selection.restore(),
             b.undo.saveStep(),
-            b.opts.imageSplitHTML ? b.markers.split() : b.markers.insert();
+            b.opts.fileSplitHTML ? b.markers.split() : b.markers.insert();
             var j = b.$el.find(".fr-marker");
             return j.replaceWith(i),
             b.html.wrap(),
@@ -438,7 +438,7 @@
                     for (var c = atob(h.result.split(",")[1]), d = [], e = 0; e < c.length; e++)
                         d.push(c.charCodeAt(e));
                     a = window.URL.createObjectURL(new Blob([new Uint8Array(d)],{
-                        type: "image/jpeg"
+                        type: "file/jpeg"
                     }))
                 }
                 qa ? (qa.on("load", f),
@@ -450,48 +450,48 @@
             h.readAsDataURL(e)
         }
         function G(a) {
-            if (b.events.trigger("image.beforeUpload", [a]) === !1)
+            if (b.events.trigger("file.beforeUpload", [a]) === !1)
                 return !1;
             if ("undefined" != typeof a && a.length > 0) {
                 var c = a[0];
-                if (c.size > b.opts.imageMaxSize)
+                if (c.size > b.opts.fileMaxSize)
                     return o(za),
                     !1;
-                if (b.opts.imageAllowedTypes.indexOf(c.type.replace(/image\//g, "")) < 0)
+                if (b.opts.fileAllowedTypes.indexOf(c.type.replace(/file\//g, "")) < 0)
                     return o(Aa),
                     !1;
                 var d;
                 if (b.drag_support.formdata && (d = b.drag_support.formdata ? new FormData : null ),
                 d) {
                     var e;
-                    if (b.opts.imageUploadToS3 !== !1) {
-                        d.append("key", b.opts.imageUploadToS3.keyStart + (new Date).getTime() + "-" + (c.name || "untitled")),
+                    if (b.opts.fileUploadToS3 !== !1) {
+                        d.append("key", b.opts.fileUploadToS3.keyStart + (new Date).getTime() + "-" + (c.name || "untitled")),
                         d.append("success_action_status", "201"),
                         d.append("X-Requested-With", "xhr"),
                         d.append("Content-Type", c.type);
-                        for (e in b.opts.imageUploadToS3.params)
-                            b.opts.imageUploadToS3.params.hasOwnProperty(e) && d.append(e, b.opts.imageUploadToS3.params[e])
+                        for (e in b.opts.fileUploadToS3.params)
+                            b.opts.fileUploadToS3.params.hasOwnProperty(e) && d.append(e, b.opts.fileUploadToS3.params[e])
                     }
-                    for (e in b.opts.imageUploadParams)
-                        b.opts.imageUploadParams.hasOwnProperty(e) && d.append(e, b.opts.imageUploadParams[e]);
-                    d.append(b.opts.imageUploadParam, c);
-                    var f = b.opts.imageUploadURL;
-                    b.opts.imageUploadToS3 && (f = "https://" + b.opts.imageUploadToS3.region + ".amazonaws.com/" + b.opts.imageUploadToS3.bucket);
-                    var g = b.core.getXHR(f, b.opts.imageUploadMethod);
+                    for (e in b.opts.fileUploadParams)
+                        b.opts.fileUploadParams.hasOwnProperty(e) && d.append(e, b.opts.fileUploadParams[e]);
+                    d.append(b.opts.fileUploadParam, c);
+                    var f = b.opts.fileUploadURL;
+                    b.opts.fileUploadToS3 && (f = "https://" + b.opts.fileUploadToS3.region + ".amazonaws.com/" + b.opts.fileUploadToS3.bucket);
+                    var g = b.core.getXHR(f, b.opts.fileUploadMethod);
                     F(g, d, c)
                 }
             }
         }
         function H(c) {
-            b.events.$on(c, "dragover dragenter", ".fr-image-upload-layer", function() {
+            b.events.$on(c, "dragover dragenter", ".fr-file-upload-layer", function() {
                 return a(this).addClass("fr-drop"),
                 !1
             }),
-            b.events.$on(c, "dragleave dragend", ".fr-image-upload-layer", function() {
+            b.events.$on(c, "dragleave dragend", ".fr-file-upload-layer", function() {
                 return a(this).removeClass("fr-drop"),
                 !1
             }),
-            b.events.$on(c, "drop", ".fr-image-upload-layer", function(d) {
+            b.events.$on(c, "drop", ".fr-file-upload-layer", function(d) {
                 d.preventDefault(),
                 d.stopPropagation(),
                 a(this).removeClass("fr-drop");
@@ -499,17 +499,17 @@
                 if (e && e.files) {
                     var f = c.data("instance") || b;
                     f.events.disableBlur(),
-                    f.image.upload(e.files),
+                    f.file.upload(e.files),
                     f.events.enableBlur()
                 }
             }),
-            b.events.$on(c, "change", '.fr-image-upload-layer input[type="file"]', function() {
+            b.events.$on(c, "change", '.fr-file-upload-layer input[type="file"]', function() {
                 if (this.files) {
                     var d = c.data("instance") || b;
                     d.events.disableBlur(),
                     c.find("input:focus").blur(),
                     d.events.enableBlur(),
-                    d.image.upload(this.files)
+                    d.file.upload(this.files)
                 }
                 a(this).val("")
             })
@@ -518,15 +518,15 @@
             var d = c.originalEvent.dataTransfer;
             if (d && d.files && d.files.length) {
                 var e = d.files[0];
-                if (e && e.type && b.opts.imageAllowedTypes.indexOf(e.type.replace(/image\//g, "")) >= 0) {
+                if (e && e.type && b.opts.fileAllowedTypes.indexOf(e.type.replace(/file\//g, "")) >= 0) {
                     b.markers.remove(),
                     b.markers.insertAtPoint(c.originalEvent),
                     b.$el.find(".fr-marker").replaceWith(a.FE.MARKERS),
                     b.popups.hideAll();
-                    var f = b.popups.get("image.insert");
+                    var f = b.popups.get("file.insert");
                     return f || (f = L()),
-                    b.popups.setContainer("image.insert", a(b.opts.scrollableContainer)),
-                    b.popups.show("image.insert", c.originalEvent.pageX, c.originalEvent.pageY),
+                    b.popups.setContainer("file.insert", a(b.opts.scrollableContainer)),
+                    b.popups.show("file.insert", c.originalEvent.pageX, c.originalEvent.pageY),
                     q(),
                     G(d.files),
                     c.preventDefault(),
@@ -580,77 +580,77 @@
                 a.parents(".fr-toolbar").length > 0 && ca()
             }),
             b.events.on("mouseup", J),
-            b.events.on("blur image.hideResizer commands.undo commands.redo element.dropped", function() {
+            b.events.on("blur file.hideResizer commands.undo commands.redo element.dropped", function() {
                 ua = !1,
                 ca(!0)
             })
         }
         function L(a) {
             if (a)
-                return b.popups.onRefresh("image.insert", c),
-                b.popups.onHide("image.insert", f),
+                return b.popups.onRefresh("file.insert", c),
+                b.popups.onHide("file.insert", f),
                 !0;
             var d, e = "";
-            b.opts.imageInsertButtons.length > 1 && (e = '<div class="fr-buttons">' + b.button.buildList(b.opts.imageInsertButtons) + "</div>");
-            var g = b.opts.imageInsertButtons.indexOf("imageUpload")
-              , h = b.opts.imageInsertButtons.indexOf("imageByURL")
+            b.opts.fileInsertButtons.length > 1 && (e = '<div class="fr-buttons">' + b.button.buildList(b.opts.fileInsertButtons) + "</div>");
+            var g = b.opts.fileInsertButtons.indexOf("fileUpload")
+              , h = b.opts.fileInsertButtons.indexOf("fileByURL")
               , i = "";
             g >= 0 && (d = " fr-active",   h >= 0 && g > h && (d = ""),
-            i = '<div class="fr-image-upload-layer' + d + ' fr-layer" id="fr-image-upload-layer-' + b.id + '"><strong>' + b.language.translate("Drop image") + "</strong><br>(" + b.language.translate("or click") + ')<div class="fr-form"><input type="file" accept="image/' + b.opts.imageAllowedTypes.join(", image/").toLowerCase() + '" tabIndex="-1"></div></div>');
+            i = '<div class="fr-file-upload-layer' + d + ' fr-layer" id="fr-file-upload-layer-' + b.id + '"><strong>' + b.language.translate("Drop file") + "</strong><br>(" + b.language.translate("or click") + ')<div class="fr-form"><input type="file" accept="file/' + b.opts.fileAllowedTypes.join(", file/").toLowerCase() + '" tabIndex="-1"></div></div>');
             var j = "";
             h >= 0 && (d = " fr-active",   g >= 0 && h > g && (d = ""),
-            j = '<div class="fr-image-by-url-layer' + d + ' fr-layer" id="fr-image-by-url-layer-' + b.id + '"><div class="fr-input-line"><input type="text" placeholder="http://" tabIndex="1"></div><div class="fr-action-buttons"><button type="button" class="fr-command fr-submit" data-cmd="imageInsertByURL" tabIndex="2">' + b.language.translate("Insert") + "</button></div></div>");
-            var k = '<div class="fr-image-progress-bar-layer fr-layer"><h3 class="fr-message">Uploading</h3><div class="fr-loader"><span class="fr-progress"></span></div><div class="fr-action-buttons"><button type="button" class="fr-command fr-back" data-cmd="imageDismissError" tabIndex="2">OK</button></div></div>'
+            j = '<div class="fr-file-by-url-layer' + d + ' fr-layer" id="fr-file-by-url-layer-' + b.id + '"><div class="fr-input-line"><input type="text" placeholder="http://" tabIndex="1"></div><div class="fr-action-buttons"><button type="button" class="fr-command fr-submit" data-cmd="fileInsertByURL" tabIndex="2">' + b.language.translate("Insert") + "</button></div></div>");
+            var k = '<div class="fr-file-progress-bar-layer fr-layer"><h3 class="fr-message">Uploading</h3><div class="fr-loader"><span class="fr-progress"></span></div><div class="fr-action-buttons"><button type="button" class="fr-command fr-back" data-cmd="fileDismissError" tabIndex="2">OK</button></div></div>'
               , l = {
                 buttons: e,
                 upload_layer: i,
                 by_url_layer: j,
                 progress_bar: k
             }
-              , m = b.popups.create("image.insert", l);
+              , m = b.popups.create("file.insert", l);
             return b.$wp && b.events.$on(b.$wp, "scroll", function() {
-                qa && b.popups.isVisible("image.insert") && la()
+                qa && b.popups.isVisible("file.insert") && la()
             }),
             H(m),
             m
         }
-        function M() {
+       /* function M() {
             if (qa) {
-                var a = b.popups.get("image.alt");
+                var a = b.popups.get("file.alt");
                 a.find("input").val(qa.attr("alt") || "").trigger("change")
             }
         }
         function N() {
-            var c = b.popups.get("image.alt");
+            var c = b.popups.get("file.alt");
             c || (c = O()),
             r(),
-            b.popups.refresh("image.alt"),
-            b.popups.setContainer("image.alt", a(b.opts.scrollableContainer));
+            b.popups.refresh("file.alt"),
+            b.popups.setContainer("file.alt", a(b.opts.scrollableContainer));
             var d = qa.offset().left + qa.width() / 2
               , e = qa.offset().top + qa.height();
-            b.popups.show("image.alt", d, e, qa.outerHeight())
+            b.popups.show("file.alt", d, e, qa.outerHeight())
         }
         function O(a) {
             if (a)
-                return b.popups.onRefresh("image.alt", M),
+                return b.popups.onRefresh("file.alt", M),
                 !0;
             var c = "";
-            c = '<div class="fr-buttons">' + b.button.buildList(b.opts.imageAltButtons) + "</div>";
+            c = '<div class="fr-buttons">' + b.button.buildList(b.opts.fileAltButtons) + "</div>";
             var d = "";
-            d = '<div class="fr-image-alt-layer fr-layer fr-active" id="fr-image-alt-layer-' + b.id + '"><div class="fr-input-line"><input type="text" placeholder="' + b.language.translate("Alternate Text") + '" tabIndex="1"></div><div class="fr-action-buttons"><button type="button" class="fr-command fr-submit" data-cmd="imageSetAlt" tabIndex="2">' + b.language.translate("Update") + "</button></div></div>";
+            d = '<div class="fr-file-alt-layer fr-layer fr-active" id="fr-file-alt-layer-' + b.id + '"><div class="fr-input-line"><input type="text" placeholder="' + b.language.translate("Alternate Text") + '" tabIndex="1"></div><div class="fr-action-buttons"><button type="button" class="fr-command fr-submit" data-cmd="fileSetAlt" tabIndex="2">' + b.language.translate("Update") + "</button></div></div>";
             var e = {
                 buttons: c,
                 alt_layer: d
             }
-              , f = b.popups.create("image.alt", e);
-            return b.$wp && b.events.$on(b.$wp, "scroll.image-alt", function() {
-                qa && b.popups.isVisible("image.alt") && N()
+              , f = b.popups.create("file.alt", e);
+            return b.$wp && b.events.$on(b.$wp, "scroll.file-alt", function() {
+                qa && b.popups.isVisible("file.alt") && N()
             }),
             f
         }
         function P(a) {
             if (qa) {
-                var c = b.popups.get("image.alt");
+                var c = b.popups.get("file.alt");
                 qa.attr("alt", a || c.find("input").val() || ""),
                 c.find("input:focus").blur(),
                 v(qa)
@@ -658,54 +658,54 @@
         }
         function Q() {
             if (qa) {
-                var a = b.popups.get("image.size");
+                var a = b.popups.get("file.size");
                 a.find('input[name="width"]').val(qa.get(0).style.width).trigger("change"),
                 a.find('input[name="height"]').val(qa.get(0).style.height).trigger("change")
             }
         }
         function R() {
-            var c = b.popups.get("image.size");
+            var c = b.popups.get("file.size");
             c || (c = S()),
             r(),
-            b.popups.refresh("image.size"),
-            b.popups.setContainer("image.size", a(b.opts.scrollableContainer));
+            b.popups.refresh("file.size"),
+            b.popups.setContainer("file.size", a(b.opts.scrollableContainer));
             var d = qa.offset().left + qa.width() / 2
               , e = qa.offset().top + qa.height();
-            b.popups.show("image.size", d, e, qa.outerHeight())
+            b.popups.show("file.size", d, e, qa.outerHeight())
         }
         function S(a) {
             if (a)
-                return b.popups.onRefresh("image.size", Q),
+                return b.popups.onRefresh("file.size", Q),
                 !0;
             var c = "";
-            c = '<div class="fr-buttons">' + b.button.buildList(b.opts.imageSizeButtons) + "</div>";
+            c = '<div class="fr-buttons">' + b.button.buildList(b.opts.fileSizeButtons) + "</div>";
             var d = "";
-            d = '<div class="fr-image-size-layer fr-layer fr-active" id="fr-image-size-layer-' + b.id + '"><div class="fr-image-group"><div class="fr-input-line"><input type="text" name="width" placeholder="' + b.language.translate("Width") + '" tabIndex="1"></div><div class="fr-input-line"><input type="text" name="height" placeholder="' + b.language.translate("Height") + '" tabIndex="1"></div></div><div class="fr-action-buttons"><button type="button" class="fr-command fr-submit" data-cmd="imageSetSize" tabIndex="2">' + b.language.translate("Update") + "</button></div></div>";
+            d = '<div class="fr-file-size-layer fr-layer fr-active" id="fr-file-size-layer-' + b.id + '"><div class="fr-file-group"><div class="fr-input-line"><input type="text" name="width" placeholder="' + b.language.translate("Width") + '" tabIndex="1"></div><div class="fr-input-line"><input type="text" name="height" placeholder="' + b.language.translate("Height") + '" tabIndex="1"></div></div><div class="fr-action-buttons"><button type="button" class="fr-command fr-submit" data-cmd="fileSetSize" tabIndex="2">' + b.language.translate("Update") + "</button></div></div>";
             var e = {
                 buttons: c,
                 size_layer: d
             }
-              , f = b.popups.create("image.size", e);
-            return b.$wp && b.events.$on(b.$wp, "scroll.image-size", function() {
-                qa && b.popups.isVisible("image.size") && R()
+              , f = b.popups.create("file.size", e);
+            return b.$wp && b.events.$on(b.$wp, "scroll.file-size", function() {
+                qa && b.popups.isVisible("file.size") && R()
             }),
             f
         }
         function T(a, c) {
             if (qa) {
-                var d = b.popups.get("image.size");
+                var d = b.popups.get("file.size");
                 qa.css("width", a || d.find('input[name="width"]').val()),
                 qa.css("height", c || d.find('input[name="height"]').val()),
                 d.find("input:focus").blur(),
                 v(qa)
             }
-        }
+        }*/
         function U(a) {
-            var c, d, e = b.popups.get("image.insert");
+            var c, d, e = b.popups.get("file.insert");
             if (qa || b.opts.toolbarInline)
                 qa && (d = qa.offset().top + qa.outerHeight());
             else {
-                var f = b.$tb.find('.fr-command[data-cmd="insertImage"]');
+                var f = b.$tb.find('.fr-command[data-cmd="insertfile"]');
                 c = f.offset().left + f.outerWidth() / 2,
                 d = f.offset().top + (b.opts.toolbarBottom ? 10 : f.outerHeight() - 10)
             }
@@ -713,36 +713,36 @@
             e.hasClass("fr-above") && (d += e.outerHeight())),
             e.find(".fr-layer").removeClass("fr-active"),
             e.find(".fr-" + a + "-layer").addClass("fr-active"),
-            b.popups.show("image.insert", c, d, qa ? qa.outerHeight() : 0)
+            b.popups.show("file.insert", c, d, qa ? qa.outerHeight() : 0)
         }
         function V(a) {
-            var c = b.popups.get("image.insert");
-            c.find(".fr-image-upload-layer").hasClass("fr-active") && a.addClass("fr-active")
+            var c = b.popups.get("file.insert");
+            c.find(".fr-file-upload-layer").hasClass("fr-active") && a.addClass("fr-active")
         }
         function W(a) {
-            var c = b.popups.get("image.insert");
-            c.find(".fr-image-by-url-layer").hasClass("fr-active") && a.addClass("fr-active")
+            var c = b.popups.get("file.insert");
+            c.find(".fr-file-by-url-layer").hasClass("fr-active") && a.addClass("fr-active")
         }
         function X() {
             var c;
-            b.shared.$image_resizer ? (ra = b.shared.$image_resizer,
+            b.shared.$file_resizer ? (ra = b.shared.$file_resizer,
             ta = b.shared.$img_overlay,
             b.events.on("destroy", function() {
                 ra.removeClass("fr-active").appendTo(a("body"))
-            }, !0)) : (b.shared.$image_resizer = a('<div class="fr-image-resizer"></div>'),
-            ra = b.shared.$image_resizer,
+            }, !0)) : (b.shared.$file_resizer = a('<div class="fr-file-resizer"></div>'),
+            ra = b.shared.$file_resizer,
             b.events.$on(ra, "mousedown", function(a) {
                 a.stopPropagation()
             }, !0),
-            b.opts.imageResize && (ra.append(k("nw") + k("ne") + k("sw") + k("se")),
-            b.shared.$img_overlay = a('<div class="fr-image-overlay"></div>'),
+            b.opts.fileResize && (ra.append(k("nw") + k("ne") + k("sw") + k("se")),
+            b.shared.$img_overlay = a('<div class="fr-file-overlay"></div>'),
             ta = b.shared.$img_overlay,
             c = ra.get(0).ownerDocument,
             a(c).find("body").append(ta))),
             b.events.on("shared.destroy", function() {
                 ra.html("").removeData().remove(),
                 ra = null ,
-                b.opts.imageResize && (ta.remove(),
+                b.opts.fileResize && (ta.remove(),
                 ta = null )
             }, !0),
             b.helpers.isMobile() || b.events.$on(a(b.o_win), "resize", function() {
@@ -750,7 +750,7 @@
                 la(),
                 q(!1))
             }),
-            b.opts.imageResize && (c = ra.get(0).ownerDocument,
+            b.opts.fileResize && (c = ra.get(0).ownerDocument,
             b.events.$on(ra, b._mousedown, ".fr-handler", l),
             b.events.$on(a(c), b._mousemove, m),
             b.events.$on(a(c.defaultView || c.parentWindow), b._mouseup, n),
@@ -758,7 +758,7 @@
         }
         function Y(c) {
             c = c || qa,
-            c && b.events.trigger("image.beforeRemove", [c]) !== !1 && (b.popups.hideAll(),
+            c && b.events.trigger("file.beforeRemove", [c]) !== !1 && (b.popups.hideAll(),
             ca(!0),
             c.get(0) == b.$el.get(0) ? c.removeAttr("src") : ("A" == c.get(0).parentNode.tagName ? (b.selection.setBefore(c.get(0).parentNode) || b.selection.setAfter(c.get(0).parentNode) || c.parent().after(a.FE.MARKERS),
             a(c.get(0).parentNode).remove()) : (b.selection.setBefore(c.get(0)) || b.selection.setAfter(c.get(0)) || c.after(a.FE.MARKERS),
@@ -831,7 +831,7 @@
             b.events.on("html.get", function(a) {
                 return a = a.replace(/<(img)((?:[\w\W]*?))class="([\w\W]*?)(fr-uploading|fr-error)([\w\W]*?)"((?:[\w\W]*?))>/g, "")
             }),
-            b.opts.imageOutputSize) {
+            b.opts.fileOutputSize) {
                 var c;
                 b.events.on("html.beforeGet", function() {
                     c = b.$el.get(0).querySelectorAll("img");
@@ -845,10 +845,10 @@
                         c[a].removeAttribute("height")
                 })
             }
-            b.opts.iframe && b.events.on("image.loaded", b.size.syncIframe),
+            b.opts.iframe && b.events.on("file.loaded", b.size.syncIframe),
             b.$wp && (i(),
             b.events.on("contentChanged", i)),
-            b.events.$on(a(b.o_win), "orientationchange.image", function() {
+            b.events.$on(a(b.o_win), "orientationchange.file", function() {
                 setTimeout(function() {
                     var a = oa();
                     a && v(a)
@@ -856,42 +856,42 @@
             }),
             p(!0),
             L(!0),
-            S(!0),
-            O(!0),
+//            S(!0),
+//            O(!0),
             b.events.on("node.remove", function(a) {
                 return "IMG" == a.get(0).tagName ? (Y(a),
                 !1) : void 0
             })
         }
         function $() {
-            b.opts.imagePaste ? b.$el.find("img[data-fr-image-pasted]").each(function(c, d) {
-                if (b.opts.imagePasteProcess) {
-                    var f = b.opts.imageDefaultWidth;
-                    f && "auto" != f && (f += b.opts.imageResizeWithPercent ? "%" : "px"),
+            b.opts.filePaste ? b.$el.find("img[data-fr-file-pasted]").each(function(c, d) {
+                if (b.opts.filePasteProcess) {
+                    var f = b.opts.fileDefaultWidth;
+                    f && "auto" != f && (f += b.opts.fileResizeWithPercent ? "%" : "px"),
                     a(d).css("width", f),
-                    a(d).removeClass("fr-dii fr-dib fr-fir fr-fil").addClass((b.opts.imageDefaultDisplay ? "fr-di" + b.opts.imageDefaultDisplay[0] : "") + (b.opts.imageDefaultAlign && "center" != b.opts.imageDefaultAlign ? " fr-fi" + b.opts.imageDefaultAlign[0] : ""))
+                    a(d).removeClass("fr-dii fr-dib fr-fir fr-fil").addClass((b.opts.fileDefaultDisplay ? "fr-di" + b.opts.fileDefaultDisplay[0] : "") + (b.opts.fileDefaultAlign && "center" != b.opts.fileDefaultAlign ? " fr-fi" + b.opts.fileDefaultAlign[0] : ""))
                 }
                 if (0 === d.src.indexOf("data:")) {
-                    if (b.events.trigger("image.beforePasteUpload", [d]) === !1)
+                    if (b.events.trigger("file.beforePasteUpload", [d]) === !1)
                         return !1;
                     qa = a(d),
                     j(),
-                    e(),
+//                    e(),
                     la(),
                     q(),
                     b.edit.off();
                     for (var g = atob(a(d).attr("src").split(",")[1]), h = [], i = 0; i < g.length; i++)
                         h.push(g.charCodeAt(i));
                     var k = new Blob([new Uint8Array(h)],{
-                        type: "image/jpeg"
+                        type: "file/jpeg"
                     });
                     G([k]),
-                    a(d).removeAttr("data-fr-image-pasted")
+                    a(d).removeAttr("data-fr-file-pasted")
                 } else
                     0 !== d.src.indexOf("http") ? (b.selection.save(),
                     a(d).remove(),
-                    b.selection.restore()) : a(d).removeAttr("data-fr-image-pasted")
-            }) : b.$el.find("img[data-fr-image-pasted]").remove()
+                    b.selection.restore()) : a(d).removeAttr("data-fr-file-pasted")
+            }) : b.$el.find("img[data-fr-file-pasted]").remove()
         }
         function _(a) {
             if (a && a.clipboardData && a.clipboardData.items && a.clipboardData.items[0]) {
@@ -900,9 +900,9 @@
                     var d = new FileReader;
                     return d.onload = function(a) {
                         var c = a.target.result
-                          , d = b.opts.imageDefaultWidth;
-                        d && "auto" != d && (d += b.opts.imageResizeWithPercent ? "%" : "px"),
-                        b.html.insert('<img data-fr-image-pasted="true" class="' + (b.opts.imageDefaultDisplay ? "fr-di" + b.opts.imageDefaultDisplay[0] : "") + (b.opts.imageDefaultAlign && "center" != b.opts.imageDefaultAlign ? " fr-fi" + b.opts.imageDefaultAlign[0] : "") + '" src="' + c + '"' + (d ? ' style="width: ' + d + ';"' : "") + ">"),
+                          , d = b.opts.fileDefaultWidth;
+                        d && "auto" != d && (d += b.opts.fileResizeWithPercent ? "%" : "px"),
+                        b.html.insert('<img data-fr-file-pasted="true" class="' + (b.opts.fileDefaultDisplay ? "fr-di" + b.opts.fileDefaultDisplay[0] : "") + (b.opts.fileDefaultAlign && "center" != b.opts.fileDefaultAlign ? " fr-fi" + b.opts.fileDefaultAlign[0] : "") + '" src="' + c + '"' + (d ? ' style="width: ' + d + ';"' : "") + ">"),
                         b.events.trigger("paste.after")
                     }
                     ,
@@ -912,7 +912,7 @@
             }
         }
         function aa(a) {
-            return a = a.replace(/<img /gi, '<img data-fr-image-pasted="true" ')
+            return a = a.replace(/<img /gi, '<img data-fr-file-pasted="true" ')
         }
         function ba(c) {
             if (a(this).parents('[contenteditable="false"]:not(.fr-element):not(body)').length)
@@ -924,7 +924,7 @@
                 c.preventDefault(),
                 !1;
             for (var d = 0; d < a.FE.INSTANCES.length; d++)
-                a.FE.INSTANCES[d] != b && a.FE.INSTANCES[d].events.trigger("image.hideResizer");
+                a.FE.INSTANCES[d] != b && a.FE.INSTANCES[d].events.trigger("file.hideResizer");
             b.toolbar.disable(),
             c && (c.stopPropagation(),
             c.preventDefault()),
@@ -935,7 +935,7 @@
             qa = a(this),
             ma(),
             j(),
-            e(),
+//           e(),
             b.selection.clear(),
             b.button.bulkRefresh(),
             b.events.trigger("video.hideResizer")
@@ -943,7 +943,7 @@
         function ca(a) {
             qa && (fa() || a === !0) && (b.toolbar.enable(),
             ra.removeClass("fr-active"),
-            b.popups.hide("image.edit"),
+//            b.popups.hide("file.edit"),
             qa = null ,
             ea())
         }
@@ -959,8 +959,8 @@
         function ga(a) {
             qa.removeClass("fr-fir fr-fil"),
             "left" == a ? qa.addClass("fr-fil") : "right" == a && qa.addClass("fr-fir"),
-            j(),
-            e()
+            j()
+//            e()
         }
         function ha(a) {
             qa && (qa.hasClass("fr-fil") ? a.find("> *:first").replaceWith(b.icon.create("align-left")) : qa.hasClass("fr-fir") ? a.find("> *:first").replaceWith(b.icon.create("align-right")) : a.find("> *:first").replaceWith(b.icon.create("align-justify")))
@@ -975,8 +975,8 @@
         function ja(a) {
             qa.removeClass("fr-dii fr-dib"),
             "inline" == a ? qa.addClass("fr-dii") : "block" == a && qa.addClass("fr-dib"),
-            j(),
-            e()
+            j()
+//           e()
         }
         function ka(a, b) {
             var c = "block";
@@ -984,14 +984,14 @@
             b.find('.fr-command[data-param1="' + c + '"]').addClass("fr-active")
         }
         function la() {
-            var c = b.popups.get("image.insert");
+            var c = b.popups.get("file.insert");
             c || (c = L()),
-            b.popups.isVisible("image.insert") || (r(),
-            b.popups.refresh("image.insert"),
-            b.popups.setContainer("image.insert", a(b.opts.scrollableContainer)));
+            b.popups.isVisible("file.insert") || (r(),
+            b.popups.refresh("file.insert"),
+            b.popups.setContainer("file.insert", a(b.opts.scrollableContainer)));
             var d = qa.offset().left + qa.width() / 2
               , e = qa.offset().top + qa.height();
-            b.popups.show("image.insert", d, e, qa.outerHeight())
+            b.popups.show("file.insert", d, e, qa.outerHeight())
         }
         function ma() {
             if (qa) {
@@ -1007,15 +1007,15 @@
             v(qa)) : (b.events.disableBlur(),
             b.selection.restore(),
             b.events.enableBlur(),
-            b.popups.hide("image.insert"),
+            b.popups.hide("file.insert"),
             b.toolbar.showInline())
         }
         function oa() {
             return qa
         }
         function pa(a, c, d) {
-            if ("undefined" == typeof c && (c = b.opts.imageStyles),
-            "undefined" == typeof d && (d = b.opts.imageMultipleStyles),
+            if ("undefined" == typeof c && (c = b.opts.fileStyles),
+            "undefined" == typeof d && (d = b.opts.fileMultipleStyles),
             !qa)
                 return !1;
             if (!d) {
@@ -1027,12 +1027,12 @@
             v(qa)
         }
         var qa, ra, sa, ta, ua = !1, va = 1, wa = 2, xa = 3, ya = 4, za = 5, Aa = 6, Ba = 7, Ca = {};
-        Ca[va] = "Image cannot be loaded from the passed link.",
+        Ca[va] = "file cannot be loaded from the passed link.",
         Ca[wa] = "No link in upload response.",
         Ca[xa] = "Error during file upload.",
         Ca[ya] = "Parsing response failed.",
         Ca[za] = "File is too large.",
-        Ca[Aa] = "Image file type is invalid.",
+        Ca[Aa] = "file file type is invalid.",
         Ca[Ba] = "Files can be uploaded only to same domain in IE 8 and IE 9.";
         var Da, Ea, Fa = !1;
         return {
@@ -1055,77 +1055,77 @@
             showProgressBar: q,
             remove: Y,
             hideProgressBar: r,
-            applyStyle: pa,
-            showAltPopup: N,
-            showSizePopup: R,
-            setAlt: P,
-            setSize: T,
-            exitEdit: ca,
-            edit: v
+            applyStyle: pa
+          //  showAltPopup: N,
+          //  showSizePopup: R,
+          //  setAlt: P,
+          //  setSize: T,
+        //    exitEdit: ca,
+         //   edit: v
         }
     }
     ,
-    a.FE.DefineIcon("insertImage", {
-        NAME: "image"
+    a.FE.DefineIcon("insertfile", {
+        NAME: "file"
     }),
-    a.FE.RegisterShortcut(a.FE.KEYCODE.P, "insertImage", null , "P"),
-    a.FE.RegisterCommand("insertImage", {
-        title: "Insert Image",
+    a.FE.RegisterShortcut(a.FE.KEYCODE.P, "insertfile", null , "P"),
+    a.FE.RegisterCommand("insertfile", {
+        title: "Insert file",
         undo: !1,
         focus: !0,
         refreshAfterCallback: !1,
         popup: !0,
         callback: function() {
-            this.popups.isVisible("image.insert") ? (this.$el.find(".fr-marker") && (this.events.disableBlur(),
+            this.popups.isVisible("file.insert") ? (this.$el.find(".fr-marker") && (this.events.disableBlur(),
             this.selection.restore()),
-            this.popups.hide("image.insert")) : this.image.showInsertPopup()
+            this.popups.hide("file.insert")) : this.file.showInsertPopup()
         },
-        plugin: "image"
+        plugin: "file"
     }),
-    a.FE.DefineIcon("imageUpload", {
+    a.FE.DefineIcon("fileUpload", {
         NAME: "upload"
     }),
-    a.FE.RegisterCommand("imageUpload", {
-        title: "Upload Image",
+    a.FE.RegisterCommand("fileUpload", {
+        title: "Upload file",
         undo: !1,
         focus: !1,
         callback: function() {
-            this.image.showLayer("image-upload")
+            this.file.showLayer("file-upload")
         },
         refresh: function(a) {
-            this.image.refreshUploadButton(a)
+            this.file.refreshUploadButton(a)
         }
     }),
-    a.FE.DefineIcon("imageByURL", {
+    a.FE.DefineIcon("fileByURL", {
         NAME: "link"
     }),
-    a.FE.RegisterCommand("imageByURL", {
+    a.FE.RegisterCommand("fileByURL", {
         title: "By URL",
         undo: !1,
         focus: !1,
         callback: function() {
-            this.image.showLayer("image-by-url")
+            this.file.showLayer("file-by-url")
         },
         refresh: function(a) {
-            this.image.refreshByURLButton(a)
+            this.file.refreshByURLButton(a)
         }
     }),
-    a.FE.RegisterCommand("imageInsertByURL", {
-        title: "Insert Image",
+    a.FE.RegisterCommand("fileInsertByURL", {
+        title: "Insert file",
         undo: !0,
         refreshAfterCallback: !1,
         callback: function() {
-            this.image.insertByURL()
+            this.file.insertByURL()
         },
         refresh: function(a) {
-            var b = this.image.get();
+            var b = this.file.get();
             b ? a.text(this.language.translate("Replace")) : a.text(this.language.translate("Insert"))
         }
-    }),
-    a.FE.DefineIcon("imageDisplay", {
+    })
+/*    a.FE.DefineIcon("fileDisplay", {
         NAME: "star"
     }),
-    a.FE.RegisterCommand("imageDisplay", {
+    a.FE.RegisterCommand("fileDisplay", {
         title: "Display",
         type: "dropdown",
         options: {
@@ -1133,13 +1133,13 @@
             block: "Break Text"
         },
         callback: function(a, b) {
-            this.image.display(b)
+            this.file.display(b)
         },
         refresh: function(a) {
-            this.opts.imageTextNear || a.addClass("fr-hidden")
+            this.opts.fileTextNear || a.addClass("fr-hidden")
         },
         refreshOnShow: function(a, b) {
-            this.image.refreshDisplayOnShow(a, b)
+            this.file.refreshDisplayOnShow(a, b)
         }
     }),
     a.FE.ICONS.align || (a.FE.DefineIcon("align", {
@@ -1157,10 +1157,10 @@
     a.FE.DefineIcon("align-justify", {
         NAME: "align-justify"
     })),
-    a.FE.DefineIcon("imageAlign", {
+    a.FE.DefineIcon("fileAlign", {
         NAME: "align-center"
     }),
-    a.FE.RegisterCommand("imageAlign", {
+    a.FE.RegisterCommand("fileAlign", {
         type: "dropdown",
         title: "Align",
         options: {
@@ -1170,129 +1170,129 @@
         },
         html: function() {
             var b = '<ul class="fr-dropdown-list">'
-              , c = a.FE.COMMANDS.imageAlign.options;
+              , c = a.FE.COMMANDS.fileAlign.options;
             for (var d in c)
-                c.hasOwnProperty(d) && (b += '<li><a class="fr-command fr-title" data-cmd="imageAlign" data-param1="' + d + '" title="' + this.language.translate(c[d]) + '">' + this.icon.create("align-" + d) + "</a></li>");
+                c.hasOwnProperty(d) && (b += '<li><a class="fr-command fr-title" data-cmd="fileAlign" data-param1="' + d + '" title="' + this.language.translate(c[d]) + '">' + this.icon.create("align-" + d) + "</a></li>");
             return b += "</ul>"
         },
         callback: function(a, b) {
-            this.image.align(b)
+            this.file.align(b)
         },
         refresh: function(a) {
-            this.image.refreshAlign(a)
+            this.file.refreshAlign(a)
         },
         refreshOnShow: function(a, b) {
-            this.image.refreshAlignOnShow(a, b)
+            this.file.refreshAlignOnShow(a, b)
         }
     }),
-    a.FE.DefineIcon("imageReplace", {
+    a.FE.DefineIcon("fileReplace", {
         NAME: "exchange"
     }),
-    a.FE.RegisterCommand("imageReplace", {
+    a.FE.RegisterCommand("fileReplace", {
         title: "Replace",
         undo: !1,
         focus: !1,
         refreshAfterCallback: !1,
         callback: function() {
-            this.image.replace()
+            this.file.replace()
         }
     }),
-    a.FE.DefineIcon("imageRemove", {
+    a.FE.DefineIcon("fileRemove", {
         NAME: "trash"
     }),
-    a.FE.RegisterCommand("imageRemove", {
+    a.FE.RegisterCommand("fileRemove", {
         title: "Remove",
         callback: function() {
-            this.image.remove()
+            this.file.remove()
         }
     }),
-    a.FE.DefineIcon("imageBack", {
+    a.FE.DefineIcon("fileBack", {
         NAME: "arrow-left"
     }),
-    a.FE.RegisterCommand("imageBack", {
+    a.FE.RegisterCommand("fileBack", {
         title: "Back",
         undo: !1,
         focus: !1,
         back: !0,
         callback: function() {
-            this.image.back()
+            this.file.back()
         },
         refresh: function(a) {
-            var b = this.image.get();
+            var b = this.file.get();
             b || this.opts.toolbarInline ? (a.removeClass("fr-hidden"),
             a.next(".fr-separator").removeClass("fr-hidden")) : (a.addClass("fr-hidden"),
             a.next(".fr-separator").addClass("fr-hidden"))
         }
     }),
-    a.FE.RegisterCommand("imageDismissError", {
+    a.FE.RegisterCommand("fileDismissError", {
         title: "OK",
         undo: !1,
         callback: function() {
-            this.image.hideProgressBar(!0)
+            this.file.hideProgressBar(!0)
         }
     }),
-    a.FE.DefineIcon("imageStyle", {
+    a.FE.DefineIcon("fileStyle", {
         NAME: "magic"
     }),
-    a.FE.RegisterCommand("imageStyle", {
+    a.FE.RegisterCommand("fileStyle", {
         title: "Style",
         type: "dropdown",
         html: function() {
             var a = '<ul class="fr-dropdown-list">'
-              , b = this.opts.imageStyles;
+              , b = this.opts.fileStyles;
             for (var c in b)
-                b.hasOwnProperty(c) && (a += '<li><a class="fr-command" data-cmd="imageStyle" data-param1="' + c + '">' + this.language.translate(b[c]) + "</a></li>");
+                b.hasOwnProperty(c) && (a += '<li><a class="fr-command" data-cmd="fileStyle" data-param1="' + c + '">' + this.language.translate(b[c]) + "</a></li>");
             return a += "</ul>"
         },
         callback: function(a, b) {
-            this.image.applyStyle(b)
+            this.file.applyStyle(b)
         },
         refreshOnShow: function(b, c) {
-            var d = this.image.get();
+            var d = this.file.get();
             d && c.find(".fr-command").each(function() {
                 var b = a(this).data("param1");
                 a(this).toggleClass("fr-active", d.hasClass(b))
             })
         }
     }),
-    a.FE.DefineIcon("imageAlt", {
+    a.FE.DefineIcon("fileAlt", {
         NAME: "info"
     }),
-    a.FE.RegisterCommand("imageAlt", {
+    a.FE.RegisterCommand("fileAlt", {
         undo: !1,
         focus: !1,
         title: "Alternate Text",
         callback: function() {
-            this.image.showAltPopup()
+            this.file.showAltPopup()
         }
     }),
-    a.FE.RegisterCommand("imageSetAlt", {
+    a.FE.RegisterCommand("fileSetAlt", {
         undo: !0,
         focus: !1,
         title: "Update",
         refreshAfterCallback: !1,
         callback: function() {
-            this.image.setAlt()
+            this.file.setAlt()
         }
     }),
-    a.FE.DefineIcon("imageSize", {
+    a.FE.DefineIcon("fileSize", {
         NAME: "arrows-alt"
     }),
-    a.FE.RegisterCommand("imageSize", {
+    a.FE.RegisterCommand("fileSize", {
         undo: !1,
         focus: !1,
         title: "Change Size",
         callback: function() {
-            this.image.showSizePopup()
+            this.file.showSizePopup()
         }
     }),
-    a.FE.RegisterCommand("imageSetSize", {
+    a.FE.RegisterCommand("fileSetSize", {
         undo: !0,
         focus: !1,
         title: "Update",
         refreshAfterCallback: !1,
         callback: function() {
-            this.image.setSize()
+            this.file.setSize()
         }
-    })
+    })*/
 });

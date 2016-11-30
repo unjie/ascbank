@@ -1,41 +1,34 @@
 angular.module('app', [ 'froala' ]).value('froalaConfig', {
-	toolbarInline : false,
-	codeMirror : false,
-	codeViewKeepActiveButtons : [ "fullscreen" ],
-	codeBeautifierOptions : {
-		end_with_newline : true,
-		indent_inner_html : true,
-		extra_liners : "['p', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'blockquote', 'pre', 'ul', 'ol', 'table', 'dl']",
-		brace_style : 'expand',
-		indent_char : '\t',
-		indent_size : 1,
-		wrap_line_length : 0
-	},
-	codeMirrorOptions : {
-		indentWithTabs : true,
-		lineNumbers : true,
-		lineWrapping : true,
-		mode : 'text/html',
-		tabMode : 'indent',
-		tabSize : 2
-	},
-	//enter : $.FroalaEditor.ENTER_P,
+	// 配置信息
+	language:'zh_cn',
+	//回车 以新建div
+	//a.FE.ENTER_P = 0,
+   // a.FE.ENTER_DIV = 1,
+   // a.FE.ENTER_BR = 2,
+	 enter :  1,
+	 editorClass: 'panel',
+	//初始
 	placeholderText : 'Enter Text Here',
+	
+	imageUploadMethod: 'POST',
+	imageUploadURL:'./file/upload',
+	imageUploadParams:{destination:'./images'	},
+	imageUploadParam:'files[0]',
+	
+	fileUploadURL:'./file/upload',
+	fileUploadParams:{destination:('./'+new Date().toDateString())	},
+	fileUploadParam:'files[0]',
+	
 	imageManagerDeleteMethod : 'DELETE',
-	imageManagerDeleteParams : {
-		items : '{{path}}'
-	},
+	//imageManagerDeleteParams : {		items : '{{path}}'	},
 	imageManagerDeleteURL : './file/remove',
 	imageManagerLoadMethod : 'POST',
-	imageManagerLoadParams : {
-		'path' : './images'
-	},
+	imageManagerLoadParams : {'path' : './images'},
 	imageManagerLoadURL : './file/reads',
 	imageManagerPageSize : 10,
 	// imageManagerPreloader: './public/images/loader.gif',
 	immediateAngularModelUpdate : false,
 	imageManagerScrollOffset : 10,
-	toolbarButtons : [ 'fullscreen', 'bold', 'italic', 'underline', 'strikeThrough', 'subscript', 'superscript', 'fontFamily', 'fontSize', '|', 'color', 'emoticons', 'inlineStyle', 'paragraphStyle', '|', 'paragraphFormat', 'align', 'formatOL', 'formatUL', 'outdent', 'indent', 'quote', 'insertHR', '-', 'insertLink', 'insertImage', 'insertVideo', 'insertFile', 'insertTable', 'undo', 'redo', 'clearFormatting', 'selectAll', 'html' ],
 
 	inlineStyles : {
 		'Big Red' : 'font-size: 20px; color: red;',
@@ -46,22 +39,28 @@ angular.module('app', [ 'froala' ]).value('froalaConfig', {
 		table : 'Bootstrap Table'
 	},
 	paragraphStyles : {
+		'label' : 'Label',
 		'bg-light' : 'Light ',
 		'bg-danger' : 'Danger',
 		'bg-warning' : 'Warning ',
-		'bg-dark'  : 'dark ',
-		'bg-info'  : 'Info ',
-		'bg-success'  : 'Success ',
-		'bg-primary'  : 'Primary ',
-		'col-lg-12' : 'col-lg-12',
-		'col-lg-6' : 'col-lg-6',
-		'col-lg-4' : 'col-lg-4',
-		'col-lg-3' : 'col-lg-3',
-		'col-lg-2-4' : 'col-lg-2-4',
-		'col-lg-2' : 'col-lg-2',
-		'col-xs-6' : 'col-xs-6',
-		'col-sm-6'  : 'col-sm-6',
-		'col-md-6' : 'col-md-6'
+		'bg-dark' : 'dark ',
+		'bg-info' : 'Info ',
+		'bg-success' : 'Success ',
+		'bg-primary' : 'Primary ',
+		'well' : 'Well',
+		'col-lg-12' : '(1)col-lg-12',
+		'col-lg-10' : '(10/12)col-lg-10',
+		'col-lg-8' : '(8/12)col-lg-8',
+		'col-lg-6' : '(1/2)col-lg-6',
+		'col-lg-4' : '(1/3)col-lg-4',
+		'col-lg-3' : '(1/4)col-lg-3',
+		'col-lg-2-4' : '(1/5)col-lg-2-4',
+		'col-lg-2' : '(1/6)col-lg-2',
+		'col-xs-6' : '(1/2)col-xs-6',
+		'col-sm-6' : '(1/2)col-sm-6',
+		'col-md-6' : '(1/2)col-md-6',
 	},
+	quickInsertButtons:['image', 'table', 'ul', 'ol', 'hr'],
+	quickInsertTags:['p', 'div', 'h1', 'h2', 'h3', 'h4', 'h5', 'h6', 'pre', 'blockquote']
 
 });

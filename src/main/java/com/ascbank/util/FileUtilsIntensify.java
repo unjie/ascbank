@@ -17,17 +17,35 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class FileUtilsIntensify {
-
+	
 	private static final Logger log = LoggerFactory.getLogger(FileUtilsIntensify.class);
-
+	
+	/**
+	 * 获取到指定文件的压缩字节流对象
+	 *
+	 * @param zipFile
+	 *            将要写入的压缩文件
+	 * @return ZipOutputStream 压缩输出字节流
+	 * @throws FileNotFoundException
+	 */
 	public static ZipOutputStream getZipOutputStream(File zipFile) throws FileNotFoundException {
 		return new ZipOutputStream(new FileOutputStream(zipFile));
 	}
-
+	
+	/**
+	 * 将文件添加到已有的压缩字节流中
+	 *
+	 * @param zipOut
+	 *            压缩输出字节流对象
+	 * @param file
+	 *            将要压缩的文件
+	 * @return ZipOutputStream 压缩字节流
+	 * @throws IOException
+	 */
 	public static ZipOutputStream putFileZip(ZipOutputStream zipOut, File file) throws IOException {
 		InputStream input = new FileInputStream(file);
 		zipOut.putNextEntry(new ZipEntry(file.getName()));
-
+		
 		int temp = 0;
 		while ((temp = input.read()) != -1) {
 			zipOut.write(temp);
@@ -36,11 +54,20 @@ public class FileUtilsIntensify {
 		// zipOut.close();
 		return zipOut;
 	}
-
+	
+	/**
+	 * 解压文件
+	 *
+	 * @param zipFile
+	 *            压缩文件
+	 * @param path
+	 *            解压路径
+	 * @throws IOException
+	 */
 	public static void uncompress(File zipFile, Path path) throws IOException {
-
+		
 		// String Parent="C:\\Users\\HAN\\Desktop"; //输出路径（文件夹目录）
-
+		
 		File file = null;
 		ZipEntry entry;
 		BufferedOutputStream bout = null;
@@ -65,12 +92,12 @@ public class FileUtilsIntensify {
 				out.close();
 				FileUtilsIntensify.log.debug("{} 解压成功", file);
 			}
-
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			FileUtilsIntensify.log.error(" uncompress  :" + e);
 			throw e;
-
+			
 		} finally {
 			if (bout != null) {
 				try {
@@ -104,18 +131,21 @@ public class FileUtilsIntensify {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-
+			
 		}
-
+		
 	}
-
+	
 	/**
 	 * 压缩单个文件
 	 *
+	 * @param file
+	 * @param zipFile
+	 * @return ZipOutputStream 压缩字节流
 	 * @throws IOException
 	 */
 	public static ZipOutputStream ZipFile(File file, File zipFile) throws IOException {
-
+		
 		InputStream input = new FileInputStream(file);
 		ZipOutputStream zipOut = new ZipOutputStream(new FileOutputStream(zipFile));
 		zipOut.putNextEntry(new ZipEntry(file.getName()));
@@ -125,8 +155,13 @@ public class FileUtilsIntensify {
 		}
 		input.close();
 		// zipOut.close();
-
+		
 		return zipOut;
 	}
 
+	public FileUtilsIntensify() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+	
 }

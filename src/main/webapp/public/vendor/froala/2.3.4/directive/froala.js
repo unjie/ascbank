@@ -1,4 +1,5 @@
-angular.module('froala', []).value('froalaConfig', {}).directive('froala', [ '$ocLazyLoad', '$document', function($ocLazyLoad, $document, froalaConfig) {
+angular.module('froala', []).value('froalaConfig', {}).directive('froala', [ '$ocLazyLoad', '$document', 'froalaConfig',function($ocLazyLoad, $document, froalaConfig) {
+
 	var generatedIds = 0;
 	var defaultConfig = {
 		immediateAngularModelUpdate : false,
@@ -23,7 +24,7 @@ angular.module('froala', []).value('froalaConfig', {}).directive('froala', [ '$o
 			// css 样式文件
 			'./public/vendor/froala/2.3.4/css/froala_editor.min.css',
 			//
-			'./public/vendor/froala/2.3.4/css/froala_style.min.css',
+			//'./public/vendor/froala/2.3.4/css/froala_style.min.css',
 			//
 			'./public/vendor/froala/2.3.4/css/plugins/char_counter.css',
 			//
@@ -46,17 +47,17 @@ angular.module('froala', []).value('froalaConfig', {}).directive('froala', [ '$o
 			'./public/vendor/froala/2.3.4/css/plugins/table.css',
 			//
 			'./public/vendor/froala/2.3.4/css/plugins/video.css',
+			//修正显示问题
+			'./public/vendor/froala/2.3.4/css/froala_amend.css',
 
 			// js 文件
-			'./public/vendor/froala/2.3.4/js/froala_editor.min.js' ,
-			// 配置文件
-			'./public/vendor/froala/2.3.4/froalaConfig.js',
-			
+			'./public/vendor/froala/2.3.4/js/froala_editor.min.js',
 			]).then(function() {
-
 				$ocLazyLoad.load([
 				// 其他插件
 				'./public/vendor/froala/2.3.4/js/plugins/align.min.js',
+				//
+				'./public/vendor/froala/2.3.4/js/plugins/image.min.js',
 				//
 				'./public/vendor/froala/2.3.4/js/plugins/char_counter.min.js',
 				//
@@ -78,8 +79,6 @@ angular.module('froala', []).value('froalaConfig', {}).directive('froala', [ '$o
 				//
 				'./public/vendor/froala/2.3.4/js/plugins/fullscreen.min.js',
 				//
-				'./public/vendor/froala/2.3.4/js/plugins/image.min.js',
-				//
 				'./public/vendor/froala/2.3.4/js/plugins/inline_style.min.js',
 				//
 				'./public/vendor/froala/2.3.4/js/plugins/line_breaker.min.js',
@@ -99,10 +98,12 @@ angular.module('froala', []).value('froalaConfig', {}).directive('froala', [ '$o
 				'./public/vendor/froala/2.3.4/js/plugins/table.min.js',
 				//
 				'./public/vendor/froala/2.3.4/js/plugins/video.min.js',
-				//
+				// 官方froala directive 
 				// './public/vendor/froala/2.3.4/angular-froala/angular-froala.js',
-				//
-				'./public/vendor/froala/2.3.4/js/plugins/image_manager.min.js'
+				//图片管理
+				'./public/vendor/froala/2.3.4/js/plugins/image_manager.min.js',
+				// 配置文件
+				//'./public/vendor/froala/2.3.4/froalaConfig.js',
 
 				]).then(function() {
 					"use strict"; // Scope strict mode to only this directive
@@ -290,6 +291,7 @@ angular.module('froala', []).value('froalaConfig', {}).directive('froala', [ '$o
 			})
 		}
 	}
+
 } ]).directive('froalaView', [ '$sce', function($sce) {
 	return {
 		restrict : 'ACM',
@@ -304,4 +306,5 @@ angular.module('froala', []).value('froalaConfig', {}).directive('froala', [ '$o
 			});
 		}
 	};
+
 } ]);
