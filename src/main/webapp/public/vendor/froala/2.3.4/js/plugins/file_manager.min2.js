@@ -59,17 +59,17 @@
             b.opts.theme && (c = " " + b.opts.theme + "-theme");
             var d = '<div class="fr-modal' + c + '"><div class="fr-modal-wrapper">';
             return d += '<div class="fr-modal-title"><div class="fr-modal-title-line"><i class="fa fa-bars fr-modal-more fr-not-available" id="fr-modal-more-' + b.sid + '" title="' + b.language.translate("Tags") + '"></i><h4 data-text="true">' + b.language.translate("Manage files") + '</h4><i title="' + b.language.translate("Cancel") + '" class="fa fa-times fr-modal-close" id="fr-modal-close"></i></div>',
-            d += '<div class="fr-file-modal-tags" id="fr-file-modal-tags"></div>',
+            d += '<div class="fr-modal-tags" id="fr-modal-tags"></div>',
             d += "</div>",
-            d += '<img class="fr-file-preloader" id="fr-file-preloader" alt="' + b.language.translate("Loading") + '.." src="' + b.opts.fileManagerPreloader + '" style="display: none;">',
-            d += '<div class="fr-file-scroller" id="fr-file-scroller"><div class="fr-file-list" id="fr-file-list"></div></div>',
+            d += '<img class="fr-preloader" id="fr-preloader" alt="' + b.language.translate("Loading") + '.." src="' + b.opts.fileManagerPreloader + '" style="display: none;">',
+            d += '<div class="fr-scroller" id="fr-scroller"><div class="fr-file-list" id="fr-file-list"></div></div>',
             d += "</div></div>",
             a(d)
         }
         function h() {
-            b.shared.$filemodal ? (A = b.shared.$filemodal,
-            G = b.shared.$overlay) : (b.shared.$filemodal = g(),
-            A = b.shared.$filemodal,
+            b.shared.$modal ? (A = b.shared.$modal,
+            G = b.shared.$overlay) : (b.shared.$modal = g(),
+            A = b.shared.$modal,
             b.helpers.isMobile() || A.addClass("fr-desktop"),
             A.appendTo("body"),
             b.shared.$overlay = a('<div class="fr-overlay">').appendTo("body"),
@@ -81,7 +81,7 @@
                 G.removeData().remove()
             }, !0)
         }
-        function i(f) {
+        function i() {
             B.show(),
             C.find(".fr-list-column").empty(),
             b.opts.fileManagerLoadURL ? a.ajax({
@@ -99,7 +99,6 @@
                 headers: b.opts.requestHeaders
             }).done(function(a, c, d) {
             	a=a.data,
-            	 Y && a.unshift(Y),
                 b.events.trigger("fileManager.filesLoaded", [a]),
                 j(a, d.response),
                 B.hide()
@@ -130,25 +129,85 @@
         function l(c) {
             var d =a("<a/>")
               , e = a('<div class="fr-file-container fr-empty fr-file-' + K++ + '" data-loading="' + b.language.translate("Loading") + '.." data-deleting="' + b.language.translate("Deleting") + '..">');
-            p(!1); 
-            e.append(d);
+            p(!1);
+         /*
+            d.onload = function() {
+                e.height(Math.floor(e.width() / d.width * d.height));
+                var f = a("<a/>");
+                  if (c.path)
+                    f.attr("href", c.path);
+                else {
+                    if (t(Q, c),
+                    !c.path)
+                        return t(R, c),
+                        !1;
+                    f.attr("href", c.path)
+                }
+                //type
+                if (c.path && f.attr("data-url", c.path),  c.type){
+                	if(c.type === 'dir'){
+                		f.html('<div class="item-icon"><i class="glyphicon glyphicon-folder-open "></i></div>'+c.name)
+                	}else{
+                    	f.html('<div class="item-icon"><i class="glyphicon glyphicon-file item-extension" data-ext="'+c.name.split('.')[1]+'"></i></div>'+c.name)
+                	}
+                }
+                	
+                
+                //tag
+                
+                if (c.path && f.attr("data-url", c.path),  c.tag)
+                    if (F.find(".fr-modal-more.fr-not-available").removeClass("fr-not-available"),  F.find(".fr-modal-tags").show(),c.tag.indexOf(",") >= 0) {
+                        for (var g = c.tag.split(","), h = 0; h < g.length; h++)
+                            g[h] = g[h].trim(),
+                            0 === E.find('a[title="' + g[h] + '"]').length && E.append('<a role="button" title="' + g[h] + '">' + g[h] + "</a>");
+                        f.attr("data-tag", g.join())
+                    } else{
+                        0 === E.find('a[title="' + c.tag.trim() + '"]').length && E.append('<a role="button" title="' + c.tag.trim() + '">' + c.tag.trim() + "</a>"),
+                        f.attr("data-tag", c.tag.trim());
+                    }
+                E.find(".fr-selected-tag").each(function(a, b) {         x(f, b.text) || e.hide()         })
+			
+                for (var i in c) c.hasOwnProperty(i) && "path" != i && f.attr("data-" + i, c[i]);
+                e.append(f).append(a(b.icon.create("fileManagerDelete")).addClass("fr-delete-img").attr("title", b.language.translate("Delete"))).append(a(b.icon.create("fileManagerInsert")).addClass("fr-insert-img").attr("title", b.language.translate("Insert")))
+             
+              f.on("load", function() {
+                    e.removeClass("fr-empty"),
+                    e.height("auto"),
+                    J++;
+                    var a = n(parseInt(f.parent().attr("class").match(/fr-file-(\d+)/)[1], 10) + 1);
+                    o(a),
+                    p(!1),
+                    J % b.opts.fileManagerPageSize === 0 && k()
+                }),
+                b.events.trigger("fileManager.fileLoaded", [f])
+                
+            } ,
+            d.onerror = function() {
+                J++,
+                e.remove();
+                var a = n(parseInt(e.attr("class").match(/fr-file-(\d+)/)[1], 10) + 1);
+                o(a),
+                t(M, c),
+                J % b.opts.fileManagerPageSize === 0 && k()
+            } ,*/
+            
             if (c.path && d.attr("data-url", c.path),  c.type){
             	if(c.type === 'dir'){
             		d.html('<div class="item-icon"><i class="glyphicon glyphicon-folder-open "></i></div>'+c.name)
-            		e.append(a(b.icon.create("fileManagerOpen")).addClass("fr-open-img").attr("title", b.language.translate("Open")))
             	}else{
-                	d.html('<div class="item-icon"><i class="glyphicon glyphicon-file item-extension" data-ext="'+c.name.split('.').pop()+'"></i></div>'+c.name),
-                    // 删除选择对象文件
-                    e.append(a(b.icon.create("fileManagerDelete")).addClass("fr-delete-img").attr("title", b.language.translate("Delete"))),
-                	// add 选择插入对象文件
-                   e.append(a(b.icon.create("fileManagerInsert")).addClass("fr-insert-img").attr("title", b.language.translate("Insert")))
+                	d.html('<div class="item-icon"><i class="glyphicon glyphicon-file item-extension" data-ext="'+c.name.split('.').pop()+'"></i></div>'+c.name)
             	}
             }
             for (var i in c) c.hasOwnProperty(i) && "path" != i && d.attr("data-" + i, c[i]);
             e.height(Math.floor(e.width() / d.width * d.height));
-            c.cls && e.addClass(c.cls);
+            e.append(d).append(a(b.icon.create("fileManagerDelete")).addClass("fr-delete-img").attr("title", b.language.translate("Delete"))).append(a(b.icon.create("fileManagerInsert")).addClass("fr-insert-img").attr("title", b.language.translate("Insert")))
+           
+            d.addClass();
+            
             d.href = c.path,
             m().append(e);
+            
+
         }
         function m() {
             var b, c;
@@ -202,7 +261,7 @@
             return b
         }
         function r(c) {
-            var e = a(c.currentTarget).siblings("a")
+            var e = a(c.currentTarget).siblings("img")
               , f = A.data("instance") || b;
             if (d(),
             f.file.showProgressBar(),
@@ -217,7 +276,7 @@
                 f.popups.setContainer("file.insert", f.$box || a("body")),
                 f.popups.show("file.insert", h, i)
             }
-            f.file.insert(e.data("url"), q(e).name, V)
+            f.file.insert(e.data("url"), !1, q(e), V)
         }
         function s(c) {
             var d = a(c.currentTarget).siblings("img")
@@ -288,10 +347,10 @@
             return !1
         }
         function y() {
-            B = A.find("#fr-file-preloader"),
+            B = A.find("#fr-preloader"),
             C = A.find("#fr-file-list"),
-            D = A.find("#fr-file-scroller"),
-            E = A.find("#fr-file-modal-tags"),
+            D = A.find("#fr-scroller"),
+            E = A.find("#fr-modal-tags"),
             F = E.parent(),
             L = e(),
             f();
@@ -310,9 +369,7 @@
                 A.find(".fr-mobile-selected").removeClass("fr-mobile-selected")
             })),
             b.events.bindClick(C, ".fr-insert-img", r),
-            b.events.bindClick(C, ".fr-open-img", _),
             b.events.bindClick(C, ".fr-delete-img", s),
-//            b.events.bindClick(C, ".fr-reply-img", _),
             A.on(b._mousedown + " " + b._mouseup, function(a) {
                 a.stopPropagation()
             }),
@@ -324,23 +381,9 @@
             b.events.bindClick(E, "a", w)
         }
         function z() {
-            return b.$wp || "File" == b.$el.get(0).tagName ? void 0 : !1
+            return b.$wp || "IMG" == b.$el.get(0).tagName ? void 0 : !1
         }
-        function _(c){
-        	var e = a(c.currentTarget).siblings("a"),u=e.data("url");
-        	C.find('.fr-list-column').html(""),
-        	b.opts.fileManagerLoadParams.path =u,// b.opts.fileManagerLoadParams.path+
-        	$(u),
-        	i()
-        }
-        function $(u){
-        	var c=u.replace(/\/[^\/]*$/,'');
-        	if(c.length<2)c='./';
-        	if(u.length<3){Y=null;}else {
-        		Y={date: 0,name: "reply", path : c, size : 0, type : "dir",cls:'btn-success'};
-			}
-        }
-        var A, B, C, D, E, F, G, H, I, J, K, L, M = 10, N = 11, O = 12, P = 13, Q = 14, R = 15, S = 21, T = 22, U = {},Y;
+        var A, B, C, D, E, F, G, H, I, J, K, L, M = 10, N = 11, O = 12, P = 13, Q = 14, R = 15, S = 21, T = 22, U = {};
         U[M] = "file cannot be loaded from the passed link.",
         U[N] = "Error during load files request.",
         U[O] = "Missing fileManagerLoadURL option.",
@@ -375,12 +418,6 @@
     }),
     a.FE.DefineIcon("fileManagerInsert", {
         NAME: "plus"
-    }),
-    a.FE.DefineIcon("fileManagerOpen", {
-        NAME: "folder-open"
-    }),
-    a.FE.DefineIcon("fileManagerReply", {
-        NAME: "reply"
     }),
     a.FE.DefineIcon("fileManagerDelete", {
         NAME: "trash"

@@ -10,16 +10,22 @@
 -->
 <urlrewrite>
 
-    <rule>
-        <note>
-            The rule means that requests to /test/status/ will be redirected to /rewrite-status
-            the url will be rewritten.
-        </note>
-        <from>(.*)/$</from>
-        <to type="redirect">%{context-path}$1/index.html</to>
-    </rule>
+	<rule>
+		<note>
+			The rule means that requests to /test/status/ will be redirected to /rewrite-status
+			the url will be rewritten.
+		</note>
+		<from>(.*)/$</from>
+		<to type="redirect">%{context-path}$1/index.html</to>
+	</rule>
 
-
+	<rule>
+		<note>
+			/file/downlaod?path= ###(File Path) ==> /file/download/###(File Path)
+		</note>
+		<from>/file/download/(.*)</from>
+		<to>/file/download?path=$1</to>
+	</rule>
 <!--     
 	<outbound-rule>
         <note>

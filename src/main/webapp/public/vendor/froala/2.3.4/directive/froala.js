@@ -102,6 +102,8 @@ angular.module('froala', []).value('froalaConfig', {}).directive('froala', [ '$o
 				// './public/vendor/froala/2.3.4/angular-froala/angular-froala.js',
 				//图片管理
 				'./public/vendor/froala/2.3.4/js/plugins/image_manager.min.js',
+				//Self edit File manage
+				'./public/vendor/froala/2.3.4/js/plugins/file_manager.min.js'
 				// 配置文件
 				//'./public/vendor/froala/2.3.4/froalaConfig.js',
 

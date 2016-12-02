@@ -19,6 +19,11 @@ angular.module('app', [ 'froala' ]).value('froalaConfig', {
 	fileUploadParams:{destination:('./'+new Date().toDateString())	},
 	fileUploadParam:'files[0]',
 	
+	fileManagerLoadMethod : 'POST',
+	fileManagerLoadParams : {'path' : './'},
+	fileManagerLoadURL : './file/reads',
+	
+	
 	imageManagerDeleteMethod : 'DELETE',
 	//imageManagerDeleteParams : {		items : '{{path}}'	},
 	imageManagerDeleteURL : './file/remove',
@@ -36,7 +41,12 @@ angular.module('app', [ 'froala' ]).value('froalaConfig', {
 		'Width 50% center' : 'width:50%; margin: auto;'
 	},
 	tableStyles : {
-		table : 'Bootstrap Table'
+		'table' : 'Bootstrap Table',
+		'table-condensed': 'Bootstap condensed-table',
+		'table-bordered' : 'Bootstap bordered-table',
+		'table-striped' : 'Bootstap zebra-striped',
+		'table-responsive' : 'table-responsive',
+		
 	},
 	paragraphStyles : {
 		'label' : 'Label',

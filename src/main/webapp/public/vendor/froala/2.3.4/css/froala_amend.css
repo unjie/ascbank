@@ -1,3 +1,154 @@
 .fr-command.fr-btn+.fr-dropdown-menu .fr-dropdown-wrapper .fr-dropdown-content ul.fr-dropdown-list li a{
 	 -webkit-box-sizing: content-box;-moz-box-sizing: content-box;box-sizing: content-box;
-} 
+}
+
+
+
+.fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list {
+  margin: 0 10px;
+  padding: 0;
+}
+.fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list::after {
+  clear: both;
+  display: block;
+  content: "";
+  height: 0;
+}
+.fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list .fr-list-column {
+  float: left;
+  width: calc((100% - 10px) / 2);
+}
+@media (min-width: 768px) and (max-width: 1199px) {
+  .fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list .fr-list-column {
+    width: calc((100% - 20px) / 3);
+  }
+}
+@media (min-width: 1200px) {
+  .fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list .fr-list-column {
+    width: calc((100% - 30px) / 4);
+  }
+}
+
+.fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div.fr-file-container {
+    position: relative;
+    padding:10px 0;
+    width: 100%;
+    display: block;
+    -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+    border-radius: 2px;
+    -moz-border-radius: 2px;
+    -webkit-border-radius: 2px;
+    -moz-background-clip: padding;
+    -webkit-background-clip: padding-box;
+    background-clip: padding-box;
+    overflow: hidden;
+ }
+ .fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div.fr-file-container.fr-mobile-selected .fr-delete-img,
+.fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div.fr-file-container.fr-mobile-selected .fr-insert-img,
+.fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div.fr-file-container.fr-mobile-selected .fr-open-img {
+  display: inline-block;
+}
+.fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div.fr-file-container .fr-delete-img,
+.fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div.fr-file-container .fr-insert-img ,
+.fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div.fr-file-container .fr-open-img 
+{
+  display: none;
+  top: 50%;
+  border-radius: 100%;
+  -moz-border-radius: 100%;
+  -webkit-border-radius: 100%;
+  -moz-background-clip: padding;
+  -webkit-background-clip: padding-box;
+  background-clip: padding-box;
+  -webkit-transition: background 0.2s ease 0s, color 0.2s ease 0s;
+  -moz-transition: background 0.2s ease 0s, color 0.2s ease 0s;
+  -ms-transition: background 0.2s ease 0s, color 0.2s ease 0s;
+  -o-transition: background 0.2s ease 0s, color 0.2s ease 0s;
+  -webkit-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  -moz-box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.12), 0 1px 2px rgba(0, 0, 0, 0.24);
+  position: absolute;
+  cursor: pointer;
+  margin: 0;
+  width: 36px;
+  height: 36px;
+  line-height: 36px;
+  text-decoration: none;
+  z-index: 3;
+}
+.fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div.fr-file-container .fr-delete-img {
+  background: #b8312f;
+  color: #ffffff;
+  left: 50%;
+  -webkit-transform: translateY(-50%) translateX(25%);
+  -moz-transform: translateY(-50%) translateX(25%);
+  -ms-transform: translateY(-50%) translateX(25%);
+  -o-transform: translateY(-50%) translateX(25%);
+}
+.fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div.fr-file-container .fr-insert-img {
+  background: #ffffff;
+  color: #1e88e5;
+  left: 50%;
+  -webkit-transform: translateY(-50%) translateX(-125%);
+  -moz-transform: translateY(-50%) translateX(-125%);
+  -ms-transform: translateY(-50%) translateX(-125%);
+  -o-transform: translateY(-50%) translateX(-125%);
+}
+.fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div.fr-file-container .fr-open-img {
+  background: #ffffff;
+  color: #1abc9c;
+  left: 52%;
+  -webkit-transform: translateY(-50%) translateX(-125%);
+  -moz-transform: translateY(-50%) translateX(-125%);
+  -ms-transform: translateY(-50%) translateX(-125%);
+  -o-transform: translateY(-50%) translateX(-125%);
+}
+.fr-modal.fr-desktop .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div.fr-file-container:hover .fr-delete-img,
+.fr-modal.fr-desktop .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div.fr-file-container:hover .fr-insert-img,
+.fr-modal.fr-desktop .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div.fr-file-container:hover .fr-open-img {
+  display: inline-block;
+}
+.fr-modal.fr-desktop .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div.fr-file-container .fr-delete-img:hover {
+  background: #bf4644;
+  color: #ffffff;
+}
+.fr-modal.fr-desktop .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div.fr-file-container .fr-insert-img:hover {
+  background: #ebebeb;
+}
+.fr-modal.fr-desktop .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div.fr-file-container .fr-open-img:hover {
+  background: #ebebeb;
+}
+.fr-modal.fr-desktop .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div .btn-success a,
+.fr-modal.fr-desktop .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div .btn-success div.item-icon i{
+	color:#ffffff;
+}
+
+
+ .fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list div.fr-file-container a {
+ 	display:block;
+    width: 100%;
+    vertical-align: middle;
+    position: relative;
+    z-index: 2;
+    -webkit-opacity: 1;
+    -moz-opacity: 1;
+    opacity: 1;
+    -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=0)";
+    -webkit-transition: opacity 0.2s ease 0s, filter 0.2s ease 0s;
+    -moz-transition: opacity 0.2s ease 0s, filter 0.2s ease 0s;
+    -ms-transition: opacity 0.2s ease 0s, filter 0.2s ease 0s;
+    -o-transition: opacity 0.2s ease 0s, filter 0.2s ease 0s;
+    -webkit-transform: translateZ(0);
+    -moz-transform: translateZ(0);
+    -ms-transform: translateZ(0);
+    -o-transform: translateZ(0);
+}
+ .fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list .fr-list-column div.fr-file-container  a .item-icon {
+    font-size: 32px;
+}
+.fr-modal .fr-modal-wrapper div.fr-file-scroller div.fr-file-list .fr-list-column div.fr-file-container  a .item-icon .item-extension::after {
+    font-family: Roboto,"Helvetica Neue",Helvetica,Arial,sans-serif;content: attr(data-ext); left: 4px;position: absolute; color: #fff; font-size: 9px; text-transform: uppercase; top: 21px;
+}
+

@@ -31,7 +31,7 @@
 		<param-value>classpath:log4j2.xml</param-value>
 	</context-param>
 
-	<!-- URL重写filter,用于将访问静态资源http://localhost/foo.css 转为http://localhost/static/foo.css -->
+	<!-- URL重写filter,用于将访问静态资源http://localhost/foo.css 转为http://localhost/static/foo.css  DEBUG-->
 	<filter>
 		<filter-name>UrlRewriteFilter</filter-name>
 		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
@@ -41,7 +41,7 @@
 		</init-param>
 		<init-param>
 			<param-name>logLevel</param-name>
-			<param-value>DEBUG</param-value>
+			<param-value>INFO</param-value>
 		</init-param>
 	</filter>
 	<filter-mapping>
