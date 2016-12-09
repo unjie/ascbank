@@ -1,12 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://xmlns.jcp.org/xml/ns/javaee" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd" id="WebApp_ID" version="3.1">
+<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns="http://xmlns.jcp.org/xml/ns/javaee"
+	xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_3_1.xsd"
+	id="WebApp_ID" version="3.1">
 	<display-name>ascbank</display-name>
-	
-	<init-param>
-            <param-name>detectAllViewResolvers</param-name>
-            <param-value>false</param-value>
-    </init-param>
-    
 	<context-param>
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:applicationContext.xml</param-value>
@@ -31,7 +28,8 @@
 		<param-value>classpath:log4j2.xml</param-value>
 	</context-param>
 
-	<!-- URL重写filter,用于将访问静态资源http://localhost/foo.css 转为http://localhost/static/foo.css  DEBUG-->
+	<!-- URL重写filter,用于将访问静态资源http://localhost/foo.css 转为http://localhost/static/foo.css 
+		DEBUG -->
 	<filter>
 		<filter-name>UrlRewriteFilter</filter-name>
 		<filter-class>org.tuckey.web.filters.urlrewrite.UrlRewriteFilter</filter-class>
@@ -48,10 +46,10 @@
 		<filter-name>UrlRewriteFilter</filter-name>
 		<url-pattern>/*</url-pattern>
 	</filter-mapping>
-	
-	
-	
-	
+
+
+
+
 	<!-- spring 委托过滤器代理 -->
 	<filter>
 		<filter-name>shiroFilter</filter-name>
@@ -101,16 +99,9 @@
 	</filter-mapping>
 
 	<!-- 解决lazily(懒加载Session关闭问题) -->
-	<!-- 
-	<filter>
-		<filter-name>openEntityManagerInViewFilter</filter-name>
-		<filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class>
-	</filter>
-	<filter-mapping>
-		<filter-name>openEntityManagerInViewFilter</filter-name>
-		<url-pattern>/*</url-pattern>
-	</filter-mapping>
-	 -->
+	<!-- <filter> <filter-name>openEntityManagerInViewFilter</filter-name> <filter-class>org.springframework.orm.jpa.support.OpenEntityManagerInViewFilter</filter-class> 
+		</filter> <filter-mapping> <filter-name>openEntityManagerInViewFilter</filter-name> 
+		<url-pattern>/*</url-pattern> </filter-mapping> -->
 	<!-- 配置 servlet 过滤 start -->
 	<servlet>
 		<servlet-name>dispatcher</servlet-name>
@@ -119,6 +110,12 @@
 			<param-name>contextConfigLocation</param-name>
 			<param-value>classpath:applicationContext.xml</param-value>
 		</init-param>
+		<!-- 
+		<init-param>
+			<param-name>detectAllViewResolvers</param-name>
+			<param-value>false</param-value>
+		</init-param>
+		 -->
 		<load-on-startup>1</load-on-startup>
 	</servlet>
 	<servlet-mapping>
@@ -126,17 +123,11 @@
 		<url-pattern>/</url-pattern>
 	</servlet-mapping>
 
-<!--
- 	<servlet-mapping>
-	    <servlet-name>default</servlet-name>
-	    <url-pattern>*.ico</url-pattern>
-	    <url-pattern>*.css</url-pattern>
-	    <url-pattern>*.js</url-pattern>
-	</servlet-mapping> 
--->
+	<!-- <servlet-mapping> <servlet-name>default</servlet-name> <url-pattern>*.ico</url-pattern> 
+		<url-pattern>*.css</url-pattern> <url-pattern>*.js</url-pattern> </servlet-mapping> -->
 	<servlet>
-		 <!-- 过滤器名称 -->
-		<servlet-name>DruidStatView</servlet-name> 
+		<!-- 过滤器名称 -->
+		<servlet-name>DruidStatView</servlet-name>
 		<!-- 过滤器需要实现的servlet接口 -->
 		<servlet-class>com.alibaba.druid.support.http.StatViewServlet</servlet-class>
 		<load-on-startup>2</load-on-startup>
@@ -152,8 +143,12 @@
 
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
+	<listener>
 		<listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
-  		<!-- 缓存清除监听器 -->
+	</listener>
+	<listener>
+		<!-- 缓存清除监听器 -->
 		<listener-class>org.springframework.web.util.IntrospectorCleanupListener</listener-class>
 	</listener>
 
@@ -182,6 +177,5 @@
 		<error-code>403</error-code>
 		<location>/WEB-INF/views/error/403.jsp</location>
 	</error-page>
-
 
 </web-app>

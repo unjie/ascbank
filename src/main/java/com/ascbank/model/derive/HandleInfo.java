@@ -17,7 +17,7 @@ public class HandleInfo {
 	private String		destination;
 	// private String folderName;
 	private String[]	items;
-	private String		newPath;
+	//private String		newPath;
 	private String		path;
 	
 	private String		perms;
@@ -41,9 +41,7 @@ public class HandleInfo {
 		return items;
 	}
 	
-	public String getNewPath() {
-		return newPath;
-	}
+	
 	
 	public String getPath() {
 		return path;
@@ -93,9 +91,7 @@ public class HandleInfo {
 		this.items = items;
 	}
 	
-	public void setNewPath(String newPath) {
-		this.newPath = newPath;
-	}
+
 	
 	public void setPath(String path) {
 		this.path = path;
@@ -140,7 +136,7 @@ public class HandleInfo {
 	 */
 	@Override
 	public String toString() {
-		return "HandleInfo [ content=" + content + ", destination=" + destination + ", items=" + items + ", newPath=" + newPath + ", path=" + path + ", perms=" + perms + ", permsCode=" + permsCode + ", recursive=" + recursive + ", toFilename=" + toFilename + "]";
+		return "HandleInfo [ content=" + content + ", destination=" + destination + ", items=" + items + ", path=" + path + ", perms=" + perms + ", permsCode=" + permsCode + ", recursive=" + recursive + ", toFilename=" + toFilename + "]";
 	}
 	
 }
