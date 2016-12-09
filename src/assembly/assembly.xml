@@ -1,47 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<id>package</id>
-<formats>
-    <format>dir</format>
-</formats>
-<includeBaseDirectory>false</includeBaseDirectory>
-<fileSets>
-    <!-- 可执行文件 -->
-    <fileSet>
-        <directory>src/bin</directory>
-        <outputDirectory>bin</outputDirectory>
-        <includes>
-            <include>*.bat</include>
-        </includes>
-        <lineEnding>dos</lineEnding>
-    </fileSet>
-    
-    <fileSet>
-        <directory>src/bin</directory>
-        <outputDirectory>bin</outputDirectory>
-        <includes>
-            <include>*.sh</include>
-        </includes>
-        <lineEnding>unix</lineEnding>
-        <fileMode>0755</fileMode>
-    </fileSet>
-    <!-- classes -->
-    <fileSet>
-        <directory>${project.build.directory}/classes</directory>
-        <outputDirectory>classes</outputDirectory>
-    </fileSet>
-</fileSets>
-<!-- 依赖jar包 -->
-<dependencySets>
-    <dependencySet>
-        <outputDirectory>lib</outputDirectory>
-        <excludes>
-            <exclude>com.ascbank:ascbank</exclude>
-        </excludes>
-    </dependencySet>
-</dependencySets>
-<!-- 
-主要有三组配置：
-formats：打包格式，此处使用的是dir，还可以是zip、rar等；
-fileSet：拷贝文件，本示例主要有bin文件、classes文件需要拷贝；
-dependencySets：依赖jar，拷贝到lib目录；
- -->
+<assembly xmlns="http://maven.apache.org/ASSEMBLY/2.0.0"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/ASSEMBLY/2.0.0 http://maven.apache.org/xsd/assembly-2.0.0.xsd">
+	<id>package</id>
+	<formats>
+		<format>dir</format>
+	</formats>
+	<includeBaseDirectory>false</includeBaseDirectory>
+	<fileSets>
+		<!-- 可执行文件 -->
+		<fileSet>
+			<directory>src/bin</directory>
+			<outputDirectory>bin</outputDirectory>
+			<includes>
+				<include>*.bat</include>
+			</includes>
+			<lineEnding>dos</lineEnding>
+		</fileSet>
+
+		<fileSet>
+			<directory>src/bin</directory>
+			<outputDirectory>bin</outputDirectory>
+			<includes>
+				<include>*.sh</include>
+			</includes>
+			<lineEnding>unix</lineEnding>
+			<fileMode>0755</fileMode>
+		</fileSet>
+		<!-- classes -->
+		<fileSet>
+			<directory>${project.build.directory}/classes</directory>
+			<outputDirectory>classes</outputDirectory>
+		</fileSet>
+	</fileSets>
+	<!-- 依赖jar包 -->
+	<dependencySets>
+		<dependencySet>
+			<outputDirectory>lib</outputDirectory>
+			<excludes>
+				<exclude>com.ascbank:ascbank</exclude>
+			</excludes>
+		</dependencySet>
+	</dependencySets>
+	<!-- 主要有三组配置： formats：打包格式，此处使用的是dir，还可以是zip、rar等； fileSet：拷贝文件，本示例主要有bin文件、classes文件需要拷贝； 
+		dependencySets：依赖jar，拷贝到lib目录； -->
+</assembly>
