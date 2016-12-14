@@ -9,8 +9,6 @@
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.2.xsd">
 
 	<!-- 启用注解 -->
-
-
 	<bean name="systemConfig" init-method="getObject" class="org.springframework.beans.factory.config.PropertiesFactoryBean">
 		<property name="locations" value="classpath:systemConfig.properties" />
 		<property name="properties">
