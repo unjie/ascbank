@@ -7,9 +7,9 @@
            http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <rabbit:connection-factory id="connectionFactory"/>
+    <rabbit:connection-factory id="connectionFactory" addresses="localhost" username="guest" password="guest"/>
 
-    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"/>
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" />
 
     <rabbit:admin connection-factory="connectionFactory"/>
 
