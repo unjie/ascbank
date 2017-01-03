@@ -7,7 +7,7 @@
            http://www.springframework.org/schema/beans
            http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-    <rabbit:connection-factory id="connectionFactory" addresses="localhost" username="guest" password="guest"/>
+    <rabbit:connection-factory id="connectionFactory" addresses="192.168.16.75" username="ccbe" password="ccbe"/>
 
     <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" />
 

@@ -26,6 +26,7 @@ then
         then
 			echo "port $PORT">>redis.$PORT.conf
 			echo "protected-mode no">>redis.$PORT.conf
+## 安全模式关闭↑与bind 2选一 全部开启会无提示,无法开启 			
 ##			echo "bind 127.0.0.1 192.168.16.62 192.168.16.72 192.168.16.75 192.168.16.65">>redis.$PORT.conf
 			echo "cluster-enabled yes">>redis.$PORT.conf
 			echo "cluster-config-file nodes-${PORT}.conf">>redis.$PORT.conf

@@ -1,7 +1,7 @@
 /**
  *
  */
-package test;
+package com.ascbank.test;
 
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
