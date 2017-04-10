@@ -8,4 +8,5 @@
 	<import resource="classpath:captcha/Springcontext-captcha.xml"/>
 	<import resource="classpath:shiro/SpringContext-shiro.xml" />
 	<import resource="classpath:solr/SpringContext-solr.xml" />
+	<import resource="classpath:amqp/SpringContext-rabbit.xml"/>
 </beans>

@@ -1,0 +1,33 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/rabbit
+           http://www.springframework.org/schema/rabbit/spring-rabbit.xsd
+           http://www.springframework.org/schema/beans
+           http://www.springframework.org/schema/beans/spring-beans.xsd">
+ 	<rabbit:annotation-driven/>
+
+    <rabbit:connection-factory id="connectionFactory" addresses="192.168.16.75" username="ccbe" password="ccbe"/>
+
+	<!-- 未指定Exchange属性时使用的为默认的Exchange交换机 -->
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"  />
+
+	<!-- Creates a rabbit admin (org.springframework.amqp.rabbit.core.RabbitAdmin), used to 
+ manage exchanges, queues and bindings. 主要用于管理Exchange,Queue,Bindings -->
+    <rabbit:admin connection-factory="connectionFactory" />
+
+	<!-- Direct exchange（直连交换机）	(Empty string) and amq.direct -->
+	<!-- <rabbit:direct-exchange name=""/> -->
+	<!-- Fanout exchange（扇型交换机）	amq.fanout -->
+	<!-- <rabbit:fanout-exchange name=""/> -->
+	<!--  Topic exchange（主题交换机）	amq.topic-->
+	<!-- <rabbit:topic-exchange name=""/> -->
+	<!-- Headers exchange（头交换机）	amq.match (and amq.headers in RabbitMQ) -->
+	<!-- <rabbit:headers-exchange name=""/> -->
+	
+	
+	
+    <rabbit:queue name="myqueue"/>
+
+</beans>

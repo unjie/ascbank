@@ -9,7 +9,7 @@
 
     <rabbit:connection-factory id="connectionFactory" addresses="192.168.16.75" username="ccbe" password="ccbe"/>
 
-    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory" />
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"  />
 
     <rabbit:admin connection-factory="connectionFactory"/>
 
