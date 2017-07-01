@@ -110,7 +110,7 @@
 	<!-- <mvc:resources mapping="/**/*.htm" location="/WEB-INF/views/" cache-period="31556926" order="4" /> -->
 	<mvc:resources mapping="/**/*.js" location="/WEB-INF/views/" cache-period="31556926" order="5" />
 	<mvc:resources mapping="/**/*.css" location="/WEB-INF/views/" cache-period="31556926" order="6" />
-
+	<mvc:resources mapping="/kettle/***" location="/WEB-INF/views/kettle/" cache-period="31556926" order="1" />
 
 
 	<!-- 配置freeMarker的模板路径 -->
